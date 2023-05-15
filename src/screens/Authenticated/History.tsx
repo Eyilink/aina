@@ -56,7 +56,7 @@ const History = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        <Title isPrimary text={i18n.t('navigation.authenticated.history')} />
+        {/* <Title isPrimary text={i18n.t('navigation.authenticated.history')} />
         {!reports ? (
           <>
             <Subtitle
@@ -140,7 +140,7 @@ const History = ({ navigation }: Props): ReactElement => {
               </ScrollView>
             )}
           </>
-        )}
+        )} */}
       </View>
     </Container>
   );

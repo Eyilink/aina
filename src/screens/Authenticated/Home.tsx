@@ -81,7 +81,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        <Title
+        {/* <Title
           isPrimary
           isDate
           isCenter
@@ -103,7 +103,7 @@ const Home = ({ navigation }: Props): ReactElement => {
             <Image style={styles.image} source={image} />
             <SubTitle text={textReco} style={styles.subtitle} />
           </ScrollView>
-        )}
+        )} */}
       </View>
     </Container>
   );
