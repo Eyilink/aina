@@ -1,13 +1,15 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement , useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as XLSX from 'xlsx';
-import * as fs from 'fs';
+//import * as XLSX from 'xlsx';
+//import * as fs from 'fs';
 
 import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import SubTitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
+import AddBoutton from '@components/atoms/AddBoutton';
+
 
 import { useReportsStore } from '@store/store';
 import { AuthenticatedStackParamList } from '@navigation/types';
@@ -17,6 +19,8 @@ import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
+
+import { Text, TouchableOpacity } from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
@@ -63,7 +67,38 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
   );
 };
 
-export default Evaluate;
+//export default Evaluate;
+const selectedSymptomes = [''];
+
+const SymptomesMenu = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+   // liste des symptomes selectionnés
+  
+
+
+  const symptomes = ['Symptome 1', 'Symptome 2', 'Symptome 3' ];
+
+  const handleMenuPress = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleSymptomePress = (symptome: string) => {
+    selectedSymptomes.push(symptome); // ajouter le symptome selectionné à la liste des symptomes selectionnés
+    console.log(selectedSymptomes);
+    setMenuOpen(false); // fermer le menu déroulant
+  };
+
+  return (
+    
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+      <AddBoutton
+      />
+    </View>
+  );
+};
+
+export default SymptomesMenu;
 
 const styles = StyleSheet.create({
   container: {
