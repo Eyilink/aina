@@ -1,21 +1,30 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+  C:\Program Files (x86)\nodejs\node.exe C:\Users\hibab\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add DateTimePickerModal
 
 PATH: 
-  C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK Utility;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\pierr\AppData\Local\Microsoft\WindowsApps;C:\Users\pierr\AppData\Roaming\npm;C:\Users\pierr\AppData\Local\atom\bin;C:\Users\pierr\AppData\Local\Yarn\bin
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin;C:\Python310\Scripts\;C:\Python310\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files (x86)\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\MATLAB\R2022b\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PuTTY\;C:\Program Files (x86)\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Meld\;C:\Users\hibab\Downloads\opencv-4.5.5\opencv-4.5.5\build\install\x64\mingw\bin;C:\Users\hibab\AppData\Local\Microsoft\WindowsApps;C:\Users\hibab\AppData\Roaming\npm;C:\Users\hibab\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\hibab\.dotnet\tools;C:\Program Files\Java\jdk-19\bin;C:\Qt\Tools\mingw1120_64\bin;C:\Users\hibab\Downloads\opencv-4.5.5\opencv-4.5.5\build\install\x64\mingw\bin;
 
 Yarn version: 
-  1.22.4
+  1.22.19
 
 Node version: 
-  12.17.0
+  16.17.1
 
 Platform: 
-  win32 x64
+  win32 ia32
 
 Trace: 
-  Error: https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.2.1.tgz: unexpected end of file
-      at Zlib.zlibOnError [as onerror] (zlib.js:180:17)
+  Error: https://registry.yarnpkg.com/DateTimePickerModal: Not found
+      at Request.params.callback [as _callback] (C:\Users\hibab\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
+      at Request.self.callback (C:\Users\hibab\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (C:\Users\hibab\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (C:\Users\hibab\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -61,7 +70,8 @@ npm manifest:
       "react-native-svg-charts": "^5.4.0",
       "react-native-timeline-flatlist": "^0.7.2",
       "react-native-web": "~0.11.7",
-      "react-sweet-state": "^2.1.1"
+      "react-sweet-state": "^2.1.1",
+      "url": "^0.11.0"
     },
     "devDependencies": {
       "@babel/core": "^7.8.6",
@@ -5724,6 +5734,11 @@ Lockfile:
       end-of-stream "^1.1.0"
       once "^1.3.1"
   
+  punycode@1.3.2:
+    version "1.3.2"
+    resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
+    integrity sha512-RofWgt/7fL5wP1Y7fxE7/EmTLzQVnB0ycyibJ0OOHIlJqTNzglYFxVwETOcIoJqJmpDXJ9xImDv+Fq34F/d4Dw==
+  
   punycode@^2.1.0:
     version "2.1.1"
     resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
@@ -5751,6 +5766,11 @@ Lockfile:
       decode-uri-component "^0.2.0"
       split-on-first "^1.0.0"
       strict-uri-encode "^2.0.0"
+  
+  querystring@0.2.0:
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
+    integrity sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==
   
   querystringify@^2.1.1:
     version "2.1.1"
@@ -7079,6 +7099,14 @@ Lockfile:
       querystringify "^2.1.1"
       requires-port "^1.0.0"
   
+  url@^0.11.0:
+    version "0.11.0"
+    resolved "https://registry.yarnpkg.com/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
+    integrity sha512-kbailJa29QrtXnxgq+DdCEGlbTeYM2eJUxsz6vjZavrCYPMIFHMKQmSKYAIuUK2i7hgPm28a8piX5NTUtM/LKQ==
+    dependencies:
+      punycode "1.3.2"
+      querystring "0.2.0"
+  
   use-subscription@^1.4.0:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.4.1.tgz#edcbcc220f1adb2dd4fa0b2f61b6cc308e620069"
@@ -7357,8 +7385,3 @@ Lockfile:
       which-module "^2.0.0"
       y18n "^3.2.1"
       yargs-parser "^7.0.0"
-  
-  yarn@^1.22.4:
-    version "1.22.4"
-    resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.4.tgz#01c1197ca5b27f21edc8bc472cd4c8ce0e5a470e"
-    integrity sha512-oYM7hi/lIWm9bCoDMEWgffW8aiNZXCWeZ1/tGy0DWrN6vmzjCXIKu2Y21o8DYVBUtiktwKcNoxyGl/2iKLUNGA==

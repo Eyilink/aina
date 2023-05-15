@@ -22,10 +22,13 @@
 ```bash
 # Install dependencies
 $ yarn install
+$ yarn add url 
+$ yarn add react-native-modal-datetime-picker
 
 # Run the app
 $ yarn ios
 $ yarn android
+
 ```
 
 ## Available yarn scripts
