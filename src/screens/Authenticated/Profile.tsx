@@ -48,7 +48,7 @@ const Profile = (): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        {/* <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
+        <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
         <ScrollView persistentScrollbar>
           <View style={styles.titleContainer}>
             <SubTitle text={user.username} style={styles.username} />
@@ -112,7 +112,7 @@ const Profile = (): ReactElement => {
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
-        </ScrollView> */}
+        </ScrollView> 
       </View>
     </Container>
   );
