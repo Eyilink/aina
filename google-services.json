@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "437880254773",
+    "firebase_url": "https://mon-suivi-sante.firebaseio.com",
+    "project_id": "mon-suivi-sante",
+    "storage_bucket": "mon-suivi-sante.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437880254773:android:890f1b5c2727a7e0dadc7c",
+        "android_client_info": {
+          "package_name": "fr.aina.monsuivisanteapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437880254773-5vucmgagjgf6od5dpvpocl83ag5rblal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX2gM9j6N2k-G0NvYZLkzWvEUbf4VgAkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437880254773-5vucmgagjgf6od5dpvpocl83ag5rblal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
