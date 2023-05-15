@@ -22,6 +22,9 @@
 ```bash
 # Install dependencies
 $ yarn install
+$ yarn add xlsx
+$ yarn add @types/xlsx
+
 
 # Run the app
 $ yarn ios
