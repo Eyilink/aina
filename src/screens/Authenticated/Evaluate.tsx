@@ -44,7 +44,7 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        <Title isPrimary isDate isCenter text={DATE_TODAY} />
+        {/* <Title isPrimary isDate isCenter text={DATE_TODAY} />
         {!isNewReportOfDay ? (
           <SubTitle text={i18n.t('evaluate.restart')} style={styles.subtitle} />
         ) : (
@@ -55,7 +55,7 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
           onPress={onStartReport}
           isValidate
           stretch
-        />
+        /> */}
       </View>
     </Container>
   );
