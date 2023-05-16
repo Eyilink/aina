@@ -1,13 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as XLSX from 'xlsx';
-import * as fs from 'fs';
 
 import Container from '@components/molecules/Container';
-import Title from '@components/atoms/Title';
-import SubTitle from '@components/atoms/SubTitle';
-import Button from '@components/atoms/Button';
+import DropDownMenu from '@components/molecules/DropDownMenu';
 
 import { useReportsStore } from '@store/store';
 import { AuthenticatedStackParamList } from '@navigation/types';
@@ -18,6 +14,14 @@ import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 
+type Pathologie = {
+  nom: string
+}
+
+type Symptome = {
+  nom: string
+}
+
 type Props = {
   navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
 };
@@ -25,6 +29,17 @@ type Props = {
 const Evaluate = ({ navigation }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
+  
+  // Exemple :
+  const pathologies: Pathologie[] = [
+    { nom: 'COVID-19' },
+    { nom: 'Grippe' },
+    { nom: 'Rhume' },
+  ];
+  const symptome: Symptome[] = [
+    { nom: 'toux' },
+    { nom: 'temperature' },
+  ];
 
   const onStartReport = (): void => {
     if (!isNewReportOfDay) {
@@ -58,6 +73,8 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
           isValidate
           stretch
         /> */}
+        
+      <DropDownMenu objets={pathologies} objets2={symptome} />
       </View>
     </Container>
   );
