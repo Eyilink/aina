@@ -14,6 +14,8 @@ import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 
+import AddBoutton from '@components/atoms/AddBoutton';
+
 
 type Pathologie = {
   nom: string
@@ -76,6 +78,8 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
         /> */}
         
       <DropDownMenu objets={pathologies} objets2={symptome} />
+      <AddBoutton></AddBoutton>
+      
       </View>
     </Container>
   );
