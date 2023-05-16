@@ -49,28 +49,22 @@ type Symptome = {
   valNum: Number,
 }
 
-const symptome: Symptome = {
-  name: 'Toux',
-  type: 'num',
-  question: "Avez vous de la ",
-  valBool: false,
-  valNum: -1,
-};
 
 const onChange = (value: boolean): void => {
   setHasUserChosen(true);
-  setPregnant(value);
+  setSymptom(value);
 };
 
-const Cat = (s: Symptome) => {
+const InputBox = (s: Symptome) => {
+  const [symptom, setSymptom] = useState<boolean>(false);
+  const [hasUserChosen, setHasUserChosen] = useState<boolean>(false);
   let symptomText = null;
-
   const [sliderValue, setSliderValue] = useState(0);
 
   const styles = StyleSheet.create({
     subtitle: {
-      fontSize: 20, // Customize the font size
-      marginTop: 10, // Customize the top margin
+      fontSize: 20,
+      marginTop: 10,
     },
     valueText: {
       fontSize: 16,
@@ -81,51 +75,43 @@ const Cat = (s: Symptome) => {
   if (s.type === 'num') {
     symptomText = (
       <View>
-        <Text style={styles.subtitle}>
-          {'\n'}
-          {s.question}
-          {s.name} ?
-          {'\n'}
-        </Text>
         <Slider
           value={sliderValue}
           onValueChange={(value) => setSliderValue(value)}
           minimumValue={0}
           maximumValue={10}
           step={1}
-          thumbTintColor="blue" // Customize the color of the slider thumb
-          minimumTrackTintColor="red" // Customize the color of the slider track before the thumb
+          thumbTintColor="blue"
+          minimumTrackTintColor="red"
         />
         <Text style={styles.valueText}>  Intensité: {sliderValue}</Text>
       </View>
     );
-  } else if(s.type === 'oui/non' || s.type === 'oui/non eval') {
+  } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
     symptomText = (
-      <Text style={styles.subtitle}>
-        {'\n'}
-        {s.question}
-        {s.name} ?
-        {'n'}
-        <Button
-          text={i18n.t('commons.yes')}
-          onPress={(): void => onChange(true)}
-          isSelected={hasUserChosen ? pregnant : false}
-          stretch
-        />
-        <Button
-          text={i18n.t('commons.no')}
-          onPress={(): void => onChange(false)}
-          isSelected={hasUserChosen ? !pregnant : false}
-          stretch
-        />
-        <Button
-          text={i18n.t('signup.validate')}
-          onPress={onValidate}
-          isValidate
-        />
-      </Text>
-    );}
-   else {
+      <View>
+        <Text style={styles.subtitle}>
+          <Button
+            text={i18n.t('commons.yes')}
+            onPress={() => onChange(true)}
+            isSelected={hasUserChosen && symptom}
+            stretch
+          />
+          <Button
+            text={i18n.t('commons.no')}
+            onPress={() => onChange(false)}
+            isSelected={hasUserChosen && !symptom}
+            stretch
+          />
+          <Button
+            text={i18n.t('signup.validate')}
+            onPress={onValidate}
+            isValidate
+          />
+        </Text>
+      </View>
+    );
+  } else {
     symptomText = <Text>Default Case</Text>;
   }
 
@@ -133,7 +119,16 @@ const Cat = (s: Symptome) => {
 };
 
 
-const Home = ({ navigation }: Props): ReactElement => {
+
+const InputSymptome = (): ReactElement => {
+  const s: Symptome = {
+    name: 'Toux',
+    type: 'num',
+    question: "Avez vous de la toux ?",
+    valBool: false,
+    valNum: -1,
+  };  
+
   // const [image, setImage] = useState<ImageSourcePropType>({});
   // const [textReco, setTextReco] = useState<string>('');
   // const [reports] = useReportsStore({ disease: MALADIE1 });
@@ -175,38 +170,27 @@ const Home = ({ navigation }: Props): ReactElement => {
 
   return (
     <Container noMarginBottom>
+      
+      {/* display question */}
       <View style={styles.container}>
-        {/* <Title
-          isPrimary
-          isDate
-          isCenter
-          text={DATE_TODAY}
-          style={styles.title}
-        />
-        {!reports ? (
-          <View>
-            <SubTitle text={i18n.t('home.firstTime')} style={styles.subtitle} />
-            <Button
-              text={i18n.t('navigation.authenticated.evaluate')}
-              onPress={(): void => navigation.navigate('Evaluate')}
-              isValidate
-              stretch
-            />
-          </View>
-        ) : (
-          <ScrollView contentContainerStyle={styles.recommandationContainer}>
-            <Image style={styles.image} source={image} />
-            <SubTitle text={textReco} style={styles.subtitle} />
-          </ScrollView>
-        )} */}
-        <Cat {...symptome} />
+        <Text style={styles.subtitle}>
+          {'\n'}
+          {s.question}
+          {'\n'}
+        </Text>
+      </View>
+
+        {/* display the input box  */}
+      <View>
+        <InputBox {...s} />
+        
       </View>
       
     </Container>
   );
 };
 
-export default Home;
+export default InputSymptome;
 
 
 const styles = StyleSheet.create({
