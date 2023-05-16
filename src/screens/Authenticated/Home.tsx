@@ -5,172 +5,113 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  Text,
-  Slider
 } from 'react-native';
 import { Notifications } from 'expo';
+// import HomeComponent from '@components/molecules/HomeComponent';
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import { AntDesign, Feather } from '@expo/vector-icons';
 import Container from '@components/molecules/Container';
+import Title from '@components/atoms/Title';
+import SubTitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
-import SliderFooter from '@components/atoms/SliderFooter';
+
+import EmojiGreen from '@assets/images/green-emoji.png';
+import EmojiOrange from '@assets/images/orange-emoji.png';
+import EmojiRed from '@assets/images/red-emoji.png';
 
 import { registerForPushNotificationsAsync } from '@helpers/notifications';
 import { BottomTabParamList } from '@navigation/types';
+import { useReportsStore } from '@store/store';
 
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import layout from '@styles/layout';
+import { DATE_TODAY, MALADIE1 } from '@constants/constants';
+import { getRecommandation } from '@helpers/utils';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'Home'>;
 };
 
-type Symptome = {
-  name: string;
-  type: 'num' | 'oui/non' | 'oui/non eval';
-  question: String,
-  valMin?: number,
-  valMax?: number,
-}
-
-
-const InputBox = (s: Symptome) => {
-  const [symptom, setSymptom] = useState(false);
-  const [hasUserChosen, setHasUserChosen] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
-
-  const onChange = (value: boolean) => {
-    setHasUserChosen(true);
-    setSymptom(value);
-  };
-
-  const handleSliderChange = (value: number) => {
-    setSliderValue(value);
-  };
-
-  const handleValidate = () => {
-    onChange(true);
-    console.log(sliderValue);
-  };
-
-  const handleYesNoSymptome = () => {
-    console.log(`Symptom: ${s.name}`);
-    console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
-  };
-
-  let symptomText = null;
-  // If the symptom is numeric, we display a slider
-  if (s.type === 'num') {
-    let minimumValue = 0;
-    let maximumValue = 10;
-    let step = 1;
-
-    if (s.name === 'Température') {
-      step = 0.1;
-    }
-
-    if (typeof s.valMin !== 'undefined') {
-      minimumValue = s.valMin;
-    }
-
-    if (typeof s.valMax !== 'undefined') {
-      maximumValue = s.valMax;
-    }
-
-    symptomText = (
-      <View>
-        <SliderFooter type={s.name} />
-        <Slider
-          style={styles.slider}
-          value={sliderValue}
-          onValueChange={handleSliderChange}
-          minimumValue={minimumValue}
-          maximumValue={maximumValue}
-          step={step}
-          minimumTrackTintColor="red"
-          thumbTintColor="red"
-        />
-        <Text style={styles.valueText}>Intensité: {sliderValue}</Text>
-        <Text style={styles.subtitle}></Text>
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={handleValidate}
-          isSelected={true}
-        />
-      </View>
-    );
-  // if the symptom is yes / no, we display a oui/non box
-  } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
-    symptomText = (
-      <View>
-        <Button
-          text={i18n.t('commons.yes')}
-          onPress={() => onChange(true)}
-          isSelected={hasUserChosen && symptom}
-          stretch
-        />
-        <Button
-          text={i18n.t('commons.no')}
-          onPress={() => onChange(false)}
-          isSelected={hasUserChosen && !symptom}
-          stretch
-        />
-        <Text style={styles.subtitle}></Text>
-        <Button
-          text="Validate"
-          onPress={handleYesNoSymptome}
-          isSelected={hasUserChosen}
-        />
-      </View>
-    );
-  } else {
-    symptomText = <Text>Type de symptome inconnu</Text>;
-  }
-
-  return symptomText;
+type Notification = {
+  origin: 'selected' | 'received' | 'selected';
+  data: object;
+  remote: boolean;
 };
 
+const Home = ({ navigation }: Props): ReactElement => {
+  const [image, setImage] = useState<ImageSourcePropType>({});
+  const [textReco, setTextReco] = useState<string>('');
+  const [reports] = useReportsStore({ disease: MALADIE1 });
 
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+    Notifications.addListener(handleNotification);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  useEffect(() => {
+    if (reports) {
+      const recommandation = getRecommandation(reports);
+      switch (recommandation) {
+        case 'end1':
+          setImage(EmojiGreen);
+          setTextReco(i18n.t('home.end1'));
+          break;
+        case 'end2':
+          setImage(EmojiOrange);
+          setTextReco(i18n.t('home.end2'));
+          break;
+        case 'end2bis':
+          setImage(EmojiOrange);
+          setTextReco(i18n.t('home.end2bis'));
+          break;
+        case 'end3':
+          setImage(EmojiRed);
+          setTextReco(i18n.t('home.end3'));
+          break;
+      }
+    }
+  }, [reports]);
 
-const InputSymptome = (): ReactElement => {
-  const s: Symptome = {
-    name: 'Toux',
-    type: 'oui/non',
-    question: "Avez vous de la toux ?",
-    // valMin: 36,
-    // valMax: 42,
-  };  
-
+  const handleNotification = (notification: Notification): void => {
+    const { origin } = notification;
+    if (origin === 'selected') navigation.navigate('Evaluate');
+  };
 
   return (
     <Container noMarginBottom>
-      {/* header */}
-      <View><Text>{'\n'}{'\n'}En-tête{'\n'}{'\n'}</Text></View>
-
-
-      {/* display question */}
       <View style={styles.container}>
-        <Text style={styles.subtitle}>
-          {'\n'}{'\n'}{'\n'}{'\n'}
-          {s.question}
-          {'\n'}
-        </Text>
+        {/* <Title
+          isPrimary
+          isDate
+          isCenter
+          text={DATE_TODAY}
+          style={styles.title}
+        />
+        {!reports ? (
+          <View>
+            <SubTitle text={i18n.t('home.firstTime')} style={styles.subtitle} />
+            <Button
+              text={i18n.t('navigation.authenticated.evaluate')}
+              onPress={(): void => navigation.navigate('Evaluate')}
+              isValidate
+              stretch
+            />
+          </View>
+        ) : (
+          <ScrollView contentContainerStyle={styles.recommandationContainer}>
+            <Image style={styles.image} source={image} />
+            <SubTitle text={textReco} style={styles.subtitle} />
+          </ScrollView>
+        )} */}
+        {/* <HomeComponent isHealthy /> */}
       </View>
-
-        {/* display the input box  */}
-      <View>
-        <InputBox {...s} />
-        
-      </View>
-      
     </Container>
   );
 };
 
-export default InputSymptome;
-
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
@@ -192,14 +133,5 @@ const styles = StyleSheet.create({
     marginTop: layout.padding / 2,
     width: 120,
     height: 120,
-  },
-  valueText: {
-    fontSize: 16,
-    marginTop: 10,
-
-  },button: {
-    marginBottom: 40,
-  },slider: {
-    height: 10,
   },
 });
