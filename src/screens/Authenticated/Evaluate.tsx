@@ -94,6 +94,7 @@ const SymptomesMenu = () => {
 
       <AddBoutton
       />
+      <Button text={'sdjhkfs'} onPress={handleMenuPress}/>
     </View>
   );
 };
