@@ -32,3 +32,4 @@ const DropDownMenu = ({ objets, objets2 }: Props) => {
 };
 
 export default DropDownMenu;
+
