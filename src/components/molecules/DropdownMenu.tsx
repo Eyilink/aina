@@ -1,25 +1,34 @@
+import React from 'react';
+import { View } from 'react-native';
+import BoxPathologie from '../atoms/BoxPathologie'
 
-import React , {ReactElement, useEffect } from 'react'
-import { View ,Text} from 'react-native';
+type Symptome = {
+    nom: string
+}
 
+type Pathologie = {
+    nom: string
+}
 
-import symptomes from '@assets/json/symptomes.json'
-
-
-
-const DropdownMenu = (): ReactElement => {
-  
-   useEffect(() => {
-    console.log(symptomes);
-  }, []);
-  return (
-    <View>
-        <Text>{symptomes.map((symptome,index)=>{
-            return symptome["name"];
-        })}</Text>
-       
-    </View>
-  );
+type Props = {
+  objets: Pathologie[]|Symptome[];
+  objets2?: Pathologie[]|Symptome[];
 };
 
-export default DropdownMenu;
+const DropDownMenu = ({ objets, objets2 }: Props) => {
+    
+    return (
+        <View>
+            {objets2 ? (objets.map((objet, index) => (
+                <BoxPathologie key={index} objet={objet} objets={objets2} />
+            ))): 
+            (objets.map((objet, index) => (
+                <BoxPathologie key={index} objet={objet} />
+            )))
+            }
+        
+        </View>
+    );
+};
+
+export default DropDownMenu;
