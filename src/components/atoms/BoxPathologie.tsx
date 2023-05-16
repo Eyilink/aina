@@ -29,7 +29,7 @@ const BoxPathologie = ({ objet }: Props): ReactElement => {
 
   return(
     <View>
-
+      
       <Button
         text={objet.nom}
         onPress={onClick}
