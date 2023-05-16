@@ -22,7 +22,9 @@ type Pathologie = {
   nom: string
 }
 
-
+type Symptome = {
+  nom: string
+}
 
 type Props = {
   navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
@@ -36,6 +38,10 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
     { nom: 'COVID-19' },
     { nom: 'Grippe' },
     { nom: 'Rhume' },
+  ];
+  const symptome: Symptome[] = [
+    { nom: 'toux' },
+    { nom: 'temperature' },
   ];
 
   const onStartReport = (): void => {
@@ -71,7 +77,7 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
           stretch
         /> */}
         
-      <DropDownMenu objets={pathologies} />
+      <DropDownMenu objets={pathologies} objets2={symptome} />
       </View>
     </Container>
   );

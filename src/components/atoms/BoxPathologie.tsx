@@ -1,7 +1,10 @@
 import React, { ReactElement } from 'react';
-import { StyleSheet, Text } from 'react-native';
-import Button from '@components/atoms/Button';
+import { StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { View } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import AppText from '@components/atoms/AppText';
+import DropDownMenu from '@components/molecules/DropDownMenu'
+
 
 
 import fonts from '@styles/fonts';
@@ -18,27 +21,55 @@ type Pathologie = {
 
 type Props = {
   objet: Symptome|Pathologie;
+  objets?: Symptome[]|Pathologie[];
+  //onPress: () => void;
 };
 
-const BoxPathologie = ({ objet }: Props): ReactElement => {
-  const [open, setOpen] = React.useState(false);
 
-  const onClick = (): void => {
+
+const BoxPathologie = ({ objet, objets }: Props): ReactElement => {
+  const [open, setOpen] = React.useState(false);
+  const [checked, setChecked] = React.useState(false);
+  const onPress = (): void => {
+    //console.log(open);
     setOpen(!open);
+    setChecked(!checked);
   };
 
   return(
     <View>
-      
-      <Button
-        text={objet.nom}
-        onPress={onClick}
-        isValidate
-        stretch
-      />
+      <TouchableOpacity
+        style={[
+          styles.button,
+          {
+            //backgroundColor: isSelected ? colors.primary : colors.greyLight,
+            alignSelf: 'stretch',
+            marginVertical: layout.padding/2,
+          },
+        ]}
+        onPress={onPress}
+      >
+        <View  style={{flexDirection:'row'}}>
+          {checked ? (
+            <>
+            <AntDesign name="check" size={22} color={'#fc327b'} />
+            <AppText 
+              text={objet.nom}
+              style={styles.textClick}
+            />
+            </>
+            ) : (
+            <AppText 
+              text={objet.nom}
+              style={styles.text}
+            />)}
+          
+          
+        </View>
+        
 
-      {open ? <Text>{"Open"}</Text> : null}
-      
+        {objets && open ? (<DropDownMenu objets={objets}/>) : null}
+      </TouchableOpacity>
     </View>
 
   );
@@ -51,7 +82,20 @@ const styles = StyleSheet.create({
     fontSize: fonts.subtitle.fontSize,
     color: colors.black,
     marginBottom: layout.padding,
-    lineHeight: fonts.subtitle.fontSize + 5,
+    lineHeight: fonts.subtitle.fontSize + 3,
     marginHorizontal: layout.padding
+  }, 
+  button: {
+    borderRadius: layout.buttons.borderRadius,
+    marginHorizontal: layout.padding,
+  },
+  textClick: {
+    marginLeft: 3,
+    textAlign: 'center',
+  },
+  text: {
+    marginLeft: 25,
+    lineHeight: fonts.subtitle.fontSize + 3,
+    textAlign: 'center',
   },
 });

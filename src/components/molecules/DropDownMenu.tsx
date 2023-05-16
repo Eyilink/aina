@@ -12,15 +12,21 @@ type Pathologie = {
 
 type Props = {
   objets: Pathologie[]|Symptome[];
+  objets2?: Pathologie[]|Symptome[];
 };
 
-const DropDownMenu = ({ objets }: Props) => {
+const DropDownMenu = ({ objets, objets2 }: Props) => {
     
     return (
         <View>
-        {objets.map((objet, index) => (
-            <BoxPathologie key={index} objet={objet} />
-        ))}
+            {objets2 ? (objets.map((objet, index) => (
+                <BoxPathologie key={index} objet={objet} objets={objets2} />
+            ))): 
+            (objets.map((objet, index) => (
+                <BoxPathologie key={index} objet={objet} />
+            )))
+            }
+        
         </View>
     );
 };
