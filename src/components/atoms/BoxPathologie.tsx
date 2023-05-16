@@ -22,7 +22,6 @@ type Pathologie = {
 type Props = {
   objet: Symptome|Pathologie;
   objets?: Symptome[]|Pathologie[];
-  //onPress: () => void;
 };
 
 
@@ -31,7 +30,6 @@ const BoxPathologie = ({ objet, objets }: Props): ReactElement => {
   const [open, setOpen] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
   const onPress = (): void => {
-    //console.log(open);
     setOpen(!open);
     setChecked(!checked);
   };
@@ -42,7 +40,6 @@ const BoxPathologie = ({ objet, objets }: Props): ReactElement => {
         style={[
           styles.button,
           {
-            //backgroundColor: isSelected ? colors.primary : colors.greyLight,
             alignSelf: 'stretch',
             marginVertical: layout.padding/2,
           },

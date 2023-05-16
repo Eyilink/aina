@@ -2,11 +2,9 @@ import React, { ReactElement } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-
 import Container from '@components/molecules/Container';
 import DropDownMenu from '@components/molecules/DropDownMenu';
 
-import Button from '@components/atoms/Button';
 import { useReportsStore } from '@store/store';
 import { AuthenticatedStackParamList } from '@navigation/types';
 import { hasPreviousReportToday } from '@helpers/utils';
@@ -15,8 +13,6 @@ import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
-
-
 
 type Pathologie = {
   nom: string
@@ -34,6 +30,7 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   
+  // Exemple :
   const pathologies: Pathologie[] = [
     { nom: 'COVID-19' },
     { nom: 'Grippe' },
