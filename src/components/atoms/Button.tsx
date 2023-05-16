@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import BsCheckLg from "react-icons/bs";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -50,12 +51,22 @@ const Button = ({
     {isLoading ? (
       <ActivityIndicator animating={isLoading} color={colors.primary} />
     ) : (
+      isChecked ? (
+      <>
+      <BsCheckLg size={22} color={'#fc327b'}></BsCheckLg>,
+      <AppText 
+      color={isSelected ? colors.white : colors.black}
+      text={text}
+      style={styles.text}
       
-      <AppText
+    />
+    </>)
+    : (
+      <AppText 
         color={isSelected ? colors.white : colors.black}
         text={text}
         style={styles.text}
-      />
+      />)
     )}
   </TouchableOpacity>
 );
