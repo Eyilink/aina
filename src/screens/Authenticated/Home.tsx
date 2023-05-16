@@ -12,24 +12,15 @@ import { Notifications } from 'expo';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import Container from '@components/molecules/Container';
-import Title from '@components/atoms/Title';
-import SubTitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
-
-import EmojiGreen from '@assets/images/green-emoji.png';
-import EmojiOrange from '@assets/images/orange-emoji.png';
-import EmojiRed from '@assets/images/red-emoji.png';
+import SliderFooter from '@components/atoms/SliderFooter';
 
 import { registerForPushNotificationsAsync } from '@helpers/notifications';
 import { BottomTabParamList } from '@navigation/types';
-import { useReportsStore } from '@store/store';
 
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import layout from '@styles/layout';
-import { DATE_TODAY, MALADIE1 } from '@constants/constants';
-import { getRecommandation } from '@helpers/utils';
-import Symptoms from './Report/Symptoms';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'Home'>;
@@ -39,45 +30,77 @@ type Symptome = {
   name: string;
   type: 'num' | 'oui/non' | 'oui/non eval';
   question: String,
-  valBool: Boolean,
-  valNum: Number,
+  valMin?: number,
+  valMax?: number,
 }
 
 
 const InputBox = (s: Symptome) => {
-  const [symptom, setSymptom] = useState<boolean>(false);
-  const [hasUserChosen, setHasUserChosen] = useState<boolean>(false);
+  const [symptom, setSymptom] = useState(false);
+  const [hasUserChosen, setHasUserChosen] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
 
-  const onChange = (value: boolean): void => {
+  const onChange = (value: boolean) => {
     setHasUserChosen(true);
     setSymptom(value);
   };
 
-  let symptomText = null;
+  const handleSliderChange = (value: number) => {
+    setSliderValue(value);
+  };
 
+  const handleValidate = () => {
+    onChange(true);
+    console.log(sliderValue);
+  };
+
+  const handleYesNoSymptome = () => {
+    console.log(`Symptom: ${s.name}`);
+    console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
+  };
+
+  let symptomText = null;
+  // If the symptom is numeric, we display a slider
   if (s.type === 'num') {
+    let minimumValue = 0;
+    let maximumValue = 10;
+    let step = 1;
+
+    if (s.name === 'Température') {
+      step = 0.1;
+    }
+
+    if (typeof s.valMin !== 'undefined') {
+      minimumValue = s.valMin;
+    }
+
+    if (typeof s.valMax !== 'undefined') {
+      maximumValue = s.valMax;
+    }
+
     symptomText = (
       <View>
+        <SliderFooter type={s.name} />
         <Slider
           style={styles.slider}
           value={sliderValue}
-          onValueChange={(value) => setSliderValue(value)}
-          minimumValue={0}
-          maximumValue={10}
-          step={1}
+          onValueChange={handleSliderChange}
+          minimumValue={minimumValue}
+          maximumValue={maximumValue}
+          step={step}
           minimumTrackTintColor="red"
           thumbTintColor="red"
         />
-        <Text style={styles.valueText}>  Intensité: {sliderValue}</Text>
+        <Text style={styles.valueText}>Intensité: {sliderValue}</Text>
         <Text style={styles.subtitle}></Text>
-        <Button style={styles.button}
+        <Button
           text={i18n.t('commons.validate')}
-          onPress={() => onChange(true)}
+          onPress={handleValidate}
           isSelected={true}
         />
       </View>
     );
+  // if the symptom is yes / no, we display a oui/non box
   } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
     symptomText = (
       <View>
@@ -94,6 +117,11 @@ const InputBox = (s: Symptome) => {
           stretch
         />
         <Text style={styles.subtitle}></Text>
+        <Button
+          text="Validate"
+          onPress={handleYesNoSymptome}
+          isSelected={hasUserChosen}
+        />
       </View>
     );
   } else {
@@ -106,15 +134,13 @@ const InputBox = (s: Symptome) => {
 
 
 
-
-
 const InputSymptome = (): ReactElement => {
   const s: Symptome = {
     name: 'Toux',
     type: 'oui/non',
     question: "Avez vous de la toux ?",
-    valBool: false,
-    valNum: -1,
+    // valMin: 36,
+    // valMax: 42,
   };  
 
 
@@ -170,9 +196,10 @@ const styles = StyleSheet.create({
   valueText: {
     fontSize: 16,
     marginTop: 10,
+
   },button: {
     marginBottom: 40,
   },slider: {
-    height: 30,
+    height: 10,
   },
 });
