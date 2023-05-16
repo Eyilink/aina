@@ -4,8 +4,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 
 import Container from '@components/molecules/Container';
-import BoxPathologie from '@components/atoms/BoxPathologie';
+import DropDownMenu from '@components/molecules/DropDownMenu';
 
+import Button from '@components/atoms/Button';
 import { useReportsStore } from '@store/store';
 import { AuthenticatedStackParamList } from '@navigation/types';
 import { hasPreviousReportToday } from '@helpers/utils';
@@ -17,7 +18,7 @@ import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 
 
 
-type Symptome = {
+type Pathologie = {
   nom: string
 }
 
@@ -31,9 +32,11 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   
-  const pathologie: Pathologie = {
-    nom: "COVID-19",
-  };
+  const pathologies: Pathologie[] = [
+    { nom: 'COVID-19' },
+    { nom: 'Grippe' },
+    { nom: 'Rhume' },
+  ];
 
   const onStartReport = (): void => {
     if (!isNewReportOfDay) {
@@ -67,7 +70,8 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
           isValidate
           stretch
         /> */}
-        <BoxPathologie objet={pathologie}/>
+        
+      <DropDownMenu objets={pathologies} />
       </View>
     </Container>
   );
