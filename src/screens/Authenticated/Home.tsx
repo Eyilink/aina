@@ -35,12 +35,6 @@ type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'Home'>;
 };
 
-type Notification = {
-  origin: 'selected' | 'received' | 'selected';
-  data: object;
-  remote: boolean;
-};
-
 type Symptome = {
   name: string;
   type: 'num' | 'oui/non' | 'oui/non eval';
@@ -50,19 +44,18 @@ type Symptome = {
 }
 
 
-const onChange = (value: boolean): void => {
-  setHasUserChosen(true);
-  setSymptom(value);
-};
-
 const InputBox = (s: Symptome) => {
   const [symptom, setSymptom] = useState<boolean>(false);
   const [hasUserChosen, setHasUserChosen] = useState<boolean>(false);
-  let symptomText = null;
   const [sliderValue, setSliderValue] = useState(0);
 
+  const onChange = (value: boolean): void => {
+    setHasUserChosen(true);
+    setSymptom(value);
+  };
+
   const styles = StyleSheet.create({
-    subtitle: {
+    sub: {
       fontSize: 20,
       marginTop: 10,
     },
@@ -71,6 +64,8 @@ const InputBox = (s: Symptome) => {
       marginTop: 10,
     },
   });
+
+  let symptomText = null;
 
   if (s.type === 'num') {
     symptomText = (
@@ -90,25 +85,18 @@ const InputBox = (s: Symptome) => {
   } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
     symptomText = (
       <View>
-        <Text style={styles.subtitle}>
-          <Button
-            text={i18n.t('commons.yes')}
-            onPress={() => onChange(true)}
-            isSelected={hasUserChosen && symptom}
-            stretch
-          />
-          <Button
-            text={i18n.t('commons.no')}
-            onPress={() => onChange(false)}
-            isSelected={hasUserChosen && !symptom}
-            stretch
-          />
-          <Button
-            text={i18n.t('signup.validate')}
-            onPress={onValidate}
-            isValidate
-          />
-        </Text>
+        <Button
+          text={i18n.t('commons.yes')}
+          onPress={() => onChange(true)}
+          isSelected={hasUserChosen && symptom}
+          stretch
+        />
+        <Button
+          text={i18n.t('commons.no')}
+          onPress={() => onChange(false)}
+          isSelected={hasUserChosen && !symptom}
+          stretch
+        />
       </View>
     );
   } else {
@@ -120,53 +108,16 @@ const InputBox = (s: Symptome) => {
 
 
 
+
 const InputSymptome = (): ReactElement => {
   const s: Symptome = {
     name: 'Toux',
-    type: 'num',
+    type: 'oui/non',
     question: "Avez vous de la toux ?",
     valBool: false,
     valNum: -1,
   };  
 
-  // const [image, setImage] = useState<ImageSourcePropType>({});
-  // const [textReco, setTextReco] = useState<string>('');
-  // const [reports] = useReportsStore({ disease: MALADIE1 });
-
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync();
-  //   Notifications.addListener(handleNotification);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // useEffect(() => {
-  //   if (reports) {
-  //     const recommandation = getRecommandation(reports);
-  //     switch (recommandation) {
-  //       case 'end1':
-  //         setImage(EmojiGreen);
-  //         setTextReco(i18n.t('home.end1'));
-  //         break;
-  //       case 'end2':
-  //         setImage(EmojiOrange);
-  //         setTextReco(i18n.t('home.end2'));
-  //         break;
-  //       case 'end2bis':
-  //         setImage(EmojiOrange);
-  //         setTextReco(i18n.t('home.end2bis'));
-  //         break;
-  //       case 'end3':
-  //         setImage(EmojiRed);
-  //         setTextReco(i18n.t('home.end3'));
-  //         break;
-  //     }
-  //   }
-  // }, [reports]);
-
-  // const handleNotification = (notification: Notification): void => {
-  //   const { origin } = notification;
-  //   if (origin === 'selected') navigation.navigate('Evaluate');
-  // };
 
   return (
     <Container noMarginBottom>
