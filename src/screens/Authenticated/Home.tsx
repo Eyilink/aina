@@ -80,6 +80,7 @@ const InputBox = (s: Symptome) => {
           minimumTrackTintColor="red"
         />
         <Text style={styles.valueText}>  Intensité: {sliderValue}</Text>
+        <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
       </View>
     );
   } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
@@ -97,10 +98,11 @@ const InputBox = (s: Symptome) => {
           isSelected={hasUserChosen && !symptom}
           stretch
         />
+        <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
       </View>
     );
   } else {
-    symptomText = <Text>Default Case</Text>;
+    symptomText = <Text>Type de symptome inconnu</Text>;
   }
 
   return symptomText;
@@ -112,7 +114,7 @@ const InputBox = (s: Symptome) => {
 const InputSymptome = (): ReactElement => {
   const s: Symptome = {
     name: 'Toux',
-    type: 'oui/non',
+    type: 'num',
     question: "Avez vous de la toux ?",
     valBool: false,
     valNum: -1,
@@ -125,7 +127,7 @@ const InputSymptome = (): ReactElement => {
       {/* display question */}
       <View style={styles.container}>
         <Text style={styles.subtitle}>
-          {'\n'}
+          {'\n'}{'\n'}{'\n'}{'\n'}
           {s.question}
           {'\n'}
         </Text>
