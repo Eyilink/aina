@@ -48,31 +48,35 @@ const Profile = (): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        {/* <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
+<<<<<<< src/screens/Authenticated/Profile.tsx
+        {/*<Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
+=======
+        <Title isPrimary text={i18n.t('navigation.authenticated.profile')} isCenter/>
+>>>>>>> src/screens/Authenticated/Profile.tsx
         <ScrollView persistentScrollbar>
           <View style={styles.titleContainer}>
             <SubTitle text={user.username} style={styles.username} />
-            <SubTitle text={user.postalCode.toString()} />
+            <SubTitle text={user.postalCode.toString()} style={styles.info} />
           </View>
           <View style={styles.infosContainer}>
             <SubTitle
               text={`${user.age.toString()} ${i18n.t('commons.units.years')}`}
               style={styles.info}
             />
-            <View style={styles.separator} />
+            {/* <View style={styles.separator} /> */}
             <SubTitle
               text={`${(user.size / 100).toString().split('.')[0]}${i18n.t(
                 'commons.linkingWords.m',
               )} ${(user.size / 100).toPrecision(3).toString().split('.')[1]}`}
               style={styles.info}
             />
-            <View style={styles.separator} />
+            {/* <View style={styles.separator} /> */}
             <SubTitle
               text={`${user.weight.toString()} ${i18n.t('commons.units.kg')}`}
               style={styles.info}
             />
           </View>
-          {user.pregnant && (
+          {/* {user.pregnant && (
             <SubTitle
               text={i18n.t('profile.pregnant')}
               style={styles.pregnant}
@@ -102,7 +106,7 @@ const Profile = (): ReactElement => {
                 : i18n.t('commons.none')
             }
             style={styles.reminder}
-          />
+          /> */}
           <Button
             text={i18n.t('profile.edit')}
             onPress={onEditProfile}
@@ -112,7 +116,11 @@ const Profile = (): ReactElement => {
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
-        </ScrollView> */}
+<<<<<<< src/screens/Authenticated/Profile.tsx
+          </ScrollView> */}
+=======
+        </ScrollView>
+>>>>>>> src/screens/Authenticated/Profile.tsx
       </View>
     </Container>
   );
@@ -121,29 +129,33 @@ const Profile = (): ReactElement => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  title:{
+   
+  },
   container: {
     paddingTop: layout.padding,
     flex: 1,
   },
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   username: {
     fontFamily: fonts.weight.bold.fontFamily,
     fontSize: fonts.sections.fontSize,
     marginRight: layout.padding,
+    textAlign: 'center'
   },
   infosContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: 'column',
+    
     marginHorizontal: layout.padding,
   },
   info: {
     marginBottom: 0,
     paddingVertical: 10,
     marginHorizontal: 0,
+    textAlign: 'center'
   },
   separator: {
     borderLeftWidth: 1,
