@@ -54,33 +54,28 @@ const InputBox = (s: Symptome) => {
     setSymptom(value);
   };
 
-  const styles = StyleSheet.create({
-    sub: {
-      fontSize: 20,
-      marginTop: 10,
-    },
-    valueText: {
-      fontSize: 16,
-      marginTop: 10,
-    },
-  });
-
   let symptomText = null;
 
   if (s.type === 'num') {
     symptomText = (
       <View>
         <Slider
+          style={styles.slider}
           value={sliderValue}
           onValueChange={(value) => setSliderValue(value)}
           minimumValue={0}
           maximumValue={10}
           step={1}
-          thumbTintColor="blue"
           minimumTrackTintColor="red"
+          thumbTintColor="red"
         />
         <Text style={styles.valueText}>  Intensité: {sliderValue}</Text>
-        <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
+        <Text style={styles.subtitle}></Text>
+        <Button style={styles.button}
+          text={i18n.t('commons.validate')}
+          onPress={() => onChange(true)}
+          isSelected={true}
+        />
       </View>
     );
   } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
@@ -98,7 +93,7 @@ const InputBox = (s: Symptome) => {
           isSelected={hasUserChosen && !symptom}
           stretch
         />
-        <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
+        <Text style={styles.subtitle}></Text>
       </View>
     );
   } else {
@@ -111,10 +106,12 @@ const InputBox = (s: Symptome) => {
 
 
 
+
+
 const InputSymptome = (): ReactElement => {
   const s: Symptome = {
     name: 'Toux',
-    type: 'num',
+    type: 'oui/non',
     question: "Avez vous de la toux ?",
     valBool: false,
     valNum: -1,
@@ -123,7 +120,10 @@ const InputSymptome = (): ReactElement => {
 
   return (
     <Container noMarginBottom>
-      
+      {/* header */}
+      <View><Text>{'\n'}{'\n'}En-tête{'\n'}{'\n'}</Text></View>
+
+
       {/* display question */}
       <View style={styles.container}>
         <Text style={styles.subtitle}>
@@ -166,5 +166,13 @@ const styles = StyleSheet.create({
     marginTop: layout.padding / 2,
     width: 120,
     height: 120,
+  },
+  valueText: {
+    fontSize: 16,
+    marginTop: 10,
+  },button: {
+    marginBottom: 40,
+  },slider: {
+    height: 30,
   },
 });
