@@ -18,30 +18,68 @@ import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 
+import AddBoutton from '@components/atoms/AddBoutton';
+import Button from '@components/atoms/Button';
+
+
+type Pathologie = {
+  nom: string
+}
+
+type Symptome = {
+  nom: string
+}
+
 type Props = {
   navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
+  ButtonClicked : boolean ;
 };
 
-const Evaluate = ({ navigation }: Props): ReactElement => {
+const Evaluate = ({ navigation}: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
+  const [ButtonClicked, setButtonClicked] = React.useState(false);
+  
+  // Exemple :
+  const pathologies: Pathologie[] = [
+    { nom: 'COVID-19' },
+    { nom: 'Grippe' },
+    { nom: 'Rhume' },
+  ];
+  const symptome: Symptome[] = [
+    { nom: 'toux' },
+    { nom: 'temperature' },
+  ];
 
-  const onStartReport = (): void => {
-    if (!isNewReportOfDay) {
-      Alert.alert(
-        i18n.t('commons.attention'),
-        i18n.t('evaluate.erase'),
-        [
-          { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
-          {
-            text: i18n.t('commons.errors.ok'),
-            onPress: (): void => navigation.navigate('Temperature'),
-          },
-        ],
-        { cancelable: false },
-      );
-    } else navigation.navigate('Temperature');
+  
+
+  const handlePress = () => {
+    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
+    //     // Vous pouvez ajouter votre logique ou vos actions ici
+    setButtonClicked(!ButtonClicked);
   };
+  const ValidatePressed = () => {
+    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
+    //     // Vous pouvez ajouter votre logique ou vos actions ici
+    setButtonClicked(!ButtonClicked);
+  };
+
+  // const onStartReport = (): void => {
+  //   if (!isNewReportOfDay) {
+  //     Alert.alert(
+  //       i18n.t('commons.attention'),
+  //       i18n.t('evaluate.erase'),
+  //       [
+  //         { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
+  //         {
+  //           text: i18n.t('commons.errors.ok'),
+  //           onPress: (): void => navigation.navigate('Temperature'),
+  //         },
+  //       ],
+  //       { cancelable: false },
+  //     );
+  //   } else navigation.navigate('Temperature');
+  // };
 
   return (
     <Container noMarginBottom>
@@ -58,12 +96,27 @@ const Evaluate = ({ navigation }: Props): ReactElement => {
           isValidate
           stretch
         /> */}
+
+      {ButtonClicked ? (<> <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={true}/> <Button
+          text={i18n.t('commons.validate')}
+          onPress={ValidatePressed}
+          isValidate
+          stretch
+        />
+        </>) : (<>
+        <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={false}/>
+        <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton></>
+        )}  
+      
+      
       </View>
     </Container>
   );
 };
 
-export default Evaluate;
+
+
+export default Evaluate
 
 const styles = StyleSheet.create({
   container: {
@@ -74,5 +127,10 @@ const styles = StyleSheet.create({
     marginTop: layout.padding * 2,
     fontSize: fonts.sections.fontSize,
     textAlign: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
 });
