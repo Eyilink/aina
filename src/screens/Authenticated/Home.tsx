@@ -7,7 +7,11 @@ import {
   View,
 } from 'react-native';
 import { Notifications } from 'expo';
+<<<<<<< src/screens/Authenticated/Home.tsx
 // import HomeComponent from '@components/molecules/HomeComponent';
+=======
+import HomeComponent from '@components/molecules/HomeComponent';
+>>>>>>> src/screens/Authenticated/Home.tsx
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import Container from '@components/molecules/Container';
@@ -105,7 +109,11 @@ const Home = ({ navigation }: Props): ReactElement => {
             <SubTitle text={textReco} style={styles.subtitle} />
           </ScrollView>
         )} */}
+<<<<<<< src/screens/Authenticated/Home.tsx
         {/* <HomeComponent isHealthy /> */}
+=======
+        <HomeComponent isHealthy />
+>>>>>>> src/screens/Authenticated/Home.tsx
       </View>
     </Container>
   );

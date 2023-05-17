@@ -41,7 +41,7 @@ const renderTabBarIcon = ({
 
 const BottomTabNavigator = (): ReactElement => (
   <Tab.Navigator
-    initialRoute="Home"
+    initialRouteName='Home'
     screenOptions={({ route }): object => ({
       tabBarIcon: ({ color }: { color: string }): ReactElement =>
         renderTabBarIcon({ color, route }),
