@@ -7,7 +7,6 @@ import * as fs from 'fs';
 import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import SubTitle from '@components/atoms/SubTitle';
-import Button from '@components/atoms/Button';
 
 import { useReportsStore } from '@store/store';
 import { AuthenticatedStackParamList } from '@navigation/types';
