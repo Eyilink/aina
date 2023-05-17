@@ -1,12 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement , useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import * as XLSX from 'xlsx';
-import * as fs from 'fs';
 
 import Container from '@components/molecules/Container';
-import Title from '@components/atoms/Title';
-import SubTitle from '@components/atoms/SubTitle';
+import DropDownMenu from '@components/molecules/DropDownMenu';
 
 import { useReportsStore } from '@store/store';
 import { AuthenticatedStackParamList } from '@navigation/types';
@@ -31,7 +28,6 @@ type Symptome = {
 
 type Props = {
   navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
-  ButtonClicked : boolean ;
 };
 
 const Evaluate = ({ navigation}: Props): ReactElement => {
@@ -96,15 +92,19 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
           stretch
         /> */}
 
-      {ButtonClicked ? (<> <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={true}/> <Button
+      {ButtonClicked ? (<> 
+        <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={true}/> 
+        <Button
           text={i18n.t('commons.validate')}
           onPress={ValidatePressed}
           isValidate
           stretch
-        />
-        </>) : (<>
-        <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={false}/>
-        <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton></>
+      />
+        </>) : (
+        <>
+          <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={false}/>
+          <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton>
+        </>
         )}  
       
       
