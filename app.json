@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Mon suivi santé",
+    "slug": "mon-suivi-sante",
+    "version": "1.0.5",
+    "privacy": "public",
+    "description": "Outil pour suivre ses symptômes et en conserver un historique",
+    "platforms": ["ios", "android", "web"],
+    "orientation": "portrait",
+    "scheme": "mon-suivi-sante",
+    "primaryColor": "#fc327b",
+    "sdkVersion": "37.0.0",
+    "icon": "./src/assets/images/app-icon.png",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#e8397b"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "bundleIdentifier": "fr.aina.monsuivisante",
+      "supportsTablet": true,
+      "buildNumber": "6",
+      "icon": "./src/assets/images/app-icon.png",
+      "infoPlist": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "versionCode": 6,
+      "package": "fr.aina.monsuivisanteapp",
+      "icon": "./src/assets/images/app-icon.png",
+      "googleServicesFile": "./google-services.json"
+    }
+  }
+}
