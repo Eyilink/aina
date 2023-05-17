@@ -50,16 +50,14 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
   
 
   const handlePress = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton
+    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
     //     // Vous pouvez ajouter votre logique ou vos actions ici
     setButtonClicked(!ButtonClicked);
-    console.log(ButtonClicked);
   };
   const ValidatePressed = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton
+    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
     //     // Vous pouvez ajouter votre logique ou vos actions ici
     setButtonClicked(!ButtonClicked);
-    console.log("ButtonClicked");
   };
 
   // const onStartReport = (): void => {
@@ -95,13 +93,16 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
           stretch
         /> */}
 
-      {ButtonClicked ? (<> <DropDownMenu objets={pathologies} objets2={symptome} /> <Button
+      {ButtonClicked ? (<> <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={true}/> <Button
           text={i18n.t('commons.validate')}
           onPress={ValidatePressed}
           isValidate
           stretch
         />
-        </>) : ( <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton>)}  
+        </>) : (<>
+        <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={false}/>
+        <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton></>
+        )}  
       
       
       </View>
@@ -126,5 +127,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 });

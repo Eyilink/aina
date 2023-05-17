@@ -13,17 +13,18 @@ type Pathologie = {
 type Props = {
   objets: Pathologie[]|Symptome[];
   objets2?: Pathologie[]|Symptome[];
+  ischeckeable : boolean;
 };
 
-const DropDownMenu = ({ objets, objets2 }: Props) => {
+const DropDownMenu = ({ objets, objets2,ischeckeable }: Props) => {
     
     return (
         <View>
             {objets2 ? (objets.map((objet, index) => (
-                <BoxPathologie key={index} objet={objet} objets={objets2} />
+                <BoxPathologie key={index} objet={objet} objets={objets2} ischeckeable={ischeckeable} />
             ))): 
             (objets.map((objet, index) => (
-                <BoxPathologie key={index} objet={objet} />
+                <BoxPathologie key={index} objet={objet} ischeckeable={ischeckeable} />
             )))
             }
         

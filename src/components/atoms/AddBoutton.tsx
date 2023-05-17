@@ -13,7 +13,7 @@ const AddBoutton = ({
   style,
 }: Props): ReactElement => (
   <View style={style}>
-  <TouchableOpacity style={[styles.button,style]} onPress={onPress}>
+  <TouchableOpacity style={styles.button} onPress={onPress}>
       <AntDesign name="plus" size={50} color="white" />
     </TouchableOpacity>
   </View>

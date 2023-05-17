@@ -22,11 +22,12 @@ type Pathologie = {
 type Props = {
   objet: Symptome|Pathologie;
   objets?: Symptome[]|Pathologie[];
+  ischeckeable : boolean;
 };
 
 
 
-const BoxPathologie = ({ objet, objets }: Props): ReactElement => {
+const BoxPathologie = ({ objet, objets, ischeckeable}: Props): ReactElement => {
   const [open, setOpen] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
   const onPress = (): void => {
@@ -47,6 +48,7 @@ const BoxPathologie = ({ objet, objets }: Props): ReactElement => {
         onPress={onPress}
       >
         <View  style={{flexDirection:'row'}}>
+          {ischeckeable?(<>
           {checked ? (
             <>
             <AntDesign name="check" size={22} color={'#fc327b'} />
@@ -59,13 +61,17 @@ const BoxPathologie = ({ objet, objets }: Props): ReactElement => {
             <AppText 
               text={objet.nom}
               style={styles.text}
-            />)}
+            />)}</>) : (<AppText 
+              text={objet.nom}
+              style={styles.text}
+            />)
+            }
           
           
         </View>
         
 
-        {objets && open ? (<DropDownMenu objets={objets}/>) : null}
+        {objets && open ? (<DropDownMenu objets={objets} ischeckeable= {ischeckeable}/>) : null}
       </TouchableOpacity>
     </View>
 
