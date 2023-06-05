@@ -17,6 +17,20 @@
     "immunosuppressantDisease": "Défense immunitaire",
     "immunosuppressantDrug": "Immunodépression"
   },
+  "months":{
+    "january": "Janvier",
+    "february": "Février",
+    "march": "Mars",
+    "april": "Avril",
+    "may": "Mai",
+    "june": "Juin",
+    "july": "Juillet",
+    "august": "Août",
+    "september": "Septembre",
+    "october": "Octobre",
+    "november": "Novembre",
+    "december": "Décembre" 
+  },
   "signup": {
     "cgu": {
       "message": "En utilisant l'application Mon Suivi Santé, vous acceptez les conditions générales d'utilisation consultables sur ce",
@@ -30,6 +44,7 @@
     "questions": {
       "username": "Quel est votre prénom ?",
       "age": "Quel est votre âge ?",
+      "dateDeNaissance": "Quelle est votre date de naissance ?",
       "postalCode": "Votre code postal",
       "size": "Quelle est votre taille ?",
       "weight": "Quel est votre poids ?",
