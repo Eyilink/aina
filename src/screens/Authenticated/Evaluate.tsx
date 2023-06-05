@@ -28,6 +28,7 @@ type Symptome = {
 
 type Props = {
   navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
+  objets: Pathologie[];
 };
 
 const Evaluate = ({ navigation}: Props): ReactElement => {

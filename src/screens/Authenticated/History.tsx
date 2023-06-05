@@ -9,6 +9,7 @@ import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import Subtitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
+import AppText from '@components/atoms/AppText';
 
 import { BottomTabParamList } from '@navigation/types';
 import { useReportsStore } from '@store/store';
@@ -20,14 +21,35 @@ import colors from '@styles/colors';
 import { MALADIE1 } from '@constants/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import BoxHistorique from '@components/atoms/BoxHistorique';
+
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
+  objets: Pathologie[];
 };
 
-const History = ({ navigation }: Props): ReactElement => {
+
+type Pathologie = {
+  nom: string;
+  date: string;
+  more: string;
+  namelogo: string;
+}
+
+const exempleList: Pathologie[] = [
+  { nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauhe",namelogo:"picture" },
+  { nom: 'Artie',date:"15/01/2023", more:"Coude - Gauhe",namelogo:"picture" },
+  { nom: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture" },
+  ]
+
+const History = ({ navigation , objets }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const [reportType, setReportType] = useState<string>('list');
   const [isChartFocused, setIsChartFocused] = useState<boolean>(false);
+
+  const exemple: Pathologie = {nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauhe",namelogo:"picture" };
+
+  
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -53,9 +75,15 @@ const History = ({ navigation }: Props): ReactElement => {
     setReportType('chart');
   };
 
+
+
   return (
     <Container noMarginBottom>
-      <View style={styles.container}>
+      <AppText text={"Historique"} style={styles.pagetitle} />
+      <BoxHistorique objet={exemple}/>     
+      {exempleList.map((object, index) => {(
+                <BoxHistorique key={index} objet={object}/>
+            )})}     
         {/* <Title isPrimary text={i18n.t('navigation.authenticated.history')} />
         {!reports ? (
           <>
@@ -141,7 +169,7 @@ const History = ({ navigation }: Props): ReactElement => {
             )}
           </>
         )} */}
-      </View>
+      
     </Container>
   );
 };
@@ -149,9 +177,15 @@ const History = ({ navigation }: Props): ReactElement => {
 export default History;
 
 const styles = StyleSheet.create({
+  pagetitle :{
+    fontSize: 24,
+    marginBottom: 20,
+    marginLeft: 5,
+
+  },
   container: {
-    flex: 1,
-    paddingTop: layout.padding,
+    //flex: 1,
+    //paddingTop: layout.padding,
   },
   subtitle: {
     marginTop: layout.padding,
