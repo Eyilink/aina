@@ -3,22 +3,38 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import { View,Text,StyleSheet } from 'react-native';
+import Button from '@components/atoms/Button';
+import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
 
 type Props = {
-  isHealthy: boolean;
+  isDataEmpty?: boolean;
   
 };
 
 const HomeComponent = ({
-    isHealthy 
+    isDataEmpty
 }: Props): ReactElement => {
   
 
   return (
     <View style={styles.container}>
-    <AntDesign name="hearto" size={96} color={isHealthy ? 'green' : 'red'} />
-    <Text style={[styles.title, !isHealthy && styles.redText]}>{'\n\n'}Lors de votre derniere évaluation vous n'aviez pas de symptomes , mais n'hesitez pas à vous évaluer régulièrement !
-    {'\n\n'}Protégez vous et vos proches ! Vous pouvez être contagieux même sans symptômes !</Text>
+    <Text style={styles.custom_title}>Aujourd'hui 28/03 16h47</Text>
+
+    {isDataEmpty ? (<>
+          <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
+          <Button
+        text="Lancer un suivi"
+        style={{minWidth: '90%'}}
+        onPress={()=>{}}
+        stretch
+      /></>) : <><HistoryFollowedSymptoms/></>
+    }
+    <Button
+      text="Renseigner une donnée ponctuelle"
+      onPress={()=>{}}
+      stretch
+    />
+
     </View>
   );
 };
@@ -28,16 +44,18 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      
+    },
+    custom_title: { 
+      fontSize: 30,
+ 
+      textAlign: 'center'
     },
     title: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: 'green',
-      textAlign: 'center' // Specify the desired color here
-    },
-    redText: {
-        color: 'red'
+      color: 'gray',
+      textAlign: 'center', // Specify the desired color here
+      marginBottom: '60%'
     }
   });
   
