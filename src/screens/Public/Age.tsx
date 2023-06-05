@@ -63,15 +63,12 @@ const BirthDateForm = ({ navigation }) => {
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
-      navigation.navigate('PostalCode');
+      navigation.navigate("Size");
     }
   };
 
   const validateDate = (day, month, year) => {
     // Perform validation logic here
-    // You can check if the day, month, and year are valid
-    // For example, check if they are numeric and within a valid range
-    // You can also consider using a date library like Moment.js for more advanced date validation
     return true; // Replace this with your validation logic
   };
 
