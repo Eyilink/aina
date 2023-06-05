@@ -3,6 +3,7 @@ import { Report } from '@store/types';
 export type PublicStackParamList = {
   Cgu: undefined;
   ProfilCreation: undefined;
+  ProfileCreated: undefined;
   Username: undefined;
   Age: undefined;
   PostalCode: undefined;

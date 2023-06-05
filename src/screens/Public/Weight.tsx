@@ -30,7 +30,7 @@ const Weight = ({ navigation }: Props): ReactElement => {
     } else {
       actions.editUserProfile({ key: 'weight', value: parseInt(weight, 10) });
       Keyboard.dismiss();
-      navigation.navigate('Diseases');
+      navigation.navigate('ProfileCreated');
     }
   };
 
