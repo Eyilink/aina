@@ -24,6 +24,7 @@ const BirthDateForm = ({ navigation }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const [, actions] = useAuthStore();
 
   const onChangeDay = (value) => {
     setDay(value);
