@@ -33,7 +33,7 @@ const ProfilCreated = ({ navigation }: Props): ReactElement => {
             {`${i18n.t('signup.endsignup')} `}
           </Text>
         </View>
-        <Button
+        <Button style={styles.button}
           text={i18n.t('signup.next')}
           onPress={onValidate}
           isValidate
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: layout.padding,
+    marginBottom: 200,
   },
   messageContainer: {
     flexDirection: 'row',
@@ -65,4 +66,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     fontFamily: fonts.weight.bold.fontFamily,
   },
+  button: {
+    marginTop : 200,
+  }
 });
