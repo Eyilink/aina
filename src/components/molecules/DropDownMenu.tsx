@@ -1,48 +1,54 @@
 import React from 'react';
 import { View } from 'react-native';
-import BoxPathologie from '../atoms/BoxPathologie'
+import BoxPathologie from '../atoms/BoxPathologie';
+import Symptoms from '@screens/Authenticated/Report/Symptoms';
 
 type Symptome = {
-    id: number;
-    name: string;
-    type: string;
-}
-  
-interface Pathologie {
-    id: string;
-    name: string;
-    symptoms: Symptome[];
-}
-
-type Props = {
-  objets: Pathologie[]|Symptome[];
-  ischeckeable : boolean;
+  id: number;
+  name: string;
+  type: string;
 };
 
+type Pathologie = {
+  id: string;
+  name: string;
+  symptoms: Symptome[];
+};
 
-const DropDownMenu = ({ objets,ischeckeable }: Props) => {
-    const [isPathologie, setIsPathologie] = React.useState(false);
-    if ('type' in objets[0]) {
-        setIsPathologie(true);
-    }
-    else {
-        setIsPathologie(false);
-        const pathologie: any = objets
-    }
-      
-    return (
-        <View>
-            {'symptoms' in objets[0] ? (objets.map((objet, index) => (
-                <BoxPathologie key={index} objet={objet} objets={objet.symptoms} ischeckeable={ischeckeable} />
-            ))): 
-            (objets.map((objet, index) => (
-                <BoxPathologie key={index} objet={objet} ischeckeable={ischeckeable} />
-            )))
-            }
-        
-        </View>
-    );
+type Props = {
+  objets: (Pathologie | Symptome)[];
+  ischeckeable: boolean;
+};
+
+const DropDownMenu = ({ objets, ischeckeable }: Props) => {
+  const isPathologie = 'symptoms' in objets[0];
+
+  return (
+    <View>
+      {objets.map((objet, index) => {
+        if (isPathologie) {
+          const pathologie = objet as Pathologie;
+          return (
+            <BoxPathologie
+              key={index}
+              objet={pathologie}
+              objets={pathologie.symptoms}
+              ischeckeable={ischeckeable}
+            />
+          );
+        } else {
+          const symptome = objet as Symptome;
+          return (
+            <BoxPathologie
+              key={index}
+              objet={symptome}
+              ischeckeable={ischeckeable}
+            />
+          );
+        }
+      })}
+    </View>
+  );
 };
 
 export default DropDownMenu;
-
