@@ -12,11 +12,15 @@ import colors from '@styles/colors';
 import layout from '@styles/layout';
 
 type Symptome = {
-  nom: string
+  id: number;
+  name: string;
+  type: string;
 }
 
 type Pathologie = {
-  nom: string
+  id: string;
+  name: string;
+  symptoms: Symptome[];
 }
 
 type Props = {
@@ -53,16 +57,16 @@ const BoxPathologie = ({ objet, objets, ischeckeable}: Props): ReactElement => {
             <>
             <AntDesign name="check" size={22} color={'#fc327b'} />
             <AppText 
-              text={objet.nom}
+              text={objet.name}
               style={styles.textClick}
             />
             </>
             ) : (
             <AppText 
-              text={objet.nom}
+              text={objet.name}
               style={styles.text}
             />)}</>) : (<AppText 
-              text={objet.nom}
+              text={objet.name}
               style={styles.text}
             />)
             }

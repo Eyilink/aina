@@ -3,25 +3,37 @@ import { View } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie'
 
 type Symptome = {
-    nom: string
+    id: number;
+    name: string;
+    type: string;
 }
-
-type Pathologie = {
-    nom: string
+  
+interface Pathologie {
+    id: string;
+    name: string;
+    symptoms: Symptome[];
 }
 
 type Props = {
   objets: Pathologie[]|Symptome[];
-  objets2?: Pathologie[]|Symptome[];
   ischeckeable : boolean;
 };
 
-const DropDownMenu = ({ objets, objets2,ischeckeable }: Props) => {
-    
+
+const DropDownMenu = ({ objets,ischeckeable }: Props) => {
+    const [isPathologie, setIsPathologie] = React.useState(false);
+    if ('type' in objets[0]) {
+        setIsPathologie(true);
+    }
+    else {
+        setIsPathologie(false);
+        const pathologie: any = objets
+    }
+      
     return (
         <View>
-            {objets2 ? (objets.map((objet, index) => (
-                <BoxPathologie key={index} objet={objet} objets={objets2} ischeckeable={ischeckeable} />
+            {'symptoms' in objets[0] ? (objets.map((objet, index) => (
+                <BoxPathologie key={index} objet={objet} objets={objet.symptoms} ischeckeable={ischeckeable} />
             ))): 
             (objets.map((objet, index) => (
                 <BoxPathologie key={index} objet={objet} ischeckeable={ischeckeable} />
