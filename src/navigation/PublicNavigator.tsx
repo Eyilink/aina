@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Cgu from '@screens/Public/Cgu';
+import ProfilCreation from '@screens/Public/ProfilCreation';
 import Username from '@screens/Public/Username';
 import Age from '@screens/Public/Age';
 import PostalCode from '@screens/Public/PostalCode';
@@ -17,8 +18,9 @@ import { PublicStackParamList } from '@navigation/types';
 const Stack = createStackNavigator<PublicStackParamList>();
 
 const PublicNavigator = (): ReactElement => (
-  <Stack.Navigator headerMode="none" initialRouteName="Cgu">
-    <Stack.Screen name="Cgu" component={Cgu} />
+  <Stack.Navigator headerMode="none" initialRouteName="ProfilCreation">
+    {/* <Stack.Screen name="Cgu" component={Cgu} /> */}
+    <Stack.Screen name="ProfilCreation" component={ProfileCreation} />
     <Stack.Screen name="Username" component={Username} />
     <Stack.Screen name="Age" component={Age} />
     <Stack.Screen name="PostalCode" component={PostalCode} />

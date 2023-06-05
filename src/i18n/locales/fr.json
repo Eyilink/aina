@@ -22,6 +22,8 @@
       "message": "En utilisant l'application Mon Suivi Santé, vous acceptez les conditions générales d'utilisation consultables sur ce",
       "here": "LIEN"
     },
+    "firstText": "Création profil Principal",
+    "next": "Suivant",
     "sectionTitle": "Mon profil",
     "validate": "Valider",
     "date": "Choisissez une heure",
