@@ -15,13 +15,13 @@ import i18n from '@i18n/i18n';
 
 
 type Props = {
-  navigation: StackNavigationProp<PublicStackParamList, 'ProfilCreated'>;
+  navigation: StackNavigationProp<PublicStackParamList, 'ProfileCreated'>;
 };
 
 const ProfilCreated = ({ navigation }: Props): ReactElement => {
 
   const onValidate = (): void => {
-    navigation.navigate('Username');
+    navigation.navigate('Diseases');
   };
 
 

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Cgu from '@screens/Public/Cgu';
 import ProfilCreation from '@screens/Public/ProfilCreation';
-import ProfilCreated from '@screens/Public/ProfileCreated';
+import ProfileCreated from '@screens/Public/ProfileCreated';
 import Username from '@screens/Public/Username';
 import Age from '@screens/Public/Age';
 import PostalCode from '@screens/Public/PostalCode';
@@ -22,7 +22,7 @@ const PublicNavigator = (): ReactElement => (
   <Stack.Navigator headerMode="none" initialRouteName="ProfilCreation">
     {/* <Stack.Screen name="Cgu" component={Cgu} /> */}
     <Stack.Screen name="ProfilCreation" component={ProfilCreation} />
-    <Stack.Screen name="ProfilCreated" component={ProfilCreated} />
+    <Stack.Screen name="ProfileCreated" component={ProfileCreated} />
     <Stack.Screen name="Username" component={Username} />
     <Stack.Screen name="Age" component={Age} />
     {/* <Stack.Screen name="PostalCode" component={PostalCode} /> */}

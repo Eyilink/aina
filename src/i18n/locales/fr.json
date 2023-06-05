@@ -34,10 +34,10 @@
   "signup": {
     "cgu": {
       "message": "En utilisant l'application Mon Suivi Santé, vous acceptez les conditions générales d'utilisation consultables sur ce",
-      "here": "LIEN",
-      "endsignup": "Profil crée !"
+      "here": "LIEN"
     },
     "firstText": "Création profil Principal",
+    "endsignup": "Profil crée !",
     "next": "Suivant",
     "sectionTitle": "Mon profil",
     "validate": "Valider",
