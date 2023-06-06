@@ -15,7 +15,7 @@ import { useAuthStore } from '@store/store';
 
 
 type Props = {
-  navigation: StackNavigationProp<AuthenticatedStackParamList, 'NewSuivi'>;
+  navigation: StackNavigationProp<PublicStackParamList, 'NewSuivi'>;
   //navigationHome: StackNavigationProp<BottomTabParamList, 'Home'>;
 };
 
@@ -23,6 +23,7 @@ const ProfilCreated = ({ navigation }: Props): ReactElement => {
   const [,actions]=useAuthStore();
   const ValidatePressed = (): void => {
     navigation.navigate('NewSuivi'); 
+    
   };
 
   const onNoValidate = (): void => {

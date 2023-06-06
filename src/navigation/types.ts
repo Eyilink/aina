@@ -7,6 +7,7 @@ export type PublicStackParamList = {
   Age: undefined;
   Size: undefined;
   Weight: undefined;
+  NewSuivi: undefined;
   // Diseases: undefined;
   // Pregnant: undefined;
   // Reminder: undefined;
