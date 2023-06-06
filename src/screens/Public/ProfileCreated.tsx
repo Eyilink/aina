@@ -15,19 +15,18 @@ import { useAuthStore } from '@store/store';
 
 
 type Props = {
-  navigation: StackNavigationProp<PublicStackParamList, 'Weight'>;
+  navigation: StackNavigationProp<AuthenticatedStackParamList, 'NewSuivi'>;
   //navigationHome: StackNavigationProp<BottomTabParamList, 'Home'>;
 };
 
 const ProfilCreated = ({ navigation }: Props): ReactElement => {
   const [,actions]=useAuthStore();
   const ValidatePressed = (): void => {
-    actions.signupUser();
-    navigation.navigate('Weight'); 
+    navigation.navigate('NewSuivi'); 
   };
 
   const onNoValidate = (): void => {
-    navigation.navigate('Weight');
+    actions.signupUser();
   };
 
 
