@@ -23,7 +23,7 @@ type Props = {
 
 const Username = ({ navigation }: Props): ReactElement => {
   const [username, onChange] = useState<string>('');
-  const [, actions] = useAuthStore();
+  const [, actions] = useAuthStore();  
 
   const onValidate = (): void => {
     if (!username.trim().length) alertError({});
@@ -34,15 +34,19 @@ const Username = ({ navigation }: Props): ReactElement => {
     }
   };
 
+  // const onGoBack = () => {
+  //   navigation.navigate('ProfileCreation');
+  // };
+
   return (
     <Container>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Title text={i18n.t('signup.sectionTitle')} />
-          <Previous />
+          {/* <Previous /> */}
         </View>
 
-        <SubTitle text={i18n.t('signup.questions.username')} />
+        <SubTitle style={{marginTop:30}} text={i18n.t('signup.questions.username')} />
         <TextInput
           autoFocus
           value={username}
@@ -51,7 +55,7 @@ const Username = ({ navigation }: Props): ReactElement => {
           returnKeyType="done"
           style={styles.input}
         />
-        <Button
+        <Button style={{backgroundColor:'#EE4483', marginTop:100}}
           text={i18n.t('signup.validate')}
           onPress={onValidate}
           isValidate

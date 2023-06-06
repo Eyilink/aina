@@ -30,7 +30,7 @@ const Weight = ({ navigation }: Props): ReactElement => {
     } else {
       actions.editUserProfile({ key: 'weight', value: parseInt(weight, 10) });
       Keyboard.dismiss();
-      navigation.navigate('Diseases');
+      navigation.navigate('ProfileCreated');
     }
   };
 
@@ -48,7 +48,7 @@ const Weight = ({ navigation }: Props): ReactElement => {
           onChange={onChange}
           unit={i18n.t('commons.units.kg')}
         />
-        <Button
+        <Button style={styles.button}
           text={i18n.t('signup.validate')}
           onPress={onValidate}
           isValidate
@@ -68,4 +68,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  button: {
+    backgroundColor:'#EE4483',
+    marginTop:100
+  }
 });

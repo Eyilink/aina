@@ -17,17 +17,35 @@
     "immunosuppressantDisease": "Défense immunitaire",
     "immunosuppressantDrug": "Immunodépression"
   },
+  "months":{
+    "january": "Janvier",
+    "february": "Février",
+    "march": "Mars",
+    "april": "Avril",
+    "may": "Mai",
+    "june": "Juin",
+    "july": "Juillet",
+    "august": "Août",
+    "september": "Septembre",
+    "october": "Octobre",
+    "november": "Novembre",
+    "december": "Décembre" 
+  },
   "signup": {
     "cgu": {
       "message": "En utilisant l'application Mon Suivi Santé, vous acceptez les conditions générales d'utilisation consultables sur ce",
       "here": "LIEN"
     },
+    "firstText": "Création profil Principal",
+    "endsignup": "Profil créé !",
+    "next": "Suivant",
     "sectionTitle": "Mon profil",
     "validate": "Valider",
     "date": "Choisissez une heure",
     "questions": {
       "username": "Quel est votre prénom ?",
       "age": "Quel est votre âge ?",
+      "dateDeNaissance": "Quelle est votre date de naissance ?",
       "postalCode": "Votre code postal",
       "size": "Quelle est votre taille ?",
       "weight": "Quel est votre poids ?",
@@ -43,6 +61,7 @@
     "diseases": "Antécédents de santé",
     "pregnant": "Enceinte",
     "reminder": "Rappel",
+    "newfollow": "Souhaitez vous lancer un nouveau suivi ?",
     "erase": "Si vous continuez, votre profil actuel sera écrasé par vos nouvelles réponses.\n\n(votre historique d'évaluation sera conservé)",
     "cgu": "Informations et confidentialité"
   },

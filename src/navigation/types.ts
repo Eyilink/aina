@@ -1,16 +1,16 @@
 import { Report } from '@store/types';
 
 export type PublicStackParamList = {
-  Cgu: undefined;
+  ProfilCreation: undefined;
+  ProfileCreated: undefined;
   Username: undefined;
   Age: undefined;
-  PostalCode: undefined;
   Size: undefined;
   Weight: undefined;
-  Diseases: undefined;
-  Pregnant: undefined;
-  Reminder: undefined;
-  Confirmation: undefined;
+  // Diseases: undefined;
+  // Pregnant: undefined;
+  // Reminder: undefined;
+  // Confirmation: undefined;
 };
 
 export type AuthenticatedStackParamList = {
