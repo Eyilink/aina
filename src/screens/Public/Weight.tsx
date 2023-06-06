@@ -48,7 +48,7 @@ const Weight = ({ navigation }: Props): ReactElement => {
           onChange={onChange}
           unit={i18n.t('commons.units.kg')}
         />
-        <Button style={{backgroundColor:'#EE4483', marginTop:100}}
+        <Button style={styles.button}
           text={i18n.t('signup.validate')}
           onPress={onValidate}
           isValidate
@@ -68,4 +68,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  button: {
+    backgroundColor:'#EE4483',
+    marginTop:100
+  }
 });

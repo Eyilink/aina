@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Container from '@components/molecules/Container';
 import Button from '@components/atoms/Button';
 
-import { useAuthStore } from '@store/store';
 import { PublicStackParamList } from '@navigation/types';
 
 import layout from '@styles/layout';
@@ -21,7 +20,8 @@ type Props = {
 const ProfilCreated = ({ navigation }: Props): ReactElement => {
 
   const onValidate = (): void => {
-    navigation.navigate('Diseases');
+    // navigation.navigate('Diseases');
+    console.log("A toi de jouer juju");
   };
 
 
@@ -40,7 +40,7 @@ const ProfilCreated = ({ navigation }: Props): ReactElement => {
         </View>
 
         <Button style={styles.button}
-          text={i18n.t('signup.next')}
+          text={i18n.t('commons.no')}
           onPress={onValidate}
           isValidate
         />

@@ -20,18 +20,16 @@ const Stack = createStackNavigator<PublicStackParamList>();
 
 const PublicNavigator = (): ReactElement => (
   <Stack.Navigator headerMode="none" initialRouteName="ProfilCreation">
-    {/* <Stack.Screen name="Cgu" component={Cgu} /> */}
     <Stack.Screen name="ProfilCreation" component={ProfilCreation} />
     <Stack.Screen name="ProfileCreated" component={ProfileCreated} />
     <Stack.Screen name="Username" component={Username} />
     <Stack.Screen name="Age" component={Age} />
-    {/* <Stack.Screen name="PostalCode" component={PostalCode} /> */}
     <Stack.Screen name="Size" component={Size} />
     <Stack.Screen name="Weight" component={Weight} />
-    <Stack.Screen name="Diseases" component={Diseases} />
+    {/* <Stack.Screen name="Diseases" component={Diseases} />
     <Stack.Screen name="Pregnant" component={Pregnant} />
     <Stack.Screen name="Reminder" component={Reminder} />
-    <Stack.Screen name="Confirmation" component={Confirmation} />
+    <Stack.Screen name="Confirmation" component={Confirmation} /> */}
   </Stack.Navigator>
 );
 

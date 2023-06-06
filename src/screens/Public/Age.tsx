@@ -131,7 +131,7 @@ const BirthDateForm = ({ navigation }) => {
             </Picker>
           </View>
         </View>
-        <Button style={{backgroundColor:'#EE4483', marginTop:100}}
+        <Button style={styles.button}
         text={i18n.t('signup.validate')}
         onPress={onValidate} isValidate />
       </View>
@@ -167,4 +167,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
   },
+  button: {
+    backgroundColor:'#EE4483',
+    marginTop:100
+  }
 });
