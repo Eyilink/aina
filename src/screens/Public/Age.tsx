@@ -131,7 +131,9 @@ const BirthDateForm = ({ navigation }) => {
             </Picker>
           </View>
         </View>
-        <Button text={i18n.t('signup.validate')} onPress={onValidate} isValidate />
+        <Button style={{backgroundColor:'#EE4483', marginTop:100}}
+        text={i18n.t('signup.validate')}
+        onPress={onValidate} isValidate />
       </View>
     </Container>
   );

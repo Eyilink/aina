@@ -48,7 +48,7 @@ const Weight = ({ navigation }: Props): ReactElement => {
           onChange={onChange}
           unit={i18n.t('commons.units.kg')}
         />
-        <Button
+        <Button style={{backgroundColor:'#EE4483', marginTop:100}}
           text={i18n.t('signup.validate')}
           onPress={onValidate}
           isValidate

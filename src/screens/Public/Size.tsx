@@ -47,7 +47,7 @@ const Size = ({ navigation }: Props): ReactElement => {
           unit={i18n.t('commons.units.cm')}
         />
 
-        <Button
+        <Button style={{backgroundColor:'#EE4483', marginTop:100}}
           text={i18n.t('signup.validate')}
           onPress={onValidate}
           isValidate
