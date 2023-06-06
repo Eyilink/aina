@@ -140,43 +140,6 @@ const BirthDateForm = ({ navigation }) => {
 export default BirthDateForm;
 
 
-// const Age = ({ navigation }: Props): ReactElement => {
-//   const [age, onChange] = useState<string>('');
-//   const [, actions] = useAuthStore();
-
-//   const onValidate = (): void => {
-//     if (age.length !== 2 || !isNumeric(age)) alertError({});
-//     else {
-//       actions.editUserProfile({ key: 'age', value: parseInt(age, 10) });
-//       navigation.navigate('PostalCode');
-//     }
-//   };
-
-//   return (
-//     <Container>
-//       <View style={styles.container}>
-//         <View style={styles.titleContainer}>
-//           <Title text={i18n.t('signup.sectionTitle')} />
-//           <Previous />
-//         </View>
-//         <SubTitle text={i18n.t('signup.questions.dateDeNaissance')} />
-//         <InputText
-//           value={age}
-//           cellCount={2}
-//           onChange={onChange}
-//           unit={i18n.t('commons.units.years')}
-//         />
-//         <Button
-//           text={i18n.t('signup.validate')}
-//           onPress={onValidate}
-//           isValidate
-//         />
-//       </View>
-//     </Container>
-//   );
-// };
-
-// export default Age;
 
 const styles = StyleSheet.create({
   container: {
