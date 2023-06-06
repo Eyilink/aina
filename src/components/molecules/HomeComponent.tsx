@@ -18,7 +18,7 @@ const HomeComponent = ({
 
   return (
     <View style={styles.container}>
-    <Text style={styles.custom_title}>Aujourd'hui 28/03 16h47</Text>
+    <Text style={styles.custom_title}>28/03/23</Text>
 
     {isDataEmpty ? (<>
           <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>

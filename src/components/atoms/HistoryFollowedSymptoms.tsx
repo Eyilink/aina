@@ -46,7 +46,7 @@ const data = [
   const renderItem = ({ item }: { item: Item }) => (
     <View>
     <View style={styles.itemContainer}>
-      <AntDesign name="forward" size={24} color="green" style={styles.icon}/>
+      <AntDesign name="forward" size={24} color="#ffc000" style={styles.icon}/>
       <View style={styles.textContainer}>
         <Text style={styles.title_comp}>{item.title}</Text>
         <Text style={styles.subtitle}>{item.subtitle}</Text>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: 'green',
+    backgroundColor: '#92c026',
     marginRight: 20,
   },
   addButton: {
