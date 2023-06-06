@@ -1,7 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Symptome = {
   id: number;
@@ -22,16 +23,12 @@ type Props = {
 
 const DropDownMenu = ({ objets, ischeckeable }: Props) => {
   const isPathologie = Array.isArray(objets) && objets.length > 0 && 'symptoms' in objets[0];
-  console.log(objets);
-  console.log(isPathologie);
-  if (isPathologie){
-    const pathologie = objets[0] as Pathologie;
-    console.log(pathologie.symptoms[0]);
-  }
+  
 
   
   return (
-    <View>
+    <SafeAreaView>
+    <ScrollView>
       {objets.map((objet, index) => {
         if (isPathologie) {
           const pathologie = objet as Pathologie;
@@ -54,7 +51,8 @@ const DropDownMenu = ({ objets, ischeckeable }: Props) => {
           );
         }
       })}
-    </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 };
 

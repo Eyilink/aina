@@ -49,9 +49,10 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
   const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
     id: item.id,
     name: item.name,
-    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms),
-  }));
-
+//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
+    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
+}));
+  console.log(pathologieData[0].symptoms);
   
 
   const handlePress = () => {
