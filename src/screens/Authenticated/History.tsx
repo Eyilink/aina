@@ -25,7 +25,6 @@ import BoxHistorique from '@components/atoms/BoxHistorique';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
-  objets: Pathologie[];
 };
 
 
@@ -42,12 +41,16 @@ const exempleList: Pathologie[] = [
   { nom: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture" },
   ]
 
-const History = ({ navigation , objets }: Props): ReactElement => {
+
+
+const History = ({ navigation }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const [reportType, setReportType] = useState<string>('list');
   const [isChartFocused, setIsChartFocused] = useState<boolean>(false);
 
   const exemple: Pathologie = {nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauhe",namelogo:"picture" };
+
+
 
   
 
@@ -78,12 +81,11 @@ const History = ({ navigation , objets }: Props): ReactElement => {
 
 
   return (
-    <Container noMarginBottom>
-      <AppText text={"Historique"} style={styles.pagetitle} />
-      <BoxHistorique objet={exemple}/>     
-      {exempleList.map((object, index) => {(
-                <BoxHistorique key={index} objet={object}/>
-            )})}     
+    <View>
+      <AppText text={"Historique"} style={styles.pagetitle} />   
+      {exempleList.map((object, index) => {    
+                return (<BoxHistorique key={index} objet={object}/>);      
+            })}     
         {/* <Title isPrimary text={i18n.t('navigation.authenticated.history')} />
         {!reports ? (
           <>
@@ -170,7 +172,7 @@ const History = ({ navigation , objets }: Props): ReactElement => {
           </>
         )} */}
       
-    </Container>
+    </View>
   );
 };
 
@@ -178,10 +180,10 @@ export default History;
 
 const styles = StyleSheet.create({
   pagetitle :{
-    fontSize: 24,
+    fontSize: 28,
     marginBottom: 20,
     marginLeft: 5,
-
+    marginTop:5,
   },
   container: {
     //flex: 1,

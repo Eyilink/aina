@@ -68,7 +68,7 @@ type Props = {
            
 
             //marginRight:15,
-            alignItems: 'center',
+            //alignItems: 'center',
     
           },
           content:{
