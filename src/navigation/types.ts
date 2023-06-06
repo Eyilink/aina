@@ -7,6 +7,7 @@ export type PublicStackParamList = {
   Age: undefined;
   Size: undefined;
   Weight: undefined;
+  NewSuivi: undefined;
   // Diseases: undefined;
   // Pregnant: undefined;
   // Reminder: undefined;
@@ -16,6 +17,7 @@ export type PublicStackParamList = {
 export type AuthenticatedStackParamList = {
   BottomTabNavigator: { screen: string };
   Temperature: undefined;
+  NewSuivi: undefined;
   Symptoms: { report: Report };
   OtherSymptoms: { report: Report };
   Notes: { report: Report };

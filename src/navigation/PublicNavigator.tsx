@@ -15,6 +15,7 @@ import Reminder from '@screens/Public/Reminder';
 import Confirmation from '@screens/Public/Confirmation';
 
 import { PublicStackParamList } from '@navigation/types';
+import NewSuivi from '@screens/Authenticated/NewSuivi';
 
 const Stack = createStackNavigator<PublicStackParamList>();
 
@@ -26,6 +27,8 @@ const PublicNavigator = (): ReactElement => (
     <Stack.Screen name="Age" component={Age} />
     <Stack.Screen name="Size" component={Size} />
     <Stack.Screen name="Weight" component={Weight} />
+    <Stack.Screen name="NewSuivi" component={NewSuivi} />
+
     {/* <Stack.Screen name="Diseases" component={Diseases} />
     <Stack.Screen name="Pregnant" component={Pregnant} />
     <Stack.Screen name="Reminder" component={Reminder} />
