@@ -23,11 +23,12 @@ type Props = {
     objet: Pathologie;
     objets?: Symptome[]|Pathologie[];
     ischeckeable ?: boolean;
+    onPress: () => void;
   };
 
 
-    const BoxPathologie = ({ objet }: Props): ReactElement => {
-        const onPress = (): void => {
+    const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
+        const onPressnath = (): void => {
             // Faire quelque chose lorsqu'on appuie sur la boîte
           };
         
