@@ -16,13 +16,20 @@ type Pathologie = {
 };
 
 type Props = {
-  objets: (Pathologie | Symptome)[];
+  objets: (Pathologie[] | Symptome[]);
   ischeckeable: boolean;
 };
 
 const DropDownMenu = ({ objets, ischeckeable }: Props) => {
-  const isPathologie = 'symptoms' in objets[0];
+  const isPathologie = Array.isArray(objets) && objets.length > 0 && 'symptoms' in objets[0];
+  console.log(objets);
+  console.log(isPathologie);
+  if (isPathologie){
+    const pathologie = objets[0] as Pathologie;
+    console.log(pathologie.symptoms[0]);
+  }
 
+  
   return (
     <View>
       {objets.map((objet, index) => {

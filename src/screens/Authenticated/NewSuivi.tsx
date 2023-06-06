@@ -49,7 +49,7 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
   const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
     id: item.id,
     name: item.name,
-    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id === item.symptoms),
+    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms),
   }));
 
   
