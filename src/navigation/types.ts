@@ -17,7 +17,6 @@ export type PublicStackParamList = {
 export type AuthenticatedStackParamList = {
   BottomTabNavigator: { screen: string };
   Temperature: undefined;
-  NewSuivi: undefined;
   Symptoms: { report: Report };
   OtherSymptoms: { report: Report };
   Notes: { report: Report };
