@@ -66,49 +66,51 @@ const History = ({ navigation }: Props): ReactElement => {
     graphClicked(!graph);
 
   }
+  //console.log(isClicked);
 
   return ( 
-    <View>
-       {isClicked ? (<>
-        <Ionicons
-        name="ios-arrow-round-back"
-        size={layout.navigation.previousIcon.size}
-        color={colors.black}
-        onPress={prev}
-      />
-      <View style= {styles.container}> 
-        <AntDesign name={exempleList[currentIndex].namelogo} size={50} color="black" />
-                <View style = {styles.content}>
-                <AppText text={exempleList[currentIndex].nom} style={styles.title} />
-                <AppText text={exempleList[currentIndex].more} style={styles.subtitle} />
-                <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
-                </View>
-      </View>
-      <View style= {styles.buttonsContainer}>
-      <Button style={styles.button} text={"DONNER"} onPress={graphpress} isSelected={graph ? false : true}/>
-      <Button style={styles.button} text={"Graph"} onPress={graphpress} isSelected ={graph ? true : false}/> 
-      </View>
-      {graph ? 
-      (  <AppText text={"GRAPH"} style={styles.pagetitle} /> )
-      :
+    
+    <Container>
+       
+       {isClicked ?
+        <>
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={prev}
+          />
+          <View style= {styles.container}> 
+            <AntDesign name={exempleList[currentIndex].namelogo} size={50} color="black" />
+            <View style = {styles.content}>
+              <AppText text={exempleList[currentIndex].nom} style={styles.title} />
+              <AppText text={exempleList[currentIndex].more} style={styles.subtitle} />
+              <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
+            </View>
+          </View>
+          <View style= {styles.buttonsContainer}>
+            <Button style={styles.button} text={"DONNER"} onPress={graphpress} isSelected={graph ? false : true}/>
+            <Button style={styles.button} text={"Graph"} onPress={graphpress} isSelected ={graph ? true : false}/> 
+          </View>
+          {graph ? 
+            (  <AppText text={"GRAPH"} style={styles.pagetitle} /> )
+            :
+            ( <AppText text={"DONNER"} style={styles.pagetitle} /> )
+          }
+        </>
+      : 
+        <> 
+        <AppText text={"Historique"} style={styles.pagetitle} />   
+        {
+          exempleList.map((object, index) => {    
+            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
+          })
+        }  
+        </>
+      }
+    
       
-      
-      ( <AppText text={"DONNER"} style={styles.pagetitle} /> )}
-      
-      
-      
-      
-      </>) : 
-      
-      
-      
-      (<> <AppText text={"Historique"} style={styles.pagetitle} />   
-      {exempleList.map((object, index) => {    
-                return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
-            })}  </>)}
-          
-      
-    </View>
+    </Container>
   );
 };
 
