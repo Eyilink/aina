@@ -33,6 +33,12 @@ const ProfilCreated = ({ navigation }: Props): ReactElement => {
             {`${i18n.t('signup.endsignup')} `}
           </Text>
         </View>
+        <View style={styles.messageContainer}>
+          <Text style={styles.message}>
+            {`${i18n.t('profile.newfollow')} `}
+          </Text>
+        </View>
+
         <Button style={styles.button}
           text={i18n.t('signup.next')}
           onPress={onValidate}
@@ -55,6 +61,7 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     flexDirection: 'row',
+    marginTop: 30
   },
   message: {
     textAlign: 'center',

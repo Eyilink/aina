@@ -61,6 +61,7 @@
     "diseases": "Antécédents de santé",
     "pregnant": "Enceinte",
     "reminder": "Rappel",
+    "newfollow": "Souhaitez vous lancer un nouveau suivi ?",
     "erase": "Si vous continuez, votre profil actuel sera écrasé par vos nouvelles réponses.\n\n(votre historique d'évaluation sera conservé)",
     "cgu": "Informations et confidentialité"
   },
