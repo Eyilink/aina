@@ -9,6 +9,7 @@ import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import Subtitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
+import AppText from '@components/atoms/AppText';
 
 import { BottomTabParamList } from '@navigation/types';
 import { useReportsStore } from '@store/store';
@@ -19,153 +20,170 @@ import fonts from '@styles/fonts';
 import colors from '@styles/colors';
 import { MALADIE1 } from '@constants/constants';
 import { ScrollView } from 'react-native-gesture-handler';
+import { AntDesign } from '@expo/vector-icons';
+import BoxHistorique from '@components/atoms/BoxHistorique';
+import { Ionicons } from '@expo/vector-icons';
+import BoxSymptome from '@components/atoms/BoxSymptome';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
 };
 
+
+type Symptome = {
+  nom: string,
+  frequence: string,
+  valeur:number,
+  unite:string,
+}
+
+type Pathologie = {
+  nom: string;
+  date: string;
+  more: string;
+  namelogo: string;
+  symp: Symptome[];
+}
+
+const exempleSymList : Symptome[]=[
+  {nom: "Poids",frequence:"tous les 7 jours",valeur:67,unite:"kg"},
+  {nom: "Douleur",frequence:"Tous les jours",valeur:8,unite:"/10"},
+]
+
+const exempleList: Pathologie[] = [
+  { nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symp:exempleSymList },
+  { nom: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symp:exempleSymList  },
+  { nom: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture",symp:exempleSymList  },
+  ]
+
+  
+
+
+
 const History = ({ navigation }: Props): ReactElement => {
-  const [reports] = useReportsStore({ disease: MALADIE1 });
-  const [reportType, setReportType] = useState<string>('list');
-  const [isChartFocused, setIsChartFocused] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = React.useState(false);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [graph, graphClicked] = React.useState(false);
+  
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setIsChartFocused(true);
-    });
-    return unsubscribe;
-  }, [navigation]);
+  const onPressPath = (index : number): void =>{
+    setIsClicked(true);
+    setCurrentIndex(index);
+    console.log(index);
+  }
+  const prev = ():void =>{
+    setIsClicked(false);
+    graphClicked(false);
+  }
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      setIsChartFocused(false);
-    });
-    return unsubscribe;
-  }, [navigation]);
+  const graphpress = ():void =>{
+    graphClicked(!graph);
 
-  const onPressList = (): void => {
-    setIsChartFocused(false);
-    setReportType('list');
-  };
+  }
+  //console.log(isClicked);
 
-  const onPressChart = (): void => {
-    setIsChartFocused(true);
-    setReportType('chart');
-  };
-
-  return (
-    <Container noMarginBottom>
-      <View style={styles.container}>
-        {/* <Title isPrimary text={i18n.t('navigation.authenticated.history')} />
-        {!reports ? (
-          <>
-            <Subtitle
-              text={i18n.t('history.firstTime')}
-              style={styles.subtitle}
-            />
-            <Button
-              text={i18n.t('navigation.authenticated.evaluate')}
-              onPress={(): void => navigation.navigate('Evaluate')}
-              isValidate
-              stretch
-            />
-          </>
-        ) : (
-          <>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                onPress={onPressList}
-                style={[
-                  styles.button,
-                  styles.buttonList,
-                  {
-                    backgroundColor:
-                      reportType === 'list' ? colors.primary : colors.greyLight,
-                  },
-                ]}
-              >
-                <Feather
-                  name="list"
-                  size={layout.navigation.tabIconSize}
-                  color={reportType === 'list' ? colors.white : colors.black}
-                />
-                <Text
-                  style={[
-                    styles.textButtons,
-                    {
-                      color:
-                        reportType === 'list' ? colors.white : colors.black,
-                    },
-                  ]}
-                >
-                  {i18n.t('history.list')}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onPressChart}
-                style={[
-                  styles.button,
-                  styles.buttonCharts,
-                  {
-                    backgroundColor:
-                      reportType === 'chart'
-                        ? colors.primary
-                        : colors.greyLight,
-                  },
-                ]}
-              >
-                <Feather
-                  name="bar-chart-2"
-                  size={layout.navigation.tabIconSize}
-                  color={reportType === 'chart' ? colors.white : colors.black}
-                />
-                <Text
-                  style={[
-                    styles.textButtons,
-                    {
-                      color:
-                        reportType === 'chart' ? colors.white : colors.black,
-                    },
-                  ]}
-                >
-                  {i18n.t('history.chart')}
-                </Text>
-              </TouchableOpacity>
+  return ( 
+    
+    <View>
+       
+       {isClicked ?
+        <>
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={prev}
+          />
+          <View style= {styles.container}> 
+            <AntDesign name={exempleList[currentIndex].namelogo} size={50} color="black" />
+            <View style = {styles.content}>
+              <AppText text={exempleList[currentIndex].nom} style={styles.title} />
+              <AppText text={exempleList[currentIndex].more} style={styles.subtitle} />
+              <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
             </View>
-            {reportType === 'list' ? (
-              <HistoryTimeline reports={reports} />
-            ) : (
-              <ScrollView persistentScrollbar>
-                <HistoryCharts reports={reports} isFocused={isChartFocused} />
-              </ScrollView>
-            )}
-          </>
-        )} */}
-      </View>
-    </Container>
+          </View>
+          <View style= {styles.buttonsContainer}>
+            <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
+            <Button style={styles.button} text={"Graph"} onPress={graphpress} isSelected ={graph ? true : false}/> 
+          </View>
+          {graph ? 
+            (  <AppText text={"GRAPH"} style={styles.pagetitle} /> )
+            :
+            <>
+            {
+              exempleList[currentIndex].symp.map((object, index) => {    
+                return (<BoxSymptome key={index} objet={object}/>);      
+              })
+            }
+            </>
+            
+          }
+        </>
+      : 
+        <> 
+        <AppText text={"Historique"} style={styles.pagetitle} />   
+        {
+          exempleList.map((object, index) => {    
+            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
+          })
+        }  
+        </>
+      }
+    
+      
+    </View>
   );
 };
 
 export default History;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: layout.padding,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold' as 'bold',
+    marginBottom: 2,
+    
   },
   subtitle: {
-    marginTop: layout.padding,
-    textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 5,
   },
+  text: {
+    fontSize: 14,
+  },
+  content:{
+    //textAlign: 'right',
+    marginLeft:20,
+    //justifyContent: 'center',
+
+  },
+  pagetitle :{
+    fontSize: 28,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginTop:5,
+  },
+  container: {
+    padding: 10,
+    marginBottom: 10,
+    flexDirection:'row',
+    alignItems:'center',
+    //flex: 1,
+    //paddingTop: layout.padding,
+  },
+  // subtitle: {
+  //   marginTop: layout.padding,
+  //   textAlign: 'center',
+  // },
   buttonsContainer: {
     flexDirection: 'row',
-    marginHorizontal: layout.padding,
+    
   },
   button: {
     flex: 1,
-    paddingHorizontal: layout.padding,
-    paddingVertical: layout.padding / 6,
-    marginBottom: layout.padding,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    marginBottom: 0,
     alignItems: 'center',
   },
   buttonList: {
