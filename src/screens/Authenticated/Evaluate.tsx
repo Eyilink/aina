@@ -13,14 +13,8 @@ import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
-
-import AddBoutton from '@components/atoms/AddBoutton';
 import Button from '@components/atoms/Button';
-
-import pathologiesJSON from '@assets/json/pathologies.json'
-import symptomsJSON from '@assets/json/symptomes.json'
-
-import Home from '@screens/Authenticated/Home';
+import NewSuivi from '@components/molecules/NewSuivi';
 
 type Symptome = {
   id: number;
@@ -34,11 +28,8 @@ type Pathologie = {
   symptoms: Symptome[];
 }
 
-type Props = {
-  navigation: StackNavigationProp<AuthenticatedStackParamList, 'NewSuivi'>;
-};
 
-const Evaluate = ({ navigation}: Props): ReactElement => {
+const Evaluate = (): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
@@ -46,31 +37,6 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
 
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
-  };
-
-  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
-    id: item.id,
-    name: item.name,
-    type: item.type,
-  }));
-  const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
-    id: item.id,
-    name: item.name,
-//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
-    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
-  }));
-  
-
-  const handlePress = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
-    setButtonClicked(!ButtonClicked);
-  };
-  const ValidatePressed = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
-    setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
-    setButtonClicked(!ButtonClicked);
   };
   // const onStartReport = (): void => {
   //   if (!isNewReportOfDay) {
@@ -104,24 +70,7 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
           isValidate
           stretch
         /> */}
-        {ButtonNewSuiviClicked? <>{ButtonClicked ? (<> 
-          <SafeAreaView>
-            <ScrollView>
-              <DropDownMenu objets={pathologieData} ischeckeable={true}/> 
-              <Button
-                text={i18n.t('commons.validate')}
-                onPress={ValidatePressed}
-                isValidate
-                stretch
-              />
-            </ScrollView>
-        </SafeAreaView>
-        </>) : (
-        <>
-          <DropDownMenu objets={pathologieData} ischeckeable={false}/>
-          <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton>
-        </>
-        )}</>  : <Button
+        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : <Button
           text={i18n.t('commons.validate')}
           onPress={ValidateButtonNewSuiviPressed}
           stretch
