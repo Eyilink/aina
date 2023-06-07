@@ -69,7 +69,6 @@ const History = ({ navigation }: Props): ReactElement => {
   const onPressPath = (index : number): void =>{
     setIsClicked(true);
     setCurrentIndex(index);
-    console.log(index);
   }
   const prev = ():void =>{
     setIsClicked(false);
@@ -78,13 +77,11 @@ const History = ({ navigation }: Props): ReactElement => {
 
   const graphpress = ():void =>{
     graphClicked(!graph);
-
   }
-  //console.log(isClicked);
 
   return ( 
     
-    <View>
+    <Container>
        
        {isClicked ?
         <>
@@ -131,7 +128,7 @@ const History = ({ navigation }: Props): ReactElement => {
       }
     
       
-    </View>
+    </Container>
   );
 };
 
