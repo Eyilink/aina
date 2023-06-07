@@ -338,4 +338,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+.expo/
+
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,eclipse,intellij,git,linux,windows,visualstudiocode,macos

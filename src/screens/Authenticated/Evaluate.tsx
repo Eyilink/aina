@@ -1,12 +1,12 @@
 import React, { ReactElement , useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import Container from '@components/molecules/Container';
 import DropDownMenu from '@components/molecules/DropDownMenu';
 
 import { useReportsStore } from '@store/store';
-import { AuthenticatedStackParamList } from '@navigation/types';
+import { AuthenticatedStackParamList, BottomTabParamList } from '@navigation/types';
 import { hasPreviousReportToday } from '@helpers/utils';
 
 import layout from '@styles/layout';
@@ -17,35 +17,48 @@ import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 import AddBoutton from '@components/atoms/AddBoutton';
 import Button from '@components/atoms/Button';
 
+import pathologiesJSON from '@assets/json/pathologies.json'
+import symptomsJSON from '@assets/json/symptomes.json'
 
-type Pathologie = {
-  nom: string
-}
+import Home from '@screens/Authenticated/Home';
 
 type Symptome = {
-  nom: string
+  id: number;
+  name: string;
+  type: string;
+}
+
+type Pathologie = {
+  id: string;
+  name: string;
+  symptoms: Symptome[];
 }
 
 type Props = {
-  navigation: StackNavigationProp<AuthenticatedStackParamList, 'Temperature'>;
+  navigation: StackNavigationProp<AuthenticatedStackParamList, 'NewSuivi'>;
 };
 
 const Evaluate = ({ navigation}: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
+  const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [ButtonClicked, setButtonClicked] = React.useState(false);
-  
-  // Exemple :
-  const pathologies: Pathologie[] = [
-    { nom: 'COVID-19' },
-    { nom: 'Grippe' },
-    { nom: 'Rhume' },
-  ];
-  const symptome: Symptome[] = [
-    { nom: 'toux' },
-    { nom: 'temperature' },
-  ];
 
+  const ValidateButtonNewSuiviPressed = (): void => {
+    setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
+  };
+
+  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
+    id: item.id,
+    name: item.name,
+    type: item.type,
+  }));
+  const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
+    id: item.id,
+    name: item.name,
+//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
+    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
+  }));
   
 
   const handlePress = () => {
@@ -56,9 +69,9 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
   const ValidatePressed = () => {
     //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
     //     // Vous pouvez ajouter votre logique ou vos actions ici
+    setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
     setButtonClicked(!ButtonClicked);
   };
-
   // const onStartReport = (): void => {
   //   if (!isNewReportOfDay) {
   //     Alert.alert(
@@ -91,21 +104,30 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
           isValidate
           stretch
         /> */}
-
-      {ButtonClicked ? (<> 
-        <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={true}/> 
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={ValidatePressed}
-          isValidate
-          stretch
-      />
+        {ButtonNewSuiviClicked? <>{ButtonClicked ? (<> 
+          <SafeAreaView>
+            <ScrollView>
+              <DropDownMenu objets={pathologieData} ischeckeable={true}/> 
+              <Button
+                text={i18n.t('commons.validate')}
+                onPress={ValidatePressed}
+                isValidate
+                stretch
+              />
+            </ScrollView>
+        </SafeAreaView>
         </>) : (
         <>
-          <DropDownMenu objets={pathologies} objets2={symptome} ischeckeable={false}/>
+          <DropDownMenu objets={pathologieData} ischeckeable={false}/>
           <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton>
         </>
-        )}  
+        )}</>  : <Button
+          text={i18n.t('commons.validate')}
+          onPress={ValidateButtonNewSuiviPressed}
+          stretch
+        />
+        }
+        
       
       
       </View>
