@@ -23,23 +23,37 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
 import BoxHistorique from '@components/atoms/BoxHistorique';
 import { Ionicons } from '@expo/vector-icons';
+import BoxSymptome from '@components/atoms/BoxSymptome';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
 };
 
 
+type Symptome = {
+  nom: string,
+  frequence: string,
+  valeur:number,
+  unite:string,
+}
+
 type Pathologie = {
   nom: string;
   date: string;
   more: string;
   namelogo: string;
+  symp: Symptome[];
 }
 
+const exempleSymList : Symptome[]=[
+  {nom: "Poids",frequence:"tous les 7 jours",valeur:67,unite:"kg"},
+  {nom: "Douleur",frequence:"Tous les jours",valeur:8,unite:"/10"},
+]
+
 const exempleList: Pathologie[] = [
-  { nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauhe",namelogo:"picture" },
-  { nom: 'Artie',date:"15/01/2023", more:"Coude - Gauhe",namelogo:"picture" },
-  { nom: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture" },
+  { nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symp:exempleSymList },
+  { nom: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symp:exempleSymList  },
+  { nom: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture",symp:exempleSymList  },
   ]
 
   
@@ -70,7 +84,7 @@ const History = ({ navigation }: Props): ReactElement => {
 
   return ( 
     
-    <Container>
+    <View>
        
        {isClicked ?
         <>
@@ -89,13 +103,20 @@ const History = ({ navigation }: Props): ReactElement => {
             </View>
           </View>
           <View style= {styles.buttonsContainer}>
-            <Button style={styles.button} text={"DONNER"} onPress={graphpress} isSelected={graph ? false : true}/>
+            <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
             <Button style={styles.button} text={"Graph"} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
           {graph ? 
             (  <AppText text={"GRAPH"} style={styles.pagetitle} /> )
             :
-            ( <AppText text={"DONNER"} style={styles.pagetitle} /> )
+            <>
+            {
+              exempleList[currentIndex].symp.map((object, index) => {    
+                return (<BoxSymptome key={index} objet={object}/>);      
+              })
+            }
+            </>
+            
           }
         </>
       : 
@@ -110,7 +131,7 @@ const History = ({ navigation }: Props): ReactElement => {
       }
     
       
-    </Container>
+    </View>
   );
 };
 

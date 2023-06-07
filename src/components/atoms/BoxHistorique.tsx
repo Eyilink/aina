@@ -9,7 +9,9 @@ import colors from '@styles/colors';
 import layout from '@styles/layout';
 
 type Symptome = {
-    nom: string
+    nom: string,
+    date: string,
+    valeur:number,
   }
   
   type Pathologie = {
@@ -17,6 +19,7 @@ type Symptome = {
     date: string;
     more: string;
     namelogo: string;
+    symp: Symptome[];
   }
 
 type Props = {
