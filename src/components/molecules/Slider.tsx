@@ -1,6 +1,6 @@
 import React, { ReactElement, useRef, useState } from 'react';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
-import { Slider, StyleSheet, View } from 'react-native';
 
 import SubTitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
@@ -27,6 +27,8 @@ type Props = {
   hasPainSymptoms: boolean;
 };
 
+const { width: screenWidth } = Dimensions.get('window');
+
 const CustomSlider = ({
   isVisible,
   onCancel,
@@ -39,7 +41,7 @@ const CustomSlider = ({
   title,
   hasPainSymptoms,
 }: Props): ReactElement => {
-  const sliderRef = useRef<Slider | null>(null);
+  const sliderRef = useRef<View | null>(null);
   const [value, setValue] = useState<number>(initialValue);
   const [updatedPainSymptoms, setPainSymptoms] = useState<PainSymptoms>(
     PAIN_SYMPTOMS,
@@ -53,15 +55,12 @@ const CustomSlider = ({
   };
 
   const onValueChangeRound = (value: number): void => {
-    setValue && setValue(roundValue(value));
+    setValue(roundValue(value));
   };
 
   const onConfirmSlider = (): void => {
     const roundedValue = roundValue(value);
-    if (PHONE_OS === 'ios' && step && sliderRef.current) {
-      sliderRef.current.setNativeProps({ value: roundedValue });
-    }
-    onConfirm && onConfirm(roundedValue, updatedPainSymptoms);
+    onConfirm(roundedValue, updatedPainSymptoms);
   };
 
   const onChangePainSymptom = (pain: keyof PainSymptoms, value: boolean) => {
@@ -71,20 +70,30 @@ const CustomSlider = ({
     });
   };
 
+  const handleSliderPress = (event: any) => {
+    const { locationX } = event.nativeEvent;
+    const width = screenWidth - 40; // Adjust the padding/margin as needed
+    const newValue = (locationX / width) * (max - min) + min;
+    setValue(newValue);
+  };
+
   return (
     <Modal isVisible={isVisible} onBackdropPress={onCancel}>
       <View style={styles.container}>
         <SubTitle isCenter text={title} style={styles.title} />
-        <Slider
-          minimumValue={min}
-          maximumValue={max}
-          minimumTrackTintColor={colors.primary}
-          step={PHONE_OS === 'ios' ? 0 : step}
-          value={value}
+        <TouchableOpacity
           style={styles.slider}
-          thumbTintColor={colors.primary}
-          onValueChange={onValueChangeRound}
-        />
+          onPress={handleSliderPress}
+          ref={sliderRef}
+        >
+          <View style={styles.sliderTrack} />
+          <View
+            style={[
+              styles.sliderValue,
+              { width: `${((value - min) / (max - min)) * 100}%` },
+            ]}
+          />
+        </TouchableOpacity>
         <SliderFooter type={type} />
         {hasPainSymptoms && (
           <SliderPainSymptoms
@@ -114,9 +123,25 @@ const styles = StyleSheet.create({
     borderRadius: layout.buttons.borderRadius,
   },
   slider: {
-    width: '100%',
+    width: screenWidth - 40, // Adjust the padding/margin as needed
     zIndex: 2,
     marginTop: layout.padding / 2,
+  },
+  sliderTrack: {
+    width: '85%',
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: 'gray',
+    marginLeft: '7%' // Customize the track color as needed
+  },
+  sliderValue: {
+    position: 'absolute',
+    marginLeft: '7%',
+    top: -2,
+    left: 0,
+    height: 5,
+    borderRadius: 5,
+    backgroundColor: colors.primary, // Customize the selected value color as needed
   },
   title: {
     marginHorizontal: 0,

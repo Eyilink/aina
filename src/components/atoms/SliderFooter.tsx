@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     height: 30,
     borderLeftColor: colors.black,
-    marginTop: PHONE_OS === 'ios' ? -35 : -25,
-    marginHorizontal: PHONE_OS === 'ios' ? 0 : 15,
+    // marginTop: PHONE_OS === 'ios' ? -35 : -25,
+    // marginHorizontal: PHONE_OS === 'ios' ? 0 : 15,
   },
   line: {
     borderLeftWidth: 1,
     borderLeftColor: colors.black,
     height: 20,
-    marginTop: PHONE_OS === 'ios' ? -30 : -20,
+    // marginTop: PHONE_OS === 'ios' ? -30 : -20,
   },
   units: {
     flexDirection: 'row',

@@ -82,30 +82,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        {/* <Title
-          isPrimary
-          isDate
-          isCenter
-          text={DATE_TODAY}
-          style={styles.title}
-        />
-        {!reports ? (
-          <View>
-            <SubTitle text={i18n.t('home.firstTime')} style={styles.subtitle} />
-            <Button
-              text={i18n.t('navigation.authenticated.evaluate')}
-              onPress={(): void => navigation.navigate('Evaluate')}
-              isValidate
-              stretch
-            />
-          </View>
-        ) : (
-          <ScrollView contentContainerStyle={styles.recommandationContainer}>
-            <Image style={styles.image} source={image} />
-            <SubTitle text={textReco} style={styles.subtitle} />
-          </ScrollView>
-        )} */}
-        <HomeComponent isHealthy />
+        <HomeComponent />
       </View>
     </Container>
   );
