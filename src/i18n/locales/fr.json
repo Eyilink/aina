@@ -89,7 +89,9 @@
       "cancel": "Annuler",
       "ok": "Ok",
       "notifications": "Afin d'activer les rappels quotidiens, nous avons besoin que vous acceptiez l'envoi de notifications."
-    }
+    },
+    "newsuivi": "Lancer un nouveau suivi",
+    "today": "Aujourd'hui "
   },
   "notification": {
     "title": "Mon Suivi Santé",
