@@ -2,9 +2,11 @@ import React, { ReactElement } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
+import Title from '@components/atoms/Title';
 import { View,Text,StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
+import  {DATE_TODAY} from '@constants/constants';
 
 type Props = {
   isDataEmpty?: boolean;
@@ -18,7 +20,10 @@ const HomeComponent = ({
 
   return (
     <View style={styles.container}>
-    <Text style={styles.custom_title}>28/03/23</Text>
+    <Title
+          text={DATE_TODAY}
+          style={styles.title}
+        />
 
     {isDataEmpty ? (<>
           <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
@@ -52,9 +57,10 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 24,
+      
       fontWeight: 'bold',
-      color: 'gray',
-      textAlign: 'center', // Specify the desired color here
+      color: 'black',
+      textAlign: 'center',
       marginBottom: '60%'
     }
   });
