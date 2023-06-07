@@ -21,6 +21,7 @@ import pathologiesJSON from '@assets/json/pathologies.json'
 import symptomsJSON from '@assets/json/symptomes.json'
 
 import Home from '@screens/Authenticated/Home';
+import NewSuivi from '@components/molecules/NewSuivi';
 
 type Symptome = {
   id: number;
@@ -34,11 +35,8 @@ type Pathologie = {
   symptoms: Symptome[];
 }
 
-type Props = {
-  navigation: StackNavigationProp<AuthenticatedStackParamList, 'NewSuivi'>;
-};
 
-const Evaluate = ({ navigation}: Props): ReactElement => {
+const Evaluate = (): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
@@ -104,24 +102,7 @@ const Evaluate = ({ navigation}: Props): ReactElement => {
           isValidate
           stretch
         /> */}
-        {ButtonNewSuiviClicked? <>{ButtonClicked ? (<> 
-          <SafeAreaView>
-            <ScrollView>
-              <DropDownMenu objets={pathologieData} ischeckeable={true}/> 
-              <Button
-                text={i18n.t('commons.validate')}
-                onPress={ValidatePressed}
-                isValidate
-                stretch
-              />
-            </ScrollView>
-        </SafeAreaView>
-        </>) : (
-        <>
-          <DropDownMenu objets={pathologieData} ischeckeable={false}/>
-          <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton>
-        </>
-        )}</>  : <Button
+        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : <Button
           text={i18n.t('commons.validate')}
           onPress={ValidateButtonNewSuiviPressed}
           stretch

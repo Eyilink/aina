@@ -12,18 +12,15 @@ import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { useAuthStore } from '@store/store';
+import NewSuivi from '@components/molecules/NewSuivi';
+import Previous from '@components/atoms/Previous';
 
 
-type Props = {
-  navigation: StackNavigationProp<PublicStackParamList, 'NewSuivi'>;
-  //navigationHome: StackNavigationProp<BottomTabParamList, 'Home'>;
-};
-
-const ProfilCreated = ({ navigation }: Props): ReactElement => {
+const ProfilCreated = (): ReactElement => {
+  const [ButtonValidateClicked, setButtonValidateClicked] = React.useState(false);
   const [,actions]=useAuthStore();
   const ValidatePressed = (): void => {
-    navigation.navigate('NewSuivi'); 
-    
+    setButtonValidateClicked(true);
   };
 
   const onNoValidate = (): void => {
@@ -33,28 +30,33 @@ const ProfilCreated = ({ navigation }: Props): ReactElement => {
 
   return (
     <Container>
-      <View style={styles.container}>
-        <View style={styles.messageContainer}>
-          <Text style={styles.message}>
-            {`${i18n.t('signup.endsignup')} `}
-          </Text>
-        </View>
-        <View style={styles.messageContainer}>
-          <Text style={styles.message}>
-            {`${i18n.t('profile.newfollow')} `}
-          </Text>
-        </View>
+      {/* <View style={styles.container}> */}
+        {ButtonValidateClicked?<><View style={styles.container}><NewSuivi></NewSuivi></View></>: 
+          <>
+            <View style={styles.messageContainer}>
+              <Text style={styles.message}>
+                {`${i18n.t('signup.endsignup')} `}
+              </Text>
+            </View>
+            <View style={styles.messageContainer}>
+              <Text style={styles.message}>
+                {`${i18n.t('profile.newfollow')} `}
+              </Text>
+            </View>
 
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={ValidatePressed}
-          stretch
-        />
-        <Button style={styles.button}
-          text={i18n.t  ('commons.no')}
-          onPress={onNoValidate}
-        />
-      </View>
+            <Button
+              text={i18n.t('commons.validate')}
+              onPress={ValidatePressed}
+              stretch
+            />
+            <Button style={styles.button}
+              text={i18n.t  ('commons.no')}
+              onPress={onNoValidate}
+            />
+          </>
+        }
+        
+      {/* </View> */}
     </Container>
   );
 };
