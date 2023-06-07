@@ -30,8 +30,8 @@ const ProfilCreated = (): ReactElement => {
 
   return (
     <Container>
-      {/* <View style={styles.container}> */}
-        {ButtonValidateClicked?<><View style={styles.container}><NewSuivi></NewSuivi></View></>: 
+      <View style={styles.container}> 
+        {ButtonValidateClicked?<><View style={styles.container}><NewSuivi isFirstLog={true}/></View></>: 
           <>
             <View style={styles.messageContainer}>
               <Text style={styles.message}>
@@ -56,7 +56,7 @@ const ProfilCreated = (): ReactElement => {
           </>
         }
         
-      {/* </View> */}
+      </View>
     </Container>
   );
 };

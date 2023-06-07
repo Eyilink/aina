@@ -13,14 +13,7 @@ import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
-
-import AddBoutton from '@components/atoms/AddBoutton';
 import Button from '@components/atoms/Button';
-
-import pathologiesJSON from '@assets/json/pathologies.json'
-import symptomsJSON from '@assets/json/symptomes.json'
-
-import Home from '@screens/Authenticated/Home';
 import NewSuivi from '@components/molecules/NewSuivi';
 
 type Symptome = {
@@ -44,31 +37,6 @@ const Evaluate = (): ReactElement => {
 
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
-  };
-
-  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
-    id: item.id,
-    name: item.name,
-    type: item.type,
-  }));
-  const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
-    id: item.id,
-    name: item.name,
-//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
-    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
-  }));
-  
-
-  const handlePress = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
-    setButtonClicked(!ButtonClicked);
-  };
-  const ValidatePressed = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
-    setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
-    setButtonClicked(!ButtonClicked);
   };
   // const onStartReport = (): void => {
   //   if (!isNewReportOfDay) {

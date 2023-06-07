@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { AsyncStorage, SafeAreaView, StyleSheet, View } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -15,7 +15,12 @@ import i18n from '@i18n/i18n';
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import Button from '@components/atoms/Button';
+import { useAuthStore } from '@store/store';
+import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
+import { StoreActionApi } from 'react-sweet-state';
+import { RootState } from '@store/types';
 
+type StoreApi = StoreActionApi<RootState>;
 
 type Symptome = {
   id: number;
@@ -29,8 +34,13 @@ type Pathologie = {
   symptoms: Symptome[];
 };
 
-const NewSuivi = () => {
+type Props = {
+  isFirstLog?: boolean;
+};
+
+const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
+  const [, actions] = useAuthStore();
 
   const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
     id: item.id,
@@ -51,9 +61,12 @@ const NewSuivi = () => {
   };
 
   const ValidatePressed = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
+    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
+    // Vous pouvez ajouter votre logique ou vos actions ici
     setButtonClicked(!ButtonClicked);
+    if (isFirstLog) {
+      actions.signupUser();
+    }
   };
   
   return (
@@ -63,13 +76,13 @@ const NewSuivi = () => {
       <SafeAreaView>
         <ScrollView>
           <DropDownMenu objets={pathologieData} ischeckeable={true}/> 
-          <Button
-            text={i18n.t('commons.validate')}
-            onPress={ValidatePressed}
-            isValidate
-            stretch
-          />
         </ScrollView>
+        <Button
+          text={i18n.t('commons.validate')}
+          onPress={ValidatePressed}
+          isValidate
+          stretch
+        />
     </SafeAreaView>
     </>) : (
     <>
