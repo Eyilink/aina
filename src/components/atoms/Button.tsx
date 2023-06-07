@@ -64,9 +64,10 @@ const styles = StyleSheet.create({
     borderRadius: layout.buttons.borderRadius,
     paddingHorizontal: layout.padding,
     paddingVertical: layout.padding / 2,
-    marginHorizontal: layout.padding,
+    // marginHorizontal: layout.padding,
   },
   text: {
     textAlign: 'center',
+    
   },
 });
