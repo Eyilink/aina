@@ -5,6 +5,7 @@ import i18n from '@i18n/i18n';
 import { View,Text,StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
+import  {DATE_TODAY} from '@constants/constants';
 
 type Props = {
   isDataEmpty?: boolean;
