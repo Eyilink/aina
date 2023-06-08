@@ -79,7 +79,6 @@ export type Data = {
   valeur:number,
 }
 
-export type Type = 'num' | 'oui/non' | 'kg' |'°C' | 'Oui/non éval';
 
 export type SymptomeJSON = {
   id: number;
@@ -92,7 +91,7 @@ export type Symptome = {
   name: string,
   frequence?: string,
   data?:Data[],
-  type: Type;
+  type: string;
   question?: String,
   valMin?: number,
   valMax?: number,
