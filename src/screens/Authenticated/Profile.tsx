@@ -118,7 +118,6 @@ const genererPictogrammeTemperature = (id, metric) => {
         <ScrollView persistentScrollbar>
           <View style={styles.titleContainer}>
             <SubTitle text={user.username} style={styles.username} />
-            <SubTitle text={user.postalCode.toString()} />
           </View>
           <View style={styles.infosContainer}>
             <SubTitle
@@ -133,33 +132,12 @@ const genererPictogrammeTemperature = (id, metric) => {
 
        
     
-          {user.pregnant && (
-            <SubTitle
-              text={i18n.t('profile.pregnant')}
-              style={styles.pregnant}
-            />
-          )}
+          
            <View>
             <Text style={{fontFamily: fonts.weight.bold.fontFamily,
     fontSize: fonts.sections.fontSize,textAlign:'center',}}>symptomes</Text>
            </View>
           <SymptomTable/>
-          <SubTitle text={i18n.t('profile.diseases')} style={styles.diseases} />
-          {!Object.keys(user.diseases).filter(
-            (disease: string) => user.diseases[disease],
-          ).length && (
-            <AppText text={i18n.t('commons.none')} style={styles.reminder} />
-          )}
-          {Object.keys(user.diseases).map(
-            (disease: string) =>
-              user.diseases[disease] && (
-                <SubTitle
-                  key={`Profile-${i18n.t(`diseases.${disease}`)}`}
-                  text={i18n.t(`diseases.${disease}`)}
-                  style={styles.disease}
-                />
-              ),
-          )}
           
 
           <Button
