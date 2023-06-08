@@ -89,13 +89,16 @@
       "cancel": "Annuler",
       "ok": "Ok",
       "notifications": "Afin d'activer les rappels quotidiens, nous avons besoin que vous acceptiez l'envoi de notifications."
-    }
+    },
+    "newsuivi": "Lancer un nouveau suivi",
+    "today": "Aujourd'hui "
   },
   "notification": {
     "title": "Mon Suivi Santé",
     "message": "N'oubliez pas de remplir le questionnaire afin de pouvoir suivre vos symptômes !"
   },
-  "evaluate": {
+  "suivi": {
+    "end": "Terminer ce suivi",
     "start": "Renseignez maintenant vos symptômes",
     "restart": "Vous avez-déjà rempli aujourd'hui le questionnaire, voulez-vous le refaire ?",
     "erase": "Si vous continuez, vos nouvelles réponses remplaçeront celles déjà remplies pour aujourd'hui."
