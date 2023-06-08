@@ -21,8 +21,6 @@ type Symptome = {
 
 type Props = {
   objet: Pathologie;
-  objets?: Symptome[]|Pathologie[];
-  ischeckeable ?: boolean;
   onPress?: () => void;
 };
 

@@ -17,6 +17,10 @@ import Button from '@components/atoms/Button';
 import NewSuivi from '@components/molecules/NewSuivi';
 import Title from '@components/atoms/Title';
 import BoxHistorique from '@components/atoms/BoxHistorique';
+import RecapSuivi from '@components/molecules/RecapSuivi';
+import pathologiesJSON from '@assets/json/pathologies.json'
+import symptomsJSON from '@assets/json/symptomes.json'
+
 import Symptome from '@components/atoms/ListSymptome';
 
 
@@ -24,13 +28,21 @@ type Symptome = {
   id: number;
   name: string;
   type: string;
-}
+};
 
 type Pathologie = {
   id: string;
   name: string;
   symptoms: Symptome[];
-}
+};
+
+const exempleSymList : Symptome[]=[
+  {name: "Poids",id:12,type:"kg"},
+  {name: "Douleur",id:10,type:"/10"},
+]
+
+
+
 
 const exempleSymList : Symptome[]=[
   {name: "Poids",id:12,type:"kg"},
@@ -46,6 +58,18 @@ const Evaluate = (): ReactElement => {
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [ButtonClicked, setButtonClicked] = React.useState(false);
+
+  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
+    id: item.id,
+    name: item.name,
+    type: item.type,
+  }));
+  const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
+    id: item.id,
+    name: item.name,
+//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
+    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
+  }));
 
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
