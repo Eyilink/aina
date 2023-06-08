@@ -27,6 +27,7 @@ type Props = {
   objet: Symptome|Pathologie;
   objets?: Symptome[]|Pathologie[];
   ischeckeable : boolean;
+  onCheckboxChange: () => void;
 };
 
 

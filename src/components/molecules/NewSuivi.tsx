@@ -19,6 +19,8 @@ import { useAuthStore } from '@store/store';
 import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
 import { StoreActionApi } from 'react-sweet-state';
 import { RootState } from '@store/types';
+import AppText from '@components/atoms/AppText';
+import ScrollDownMenu from './ScrollDownMenu';
 
 type StoreApi = StoreActionApi<RootState>;
 
@@ -37,7 +39,15 @@ type Pathologie = {
 type Props = {
   isFirstLog?: boolean;
 };
-
+const dropdownItems = [
+  { title: 'Personnalisé', icon: require('@assets/images/1_i.png') },
+  { title: 'Dentaire', icon: require('@assets/images/2_i.png') },
+  { title: 'Articulaire', icon: require('@assets/images/3_i.png') },
+  { title: 'Dermatologie', icon: require('@assets/images/4_i.png') },
+  { title: 'Gynécologie', icon: require('@assets/images/5_i.png') },
+  { title: 'Cardiovasculaire', icon: require('@assets/images/6_i.png') },
+  // Add more items as needed
+];
 const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
@@ -70,8 +80,8 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   };
   
   return (
-    <Container noMarginBottom>
-
+    <View style={styles.container}>
+    <AppText text='Choix du Suivi' style={styles.text}></AppText>
     {ButtonClicked ? (<> 
       <SafeAreaView>
         <ScrollView>
@@ -86,20 +96,37 @@ const NewSuivi = ({ isFirstLog }: Props) => {
     </SafeAreaView>
     </>) : (
     <>
-      <DropDownMenu objets={pathologieData} ischeckeable={false}/>
-      <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton>
+      {/* <DropDownMenu objets={pathologieData} ischeckeable={false}/> */}
+      {/* <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton> */}
+      <ScrollDownMenu items={dropdownItems} />
+      <Button
+          text={i18n.t('commons.validate')}
+          onPress={()=>{}}
+          isValidate
+          stretch
+          style={{marginBottom: -10}}
+        />
     </>
     )}
-  </Container>
+  </View>
   );
 };
 
 export default NewSuivi;
 
 const styles = StyleSheet.create({
+  text: {
+    fontFamily: fonts.title.fontFamily,
+    fontSize: fonts.title.fontSize,
+  // Added fontWeight to make the text bold
+    textAlign: 'center',
+    marginTop: -40,
+    marginBottom:30 // Added textAlign to center the text horizontally
+  },
   container: {
     flex: 1,
     paddingVertical: layout.padding,
+
   },
   subtitle: {
     marginTop: layout.padding * 2,
@@ -109,6 +136,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-
   },
 });
+
