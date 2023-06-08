@@ -2,7 +2,7 @@
   "navigation": {
     "authenticated": {
       "home": "Accueil",
-      "evaluate": "Évaluer",
+      "suivi": "Suivi",
       "history": "Historique",
       "profile": "Profil"
     }
