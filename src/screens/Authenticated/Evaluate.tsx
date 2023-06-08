@@ -17,6 +17,8 @@ import Button from '@components/atoms/Button';
 import NewSuivi from '@components/molecules/NewSuivi';
 import Title from '@components/atoms/Title';
 import BoxHistorique from '@components/atoms/BoxHistorique';
+import Symptome from '@components/atoms/ListSymptome';
+
 
 type Symptome = {
   id: number;
@@ -29,6 +31,14 @@ type Pathologie = {
   name: string;
   symptoms: Symptome[];
 }
+
+const exempleSymList : Symptome[]=[
+  {name: "Poids",id:12,type:"kg"},
+  {name: "Douleur",id:10,type:"/10"},
+]
+
+
+
 
 
 const Evaluate = (): ReactElement => {
@@ -81,6 +91,7 @@ const Evaluate = (): ReactElement => {
               namelogo: 'picture',
               symp: [{nom: 'Nath', date: '07/06', valeur: 10}]
             }}></BoxHistorique>
+            <Symptome objets={exempleSymList}/>
           <Button
             text={i18n.t('commons.newsuivi')}
             onPress={ValidateButtonNewSuiviPressed}
