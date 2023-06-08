@@ -6,18 +6,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BoxHistorique from '@components/atoms/BoxHistorique';
 import Button from '@components/atoms/Button';
 import i18n from '@i18n/i18n';
-
-type Symptome = {
-  id: number;
-  name: string;
-  type: string;
-};
-
-type Pathologie = {
-  id: string;
-  name: string;
-  symptoms: Symptome[];
-};
+import ListSymptome from '@components/atoms/ListSymptome';
+import { Pathologie } from '@store/types';
 
 type Props = {
   objet: Pathologie;
@@ -27,12 +17,9 @@ const RecapSuivi = ({ objet }: Props) => {
   
   return (
     <View>
-      <BoxHistorique objet={{
-        nom: 'Nathan',
-        more: 'Prud\'homme',
-        namelogo: 'picture',
-        symp: [{nom: 'Nath', date: '07/06', valeur: 10}]
-      }}/>
+      <BoxHistorique objet={objet}/>
+
+      <ListSymptome objets={objet.symptoms}/>
 
       <Button text={i18n.t('suivi.end')} 
               isSelected

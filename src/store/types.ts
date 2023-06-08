@@ -77,3 +77,36 @@ export type RootState = {
   isLoading: boolean;
   disease: Disease;
 };
+
+export type Data = { 
+  date: string,
+  valeur:number,
+}
+
+export type Type = 'num' | 'oui/non' | 'kg' |'°C' | 'Oui/non éval';
+
+export type SymptomeJSON = {
+  id: number;
+  name: string,
+  type: string,
+}
+
+export type Symptome = {
+  id: number;
+  name: string,
+  frequence?: string,
+  data?:Data[],
+  type: Type;
+  question?: String,
+  valMin?: number,
+  valMax?: number,
+}
+  
+export type Pathologie = {
+  id: string;
+  name: string;
+  date?: string;
+  more?: string;
+  namelogo?: string;
+  symptoms: Symptome[];
+}

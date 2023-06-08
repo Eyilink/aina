@@ -1,23 +1,10 @@
 import React, { ReactElement } from 'react';
-import { StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { StyleSheet, TouchableOpacity} from 'react-native';
 import { View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import AppText from '@components/atoms/AppText';
 import colors from '@styles/colors';
-
-type Symptome = {
-    nom: string,
-    date: string,
-    valeur:number,
-  }
-  
-  type Pathologie = {
-    nom: string;
-    date?: string;
-    more: string;
-    namelogo: string;
-    symp: Symptome[];
-  }
+import { Pathologie } from '@store/types';
 
 type Props = {
   objet: Pathologie;
@@ -28,10 +15,10 @@ type Props = {
 const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
   return (
     <TouchableOpacity onPress={onPress} style = {styles.container}>
-      <AntDesign name={objet.namelogo} size={50} color="black" />
+      {objet.namelogo ? <AntDesign name={objet.namelogo} size={50} color="black" /> : null}
       <View style = {styles.content}>
-        <AppText text={objet.nom} style={styles.title} />
-        <AppText text={objet.more} style={styles.subtitle} />
+        <AppText text={objet.name} style={styles.title} />
+        {objet.more ? <AppText text={objet.more} style={styles.subtitle} /> : null}
         {objet.date ? <AppText text= {"Depuis le " + objet.date} style={styles.text} />:null}
         
       </View>

@@ -4,13 +4,8 @@ import { View } from 'react-native';
 import AppText from '@components/atoms/AppText';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import colors from '@styles/colors';
+import { Symptome } from '@store/types';
 
-
-type Symptome = {
-    id: number;
-    name: string;
-    type: string;
-  }
 type Props = {
     objets: Symptome[];
     onPress?: () => void;

@@ -20,37 +20,7 @@ import BoxHistorique from '@components/atoms/BoxHistorique';
 import RecapSuivi from '@components/molecules/RecapSuivi';
 import pathologiesJSON from '@assets/json/pathologies.json'
 import symptomsJSON from '@assets/json/symptomes.json'
-
-import Symptome from '@components/atoms/ListSymptome';
-
-
-type Symptome = {
-  id: number;
-  name: string;
-  type: string;
-};
-
-type Pathologie = {
-  id: string;
-  name: string;
-  symptoms: Symptome[];
-};
-
-const exempleSymList : Symptome[]=[
-  {name: "Poids",id:12,type:"kg"},
-  {name: "Douleur",id:10,type:"/10"},
-]
-
-
-
-
-const exempleSymList : Symptome[]=[
-  {name: "Poids",id:12,type:"kg"},
-  {name: "Douleur",id:10,type:"/10"},
-]
-
-
-
+import { Pathologie, Symptome } from '@store/types';
 
 
 const Evaluate = (): ReactElement => {
@@ -109,13 +79,7 @@ const Evaluate = (): ReactElement => {
         {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : 
         <>
           <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
-          <BoxHistorique objet={{
-              nom: 'Nathan',
-              more: 'Prud\'homme',
-              namelogo: 'picture',
-              symp: [{nom: 'Nath', date: '07/06', valeur: 10}]
-            }}></BoxHistorique>
-            <Symptome objets={exempleSymList}/>
+          <RecapSuivi objet={pathologieData[0]}/>
           <Button
             text={i18n.t('commons.newsuivi')}
             onPress={ValidateButtonNewSuiviPressed}
