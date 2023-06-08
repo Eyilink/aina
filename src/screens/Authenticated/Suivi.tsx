@@ -23,7 +23,7 @@ import symptomsJSON from '@assets/json/symptomes.json'
 import { Pathologie, Symptome } from '@store/types';
 
 
-const Evaluate = (): ReactElement => {
+const Suivi = (): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
@@ -96,7 +96,7 @@ const Evaluate = (): ReactElement => {
 
 
 
-export default Evaluate
+export default Suivi
 
 const styles = StyleSheet.create({
   container: {
