@@ -6,11 +6,9 @@ import ProfilCreation from '@screens/Public/ProfilCreation';
 import ProfileCreated from '@screens/Public/ProfileCreated';
 import Username from '@screens/Public/Username';
 import Age from '@screens/Public/Age';
-import PostalCode from '@screens/Public/PostalCode';
+
 import Size from '@screens/Public/Size';
 import Weight from '@screens/Public/Weight';
-import Diseases from '@screens/Public/Diseases';
-import Pregnant from '@screens/Public/Pregnant';
 import Reminder from '@screens/Public/Reminder';
 import Confirmation from '@screens/Public/Confirmation';
 
