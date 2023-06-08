@@ -18,7 +18,8 @@ import Button from '@components/atoms/Button';
 import { useAuthStore } from '@store/store';
 import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
 import { StoreActionApi } from 'react-sweet-state';
-import { Pathologie, RootState, Symptome, SymptomeJSON, Type } from '@store/types';
+import { Pathologie, RootState, Symptome, SymptomeJSON } from '@store/types';
+import Previous from '@components/atoms/Previous';
 
 type StoreApi = StoreActionApi<RootState>;
 
@@ -31,7 +32,6 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   const [, actions] = useAuthStore();
 
   const symptomeData: Symptome[] = symptomsJSON.map((item: SymptomeJSON) => {
-    console.log(item.type);
     return{
     id: item.id,
     name: item.name,
