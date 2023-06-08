@@ -30,17 +30,6 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
 
-  // const isValidSymptomeType = (value: string): value is Type => {
-  //   return (
-  //     value == 'Num.' ||
-  //     value == '0ui/non' ||
-  //     value == 'kg' ||
-  //     value == '°C' ||
-  //     value == 'Oui/non éval' ||
-  //     value == ''
-  //   );
-  // };
-
   const symptomeData: Symptome[] = symptomsJSON.map((item: SymptomeJSON) => {
     console.log(item.type);
     return{

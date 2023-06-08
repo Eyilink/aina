@@ -79,7 +79,6 @@ export type Data = {
   valeur:number,
 }
 
-export type Type = 'Num.' | 'Oui/non' | 'kg' |'°C' | 'Oui/non éval' | '';
 
 export type SymptomeJSON = {
   id: number;
