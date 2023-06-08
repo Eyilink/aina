@@ -24,8 +24,7 @@ const EndSuiviPopUp = ({ onClose }: AskPopUpProps) => {
         <Button
           text={i18n.t('commons.no')}
           onPress={onClose}
-        />   
-        
+        />      
     </View>
   );
 };
