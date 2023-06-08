@@ -11,13 +11,13 @@ type Props = {
 
   const ChartSymptome = ({ objet }: Props): ReactElement => {
     
-      const labels = objet.data.map(item => item.date);
-      const values = objet.data.map(item => item.valeur);
+      const labels = objet.data ? objet.data.map(item => item.date) : null;
+      const values = objet.data ? objet.data.map(item => item.valeur) : null;
       return (
-        <View style={{ height: 200, flexDirection: 'row' }}>
+        <View style={{ marginRight:20,marginLeft:20,height:150, flexDirection: 'row'}}>
           <YAxis
             data={values}
-            contentInset={{ top: 20, bottom: 20 }}
+            contentInset={{ top: 2, bottom: 2 }}
             svg={{ fontSize: 10, fill: 'grey' }}
             numberOfTicks={10}
             formatLabel={value => `${value}`}
@@ -27,7 +27,9 @@ type Props = {
               style={{ flex: 1 }}
               data={values}
               svg={{ stroke: 'rgb(134, 65, 244)' }}
-              contentInset={{ top: 20, bottom: 20 }}
+              contentInset={{ top: 2, bottom: 2 }}
+               // Ajustez la valeur du curveFactor selon vos besoins (0.5 pour une courbe plus arrondie)
+              //showPoints={true}
             >
               <Grid />
             </LineChart>
