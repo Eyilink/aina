@@ -21,6 +21,10 @@ import RecapSuivi from '@components/molecules/RecapSuivi';
 import pathologiesJSON from '@assets/json/pathologies.json'
 import symptomsJSON from '@assets/json/symptomes.json'
 import { Pathologie, Symptome } from '@store/types';
+import { Ionicons } from '@expo/vector-icons';
+import colors from '@styles/colors';
+
+
 
 
 const Suivi = (): ReactElement => {
@@ -76,7 +80,14 @@ const Suivi = (): ReactElement => {
           isValidate
           stretch
         /> */}
-        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : 
+        {ButtonNewSuiviClicked? <>
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={ValidateButtonNewSuiviPressed}
+          />
+          <NewSuivi/></>  : 
         <>
           <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
           <RecapSuivi objet={pathologieData[0]}/>
@@ -111,6 +122,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-
   },
+  
 });
