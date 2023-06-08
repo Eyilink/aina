@@ -69,6 +69,7 @@
     "yes": "Oui",
     "no": "Non",
     "none": "aucun",
+    "close": "fermer",
     "units": {
       "cm": "cm",
       "kg": "kg",
@@ -131,7 +132,8 @@
     "runnyNose": "Écoulement nasal",
     "skinProblem": "Problème cutané",
     "notes": "Notes",
-    "peopleMet": "Personnes rencontrées"
+    "peopleMet": "Personnes rencontrées",
+    "endrecord": "Etes vous sûr de vouloir terminer\nce suivi ?",
   },
   "home": {
     "firstTime": "Afin de pouvoir évaluer votre état de santé et de vous donner les recommandations nécessaires, nous avons besoin de connaître vos symptômes.",
