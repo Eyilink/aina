@@ -18,14 +18,10 @@ export type Diseases = {
 };
 
 export type User = {
-  cgu: boolean;
   username: string;
   age: number;
-  postalCode: number;
   size: number;
   weight: number;
-  diseases: Diseases;
-  pregnant: boolean;
   reminder: Reminder;
 };
 
