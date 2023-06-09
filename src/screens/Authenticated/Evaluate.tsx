@@ -70,7 +70,8 @@ const Evaluate = (): ReactElement => {
           isValidate
           stretch
         /> */}
-        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : <Button
+        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : 
+        <Button
           text={i18n.t('commons.validate')}
           onPress={ValidateButtonNewSuiviPressed}
           stretch
@@ -83,7 +84,6 @@ const Evaluate = (): ReactElement => {
     </Container>
   );
 };
-
 
 
 export default Evaluate
