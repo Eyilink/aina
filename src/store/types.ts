@@ -22,6 +22,7 @@ export type User = {
   age: number;
   size: number;
   weight: number;
+  my_personal_datas: string[][];
   reminder: Reminder;
 };
 
@@ -66,12 +67,14 @@ export type Disease = {
 export type Auth = {
   user: string | null;
   token: string | null;
+
 };
 
 export type RootState = {
   auth: Auth;
   isLoading: boolean;
   disease: Disease;
+  twoDArray: string[][];
 };
 
 export type Data = { 

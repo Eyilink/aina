@@ -3,6 +3,7 @@ import { SafeAreaView, View } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useState } from 'react';
 import { Pathologie, Symptome } from '@store/types';
 
 type Props = {
@@ -12,6 +13,19 @@ type Props = {
 
 const DropDownMenu = ({ objets, ischeckeable }: Props) => {
   const isPathologie = Array.isArray(objets) && objets.length > 0 && 'symptoms' in objets[0];
+  const [checkedArray, setCheckedArray] = useState<boolean[]>([]);
+  const handleCheckboxChange = (index: number, objet: Pathologie | Symptome) => {
+    const updatedCheckedArray = [...checkedArray];
+    if ('symptoms' in objet) {
+      
+      updatedCheckedArray[index] = true;
+    } else {
+     
+      updatedCheckedArray[index] = true;
+    }
+  
+    setCheckedArray(updatedCheckedArray);
+  };
   
 
   
@@ -26,7 +40,8 @@ const DropDownMenu = ({ objets, ischeckeable }: Props) => {
               key={index}
               objet={pathologie}
               objets={pathologie.symptoms}
-              ischeckeable={ischeckeable}
+              ischeckeable={checkedArray[index]}
+              onCheckboxChange={() => handleCheckboxChange(index,objet)}
             />
           );
         } else {
@@ -35,7 +50,8 @@ const DropDownMenu = ({ objets, ischeckeable }: Props) => {
             <BoxPathologie
               key={index}
               objet={symptome}
-              ischeckeable={ischeckeable}
+              ischeckeable={checkedArray[index]}
+              onCheckboxChange={() => handleCheckboxChange(index,objet)}
             />
           );
         }

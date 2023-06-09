@@ -30,12 +30,16 @@ type EditUserProfileProps = {
   key: keyof User;
   value: string | number | boolean | object;
 };
+type UserStoreState = {
+  twoDArray: string[][];
+};
 
 // This is the value of the store on initialisation
 const initialState: RootState = {
   isLoading: false,
   auth: { user: null, token: null },
   disease: { [MALADIE1]: { user: null, reports: null } },
+  twoDArray: [],
 };
 
 // All the actions that mutate the store
@@ -164,6 +168,30 @@ const actions = {
     } catch (error) {
       setState({ isLoading: false });
       console.warn(error);
+    }
+  },
+
+  setTwoDArray: (twoDArray: string[][]) => async ({ setState }: StoreActionApi<UserStoreState>) => {
+    // Update the state with the new twoDArray
+    setState({ twoDArray });
+
+    // Store the twoDArray in AsyncStorage
+    try {
+      await AsyncStorage.setItem('twoDArray', JSON.stringify(twoDArray));
+    } catch (error) {
+      console.error('Error storing twoDArray in AsyncStorage:', error);
+    }
+  },
+  getTwoDArray: () => async ({ setState }: StoreActionApi<UserStoreState>) => {
+    // Retrieve the twoDArray from AsyncStorage
+    try {
+      const storedTwoDArray = await AsyncStorage.getItem('twoDArray');
+      if (storedTwoDArray) {
+        const parsedTwoDArray = JSON.parse(storedTwoDArray);
+        setState({ twoDArray: parsedTwoDArray });
+      }
+    } catch (error) {
+      console.error('Error retrieving twoDArray from AsyncStorage:', error);
     }
   },
 };

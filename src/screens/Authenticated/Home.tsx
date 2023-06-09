@@ -82,7 +82,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        <HomeComponent />
+        <HomeComponent isDataEmpty/>
       </View>
     </Container>
   );
