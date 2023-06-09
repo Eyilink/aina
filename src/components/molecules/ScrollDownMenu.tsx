@@ -3,27 +3,61 @@ import { View, StyleSheet, ScrollView, Image, ImageSourcePropType, TouchableOpac
 import AppText from '@components/atoms/AppText';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-
+import i18n from '@i18n/i18n';
+import Button from '@components/atoms/Button';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
 }
-
+type Symptome = {
+    id: number;
+    name: string;
+    type: string;
+  };
+interface Pathologie  {
+    id: string;
+    name: string;
+    symptoms: Symptome[];
+    icon: ImageSourcePropType
+  };
 interface DropdownMenuProps {
-  items: DropdownItem[];
+  items: Pathologie[];
+  
 }
 
 interface chk_BoxProps {
     index: number;
-    title: string;
-    
+    symptom: Symptome;
+    id_p: string;
+    twoDArray: string[][];
+    setTwoDArray: React.Dispatch<React.SetStateAction<string[][]>>;
   }
-  
-const Chk_Box : React.FC<chk_BoxProps> = ({index,title }) => {
+
+
+const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTwoDArray }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
+        if(isChecked){
+        const existingObject = twoDArray.find((obj) => obj[0] === id_p);
+        const existingSymptom = twoDArray.find((obj) => obj.slice(1).includes(symptom.id.toString()));
+        if(!existingSymptom)
+            if (existingObject) {
+                // Object with id_p exists, append symptomId to the second dimension
+                const updatedArray = twoDArray.map((obj) => {
+                if (obj[0] === id_p) {
+                    return [...obj,symptom.id.toString() ];
+                }
+                return obj;
+                });
+                setTwoDArray(updatedArray);
+            } else {
+                const updatedArray = [...twoDArray , [id_p,symptom.id.toString()]];
+                setTwoDArray(updatedArray);
+            }
+            };
       };
+    
     return(
         <TouchableOpacity
         key={index}
@@ -34,7 +68,7 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,title }) => {
           {isChecked && <Entypo name="check" size={24} color="#ffffff" style={{}}/>}
         </View>
         <View style={styles.itemTitleContainer}>
-          <AppText style={styles.itemTitle} text={title} />
+          <AppText style={styles.itemTitle} text={symptom.name} />
         </View>
       </TouchableOpacity>
     )
@@ -43,14 +77,16 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,title }) => {
 
 const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
- 
+  const [isWhichP , setIsWichP] = useState<string>("");
+  const [twoDArray, setTwoDArray] = useState<string[][]>([]);
+//   useEffect(() => {
+//     setIsSymptom(false);
+   
+//   }, []);
 
-  useEffect(() => {
-    setIsSymptom(false);
-  }, []);
-
-  const handleItemPress = () => {
+  const handleItemPress = (id : string) => {
     setIsSymptom(true);
+    setIsWichP(id);
   };
 
   
@@ -61,6 +97,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
 
   return (
     <View style={styles.container}>
+        <View style={styles.or_background}>
       {isSymptom && (
         <TouchableOpacity style={styles.arrowContainer} onPress={handleArrowClick}>
           <AntDesign style={styles.arrowContainer} name="arrowleft" size={24} color="black" />
@@ -68,9 +105,19 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       )}
       {isSymptom ? (
         <ScrollView>
-          {items.map((item, index) => (
-           <Chk_Box index={index} title={item.title} />
-          ))}
+          {items.map((item, index) => {
+            if (isWhichP === item.id) {
+              return (
+                <React.Fragment key={index}>
+                  {item.symptoms.map((symptom, idx) => (
+                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTwoDArray={setTwoDArray} />
+                  ))}
+                </React.Fragment>
+              );
+            } else {
+              return null;
+            }
+          })}
         </ScrollView>
       ) : (
         <ScrollView>
@@ -78,25 +125,37 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
             <TouchableOpacity
               key={index}
               style={styles.itemContainer}
-              onPress={handleItemPress}
+              onPress={()=>handleItemPress(item.id)}
             >
               <View style={styles.itemIconContainer}>
                 <Image style={{ width: 40, height: 40 }} source={item.icon} />
               </View>
               <View style={styles.itemTitleContainer}>
-                <AppText style={styles.itemTitle} text={item.title} />
+                <AppText style={styles.itemTitle} text={item.name} />
               </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
       )}
+      </View>
+      {if(!isSymptom)
+      <Button
+          text={i18n.t('commons.validate')}
+          onPress={()=>{console.log(twoDArray)}}
+          isValidate
+          stretch
+          style={{marginBottom: 0}}
+        />
+      }
+      
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, },
+    or_background:{
     backgroundColor: '#f2f2f2', // Set the gray background color
   },
   arrowContainer: {

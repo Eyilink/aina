@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, SafeAreaView, StyleSheet, View } from 'react-native';
+import { AsyncStorage, ImageSourcePropType, SafeAreaView, StyleSheet, View } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,6 +22,7 @@ import { RootState } from '@store/types';
 import AppText from '@components/atoms/AppText';
 import ScrollDownMenu from './ScrollDownMenu';
 
+
 type StoreApi = StoreActionApi<RootState>;
 
 type Symptome = {
@@ -34,6 +35,7 @@ type Pathologie = {
   id: string;
   name: string;
   symptoms: Symptome[];
+  icon: ImageSourcePropType
 };
 
 type Props = {
@@ -48,6 +50,24 @@ const dropdownItems = [
   { title: 'Cardiovasculaire', icon: require('@assets/images/6_i.png') },
   // Add more items as needed
 ];
+const getIconPath = (iconName: string): ImageSourcePropType => {
+  switch (iconName) {
+    case '1_i.png':
+      return require('@assets/images/1_i.png');
+    case '2_i.png':
+      return require('@assets/images/2_i.png');
+    case '3_i.png':
+      return require('@assets/images/3_i.png');
+    case '4_i.png':
+      return require('@assets/images/4_i.png');
+    case '5_i.png':
+      return require('@assets/images/5_i.png');
+    case '6_i.png':
+      return require('@assets/images/6_i.png');
+    default:
+      return require('@assets/images/6_i.png'); // Provide a default image path
+  }
+};
 const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
@@ -60,10 +80,12 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
     id: item.id,
     name: item.name,
-//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
-    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
+    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id))),
+    icon: getIconPath(item.icon), // Use a function to get the static image path
   }));
-
+  
+  
+  
   const handlePress = () => {
     //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
     //     // Vous pouvez ajouter votre logique ou vos actions ici
@@ -98,14 +120,8 @@ const NewSuivi = ({ isFirstLog }: Props) => {
     <>
       {/* <DropDownMenu objets={pathologieData} ischeckeable={false}/> */}
       {/* <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton> */}
-      <ScrollDownMenu items={dropdownItems} />
-      <Button
-          text={i18n.t('commons.validate')}
-          onPress={()=>{}}
-          isValidate
-          stretch
-          style={{marginBottom: -10}}
-        />
+      <ScrollDownMenu items={pathologieData} />
+     
     </>
     )}
   </View>
