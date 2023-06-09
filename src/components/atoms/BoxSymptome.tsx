@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   namestyle: {
     justifyContent:'space-around',
     flexDirection: 'row',
-    //marginTop:20,
+    marginTop:20,
 
   },
   title: {
