@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
+import { useAuthStore } from '@store/store';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -30,15 +31,19 @@ interface chk_BoxProps {
     symptom: Symptome;
     id_p: string;
     twoDArray: string[][];
-    setTwoDArray: React.Dispatch<React.SetStateAction<string[][]>>;
+    setTDArray: React.Dispatch<React.SetStateAction<string[][]>>;
   }
 
 
-const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTwoDArray }) => {
+const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    useEffect(()=>{
+        const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
+        setIsChecked(checked)
+    },[])
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
-        if(isChecked){
+        // if(isChecked){
         const existingObject = twoDArray.find((obj) => obj[0] === id_p);
         const existingSymptom = twoDArray.find((obj) => obj.slice(1).includes(symptom.id.toString()));
         if(!existingSymptom)
@@ -50,12 +55,12 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTwoD
                 }
                 return obj;
                 });
-                setTwoDArray(updatedArray);
+                setTDArray(updatedArray);
             } else {
                 const updatedArray = [...twoDArray , [id_p,symptom.id.toString()]];
-                setTwoDArray(updatedArray);
+                setTDArray(updatedArray);
             }
-            };
+            // };
       };
     
     return(
@@ -78,7 +83,9 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTwoD
 const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
   const [isWhichP , setIsWichP] = useState<string>("");
-  const [twoDArray, setTwoDArray] = useState<string[][]>([]);
+  const [twoDArray, setTDArray] = useState<string[][]>([]);
+  const [, actions] = useAuthStore();
+//   const [array, {setTwoDArray,getTwoDArray}] = useUserStore((state)=> [state.twoDArray,state]);
 //   useEffect(() => {
 //     setIsSymptom(false);
    
@@ -110,7 +117,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
               return (
                 <React.Fragment key={index}>
                   {item.symptoms.map((symptom, idx) => (
-                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTwoDArray={setTwoDArray} />
+                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} />
                   ))}
                 </React.Fragment>
               );
@@ -138,13 +145,13 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
         </ScrollView>
       )}
       </View>
-      {if(!isSymptom)
+      {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
-          onPress={()=>{console.log(twoDArray)}}
+          onPress={()=>{actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });}}
           isValidate
           stretch
-          style={{marginBottom: 0}}
+          style={{marginTop: 10}}
         />
       }
       

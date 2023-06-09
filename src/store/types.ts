@@ -76,4 +76,5 @@ export type RootState = {
   auth: Auth;
   isLoading: boolean;
   disease: Disease;
+  twoDArray: string[][];
 };
