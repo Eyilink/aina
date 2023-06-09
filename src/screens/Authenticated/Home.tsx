@@ -76,7 +76,7 @@ const Home = ({ navigation }: Props): ReactElement => {
 
   const handleNotification = (notification: Notification): void => {
     const { origin } = notification;
-    if (origin === 'selected') navigation.navigate('Evaluate');
+    if (origin === 'selected') navigation.navigate('Suivi');
   };
 
   return (

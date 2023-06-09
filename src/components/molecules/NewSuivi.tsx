@@ -72,11 +72,14 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
 
-  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
+  const symptomeData: Symptome[] = symptomsJSON.map((item: SymptomeJSON) => {
+    return{
     id: item.id,
     name: item.name,
-    type: item.type,
-  }));
+    type: item.type
+    }
+  });
+
   const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
     id: item.id,
     name: item.name,

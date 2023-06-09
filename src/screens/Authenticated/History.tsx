@@ -24,36 +24,42 @@ import { AntDesign } from '@expo/vector-icons';
 import BoxHistorique from '@components/atoms/BoxHistorique';
 import { Ionicons } from '@expo/vector-icons';
 import BoxSymptome from '@components/atoms/BoxSymptome';
+import ChartSymptome from '@components/atoms/ChartSymptome';
+import { Symptome, Pathologie, Data } from '@store/types';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
 };
 
 
-type Symptome = {
-  nom: string,
-  frequence: string,
-  valeur:number,
-  unite:string,
-}
 
-type Pathologie = {
-  nom: string;
-  date: string;
-  more: string;
-  namelogo: string;
-  symp: Symptome[];
-}
+const ExempleData : Data[] = [
+  {date:'08/06/2023', valeur: 12},
+  {date:'01/06/2023', valeur: 32},
+  {date:'25/05/2023', valeur: 20},
+  {date:'08/06/2023', valeur: 12},
+  {date:'01/06/2023', valeur: 32},
+  {date:'25/05/2023', valeur: 20},
+]
+
+const ExempleData2 : Data[] = [
+  {date:'08/06/2023', valeur: 5},
+  {date:'01/06/2023', valeur: 6},
+  {date:'25/05/2023', valeur: 9},
+  {date:'08/06/2023', valeur: 5},
+  {date:'01/06/2023', valeur: 4},
+  {date:'25/05/2023', valeur: 1},
+]
 
 const exempleSymList : Symptome[]=[
-  {nom: "Poids",frequence:"tous les 7 jours",valeur:67,unite:"kg"},
-  {nom: "Douleur",frequence:"Tous les jours",valeur:8,unite:"/10"},
+  {id: 1, name: "Poids",frequence:"tous les 7 jours",data:ExempleData,type:"kg"},
+  {id: 2, name: "Douleur",frequence:"Tous les jours",data:ExempleData2,type:"kg"},
 ]
 
 const exempleList: Pathologie[] = [
-  { nom: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symp:exempleSymList },
-  { nom: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symp:exempleSymList  },
-  { nom: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture",symp:exempleSymList  },
+  { id:"1",name: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symptoms:exempleSymList },
+  { id:"2",name: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symptoms:exempleSymList  },
+  { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture",symptoms:exempleSymList  },
   ]
 
   
@@ -92,10 +98,10 @@ const History = ({ navigation }: Props): ReactElement => {
             onPress={prev}
           />
           <View style= {styles.container}> 
-            <AntDesign name={exempleList[currentIndex].namelogo} size={50} color="black" />
+            {exempleList[currentIndex].namelogo ? <AntDesign name={exempleList[currentIndex].namelogo} size={50} color="black" /> : null}
             <View style = {styles.content}>
-              <AppText text={exempleList[currentIndex].nom} style={styles.title} />
-              <AppText text={exempleList[currentIndex].more} style={styles.subtitle} />
+              <AppText text={exempleList[currentIndex].name} style={styles.title} />
+              {exempleList[currentIndex].more ? <AppText text={exempleList[currentIndex].more} style={styles.subtitle} /> : null}
               <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
             </View>
           </View>
@@ -104,11 +110,25 @@ const History = ({ navigation }: Props): ReactElement => {
             <Button style={styles.button} text={"Graph"} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
           {graph ? 
-            (  <AppText text={"GRAPH"} style={styles.pagetitle} /> )
+            (  
+              <>
+            {
+            exempleList[currentIndex].symptoms.map((object, index) => {    
+                return (
+                  <>
+                  <AppText text={object.name} style={styles.pagetitle} />
+                  {object.data ? <ChartSymptome objet = {object}/> : null}
+                </>
+                );      
+              }) 
+            }
+            
+              </>
+            )
             :
             <>
             {
-              exempleList[currentIndex].symp.map((object, index) => {    
+              exempleList[currentIndex].symptoms.map((object, index) => {    
                 return (<BoxSymptome key={index} objet={object}/>);      
               })
             }
