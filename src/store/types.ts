@@ -67,6 +67,7 @@ export type Disease = {
 export type Auth = {
   user: string | null;
   token: string | null;
+
 };
 
 export type RootState = {

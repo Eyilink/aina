@@ -5,7 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
-import { useAuthStore } from '@store/store';
+import { useAuthStore, useUserStore } from '@store/store';
+import { CGU_URL, MALADIE1 } from '@constants/constants';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -87,6 +88,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [isWhichP , setIsWichP] = useState<string>("");
   const [twoDArray, setTDArray] = useState<string[][]>([]);
   const [, actions] = useAuthStore();
+  const [user, ] = useUserStore({ disease: MALADIE1 });
 
 
   const handleItemPress = (id : string) => {
@@ -146,7 +148,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
-          onPress={()=>{actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });}}
+          onPress={()=>{actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });console.log(user.my_personal_datas)}}
           isValidate
           stretch
           style={{marginTop: 10}}
