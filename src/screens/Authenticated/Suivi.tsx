@@ -21,9 +21,13 @@ import RecapSuivi from '@components/molecules/RecapSuivi';
 import pathologiesJSON from '@assets/json/pathologies.json'
 import symptomsJSON from '@assets/json/symptomes.json'
 import { Pathologie, Symptome } from '@store/types';
+import { Ionicons } from '@expo/vector-icons';
+import colors from '@styles/colors';
 
 
-const Evaluate = (): ReactElement => {
+
+
+const Suivi = (): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
@@ -76,7 +80,14 @@ const Evaluate = (): ReactElement => {
           isValidate
           stretch
         /> */}
-        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : 
+        {ButtonNewSuiviClicked? <>
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={ValidateButtonNewSuiviPressed}
+          />
+          <NewSuivi/></>  : 
         <>
           <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
           <RecapSuivi objet={pathologieData[0]}/>
@@ -96,7 +107,7 @@ const Evaluate = (): ReactElement => {
 
 
 
-export default Evaluate
+export default Suivi
 
 const styles = StyleSheet.create({
   container: {
@@ -111,6 +122,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-
   },
+  
 });

@@ -18,7 +18,8 @@ import Button from '@components/atoms/Button';
 import { useAuthStore } from '@store/store';
 import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
 import { StoreActionApi } from 'react-sweet-state';
-import { Pathologie, RootState, Symptome, SymptomeJSON, Type } from '@store/types';
+import { Pathologie, RootState, Symptome, SymptomeJSON } from '@store/types';
+import Previous from '@components/atoms/Previous';
 
 type StoreApi = StoreActionApi<RootState>;
 
@@ -30,20 +31,7 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
 
-  const isValidSymptomeType = (value: string): value is Type => {
-    return (
-      value == 'num' ||
-      value == 'oui/non' ||
-      value == 'kg' ||
-      value == '°C' ||
-      value == 'Oui/non éval'
-    );
-  };
-
   const symptomeData: Symptome[] = symptomsJSON.map((item: SymptomeJSON) => {
-    if (!isValidSymptomeType(item.type)) {
-      throw new Error(`Type invalide : ${item.type}`);
-    }
     return{
     id: item.id,
     name: item.name,

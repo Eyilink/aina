@@ -24,7 +24,7 @@ export type AuthenticatedStackParamList = {
 
 export type BottomTabParamList = {
   Home: undefined;
-  Evaluate: undefined;
+  Suivi: undefined;
   History: undefined;
   Profile: undefined;
 };
