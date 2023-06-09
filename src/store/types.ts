@@ -18,14 +18,10 @@ export type Diseases = {
 };
 
 export type User = {
-  cgu: boolean;
   username: string;
   age: number;
-  postalCode: number;
   size: number;
   weight: number;
-  diseases: Diseases;
-  pregnant: boolean;
   reminder: Reminder;
 };
 
@@ -77,3 +73,35 @@ export type RootState = {
   isLoading: boolean;
   disease: Disease;
 };
+
+export type Data = { 
+  date: string,
+  valeur:number,
+}
+
+
+export type SymptomeJSON = {
+  id: number;
+  name: string,
+  type: string,
+}
+
+export type Symptome = {
+  id: number;
+  name: string,
+  frequence?: string,
+  data?:Data[],
+  type: string;
+  question?: String,
+  valMin?: number,
+  valMax?: number,
+}
+  
+export type Pathologie = {
+  id: string;
+  name: string;
+  date?: string;
+  more?: string;
+  namelogo?: string;
+  symptoms: Symptome[];
+}

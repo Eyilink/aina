@@ -10,18 +10,7 @@ import DropDownMenu from '@components/molecules/DropDownMenu'
 import fonts from '@styles/fonts';
 import colors from '@styles/colors';
 import layout from '@styles/layout';
-
-type Symptome = {
-  id: number;
-  name: string;
-  type: string;
-}
-
-type Pathologie = {
-  id: string;
-  name: string;
-  symptoms: Symptome[];
-}
+import { Pathologie, Symptome } from '@store/types';
 
 type Props = {
   objet: Symptome|Pathologie;

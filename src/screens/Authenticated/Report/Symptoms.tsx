@@ -217,7 +217,7 @@ const Symptoms = ({ navigation, route }: Props): ReactElement => {
         max={10}
         type="pain"
         hasPainSymptoms={symptoms.selectedSymptom === 'pain'}
-        title={i18n.t(`report.${symptoms.selectedSymptom}Evaluate`)}
+        title={i18n.t(`report.${symptoms.selectedSymptom}Suivi`)}
       />
     </Container>
   );

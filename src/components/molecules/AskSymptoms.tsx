@@ -14,14 +14,7 @@ import SliderFooter from '@components/atoms/SliderFooter';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import layout from '@styles/layout';
-
-type Symptome = {
-  name: string;
-  type: 'num' | 'oui/non' | 'oui/non eval';
-  question: String,
-  valMin?: number,
-  valMax?: number,
-}
+import { Symptome } from '@store/types';
 
 
 const InputBox = (s: Symptome) => {
@@ -90,7 +83,7 @@ const InputBox = (s: Symptome) => {
       </View>
     );
   // if the symptom is yes / no, we display a oui/non box
-  } else if (s.type === 'oui/non' || s.type === 'oui/non eval') {
+  } else if (s.type == 'oui/non' || s.type == 'oui/non eval') {
     symptomText = (
       <View>
         <Button

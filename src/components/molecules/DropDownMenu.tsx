@@ -3,18 +3,7 @@ import { SafeAreaView, View } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
-
-type Symptome = {
-  id: number;
-  name: string;
-  type: string;
-};
-
-type Pathologie = {
-  id: string;
-  name: string;
-  symptoms: Symptome[];
-};
+import { Pathologie, Symptome } from '@store/types';
 
 type Props = {
   objets: (Pathologie[] | Symptome[]);

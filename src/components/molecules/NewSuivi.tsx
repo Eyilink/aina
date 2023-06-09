@@ -18,21 +18,10 @@ import Button from '@components/atoms/Button';
 import { useAuthStore } from '@store/store';
 import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
 import { StoreActionApi } from 'react-sweet-state';
-import { RootState } from '@store/types';
+import { Pathologie, RootState, Symptome, SymptomeJSON } from '@store/types';
+import Previous from '@components/atoms/Previous';
 
 type StoreApi = StoreActionApi<RootState>;
-
-type Symptome = {
-  id: number;
-  name: string;
-  type: string;
-};
-
-type Pathologie = {
-  id: string;
-  name: string;
-  symptoms: Symptome[];
-};
 
 type Props = {
   isFirstLog?: boolean;
@@ -42,15 +31,17 @@ const NewSuivi = ({ isFirstLog }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
 
-  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
+  const symptomeData: Symptome[] = symptomsJSON.map((item: SymptomeJSON) => {
+    return{
     id: item.id,
     name: item.name,
-    type: item.type,
-  }));
+    type: item.type
+    }
+  });
+
   const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
     id: item.id,
     name: item.name,
-//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
     symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
   }));
 
