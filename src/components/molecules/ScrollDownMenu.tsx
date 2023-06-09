@@ -39,10 +39,12 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDAr
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
-        setIsChecked(checked)
+        setIsChecked(checked);
+        console.log(twoDArray)
     },[])
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
+
         // if(isChecked){
         const existingObject = twoDArray.find((obj) => obj[0] === id_p);
         const existingSymptom = twoDArray.find((obj) => obj.slice(1).includes(symptom.id.toString()));
@@ -85,11 +87,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [isWhichP , setIsWichP] = useState<string>("");
   const [twoDArray, setTDArray] = useState<string[][]>([]);
   const [, actions] = useAuthStore();
-//   const [array, {setTwoDArray,getTwoDArray}] = useUserStore((state)=> [state.twoDArray,state]);
-//   useEffect(() => {
-//     setIsSymptom(false);
-   
-//   }, []);
+
 
   const handleItemPress = (id : string) => {
     setIsSymptom(true);
