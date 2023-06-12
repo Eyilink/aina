@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View, Alert } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -15,6 +15,20 @@ type Props = {
 
 const RecapSuivi = ({ objet }: Props) => {
   
+  const EndSuivi = (): void => {
+    Alert.alert(
+      i18n.t('commons.attention'),
+      i18n.t('report.endrecord'),
+      [
+        { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
+        {
+          text: i18n.t('commons.errors.ok'),
+        },
+      ],
+      { cancelable: false },
+    );
+  };
+
   return (
     <View>
       <BoxHistorique objet={objet}/>
@@ -23,9 +37,7 @@ const RecapSuivi = ({ objet }: Props) => {
 
       <Button text={i18n.t('suivi.end')} 
               isSelected
-              onPress={function (): void {
-                throw new Error('Function not implemented.');
-              } } 
+              onPress={EndSuivi} 
       />
     </View>
   );
