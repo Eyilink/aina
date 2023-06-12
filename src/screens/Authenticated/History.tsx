@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Feather } from '@expo/vector-icons';
 
@@ -57,9 +57,9 @@ const exempleSymList : Symptome[]=[
 ]
 
 const exempleList: Pathologie[] = [
-  { id:"1",name: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symptoms:exempleSymList },
-  { id:"2",name: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"picture",symptoms:exempleSymList  },
-  { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"picture",symptoms:exempleSymList  },
+  { id:"1",name: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:'3_i.png',symptoms:exempleSymList },
+  { id:"2",name: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"6_i.png",symptoms:exempleSymList  },
+  { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"4_i.png",symptoms:exempleSymList  },
   ]
 
   
@@ -85,6 +85,25 @@ const History = ({ navigation }: Props): ReactElement => {
     graphClicked(!graph);
   }
 
+  const getIconPath = (iconName: string): ImageSourcePropType => {
+    switch (iconName) {
+      case '1_i.png':
+        return require('@assets/images/1_i.png');
+      case '2_i.png':
+        return require('@assets/images/2_i.png');
+      case '3_i.png':
+        return require('@assets/images/3_i.png');
+      case '4_i.png':
+        return require('@assets/images/4_i.png');
+      case '5_i.png':
+        return require('@assets/images/5_i.png');
+      case '6_i.png':
+        return require('@assets/images/6_i.png');
+      default:
+        return require('@assets/images/6_i.png'); // Provide a default image path
+    }
+  };
+
   return ( 
     
     <Container>
@@ -98,7 +117,7 @@ const History = ({ navigation }: Props): ReactElement => {
             onPress={prev}
           />
           <View style= {styles.container}> 
-            {exempleList[currentIndex].namelogo ? <AntDesign name={exempleList[currentIndex].namelogo} size={50} color="black" /> : null}
+            {exempleList[currentIndex].namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(exempleList[currentIndex].namelogo)} /> : null}
             <View style = {styles.content}>
               <AppText text={exempleList[currentIndex].name} style={styles.title} />
               {exempleList[currentIndex].more ? <AppText text={exempleList[currentIndex].more} style={styles.subtitle} /> : null}
@@ -115,12 +134,12 @@ const History = ({ navigation }: Props): ReactElement => {
             {
             exempleList[currentIndex].symptoms.map((object, index) => {    
                 return (
-                  <>
+                 
                   <View key= {index}>
                   <AppText  text={object.name} style={styles.pagetitle} />
-                  {object.data ? <ChartSymptome objet = {object}/> : null}
+                  {object.data ? <ChartSymptome  objet = {object}/> : null}
                   </View>
-                </>
+             
                 );      
               }) 
             }
