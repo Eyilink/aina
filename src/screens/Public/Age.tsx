@@ -20,7 +20,7 @@ type Props = {
   navigation: StackNavigationProp<PublicStackParamList, 'Age'>;
 };
 
-const BirthDateForm = ({ navigation }) => {
+const BirthDateForm = ({ navigation }: Props) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
@@ -64,7 +64,7 @@ const BirthDateForm = ({ navigation }) => {
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
-      navigation.navigate("Size");
+      navigation.navigate("MoreData");
     }
   };
 
