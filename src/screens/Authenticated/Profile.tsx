@@ -1,4 +1,4 @@
-import React, { ReactElement , useState} from 'react';
+import React, { Component, ReactElement , useState} from 'react';
 import {
   Text,
   StyleSheetProperties,
@@ -26,11 +26,14 @@ import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { CGU_URL, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
+import NewSuivi from '@components/molecules/NewSuivi';
+import Evaluate from '@screens/Authenticated/Evaluate';
 
 
-const Profile = (): ReactElement => {
+function Profile(): ReactElement {
+  const [showElements, setShowElements] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
-
+  const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const onEditProfile = (): void => {
     Alert.alert(
       i18n.t('commons.attention'),
@@ -42,49 +45,55 @@ const Profile = (): ReactElement => {
           onPress: (): Promise<void> => actions.resetUserSession(),
         },
       ],
-      { cancelable: false },
+      { cancelable: false }
     );
   };
+ const ValidateButtonNewSuiviPressed = (): void => {
+    <NewSuivi/>
+    setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
+  };
+  let couleur = 0;
+  const symptoms = [
+    { id: 1, date: '2023-06-01', metric: 30, value: 'Fever' },
+    { id: 2, date: '2023-06-02', metric: 10, value: 'Cough' },
+    { id: 3, date: '2023-06-03', metric: 20, value: 'Headache' },
+  ];
 
-let couleur=0;
-const symptoms = [
-  { id: 1, date: '2023-06-01', metric: 30, value: 'Fever' },
-  { id: 2, date: '2023-06-02', metric: 10, value: 'Cough' },
-  { id: 3, date: '2023-06-03', metric: 20, value: 'Headache' },
-];
+  const onPressCGU = async (): Promise<void> => {
+    await WebBrowser.openBrowserAsync(CGU_URL);
+  };
 
-const onPressCGU = async (): Promise<void> => {
-  await WebBrowser.openBrowserAsync(CGU_URL);
-};
+  const genererPictogrammeTemperature = (id, metric) => {
+    let couleur;
 
-const genererPictogrammeTemperature = (id, metric) => {
-  let couleur;
+    if (metric < 10) {
+      couleur = '#00FFFF'; // Bleu clair
+    } else if (metric >= 10 && metric < 20) {
+      couleur = '#00FF00'; // Vert
+    } else if (metric >= 20 && metric < 30) {
+      couleur = '#FFFF00'; // Jaune
+    } else {
+      couleur = '#FF0000'; // Rouge
+    }
 
-  if (metric < 10) {
-    couleur = '#00FFFF'; // Bleu clair
-  } else if (metric >= 10 && metric < 20) {
-    couleur = '#00FF00'; // Vert
-  } else if (metric >= 20 && metric < 30) {
-    couleur = '#FFFF00'; // Jaune
-  } else {
-    couleur = '#FF0000'; // Rouge
-  }
+    return couleur;
+  };
 
-  return couleur;
-};
-
-
+  const handleButtonPress = () => {
+    setShowElements(!showElements); // Inverse la valeur de showElements à chaque pression du bouton
+  };
 
   const SymptomTable = () => (
     <View style={styles.container}>
       {symptoms.map((symptom) => (
         <TouchableOpacity key={symptom.value} onPress={onPressCGU}>
           <View style={styles.symptomDetails}>
-            
+
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
+                display: showElements ? "none" :"flex",
               }}
             >
               <View
@@ -92,16 +101,17 @@ const genererPictogrammeTemperature = (id, metric) => {
                   width: 25,
                   height: 25,
                   borderRadius: 25,
+                  display: showElements ? "none" :"flex",
                   backgroundColor: genererPictogrammeTemperature(
                     symptom.id,
                     symptom.metric
+                    
                   ),
-                }}
-              />
+                }} />
               <Text style={styles.value}>{symptom.value}</Text>
-            
-          <Text style={styles.id}>{symptom.id}</Text>
-          </View>
+               
+              <Text style={styles.id}>{symptom.id}</Text>
+            </View>
           </View>
           <Text style={styles.date}>{symptom.date}</Text>
         </TouchableOpacity>
@@ -113,39 +123,62 @@ const genererPictogrammeTemperature = (id, metric) => {
 
   return (
     <Container noMarginBottom>
+    
       <View style={styles.container}>
         <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
         <ScrollView persistentScrollbar>
+       
           <View style={styles.titleContainer}>
+          {!showElements &&(
             <SubTitle text={user.username} style={styles.username} />
+          )}
           </View>
           <View style={styles.infosContainer}>
+            {!showElements &&(
             <SubTitle
               text={`${user.age.toString()} ${i18n.t('commons.units.years')}`}
-              style={styles.info}
-            />
+              style={styles.info} />
+            )}
+
           </View>
           
+          {user.pregnant && (
+            <SubTitle
+              text={i18n.t('profile.pregnant')}
+              style={styles.pregnant}
+            />
+          )}
+        
           
+          
+              
+          {!showElements && (
+          <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
+              text={user.reminder?.isActive
+                ? format(fromUnixTime(user.reminder.date!), "kk'h'mm")
+                : i18n.t('commons.none')}
+              style={styles.reminder} /></>
+          )}
+
+
+
+
+
+
 
         
-
-       
-    
+         
           
-           <View>
-            <Text style={{fontFamily: fonts.weight.bold.fontFamily,
-    fontSize: fonts.sections.fontSize,textAlign:'center',}}>symptomes</Text>
-           </View>
-          <SymptomTable/>
-          
-
+         {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
+           
           <Button
             text={'Modifier mon profil'}
-            onPress={onEditProfile}
+            onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
             isValidate
-            style={styles.editButton}
-          />
+            style={styles.editButton} /> )
+            
+            
+            }
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
@@ -153,12 +186,12 @@ const genererPictogrammeTemperature = (id, metric) => {
       </View>
     </Container>
   );
-};
+}
 
 
 
 
- export default Profile;
+
 
 
 const styles = StyleSheet.create({
@@ -166,6 +199,7 @@ const styles = StyleSheet.create({
     paddingTop: layout.padding,
     flex: 1,
     flexDirection:'column',
+    
   },
   titleContainer: {
     flexDirection: 'row',
@@ -219,6 +253,7 @@ const styles = StyleSheet.create({
     marginBottom: layout.padding,
     textDecorationLine: 'underline',
     color: colors.greyDark,
+    
   },
   cell: {
 
@@ -237,6 +272,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginBottom:layout.padding / 3,
     marginTop:layout.padding,
+    
+    
   },
   value: {
     //fontWeight: 'bold',
@@ -273,7 +310,10 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
   },
+
+ 
  
 });
+export default Profile;
 
 

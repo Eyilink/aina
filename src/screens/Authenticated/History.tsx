@@ -34,26 +34,26 @@ type Props = {
 
 
 const ExempleData : Data[] = [
-  {date:'08/06/2023', valeur: 12},
-  {date:'01/06/2023', valeur: 32},
-  {date:'25/05/2023', valeur: 20},
-  {date:'08/06/2023', valeur: 12},
-  {date:'01/06/2023', valeur: 32},
-  {date:'25/05/2023', valeur: 20},
+  {date:'08/06', valeur: 12},
+  {date:'01/06', valeur: 32},
+  {date:'25/05', valeur: 20},
+  {date:'08/06', valeur: 12},
+  {date:'01/06', valeur: 32},
+  {date:'25/05', valeur: 20},
 ]
 
 const ExempleData2 : Data[] = [
-  {date:'08/06/2023', valeur: 5},
-  {date:'01/06/2023', valeur: 6},
-  {date:'25/05/2023', valeur: 9},
-  {date:'08/06/2023', valeur: 5},
-  {date:'01/06/2023', valeur: 4},
-  {date:'25/05/2023', valeur: 1},
+  {date:'08/06', valeur: 5},
+  {date:'01/06', valeur: 6},
+  {date:'25/05', valeur: 9},
+  {date:'08/06', valeur: 5},
+  {date:'01/06', valeur: 4},
+  {date:'25/05', valeur: 1},
 ]
 
 const exempleSymList : Symptome[]=[
   {id: 1, name: "Poids",frequence:"tous les 7 jours",data:ExempleData,type:"kg"},
-  {id: 2, name: "Douleur",frequence:"Tous les jours",data:ExempleData2,type:"kg"},
+  {id: 2, name: "Douleur",frequence:"Tous les jours",data:ExempleData2,type:"num"},
 ]
 
 const exempleList: Pathologie[] = [
@@ -116,8 +116,10 @@ const History = ({ navigation }: Props): ReactElement => {
             exempleList[currentIndex].symptoms.map((object, index) => {    
                 return (
                   <>
-                  <AppText text={object.name} style={styles.pagetitle} />
+                  <View key= {index}>
+                  <AppText  text={object.name} style={styles.pagetitle} />
                   {object.data ? <ChartSymptome objet = {object}/> : null}
+                  </View>
                 </>
                 );      
               }) 
