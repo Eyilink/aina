@@ -4,7 +4,7 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 
 import i18n from '@i18n/i18n';
 import Home from '@screens/Authenticated/Home';
-import Evaluate from '@screens/Authenticated/Evaluate';
+import Suivi from '@screens/Authenticated/Suivi';
 import History from '@screens/Authenticated/History';
 import Profile from '@screens/Authenticated/Profile';
 
@@ -27,7 +27,7 @@ const renderTabBarIcon = ({
   if (route.name === 'Home') {
     return <AntDesign name="home" size={size} color={color} />;
   }
-  if (route.name === 'Evaluate') {
+  if (route.name === 'Suivi') {
     return <AntDesign name="pluscircle" size={size} color={color} />;
   }
   if (route.name === 'History') {
@@ -58,9 +58,9 @@ const BottomTabNavigator = (): ReactElement => (
       options={{ tabBarLabel: i18n.t('navigation.authenticated.home') }}
     />
     <Tab.Screen
-      name="Evaluate"
-      component={Evaluate}
-      options={{ tabBarLabel: i18n.t('navigation.authenticated.evaluate') }}
+      name="Suivi"
+      component={Suivi}
+      options={{ tabBarLabel: i18n.t('navigation.authenticated.suivi') }}
     />
     <Tab.Screen
       name="History"

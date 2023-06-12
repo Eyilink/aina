@@ -13,7 +13,9 @@ import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
 import { useAuthStore } from '@store/store';
 import NewSuivi from '@components/molecules/NewSuivi';
-import Previous from '@components/atoms/Previous';
+
+import { Ionicons } from '@expo/vector-icons';
+import colors from '@styles/colors';
 
 
 const ProfilCreated = (): ReactElement => {
@@ -21,6 +23,10 @@ const ProfilCreated = (): ReactElement => {
   const [,actions]=useAuthStore();
   const ValidatePressed = (): void => {
     setButtonValidateClicked(true);
+  };
+
+  const ValidateButtonNewSuiviPressed = (): void => {
+    setButtonValidateClicked(!ButtonValidateClicked);
   };
 
   const onNoValidate = (): void => {
@@ -31,7 +37,13 @@ const ProfilCreated = (): ReactElement => {
   return (
     <Container>
       <View style={styles.container}> 
-        {ButtonValidateClicked?<><View style={styles.container}><NewSuivi isFirstLog={true}/></View></>: 
+        {ButtonValidateClicked?<><View style={styles.container}>
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={ValidateButtonNewSuiviPressed}
+          /><NewSuivi isFirstLog={true}/></View></>: 
           <>
             <View style={styles.messageContainer}>
               <Text style={styles.message}>

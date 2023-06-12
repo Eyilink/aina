@@ -2,13 +2,8 @@ import React, { ReactElement } from 'react';
 import { View } from 'react-native';
 import AppText from '@components/atoms/AppText';
 import { StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { Symptome } from '@store/types';
 
-type Symptome = {
-    nom: string,
-    frequence: string,
-    valeur:number,
-    unite:string,
-  };
 
   type Props = {
     objet:Symptome;
@@ -23,11 +18,11 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
     return (
         <TouchableOpacity onPress={onPressnath} style={styles.namestyle}>
             <View>
-                <AppText text={objet.nom} style={styles.title}/>
-                <AppText text={objet.frequence} style={styles.subtitle}/>
+                <AppText text={objet.name} style={styles.title}/>
+                {objet.frequence?<AppText text={objet.frequence} style={styles.subtitle}/>:null}
             </View>
             <View style={styles.valuestyle}>
-                <AppText text={objet.valeur.toString() + " "+ objet.unite}/> 
+                {objet.data && objet.type?<AppText text={objet.data[objet.data.length-1].valeur.toString() + " "+ objet.type}/> : null}
             </View>        
             
         </TouchableOpacity>
@@ -39,7 +34,7 @@ const styles = StyleSheet.create({
   namestyle: {
     justifyContent:'space-around',
     flexDirection: 'row',
-    //marginTop:20,
+    marginTop:20,
 
   },
   title: {

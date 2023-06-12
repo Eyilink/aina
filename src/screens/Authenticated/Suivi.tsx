@@ -15,25 +15,35 @@ import i18n from '@i18n/i18n';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 import Button from '@components/atoms/Button';
 import NewSuivi from '@components/molecules/NewSuivi';
-
-type Symptome = {
-  id: number;
-  name: string;
-  type: string;
-}
-
-type Pathologie = {
-  id: string;
-  name: string;
-  symptoms: Symptome[];
-}
+import Title from '@components/atoms/Title';
+import BoxHistorique from '@components/atoms/BoxHistorique';
+import RecapSuivi from '@components/molecules/RecapSuivi';
+import pathologiesJSON from '@assets/json/pathologies.json'
+import symptomsJSON from '@assets/json/symptomes.json'
+import { Pathologie, Symptome } from '@store/types';
+import { Ionicons } from '@expo/vector-icons';
+import colors from '@styles/colors';
 
 
-const Evaluate = (): ReactElement => {
+
+
+const Suivi = (): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [ButtonClicked, setButtonClicked] = React.useState(false);
+
+  const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
+    id: item.id,
+    name: item.name,
+    type: item.type,
+  }));
+  const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
+    id: item.id,
+    name: item.name,
+//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
+    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
+  }));
 
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
@@ -70,12 +80,22 @@ const Evaluate = (): ReactElement => {
           isValidate
           stretch
         /> */}
-        {ButtonNewSuiviClicked? <NewSuivi></NewSuivi>  : 
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={ValidateButtonNewSuiviPressed}
-          stretch
-        />
+        {ButtonNewSuiviClicked? <>
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={ValidateButtonNewSuiviPressed}
+          />
+          <NewSuivi/></>  : 
+        <>
+          <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
+          <RecapSuivi objet={pathologieData[0]}/>
+          <Button
+            text={i18n.t('commons.newsuivi')}
+            onPress={ValidateButtonNewSuiviPressed}
+          />
+        </>
         }
         
       
@@ -86,7 +106,8 @@ const Evaluate = (): ReactElement => {
 };
 
 
-export default Evaluate
+
+export default Suivi
 
 const styles = StyleSheet.create({
   container: {
@@ -101,6 +122,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-
   },
+  
 });
