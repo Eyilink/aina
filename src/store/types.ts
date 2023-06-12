@@ -22,7 +22,7 @@ export type User = {
   age: number;
   size: number;
   weight: number;
-  my_personal_datas: string[][];
+  my_personal_datas: Pathologie[][];
   reminder: Reminder;
 };
 

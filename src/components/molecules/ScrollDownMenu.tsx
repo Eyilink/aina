@@ -7,6 +7,7 @@ import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
 import { CGU_URL, MALADIE1 } from '@constants/constants';
+import pathos from '@assets/json/pathologies.json';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -97,7 +98,20 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   };
 
   
+  const processDatas = () => {
+    const pathos : Pathologie[] = [];
+    twoDArray.map((objet,index)=>{
+      const newE : Pathologie = {
+        id: objet[0],
+        name: ,
+        symptoms: Symptome[],
+        icon: ImageSourcePropType
+      }
+    });
+    actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });
+    console.log(user.my_personal_datas)
 
+  };
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
@@ -148,7 +162,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
-          onPress={()=>{actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });console.log(user.my_personal_datas)}}
+          onPress={()=>{processDatas()}}
           isValidate
           stretch
           style={{marginTop: 10}}
