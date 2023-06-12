@@ -7,6 +7,8 @@ import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
 import { CGU_URL, MALADIE1 } from '@constants/constants';
+import pathos_all from '@assets/json/pathologies.json';
+import symptomsJSON from '@assets/json/symptomes.json'
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -20,7 +22,7 @@ interface Pathologie  {
     id: string;
     name: string;
     symptoms: Symptome[];
-    icon: ImageSourcePropType
+    icon?: ImageSourcePropType
   };
 interface DropdownMenuProps {
   items: Pathologie[];
@@ -41,7 +43,7 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDAr
     useEffect(()=>{
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
         setIsChecked(checked);
-        console.log(twoDArray)
+        // console.log(twoDArray)
     },[])
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
@@ -82,6 +84,24 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDAr
     )
 
 }
+const getIconPath = (iconName?: string): ImageSourcePropType => {
+  switch (iconName) {
+    case '1_i.png':
+      return require('@assets/images/1_i.png');
+    case '2_i.png':
+      return require('@assets/images/2_i.png');
+    case '3_i.png':
+      return require('@assets/images/3_i.png');
+    case '4_i.png':
+      return require('@assets/images/4_i.png');
+    case '5_i.png':
+      return require('@assets/images/5_i.png');
+    case '6_i.png':
+      return require('@assets/images/6_i.png');
+    default:
+      return require('@assets/images/6_i.png'); // Provide a default image path
+  }
+};
 
 const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
@@ -89,6 +109,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [twoDArray, setTDArray] = useState<string[][]>([]);
   const [, actions] = useAuthStore();
   const [user, ] = useUserStore({ disease: MALADIE1 });
+  const [pathos,setPathos] = useState<Pathologie[]>([]);
 
 
   const handleItemPress = (id : string) => {
@@ -97,10 +118,30 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   };
 
   
-
+  const processDatas = () => {
+    twoDArray.map((objet, index) => {
+      const nm = pathos_all.find(obj => obj.id === objet[0])?.name;
+      const newE: Pathologie = {
+        id: objet[0],
+        name: nm ? nm : "",
+        symptoms: symptomsJSON.filter(obj => objet.slice(1).includes(obj.id.toString()))
+                                 .map(filteredObj => ({
+                                    id: filteredObj.id,
+                                    name: filteredObj.name,
+                                    type: filteredObj.type
+                                  })),
+        icon: getIconPath(pathos_all.find(obj => obj.id === objet[0])?.icon?.toString())
+      };
+      
+      setPathos([...pathos, newE]);
+    });
+    actions.editUserProfile({ key: 'my_personal_datas', value: pathos });
+    console.log(pathos);
+  };
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
+  
 
   return (
     <View style={styles.container}>
@@ -135,10 +176,10 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
               onPress={()=>handleItemPress(item.id)}
             >
               <View style={styles.itemIconContainer}>
-                <Image style={{ width: 40, height: 40 }} source={item.icon} />
+                <Image style={{ width: 40, height: 40 }} source={item?.icon ? item.icon : getIconPath("")} />
               </View>
               <View style={styles.itemTitleContainer}>
-                <AppText style={styles.itemTitle} text={item.name} />
+                <AppText style={styles.itemTitle} text={item.name ? item.name :  ""} />
               </View>
             </TouchableOpacity>
           ))}
@@ -148,7 +189,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
-          onPress={()=>{actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });console.log(user.my_personal_datas)}}
+          onPress={()=>{processDatas()}}
           isValidate
           stretch
           style={{marginTop: 10}}

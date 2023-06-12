@@ -24,7 +24,7 @@ export type User = {
   weight: number;
   allergy: boolean;
   tetanos: boolean;
-  my_personal_datas: string[][];
+  my_personal_datas: Pathologie[];
   reminder: Reminder;
 };
 
@@ -83,13 +83,12 @@ export type SymptomeJSON = {
   id: number;
   name: string,
   type: string,
-};
+}
 
 export type Data = { 
   date: string,
   valeur:number,
 };
-
 export type Symptome = {
   id: number;
   name: string,
