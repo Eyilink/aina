@@ -7,12 +7,14 @@ import ProfileCreated from '@screens/Public/ProfileCreated';
 import Username from '@screens/Public/Username';
 import Age from '@screens/Public/Age';
 
-import Size from '@screens/Public/Size';
+import Size from '@screens/Public/MoreData';
 import Weight from '@screens/Public/Weight';
 import Reminder from '@screens/Public/Reminder';
 import Confirmation from '@screens/Public/Confirmation';
 
 import { PublicStackParamList } from '@navigation/types';
+import MoreData from '@screens/Public/MoreData';
+import ComplementaryData from '@screens/Public/ComplementaryData';
 
 const Stack = createStackNavigator<PublicStackParamList>();
 
@@ -22,7 +24,8 @@ const PublicNavigator = (): ReactElement => (
     <Stack.Screen name="ProfileCreated" component={ProfileCreated} />
     <Stack.Screen name="Username" component={Username} />
     <Stack.Screen name="Age" component={Age} />
-    <Stack.Screen name="Size" component={Size} />
+    <Stack.Screen name="MoreData" component={MoreData} />
+    <Stack.Screen name="ComplementaryData" component={ComplementaryData} />
     <Stack.Screen name="Weight" component={Weight} />
 
     {/* <Stack.Screen name="Diseases" component={Diseases} />
