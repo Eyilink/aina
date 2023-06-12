@@ -22,8 +22,9 @@ export type User = {
   age: number;
   size: number;
   weight: number;
+  allergy: boolean;
+  tetanos: boolean;
   reminder: Reminder;
-  
 };
 
 export type PainSymptoms = {

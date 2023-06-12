@@ -9,18 +9,22 @@ import Button from '@components/atoms/Button';
 import InputText from '@components/atoms/InputText';
 import Previous from '@components/atoms/Previous';
 
-import { useAuthStore } from '@store/store';
+import { useAuthStore, useUserStore } from '@store/store';
 import { PublicStackParamList } from '@navigation/types';
 import { alertError, isNumeric } from '@helpers/utils';
 
 import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
+import { MALADIE1 } from '@constants/constants';
+import { getUserSelector } from '@store/selectors';
 
 type Props = {
-  navigation: StackNavigationProp<PublicStackParamList, 'MoreData'>;
+  navigation: StackNavigationProp<PublicStackParamList, 'ComplementaryData'>;
 };
 
 const ComplementaryData = ({ navigation }: Props): ReactElement => {
+  const [AllergyClicked, setAllergyClicked] = React.useState(true);
+  const [TetanosClicked, setTetanosClicked] = React.useState(true);
   const [size, onChangeSize] = useState<string>('');
   const [weight, onChangeWeight] = useState<string>('');
   const [, actions] = useAuthStore();
@@ -33,11 +37,35 @@ const ComplementaryData = ({ navigation }: Props): ReactElement => {
       actions.editUserProfile({ key: 'size', value: parseInt(size, 10) });
       Keyboard.dismiss();
       navigation.navigate('ProfileCreated');
+      if (AllergyClicked){
+        actions.editUserProfile({ key: 'allergy', value: true});
+      }
+      else {
+        actions.editUserProfile({ key: 'allergy', value: false});
+      }
+      if (TetanosClicked){
+        actions.editUserProfile({ key: 'tetanos', value: true});
+      }
+      else {
+        actions.editUserProfile({ key: 'allergy', value: false});
+      }
     }
   };
 
-  const onNoValidate = (): void => {
-    navigation.navigate('ProfileCreated');
+  const onAllergyValidate = (): void => {
+    setAllergyClicked(true);
+  };
+
+  const onNoAllergyValidate = (): void => {
+    setAllergyClicked(false);
+  };
+
+  const onTetanosValidate = (): void => {
+    setTetanosClicked(true);
+  };
+
+  const onNoTetanosValidate = (): void => {
+    setTetanosClicked(false);
   };
 
   return (
@@ -70,22 +98,45 @@ const ComplementaryData = ({ navigation }: Props): ReactElement => {
 
         <View style={styles.container}>
           <SubTitle text={i18n.t('signup.title.allergy')} />
-          <InputText
-            value={size}
-            cellCount={3}
-            onChange={onChangeSize}
-            unit={i18n.t('commons.units.cm')}
-          />
+          <View style={styles.messageContainer}>
+            <Button style={styles.button}
+              text={i18n.t('commons.yes')}
+              onPress={onAllergyValidate}
+              isValidate={AllergyClicked}
+              isSelected={AllergyClicked}
+            />
+            <Button style={styles.button}
+              text={i18n.t('commons.no')}
+              onPress={onNoAllergyValidate}
+              isValidate={!AllergyClicked}
+              isSelected={!AllergyClicked}
+            />
+          </View>
         </View>
 
-
-
-          <Button style={styles.button}
-            text={i18n.t('commons.validate')}
-            onPress={onValidate}
-            isValidate
-            isSelected
-          />
+        <View style={styles.container}>
+          <SubTitle text={i18n.t('signup.title.tetanos')} />
+          <View style={styles.messageContainer}>
+            <Button style={styles.button}
+              text={i18n.t('commons.yes')}
+              onPress={onTetanosValidate}
+              isValidate={TetanosClicked}
+              isSelected={TetanosClicked}
+            />
+            <Button style={styles.button}
+              text={i18n.t('commons.no')}
+              onPress={onNoTetanosValidate}
+              isValidate={!TetanosClicked}
+              isSelected={!TetanosClicked}
+            />
+          </View>
+        </View>
+        <Button style={styles.button}
+          text={i18n.t('commons.validate')}
+          onPress={onValidate}
+          isValidate
+          isSelected
+        />
       </View>
     </Container>
   );
@@ -95,15 +146,19 @@ export default ComplementaryData;
 
 const styles = StyleSheet.create({
   container: {
-    //paddingVertical: layout.padding,
-    margin: layout.padding
+    margin: 20
   },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  messageContainer: {
+    margin: -30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   button: {
-    //backgroundColor:'#EE4483',
-    //marginTop:100
+    alignItems: 'center',
+    margin: 10
   }
 });
