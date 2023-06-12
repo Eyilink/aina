@@ -20,25 +20,25 @@ type Props = {
   navigation: StackNavigationProp<PublicStackParamList, 'Age'>;
 };
 
-const BirthDateForm = ({ navigation }) => {
+const BirthDateForm = ({ navigation }: Props) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [, actions] = useAuthStore();
 
-  const onChangeDay = (value) => {
+  const onChangeDay = (value : string) => {
     setDay(value);
   };
 
-  const onChangeMonth = (value) => {
+  const onChangeMonth = (value : string) => {
     setMonth(value);
   };
 
-  const onChangeYear = (value) => {
+  const onChangeYear = (value : string) => {
     setYear(value);
   };
 
-  const calculateAge = (birthDate) => {
+  const calculateAge = (birthDate: string): string => {
     const currentDate = new Date();
     const [year, month, day] = birthDate.split('-').map(Number);
   
@@ -48,11 +48,13 @@ const BirthDateForm = ({ navigation }) => {
   
     // Adjust the age if the current date is before the birth date
     if (monthsDiff < 0 || (monthsDiff === 0 && daysDiff < 0)) {
-      return yearsDiff - 1;
+      console.log(String(yearsDiff - 1))
+      return String(yearsDiff - 1);
     }
-  
-    return yearsDiff;
+    console.log(String(yearsDiff));
+    return String(yearsDiff);
   };
+  
   
 
   const onValidate = () => {
@@ -64,7 +66,7 @@ const BirthDateForm = ({ navigation }) => {
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
-      navigation.navigate("Size");
+      navigation.navigate("MoreData");
     }
   };
 

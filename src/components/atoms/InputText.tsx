@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   codeFiledRoot: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: layout.padding,
+    //marginTop: layout.padding,
   },
   cellRoot: {
     width: 50,
