@@ -123,17 +123,42 @@ function Profile(): ReactElement {
 
   return (
     <Container noMarginBottom>
+    
       <View style={styles.container}>
         <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
         <ScrollView persistentScrollbar>
+       
           <View style={styles.titleContainer}>
+          {!showElements &&(
             <SubTitle text={user.username} style={styles.username} />
+          )}
           </View>
           <View style={styles.infosContainer}>
+            {!showElements &&(
             <SubTitle
               text={`${user.age.toString()} ${i18n.t('commons.units.years')}`}
               style={styles.info} />
+            )}
+
           </View>
+          
+          {user.pregnant && (
+            <SubTitle
+              text={i18n.t('profile.pregnant')}
+              style={styles.pregnant}
+            />
+          )}
+        
+          
+          
+              
+          {!showElements && (
+          <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
+              text={user.reminder?.isActive
+                ? format(fromUnixTime(user.reminder.date!), "kk'h'mm")
+                : i18n.t('commons.none')}
+              style={styles.reminder} /></>
+          )}
 
 
 
@@ -142,16 +167,10 @@ function Profile(): ReactElement {
 
 
         
-          <View>
-            <Text style={{
-              fontFamily: fonts.weight.bold.fontFamily,
-              fontSize: fonts.sections.fontSize, textAlign: 'center',
-              display: showElements ? "none" :"flex",
-            }}>symptomes</Text>
-          </View>
-          <SymptomTable />
+         
           
-         {ButtonNewSuiviClicked? ( <NewSuivi />  ):( 
+         {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
+           
           <Button
             text={'Modifier mon profil'}
             onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
