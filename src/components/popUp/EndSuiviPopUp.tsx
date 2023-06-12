@@ -17,14 +17,19 @@ const EndSuiviPopUp = ({ onClose }: AskPopUpProps) => {
         <View>
         <Text style={styles.text}>{i18n.t('report.endrecord')}</Text>
       </View>
-      <Button style={{backgroundColor:'#EE4483'}}
+      <View style={styles.rowButton}>
+      <Button style={styles.button}
           text={i18n.t('commons.yes')}
+          isValidate
+          isSelected
           onPress={yesPressed}
         />
-        <Button
+        <Button style={styles.button}
           text={i18n.t('commons.no')}
           onPress={onClose}
-        />      
+        /> 
+        </View>
+             
     </View>
   );
 };
@@ -40,6 +45,14 @@ const styles = StyleSheet.create({
     marginBottom:15,
     textAlign: 'center',
   },
+  rowButton:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    margin: 10
+  }
 });
 
 export default EndSuiviPopUp;
