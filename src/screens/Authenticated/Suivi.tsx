@@ -33,7 +33,6 @@ const Suivi = (): ReactElement => {
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
-
   const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
     id: item.id,
     name: item.name,

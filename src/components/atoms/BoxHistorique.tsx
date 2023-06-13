@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { StyleSheet, TouchableOpacity, Image, ImageSourcePropType} from 'react-native';
 import { View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import AppText from '@components/atoms/AppText';
 import colors from '@styles/colors';
 import { Pathologie } from '@store/types';
@@ -39,7 +38,13 @@ const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
       <View style = {styles.content}>
         <AppText text={objet.name} style={styles.title} />
         {objet.more ? <AppText text={objet.more} style={styles.subtitle} /> : null}
-        {objet.date ? <AppText text= {"Depuis le " + objet.date} style={styles.text} />:null}
+        {objet.date ?
+          objet.dateend ? 
+            <AppText text= {"Du " + objet.date + " au " + objet.dateend } style={styles.text} /> 
+            :
+            <AppText text= {"Depuis le " + objet.date} style={styles.text} />
+         :
+          null}
         
       </View>
     </TouchableOpacity>

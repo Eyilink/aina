@@ -35,11 +35,11 @@ const RecapSuivi = ({ objet }: Props) => {
       <Button text={i18n.t('suivi.end')} 
               isSelected
               onPress={onValidate} />
-              <Modal visible={showPopUp} animationType="slide" transparent>
-              <View style={styles.modalContainer}>
-              <EndSuiviPopUp onClose={onClosePopUp} pathologieRemove={objet} />
-              </View>
-            </Modal>
+      <Modal visible={showPopUp} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <EndSuiviPopUp onClose={onClosePopUp} pathologieRemove={objet} />
+        </View>
+      </Modal>
             
     </View>
   );

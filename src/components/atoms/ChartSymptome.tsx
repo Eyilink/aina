@@ -17,7 +17,7 @@ type Props = {
 
   const ChartSymptome = ({ objet }: Props): ReactElement => {
     
-      const labels : String[] = objet.data ? objet.data.map(item => item.date) : [''];
+      const labels : String[] = objet.data ? objet.data.map(item => [item.date.split('/')[0],'/',item.date.split('/')[1]]) : [''];
       const values = objet.data ? objet.data.map(item => item.valeur) : [0];
       return (
 

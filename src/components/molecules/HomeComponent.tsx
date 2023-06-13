@@ -36,31 +36,35 @@ const HomeComponent = ({
           text={DATE_TODAY}
         />
     {!ButtonClicked?
-
-    isDataEmpty ? (<>
-      <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
+      <>
+      {isDataEmpty ? 
+        <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
+      : 
+      <>
+        <HistoryFollowedSymptoms/>
         <Button
-          text={i18n.t('commons.newsuivi')}
-          style={{minWidth: '90%'}}
-          onPress={ValidatePressed}
+          text="Renseigner une donnée ponctuelle"
+          onPress={()=>{}}
           stretch
         />
-        </>) 
-      : <><HistoryFollowedSymptoms/>
-    <Button
-      text="Renseigner une donnée ponctuelle"
-      onPress={()=>{}}
-      stretch
-    /></>
-  :<>
-    <Ionicons
-      name="ios-arrow-round-back"
-      size={layout.navigation.previousIcon.size}
-      color={colors.black}
-      onPress={ValidatePressed}
-    />
-    <NewSuivi onPress={ValidatePressed}/>
-  </>}
+      </>}
+
+      <Button
+        text={i18n.t('commons.newsuivi')}
+        style={{minWidth: '90%'}}
+        onPress={ValidatePressed}
+        stretch
+      /></>
+    :<>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={layout.navigation.previousIcon.size}
+        color={colors.black}
+        onPress={ValidatePressed}
+      />
+      <NewSuivi onPress={ValidatePressed}/>
+    </>
+    }
     </View>
   );
 };
