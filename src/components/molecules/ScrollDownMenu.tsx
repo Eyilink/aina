@@ -8,7 +8,8 @@ import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
 import { CGU_URL, MALADIE1 } from '@constants/constants';
 import pathos_all from '@assets/json/pathologies.json';
-import symptomsJSON from '@assets/json/symptomes.json'
+import symptomsJSON from '@assets/json/symptomes.json';
+import { useNavigation } from '@react-navigation/native';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -26,6 +27,7 @@ interface Pathologie  {
   };
 interface DropdownMenuProps {
   items: Pathologie[];
+  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
   
 }
 
@@ -107,7 +109,7 @@ const getIconPath = (iconName?: string): ImageSourcePropType => {
   }
 };
 
-const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
+const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviClicked }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
   const [isWhichP , setIsWichP] = useState<string>("");
   const [twoDArray, setTDArray] = useState<string[][]>([]);
@@ -150,6 +152,8 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   };
   const handleButtonPress = () => {
     processDatas();
+    setButtonNewSuiviClicked(false);
+
   };
   useEffect(()=>{
     setRender(true);
