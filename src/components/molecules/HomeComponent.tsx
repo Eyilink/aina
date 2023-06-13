@@ -7,6 +7,11 @@ import { View,Text,StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
 import  {DATE_TODAY} from '@constants/constants';
+import NewSuivi from './NewSuivi';
+import { Ionicons } from '@expo/vector-icons';
+import layout from '@styles/layout';
+import colors from '@styles/colors';
+
 
 type Props = {
   isDataEmpty?: boolean;
@@ -16,7 +21,14 @@ type Props = {
 const HomeComponent = ({
     isDataEmpty
 }: Props): ReactElement => {
-  
+  const [ButtonClicked, setButtonClicked] = React.useState(false);
+
+
+  const ValidatePressed = () => {
+    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
+    // Vous pouvez ajouter votre logique ou vos actions ici
+    setButtonClicked(!ButtonClicked);
+  };
 
   return (
     <View style={styles.container}>
@@ -24,22 +36,32 @@ const HomeComponent = ({
           text={DATE_TODAY}
           style={styles.title}
         />
+    {!ButtonClicked?
 
-    {isDataEmpty ? (<>
-          <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
-          <Button
-        text="Lancer un suivi"
-        style={{minWidth: '90%'}}
-        onPress={()=>{}}
-        stretch
-      /></>) : <><HistoryFollowedSymptoms/></>
-    }
+    isDataEmpty ? (<>
+      <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
+        <Button
+          text={i18n.t('commons.newsuivi')}
+          style={{minWidth: '90%'}}
+          onPress={ValidatePressed}
+          stretch
+        />
+        </>) 
+      : <><HistoryFollowedSymptoms/>
     <Button
       text="Renseigner une donnée ponctuelle"
       onPress={()=>{}}
       stretch
+    /></>
+  :<>
+    <Ionicons
+      name="ios-arrow-round-back"
+      size={layout.navigation.previousIcon.size}
+      color={colors.black}
+      onPress={ValidatePressed}
     />
-
+    <NewSuivi onPress={ValidatePressed}/>
+  </>}
     </View>
   );
 };
