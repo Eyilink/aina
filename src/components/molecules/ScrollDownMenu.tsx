@@ -125,11 +125,11 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
         id: objet[0],
         name: nm ? nm : "",
         symptoms: symptomsJSON.filter(obj => objet.slice(1).includes(obj.id.toString()))
-                                 .map(filteredObj => ({
-                                    id: filteredObj.id,
-                                    name: filteredObj.name,
-                                    type: filteredObj.type
-                                  })),
+                              .map(filteredObj => ({
+                                id: filteredObj.id,
+                                name: filteredObj.name,
+                                type: filteredObj.type
+                              })),
         icon: getIconPath(pathos_all.find(obj => obj.id === objet[0])?.icon?.toString())
       };
       
@@ -139,11 +139,12 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
     console.log(pathos);
     console.log(user);
   };
+
+
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
   
-
   return (
     <View style={styles.container}>
         <View style={styles.or_background}>

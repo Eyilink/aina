@@ -18,7 +18,7 @@ import Button from '@components/atoms/Button';
 import { useAuthStore } from '@store/store';
 import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
 import { StoreActionApi } from 'react-sweet-state';
-import { RootState } from '@store/types';
+import { RootState, SymptomeJSON } from '@store/types';
 import AppText from '@components/atoms/AppText';
 import ScrollDownMenu from './ScrollDownMenu';
 
@@ -40,6 +40,7 @@ type Pathologie = {
 
 type Props = {
   isFirstLog?: boolean;
+  onPress?: () => void;
 };
 const dropdownItems = [
   { title: 'Personnalisé', icon: require('@assets/images/1_i.png') },
@@ -68,7 +69,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
 };
-const NewSuivi = ({ isFirstLog }: Props) => {
+const NewSuivi = ({ isFirstLog, onPress }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
 
@@ -102,6 +103,7 @@ const NewSuivi = ({ isFirstLog }: Props) => {
     if (isFirstLog) {
       actions.signupUser();
     }
+    onPress ? onPress() : null;
   };
   
   return (
