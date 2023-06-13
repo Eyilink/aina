@@ -2,16 +2,22 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import i18n from '@i18n/i18n';
+import { Pathologie } from '@store/types';
+import { useUserStore } from '@store/store';
+import { MALADIE1 } from '@constants/constants';
 
 type AskPopUpProps = {
   onClose: () => void;
+  pathologieRemove: Pathologie;
 };
 
-const EndSuiviPopUp = ({ onClose }: AskPopUpProps) => {
+const EndSuiviPopUp = ({ onClose, pathologieRemove }: AskPopUpProps) => {
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
 
-    const yesPressed = (): void => {
-        console.log("Terminer le suivi");
-      };
+  const yesPressed = (): void => {const pathologiesUser: Pathologie[]= Object.values(user.my_personal_datas);
+    actions.editUserProfile({key: 'my_personal_datas' , value: user.my_personal_datas.filter((item: Pathologie) => console.log("Dans filter",item.id !== pathologieRemove.id))});
+    console.log(user);
+  };
   return (
     <View style={styles.popUpContainer}>
         <View>
