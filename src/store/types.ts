@@ -107,4 +107,5 @@ export type Pathologie = {
   more?: string;
   namelogo?: string;
   symptoms: Symptome[];
+  dateend?: string;
 };

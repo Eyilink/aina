@@ -59,7 +59,7 @@ const exempleSymList : Symptome[]=[
 const exempleList: Pathologie[] = [
   { id:"1",name: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:'3_i.png',symptoms:exempleSymList },
   { id:"2",name: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"6_i.png",symptoms:exempleSymList  },
-  { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"4_i.png",symptoms:exempleSymList  },
+  { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"4_i.png",symptoms:exempleSymList, dateend:"15/02/2023" },
   ]
 
   
@@ -121,7 +121,11 @@ const History = ({ navigation }: Props): ReactElement => {
             <View style = {styles.content}>
               <AppText text={exempleList[currentIndex].name} style={styles.title} />
               {exempleList[currentIndex].more ? <AppText text={exempleList[currentIndex].more} style={styles.subtitle} /> : null}
-              <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
+              {exempleList[currentIndex].dateend ? 
+                <AppText text= {"Du " + exempleList[currentIndex].date + " Au " + exempleList[currentIndex].dateend} style={styles.text} />
+                :
+                <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
+              }
             </View>
           </View>
           <View style= {styles.buttonsContainer}>
