@@ -11,6 +11,7 @@ import NewSuivi from './NewSuivi';
 import { Ionicons } from '@expo/vector-icons';
 import layout from '@styles/layout';
 import colors from '@styles/colors';
+import Container from './Container';
 
 
 type Props = {
@@ -31,22 +32,22 @@ const HomeComponent = ({
   };
 
   return (
-    <View style={styles.container}>
+    <Container style={styles.container}>
     <Title
           text={DATE_TODAY}
         />
     {!ButtonClicked?
       <>
       {isDataEmpty ? 
-        <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
+        <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
       : 
       <>
         <HistoryFollowedSymptoms/>
-        <Button
+        {/* <Button
           text="Renseigner une donnée ponctuelle"
           onPress={()=>{}}
           stretch
-        />
+        /> */}
       </>}
 
       <Button
@@ -61,11 +62,14 @@ const HomeComponent = ({
         size={layout.navigation.previousIcon.size}
         color={colors.black}
         onPress={ValidatePressed}
+        style={{marginLeft:12}}
       />
+      <View style={styles.newsuivicontainer}>
       <NewSuivi onPress={ValidatePressed}/>
+      </View>
     </>
     }
-    </View>
+    </Container>
   );
 };
 
@@ -87,6 +91,10 @@ const styles = StyleSheet.create({
       color: 'black',
       textAlign: 'center',
       marginBottom: '60%'
+    },
+    newsuivicontainer: {
+      flex: 1,
+      
     }
   });
   
