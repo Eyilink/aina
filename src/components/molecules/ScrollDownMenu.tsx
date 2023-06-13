@@ -35,15 +35,16 @@ interface chk_BoxProps {
     id_p: string;
     twoDArray: string[][];
     setTDArray: React.Dispatch<React.SetStateAction<string[][]>>;
+    pressingChkBx: () => void;
   }
 
 
-const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray }) => {
+const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
         setIsChecked(checked);
-        // console.log(twoDArray)
+
     },[])
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
@@ -66,6 +67,8 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDAr
                 setTDArray(updatedArray);
             }
             // };
+            pressingChkBx();
+           
       };
     
     return(
@@ -109,9 +112,9 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
   const [twoDArray, setTDArray] = useState<string[][]>([]);
   const [, actions] = useAuthStore();
   const [user, ] = useUserStore({ disease: MALADIE1 });
-  const [pathos,setPathos] = useState<Pathologie[]>([]);
+  const [render, setRender] = useState<boolean>(false);
 
-
+  
   const handleItemPress = (id : string) => {
     setIsSymptom(true);
     setIsWichP(id);
@@ -119,32 +122,58 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
 
   
   const processDatas = () => {
-    twoDArray.map((objet, index) => {
-      const nm = pathos_all.find(obj => obj.id === objet[0])?.name;
+    const updatedPathos = twoDArray.map((objet, index) => {
+      const nm = pathos_all.find((obj) => obj.id === objet[0])?.name;
       const newE: Pathologie = {
         id: objet[0],
         name: nm ? nm : "",
-        symptoms: symptomsJSON.filter(obj => objet.slice(1).includes(obj.id.toString()))
-                                 .map(filteredObj => ({
-                                    id: filteredObj.id,
-                                    name: filteredObj.name,
-                                    type: filteredObj.type
-                                  })),
-        icon: getIconPath(pathos_all.find(obj => obj.id === objet[0])?.icon?.toString())
+        symptoms: symptomsJSON
+          .filter((obj) => objet.slice(1).includes(obj.id.toString()))
+          .map((filteredObj) => ({
+            id: filteredObj.id,
+            name: filteredObj.name,
+            type: filteredObj.type,
+          })),
+        icon: getIconPath(
+          pathos_all.find((obj) => obj.id === objet[0])?.icon?.toString()
+        ),
       };
-      
-      setPathos([...pathos, newE]);
+      return newE;
     });
-    actions.editUserProfile({ key: 'my_personal_datas', value: pathos });
-    console.log(pathos);
-    console.log(user);
+
+    actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
   };
+  
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
-  
+  const handleButtonPress = () => {
+    processDatas();
+  };
+  useEffect(()=>{
+    setRender(true);
+    console.log(twoDArray)
+  },[twoDArray])
+  useEffect(()=>{
+    console.log("In useeffect ...");
+    if(user.my_personal_datas)
+    {
+      user.my_personal_datas.map((obj,ind)=>{
+        const updatedArray = [obj.id];
+        obj.symptoms.map((s, index) => {
+          updatedArray.push(s.id.toString());
+        });
 
-  return (
+        
+        twoDArray.push(updatedArray);
+        
+      })
+      
+    }
+    console.log("After useeffect ...");
+  },[]);
+  return render ? (
+    
     <View style={styles.container}>
         <View style={styles.or_background}>
       {isSymptom && (
@@ -159,7 +188,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
               return (
                 <React.Fragment key={index}>
                   {item.symptoms.map((symptom, idx) => (
-                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} />
+                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
                   ))}
                 </React.Fragment>
               );
@@ -190,7 +219,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
-          onPress={()=>{processDatas()}}
+          onPress={()=>{handleButtonPress();}}
           isValidate
           stretch
           style={{marginTop: 10}}
@@ -198,7 +227,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       }
       
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
