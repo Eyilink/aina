@@ -37,7 +37,7 @@ const RecapSuivi = ({ objet }: Props) => {
               onPress={onValidate} />
               <Modal visible={showPopUp} animationType="slide" transparent>
               <View style={styles.modalContainer}>
-              <EndSuiviPopUp onClose={onClosePopUp} pathologieRemove={objet} />
+                <EndSuiviPopUp onClose={onClosePopUp} pathologieRemove={objet} />
               </View>
             </Modal>
             

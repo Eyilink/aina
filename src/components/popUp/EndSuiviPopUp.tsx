@@ -15,7 +15,7 @@ const EndSuiviPopUp = ({ onClose, pathologieRemove }: AskPopUpProps) => {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const yesPressed = (): void => {const pathologiesUser: Pathologie[]= Object.values(user.my_personal_datas);
-    actions.editUserProfile({key: 'my_personal_datas' , value: user.my_personal_datas.filter((item: Pathologie) => console.log("Dans filter",item.id !== pathologieRemove.id))});
+    actions.editUserProfile({key: 'my_personal_datas' , value: user.my_personal_datas.filter((item: Pathologie) => item.id !== pathologieRemove.id)});
     console.log(user);
   };
   return (
