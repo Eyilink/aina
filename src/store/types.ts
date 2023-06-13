@@ -20,6 +20,7 @@ export type Diseases = {
 export type User = {
   username: string;
   age: number;
+  birthDate: string;
   size: number;
   weight: number;
   allergy: boolean;

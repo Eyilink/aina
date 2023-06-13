@@ -37,7 +37,6 @@ const ProfilCreated = (): ReactElement => {
 
   return (
     <Container>
-      <View style={styles.container}> 
         <View style={styles.messageContainer}>
           <Text style={styles.message}>
             {`${i18n.t('signup.endsignup')} `}
@@ -49,7 +48,8 @@ const ProfilCreated = (): ReactElement => {
             size={layout.navigation.previousIcon.size}
             color={colors.black}
             onPress={ValidateButtonNewSuiviPressed}
-          /><NewSuivi isFirstLog={true}/></View></>: 
+          />
+          <NewSuivi isFirstLog={true}/></View></>: 
           <>
             
             <View style={styles.messageContainer}>
@@ -58,8 +58,8 @@ const ProfilCreated = (): ReactElement => {
               </Text>
             </View>
 
-            <Button
-              text={i18n.t('commons.validate')}
+            <Button style={styles.button}
+              text={i18n.t('commons.yes')}
               onPress={ValidatePressed}
               isSelected
             />
@@ -70,7 +70,6 @@ const ProfilCreated = (): ReactElement => {
           </>
         }
         
-      </View>
     </Container>
   );
 };
@@ -81,13 +80,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: layout.padding,
-    marginBottom: 200,
   },
   messageContainer: {
     flexDirection: 'row',
-    marginTop: 30
+    marginTop: 30,
+    marginLeft: 20,
+    marginBottom: 50
   },
   message: {
     textAlign: 'center',
@@ -100,6 +98,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.weight.bold.fontFamily,
   },
   button: {
-    marginTop : 200,
+    marginTop : 75,
   }
 });
