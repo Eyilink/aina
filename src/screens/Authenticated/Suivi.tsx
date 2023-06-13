@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Container from '@components/molecules/Container';
 import DropDownMenu from '@components/molecules/DropDownMenu';
 
-import { useReportsStore } from '@store/store';
+import { useReportsStore, useUserStore } from '@store/store';
 import { AuthenticatedStackParamList, BottomTabParamList } from '@navigation/types';
 import { hasPreviousReportToday } from '@helpers/utils';
 
@@ -32,6 +32,7 @@ const Suivi = (): ReactElement => {
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [ButtonClicked, setButtonClicked] = React.useState(false);
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
     id: item.id,
@@ -90,7 +91,8 @@ const Suivi = (): ReactElement => {
           <NewSuivi/></>  : 
         <>
           <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
-          <RecapSuivi objet={pathologieData[0]}/>
+          {user.my_personal_datas?user.my_personal_datas.map((pathologie: Pathologie) => 
+            (<RecapSuivi objet={pathologie}/>)):null}
           <Button
             text={i18n.t('commons.newsuivi')}
             onPress={ValidateButtonNewSuiviPressed}

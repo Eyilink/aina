@@ -51,8 +51,16 @@
       "weight": "Quel est votre poids ?",
       "diseases": "Avez-vous des antécédents de santé ?",
       "pregnant": "Êtes-vous enceinte ?",
+      "baseddata": "Souhaitez-vous renseigner quelques données de base ?",
       "reminder": "Afin de protéger votre santé, la vie de vos proches et des autres, il est essentiel de vérifier l'existence de symptômes tous les jours.\n\nSouhaitez-vous un rappel tous les jours ?"
     },
+    "title": {
+      "size": "Taille",
+      "weight": "Poids",
+      "allergy": "Allergie",
+      "tetanos": "Vaccination tetanos"
+    },
+    "moredata": "Ces données élémentaires permettent à l’application d’apporter quelques fonctions supplémentaires mais sont facultatives.",
     "confirmation": "C'est bon, nous avons tous les éléments qui vous caractérisent !\n\nChaque jour, nous allons vous aider à suivre vos symptômes.",
     "go": "C'est parti"
   },

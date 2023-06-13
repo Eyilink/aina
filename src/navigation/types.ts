@@ -5,7 +5,8 @@ export type PublicStackParamList = {
   ProfileCreated: undefined;
   Username: undefined;
   Age: undefined;
-  Size: undefined;
+  MoreData: undefined;
+  ComplementaryData: undefined;
   Weight: undefined;
   NewSuivi: undefined;
   // Diseases: undefined;

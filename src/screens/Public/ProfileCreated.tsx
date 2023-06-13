@@ -16,6 +16,7 @@ import NewSuivi from '@components/molecules/NewSuivi';
 
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
+import Previous from '@components/atoms/Previous';
 
 
 const ProfilCreated = (): ReactElement => {
@@ -37,6 +38,11 @@ const ProfilCreated = (): ReactElement => {
   return (
     <Container>
       <View style={styles.container}> 
+        <View style={styles.messageContainer}>
+          <Text style={styles.message}>
+            {`${i18n.t('signup.endsignup')} `}
+          </Text>
+        </View>
         {ButtonValidateClicked?<><View style={styles.container}>
           <Ionicons
             name="ios-arrow-round-back"
@@ -45,11 +51,7 @@ const ProfilCreated = (): ReactElement => {
             onPress={ValidateButtonNewSuiviPressed}
           /><NewSuivi isFirstLog={true}/></View></>: 
           <>
-            <View style={styles.messageContainer}>
-              <Text style={styles.message}>
-                {`${i18n.t('signup.endsignup')} `}
-              </Text>
-            </View>
+            
             <View style={styles.messageContainer}>
               <Text style={styles.message}>
                 {`${i18n.t('profile.newfollow')} `}
@@ -59,7 +61,7 @@ const ProfilCreated = (): ReactElement => {
             <Button
               text={i18n.t('commons.validate')}
               onPress={ValidatePressed}
-              stretch
+              isSelected
             />
             <Button style={styles.button}
               text={i18n.t  ('commons.no')}
@@ -99,6 +101,5 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop : 200,
-    backgroundColor:'#EE4483'
   }
 });

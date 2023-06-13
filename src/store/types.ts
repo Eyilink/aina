@@ -22,7 +22,9 @@ export type User = {
   age: number;
   size: number;
   weight: number;
-  my_personal_datas: string[][];
+  allergy: boolean;
+  tetanos: boolean;
+  my_personal_datas: Pathologie[];
   reminder: Reminder;
 };
 
@@ -77,18 +79,16 @@ export type RootState = {
   twoDArray: string[][];
 };
 
-export type Data = { 
-  date: string,
-  valeur:number,
-}
-
-
 export type SymptomeJSON = {
   id: number;
   name: string,
   type: string,
 }
 
+export type Data = { 
+  date: string,
+  valeur:number,
+};
 export type Symptome = {
   id: number;
   name: string,
@@ -98,7 +98,7 @@ export type Symptome = {
   question?: String,
   valMin?: number,
   valMax?: number,
-}
+};
   
 export type Pathologie = {
   id: string;
@@ -107,4 +107,4 @@ export type Pathologie = {
   more?: string;
   namelogo?: string;
   symptoms: Symptome[];
-}
+};
