@@ -15,16 +15,21 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
       };
     
   
-    return (
+      return (
         <TouchableOpacity onPress={onPressnath} style={styles.namestyle}>
-            <View>
-                <AppText text={objet.name} style={styles.title}/>
-                {objet.frequence?<AppText text={objet.frequence} style={styles.subtitle}/>:null}
-            </View>
-            <View style={styles.valuestyle}>
-                {objet.data && objet.type?<AppText text={objet.data[objet.data.length-1].valeur.toString() + " "+ objet.type}/> : null}
-            </View>        
-            
+          <View>
+            <AppText text={objet.name} style={styles.title} />
+            {objet.frequence ? <AppText text={objet.frequence} style={styles.subtitle} /> : null}
+          </View>
+          <View style={styles.valuestyle}>
+            {objet.data && objet.type ? (
+              objet.type === "num" ? (
+                <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " /10"} />
+              ) : (
+                <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " " + objet.type} />
+              )
+            ) : null}
+          </View>
         </TouchableOpacity>
       );
     
