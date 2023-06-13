@@ -34,7 +34,6 @@ const HomeComponent = ({
     <View style={styles.container}>
     <Title
           text={DATE_TODAY}
-          style={styles.title}
         />
     {!ButtonClicked?
 

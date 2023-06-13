@@ -145,7 +145,6 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
     setIsSymptom(!isSymptom);
   };
   
-
   return (
     <View style={styles.container}>
         <View style={styles.or_background}>
