@@ -34,21 +34,21 @@ type Props = {
 
 
 const ExempleData : Data[] = [
-  {date:'08/06', valeur: 12},
-  {date:'01/06', valeur: 32},
-  {date:'25/05', valeur: 20},
-  {date:'08/06', valeur: 12},
-  {date:'01/06', valeur: 32},
-  {date:'25/05', valeur: 20},
+  {date:'08/05/2023', valeur: 12},
+  {date:'15/05/2023', valeur: 32},
+  {date:'25/05/2023', valeur: 20},
+  {date:'01/06/2023', valeur: 12},
+  {date:'12/06/2023', valeur: 32},
+  {date:'25/06/2023', valeur: 20},
 ]
 
 const ExempleData2 : Data[] = [
-  {date:'08/06', valeur: 5},
-  {date:'01/06', valeur: 6},
-  {date:'25/05', valeur: 9},
-  {date:'08/06', valeur: 5},
-  {date:'01/06', valeur: 4},
-  {date:'25/05', valeur: 1},
+  {date:'08/05/2023', valeur: 5},
+  {date:'15/05/2023', valeur: 6},
+  {date:'25/05/2023', valeur: 9},
+  {date:'01/06/2023', valeur: 5},
+  {date:'12/06/2023', valeur: 4},
+  {date:'25/06/2023', valeur: 1},
 ]
 
 const exempleSymList : Symptome[]=[
