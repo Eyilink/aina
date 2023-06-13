@@ -137,6 +137,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
     });
     actions.editUserProfile({ key: 'my_personal_datas', value: pathos });
     console.log(pathos);
+    console.log(user);
   };
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
