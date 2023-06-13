@@ -17,6 +17,7 @@ const EndSuiviPopUp = ({ onClose, pathologieRemove }: AskPopUpProps) => {
   const yesPressed = (): void => {const pathologiesUser: Pathologie[]= Object.values(user.my_personal_datas);
     actions.editUserProfile({key: 'my_personal_datas' , value: user.my_personal_datas.filter((item: Pathologie) => item.id !== pathologieRemove.id)});
     console.log(user);
+    onClose();
   };
   return (
     <View style={styles.popUpContainer}>
