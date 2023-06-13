@@ -89,7 +89,7 @@ const Suivi = (): ReactElement => {
               color={colors.black}
               onPress={ValidateButtonNewSuiviPressed}
             />
-            <NewSuivi/></>  : 
+            <NewSuivi setButtonNewSuiviClicked={setButtonNewSuiviClicked}/></>  : 
           <>
             <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
             {user.my_personal_datas?user.my_personal_datas.map((pathologie: Pathologie) => 

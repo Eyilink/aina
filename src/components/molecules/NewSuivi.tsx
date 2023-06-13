@@ -41,6 +41,7 @@ type Pathologie = {
 type Props = {
   isFirstLog?: boolean;
   onPress?: () => void;
+  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
 };
 const dropdownItems = [
   { title: 'Personnalisé', icon: require('@assets/images/1_i.png') },
@@ -69,7 +70,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
 };
-const NewSuivi = ({ isFirstLog, onPress }: Props) => {
+const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore();
 
@@ -125,7 +126,7 @@ const NewSuivi = ({ isFirstLog, onPress }: Props) => {
     <>
       {/* <DropDownMenu objets={pathologieData} ischeckeable={false}/> */}
       {/* <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton> */}
-      <ScrollDownMenu items={pathologieData} />
+      <ScrollDownMenu items={pathologieData} setButtonNewSuiviClicked={setButtonNewSuiviClicked}/>
      
     </>
     )}
