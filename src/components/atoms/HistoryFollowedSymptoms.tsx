@@ -6,6 +6,7 @@ import { he } from 'date-fns/locale';
 import layout from '@styles/layout';
 import CustomSlider from '@components/molecules/Slider'
 type Props = {};
+// import roundValue from '@components/molecules/Slider';
 
 const data = [
   { id: 1, title: 'Articulation', subtitle: 'Coude-Gauche' },
@@ -24,7 +25,7 @@ type CustomComponentProps = {
 
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const [value,setValue] = useState(0);
   const handlePress = () => {
     setModalVisible(true);
   };
@@ -32,10 +33,28 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  const generatePictogrammeTemperature = (value: any ) => {
+    let backgroundColor;
+
+    if (value === 1 ||value === 2  ) {
+      backgroundColor= '#00FF00'; //vert
+    }
+     else if (value === 3 || value ===  4 || value === 5 || value === 6 ) {
+      backgroundColor = '#FFFF00'; // Jaune
+    } else {
+      backgroundColor = '#00FF00'; // Rouge
+    }
+
+    return backgroundColor;
+  };
 
   return (
     <View style={styles.customComponentContainer}>
-      <View style={styles.circle} />
+      <View style={{ width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor:generatePictogrammeTemperature(value) ,
+    marginRight: 20,}} />
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{title}</Text>
         <Text style={styles.subtitle_custom}>{subtitle}</Text>
@@ -51,7 +70,7 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
             max={10}
             title='Temperature'
             hasPainSymptoms={false}
-            
+            roundvalue={value}
             />
       </Modal>
     </View>
