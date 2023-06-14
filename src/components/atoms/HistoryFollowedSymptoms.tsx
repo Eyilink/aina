@@ -130,9 +130,11 @@ const renderItem = ({ item }: { item: Pathologie }) => (
         <Text style={styles.subtitle}>{item.more}</Text>
       </View>
     </View>
+    <View style={styles.Symptome}>
     {item.symptoms.map((item) => (
-      <CustomComponent key={item.id} title={item.name} subtitle={item.name} />
+      <CustomComponent key={item.id}  title={item.name} subtitle={item.name} />
     ))}
+    </View>
   </View>
 );
 
@@ -156,8 +158,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
   },
+  Symptome: {
+    flexDirection:'column',
+    textAlign: 'left',
+    marginRight: 15,
+  },
   flatListContainer: {
     flexGrow: 1,
+    textAlign: 'left',
   },
   title: {
     fontSize: 24,
@@ -212,6 +220,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    
     padding: 10,
   },
   circle: {
