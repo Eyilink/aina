@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import { format, fromUnixTime } from 'date-fns';
 import * as WebBrowser from 'expo-web-browser';
-
+import * as FileSystem from 'expo-file-system'
+import * as DocumentPicker from 'expo-document-picker'
 
 import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
@@ -159,16 +160,6 @@ function Profile(): ReactElement {
                 : i18n.t('commons.none')}
               style={styles.reminder} /></>
           )}
-
-
-
-
-
-
-
-        
-         
-          
          {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
            
           <Button
@@ -176,9 +167,14 @@ function Profile(): ReactElement {
             onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
             isValidate
             style={styles.editButton} /> )
-            
-            
-            }
+          }
+          <Button
+            text={"Importer des données"}
+            onPress={async()=>{
+              const document = await DocumentPicker.getDocumentAsync()
+              const content = await FileSystem.readAsStringAsync(document.uri)
+            }}
+          />
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
