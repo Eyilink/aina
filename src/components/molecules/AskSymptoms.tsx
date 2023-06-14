@@ -62,7 +62,7 @@ const InputBox = (s: Symptome) => {
 
     symptomText = (
       <View>
-        <SliderFooter type={s.name} />
+        <SliderFooter type={s.type} />
         <Slider
           style={styles.slider}
           value={sliderValue}
@@ -117,13 +117,6 @@ const InputBox = (s: Symptome) => {
 
 
 const InputSymptome = (s : Symptome): ReactElement => {
-//   const s: Symptome = {
-//     name: 'Toux',
-//     type: 'oui/non',
-//     question: "Avez vous de la toux ?",
-//     // valMin: 36,
-//     // valMax: 42,
-//   };  
 
 
   return (

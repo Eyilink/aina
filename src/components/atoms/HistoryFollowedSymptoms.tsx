@@ -8,6 +8,7 @@ import CustomSlider from '@components/molecules/Slider';
 import {  MALADIE1 } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
 import { Pathologie } from '@store/types';
+import InputSymptome from '@components/molecules/AskSymptoms'
 type Props = {};
 
 const data = [
@@ -27,15 +28,12 @@ type CustomComponentProps = {
 };
 
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isInputVisible, setInputVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const handlePress = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
+    console.log(user.my_personal_datas[0].symptoms[0].name);
+    setInputVisible(true);
   };
 
   return (
@@ -46,19 +44,10 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
         <Text style={styles.subtitle_custom}>{subtitle}</Text>
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
-      <Modal visible={isModalVisible} transparent>
-       
-            <CustomSlider isVisible onCancel={()=>{}} onConfirm={closeModal}
-            step={1} 
-            initialValue={1}
-            type='temperature'
-            min={1}
-            max={10}
-            title='Temperature'
-            hasPainSymptoms={false}
-            
-            />
-      </Modal>
+      if (isInputVisible){
+      <InputSymptome {...user.my_personal_datas[0].symptoms[0]}/>
+      }
+      
     </View>
   );
 };
