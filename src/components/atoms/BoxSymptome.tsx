@@ -16,7 +16,7 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
       };
       const dateString = objet.data ? objet.data[objet.data.length - 1].date : "(tr";
       const date = moment(dateString, 'DD/MM/YYYY');
-      const formattedDate = date.locale('fr').format('dddd D MMMM');
+      const formattedDate = objet.data ? date.locale('fr').format('dddd D MMMM') : "à Renseigner";
     
   
       return (
