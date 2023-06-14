@@ -9,13 +9,22 @@ import i18n from '@i18n/i18n';
 import ListSymptome from '@components/atoms/ListSymptome';
 import { Pathologie } from '@store/types';
 import EndSuiviPopUp from '@components/popUp/EndSuiviPopUp';
+import ScrollDownMenu from './ScrollDownMenu';
+import { Chk_Box } from './ScrollDownMenu';
+
 
 type Props = {
   objet: Pathologie;
 };
 
 const RecapSuivi = ({ objet }: Props) => {
-  
+  const [ButtonEdit, setButtonEdit] = useState(false);
+
+  const onPress = () => {
+    console.log("Press");
+    setButtonEdit(!ButtonEdit);
+  };
+
   const [showPopUp, setShowPopUp] = useState(false);
 
   const onValidate = () => {
@@ -29,8 +38,23 @@ const RecapSuivi = ({ objet }: Props) => {
   return (
     <View>
       <BoxHistorique objet={objet}/>
-
-      <ListSymptome objets={objet.symptoms}/>
+      {ButtonEdit?
+                  <>
+                  {objet.map((item, index) => {
+                    if (isWhichP === item.id) {
+                      return (
+                        <React.Fragment key={index}>
+                          {item.symptoms.map((symptom, idx) => (
+                            <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
+                          ))}
+                        </React.Fragment>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                </ScrollView></>: <ListSymptome objets={objet.symptoms} onPress={onPress}/>}
+      
 
       <Button text={i18n.t('suivi.end')} 
               isSelected
