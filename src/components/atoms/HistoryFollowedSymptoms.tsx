@@ -6,7 +6,7 @@ import { he } from 'date-fns/locale';
 import layout from '@styles/layout';
 import CustomSlider from '@components/molecules/Slider'
 type Props = {};
-// import roundValue from '@components/molecules/Slider';
+// import {value} from '@components/molecules/Slider';
 
 const data = [
   { id: 1, title: 'Articulation', subtitle: 'Coude-Gauche' },
@@ -22,10 +22,15 @@ type CustomComponentProps = {
   title: string;
   subtitle: string;
 };
-
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [value,setValue] = useState(0);
+  const [value, setValue] = useState(1);
+
+
+const handleValue = (value: number) => {
+  setValue(value);
+}
+
   const handlePress = () => {
     setModalVisible(true);
   };
@@ -33,16 +38,18 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const closeModal = () => {
     setModalVisible(false);
   };
-  const generatePictogrammeTemperature = (value: any ) => {
+  const generatePictogrammeTemperature = (value: number ) => {
     let backgroundColor;
-
+    console.log(value);
+    value=Math.floor(value);
     if (value === 1 ||value === 2  ) {
+    
       backgroundColor= '#00FF00'; //vert
     }
-     else if (value === 3 || value ===  4 || value === 5 || value === 6 ) {
+     else if (value === 3 || value ===  4 || value === 5 || value == 6 ) {
       backgroundColor = '#FFFF00'; // Jaune
     } else {
-      backgroundColor = '#00FF00'; // Rouge
+      backgroundColor = '#FF0000'; // Rouge
     }
 
     return backgroundColor;
@@ -62,15 +69,17 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
       <Button text="+" onPress={handlePress} style={styles.addButton} />
       <Modal visible={isModalVisible} transparent>
        
-            <CustomSlider isVisible onCancel={()=>{}} onConfirm={closeModal}
-            step={1} 
-            initialValue={1}
-            type='temperature'
-            min={1}
-            max={10}
-            title='Temperature'
-            hasPainSymptoms={false}
-            roundvalue={value}
+            <CustomSlider isVisible onCancel={() => { } } onConfirm={closeModal}
+        step={1}
+        initialValue={1}
+        type='temperature'
+        min={1}
+        max={10}
+        title='Temperature'
+        hasPainSymptoms={false}  
+        value={value}   
+        handleValue={handleValue} 
+        roundvalue={value}    
             />
       </Modal>
     </View>
