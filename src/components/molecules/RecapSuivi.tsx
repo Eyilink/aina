@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Alert, Modal, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Alert, Modal, StyleSheet, Text } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -40,7 +40,7 @@ const RecapSuivi = ({ objet }: Props) => {
           <EndSuiviPopUp onClose={onClosePopUp} pathologieRemove={objet} />
         </View>
       </Modal>
-            
+      <View style={styles.separator} />      
     </View>
   );
 
@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  separator: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1.5,
+    margin: 23,
   },
 });
 
