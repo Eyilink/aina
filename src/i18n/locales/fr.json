@@ -51,8 +51,16 @@
       "weight": "Quel est votre poids ?",
       "diseases": "Avez-vous des antécédents de santé ?",
       "pregnant": "Êtes-vous enceinte ?",
+      "baseddata": "Souhaitez-vous renseigner quelques données de base ?",
       "reminder": "Afin de protéger votre santé, la vie de vos proches et des autres, il est essentiel de vérifier l'existence de symptômes tous les jours.\n\nSouhaitez-vous un rappel tous les jours ?"
     },
+    "title": {
+      "size": "Taille",
+      "weight": "Poids",
+      "allergy": "Allergie",
+      "tetanos": "Vaccination tetanos"
+    },
+    "moredata": "Ces données élémentaires permettent à l’application d’apporter quelques fonctions supplémentaires mais sont facultatives.",
     "confirmation": "C'est bon, nous avons tous les éléments qui vous caractérisent !\n\nChaque jour, nous allons vous aider à suivre vos symptômes.",
     "go": "C'est parti"
   },
@@ -136,14 +144,16 @@
     "skinProblem": "Problème cutané",
     "notes": "Notes",
     "peopleMet": "Personnes rencontrées",
-    "endrecord": "Etes vous sûr de vouloir terminer\nce suivi ?",
+    "endrecord": "Etes vous sûr de vouloir terminer\nce suivi ?"
   },
   "home": {
     "firstTime": "Afin de pouvoir évaluer votre état de santé et de vous donner les recommandations nécessaires, nous avons besoin de connaître vos symptômes.",
     "end1": "Vous n’avez pas de symptômes évocateurs.\n\nContinuez de suivre chaque jour votre santé. Respectez les gestes barrière.",
     "end2": "Vous avez un symptôme évocateur.\n\nRestez chez vous.\n\nSuivez l’évolution de vos symptômes.",
     "end2bis": "Vous n’avez pas de symptômes évocateurs aujourd’hui.\n\nVous en aviez dans les 3 derniers jours donc soyez très vigilant.",
-    "end3": "Vous avez au moins deux symptômes évocateurs.\n\nRestez chez vous et contactez un médecin. Si vous l’avez déjà fait, continuez de suivre vos symptômes.\n\nContactez un médecin ou le 15 en cas d’aggravation."
+    "end3": "Vous avez au moins deux symptômes évocateurs.\n\nRestez chez vous et contactez un médecin. Si vous l’avez déjà fait, continuez de suivre vos symptômes.\n\nContactez un médecin ou le 15 en cas d’aggravation.",
+    "nodata": "Vous ne suivez actuellement aucune données."
+
   },
   "history": {
     "firstTime": "Afin de pouvoir suivre l'historique de votre état de santé, nous avons besoin de connaître vos symptômes.",

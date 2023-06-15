@@ -7,6 +7,9 @@ import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
 import { CGU_URL, MALADIE1 } from '@constants/constants';
+import pathos_all from '@assets/json/pathologies.json';
+import symptomsJSON from '@assets/json/symptomes.json';
+import { useNavigation } from '@react-navigation/native';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -20,10 +23,11 @@ interface Pathologie  {
     id: string;
     name: string;
     symptoms: Symptome[];
-    icon: ImageSourcePropType
+    icon?: ImageSourcePropType
   };
 interface DropdownMenuProps {
   items: Pathologie[];
+  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
   
 }
 
@@ -33,22 +37,24 @@ interface chk_BoxProps {
     id_p: string;
     twoDArray: string[][];
     setTDArray: React.Dispatch<React.SetStateAction<string[][]>>;
+    pressingChkBx: () => void;
   }
 
 
-const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray }) => {
+const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
+        
         setIsChecked(checked);
-        console.log(twoDArray)
+
     },[])
     const handleIsChecked = () => {
         setIsChecked(!isChecked);
 
         // if(isChecked){
         const existingObject = twoDArray.find((obj) => obj[0] === id_p);
-        const existingSymptom = twoDArray.find((obj) => obj.slice(1).includes(symptom.id.toString()));
+        const existingSymptom = twoDArray.find((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
         if(!existingSymptom)
             if (existingObject) {
                 // Object with id_p exists, append symptomId to the second dimension
@@ -64,6 +70,8 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDAr
                 setTDArray(updatedArray);
             }
             // };
+            pressingChkBx();
+           
       };
     
     return(
@@ -82,27 +90,95 @@ const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDAr
     )
 
 }
+const getIconPath = (iconName?: string): ImageSourcePropType => {
+  switch (iconName) {
+    case '1_i.png':
+      return require('@assets/images/1_i.png');
+    case '2_i.png':
+      return require('@assets/images/2_i.png');
+    case '3_i.png':
+      return require('@assets/images/3_i.png');
+    case '4_i.png':
+      return require('@assets/images/4_i.png');
+    case '5_i.png':
+      return require('@assets/images/5_i.png');
+    case '6_i.png':
+      return require('@assets/images/6_i.png');
+    default:
+      return require('@assets/images/6_i.png'); // Provide a default image path
+  }
+};
 
-const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
+const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviClicked }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
   const [isWhichP , setIsWichP] = useState<string>("");
   const [twoDArray, setTDArray] = useState<string[][]>([]);
   const [, actions] = useAuthStore();
   const [user, ] = useUserStore({ disease: MALADIE1 });
+  const [render, setRender] = useState<boolean>(false);
 
-
+  
   const handleItemPress = (id : string) => {
     setIsSymptom(true);
     setIsWichP(id);
   };
 
   
+  const processDatas = () => {
+    const updatedPathos = twoDArray.map((objet, index) => {
+      const nm = pathos_all.find((obj) => obj.id === objet[0])?.name;
+      const newE: Pathologie = {
+        id: objet[0],
+        name: nm ? nm : "",
+        symptoms: symptomsJSON
+          .filter((obj) => objet.slice(1).includes(obj.id.toString()))
+          .map((filteredObj) => ({
+            id: filteredObj.id,
+            name: filteredObj.name,
+            type: filteredObj.type,
+          })),
+        icon: getIconPath(
+          pathos_all.find((obj) => obj.id === objet[0])?.icon?.toString()
+        ),
+      };
+      return newE;
+    });
 
+    actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
+  };
+  
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
+  const handleButtonPress = () => {
+    processDatas();
+    setButtonNewSuiviClicked(false);
 
-  return (
+  };
+  useEffect(()=>{
+    setRender(true);
+    console.log(twoDArray)
+  },[twoDArray])
+  useEffect(()=>{
+    console.log("In useeffect ...");
+    if(user.my_personal_datas)
+    {
+      user.my_personal_datas.map((obj,ind)=>{
+        const updatedArray = [obj.id];
+        obj.symptoms.map((s, index) => {
+          updatedArray.push(s.id.toString());
+        });
+
+        
+        twoDArray.push(updatedArray);
+        
+      })
+      
+    }
+    console.log("After useeffect ...");
+  },[]);
+  return render ? (
+    
     <View style={styles.container}>
         <View style={styles.or_background}>
       {isSymptom && (
@@ -117,7 +193,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
               return (
                 <React.Fragment key={index}>
                   {item.symptoms.map((symptom, idx) => (
-                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} />
+                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
                   ))}
                 </React.Fragment>
               );
@@ -135,10 +211,10 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
               onPress={()=>handleItemPress(item.id)}
             >
               <View style={styles.itemIconContainer}>
-                <Image style={{ width: 40, height: 40 }} source={item.icon} />
+                <Image style={{ width: 40, height: 40 }} source={item?.icon ? item.icon : getIconPath("")} />
               </View>
               <View style={styles.itemTitleContainer}>
-                <AppText style={styles.itemTitle} text={item.name} />
+                <AppText style={styles.itemTitle} text={item.name ? item.name :  ""} />
               </View>
             </TouchableOpacity>
           ))}
@@ -148,7 +224,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
-          onPress={()=>{actions.editUserProfile({ key: 'my_personal_datas', value: twoDArray });console.log(user.my_personal_datas)}}
+          onPress={()=>{handleButtonPress();}}
           isValidate
           stretch
           style={{marginTop: 10}}
@@ -156,7 +232,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items }) => {
       }
       
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

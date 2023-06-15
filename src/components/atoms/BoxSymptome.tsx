@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import AppText from '@components/atoms/AppText';
 import { StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Symptome } from '@store/types';
+import moment from 'moment';
 
 
   type Props = {
@@ -13,18 +14,26 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
     const onPressnath = (): void => {
         // Faire quelque chose lorsqu'on appuie sur la boîte
       };
+      const dateString = objet.data ? objet.data[objet.data.length - 1].date : "(tr";
+      const date = moment(dateString, 'DD/MM/YYYY');
+      const formattedDate = objet.data ? date.locale('fr').format('dddd D MMMM') : "à Renseigner";
     
   
-    return (
+      return (
         <TouchableOpacity onPress={onPressnath} style={styles.namestyle}>
-            <View>
-                <AppText text={objet.name} style={styles.title}/>
-                {objet.frequence?<AppText text={objet.frequence} style={styles.subtitle}/>:null}
-            </View>
-            <View style={styles.valuestyle}>
-                {objet.data && objet.type?<AppText text={objet.data[objet.data.length-1].valeur.toString() + " "+ objet.type}/> : null}
-            </View>        
-            
+          <View>
+            <AppText text={objet.name} style={styles.title} />
+            {objet.frequence ? <AppText text={formattedDate} style={styles.subtitle} /> : null}
+          </View>
+          <View style={styles.valuestyle}>
+            {objet.data && objet.type ? (
+              objet.type === "num" ? (
+                <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " /10"} />
+              ) : (
+                <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " " + objet.type} />
+              )
+            ) : null}
+          </View>
         </TouchableOpacity>
       );
     

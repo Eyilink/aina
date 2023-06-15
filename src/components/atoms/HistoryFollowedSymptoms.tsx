@@ -4,12 +4,16 @@ import { AntDesign } from '@expo/vector-icons';
 import Button from '@components/atoms/Button';
 import { he } from 'date-fns/locale';
 import layout from '@styles/layout';
-import CustomSlider from '@components/molecules/Slider'
+import CustomSlider from '@components/molecules/Slider';
+import {  MALADIE1 } from '@constants/constants';
+import { useReportsStore, useUserStore } from '@store/store';
+import { Pathologie } from '@store/types';
 type Props = {};
 // import {value} from '@components/molecules/Slider';
 
 const data = [
-  { id: 1, title: 'Articulation', subtitle: 'Coude-Gauche' },
+  { id: 1, title: 'Pathologie', subtitle: 'Coude-Gauche' },
+  { id: 1, title: 'Pathologie', subtitle: 'Coude-Gauche' },
   // Add more data items as needed
 ];
 const symptomsData = [
@@ -24,12 +28,7 @@ type CustomComponentProps = {
 };
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [value, setValue] = useState(1);
-
-
-const handleValue = (value: number) => {
-  setValue(value);
-}
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const handlePress = () => {
     setModalVisible(true);
@@ -144,26 +143,30 @@ type Item = {
   subtitle: string;
 };
 
-const renderItem = ({ item }: { item: Item }) => (
-  <View>
+const renderItem = ({ item }: { item: Pathologie }) => (
+  <View style={styles.custom}>
     <View style={styles.itemContainer}>
       <AntDesign name="forward" size={24} color="#ffc000" style={styles.icon} />
       <View style={styles.textContainer}>
-        <Text style={styles.title_comp}>{item.title}</Text>
-        <Text style={styles.subtitle}>{item.subtitle}</Text>
+        <Text style={styles.title_comp}>{item.name}</Text>
+        <Text style={styles.subtitle}>{item.more}</Text>
       </View>
     </View>
-    {symptomsData.map((item) => (
-      <CustomComponent key={item.id} title={item.title} subtitle={item.subtitle} />
+    <View style={styles.Symptome}>
+    {item.symptoms.map((item) => (
+      <CustomComponent key={item.id}  title={item.name} subtitle={item.name} />
     ))}
+    </View>
   </View>
 );
 
 function HistoryFollowedSymptoms({}: Props) {
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
+  
   return (
     <View style={styles.container}>
       <FlatList
-        data={data}
+        data={user.my_personal_datas}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         style={styles.flatListContainer}
@@ -177,8 +180,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
   },
+  Symptome: {
+    flexDirection:'column',
+    textAlign: 'left',
+    marginRight: 15,
+  },
   flatListContainer: {
     flexGrow: 1,
+    textAlign: 'left',
   },
   title: {
     fontSize: 24,
@@ -201,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   icon: {
     marginRight: 30,
@@ -225,7 +234,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  custom: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    
     padding: 10,
   },
   circle: {

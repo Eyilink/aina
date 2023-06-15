@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Container from '@components/molecules/Container';
 import DropDownMenu from '@components/molecules/DropDownMenu';
 
-import { useReportsStore } from '@store/store';
+import { useReportsStore, useUserStore } from '@store/store';
 import { AuthenticatedStackParamList, BottomTabParamList } from '@navigation/types';
 import { hasPreviousReportToday } from '@helpers/utils';
 
@@ -33,7 +33,7 @@ const Suivi = (): ReactElement => {
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [ButtonClicked, setButtonClicked] = React.useState(false);
-
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
   const symptomeData: Symptome[] = symptomsJSON.map((item: Symptome) => ({
     id: item.id,
     name: item.name,
@@ -69,38 +69,40 @@ const Suivi = (): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        {/* <Title isPrimary isDate isCenter text={DATE_TODAY} />
-        {!isNewReportOfDay ? (
-          <SubTitle text={i18n.t('evaluate.restart')} style={styles.subtitle} />
-        ) : (
-          <SubTitle text={i18n.t('evaluate.start')} style={styles.subtitle} />
-        )}
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={onStartReport}
-          isValidate
-          stretch
-        /> */}
-        {ButtonNewSuiviClicked? <>
-          <Ionicons
-            name="ios-arrow-round-back"
-            size={layout.navigation.previousIcon.size}
-            color={colors.black}
-            onPress={ValidateButtonNewSuiviPressed}
-          />
-          <NewSuivi/></>  : 
-        <>
-          <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
-          <RecapSuivi objet={pathologieData[0]}/>
+        <ScrollView>
+          {/* <Title isPrimary isDate isCenter text={DATE_TODAY} />
+          {!isNewReportOfDay ? (
+            <SubTitle text={i18n.t('evaluate.restart')} style={styles.subtitle} />
+          ) : (
+            <SubTitle text={i18n.t('evaluate.start')} style={styles.subtitle} />
+          )}
           <Button
-            text={i18n.t('commons.newsuivi')}
-            onPress={ValidateButtonNewSuiviPressed}
-          />
-        </>
-        }
+            text={i18n.t('commons.validate')}
+            onPress={onStartReport}
+            isValidate
+            stretch
+          /> */}
+          {ButtonNewSuiviClicked? <>
+            <Ionicons
+              name="ios-arrow-round-back"
+              size={layout.navigation.previousIcon.size}
+              color={colors.black}
+              onPress={ValidateButtonNewSuiviPressed}
+            />
+            <NewSuivi setButtonNewSuiviClicked={setButtonNewSuiviClicked}/></>  : 
+          <>
+            <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
+            {user.my_personal_datas?user.my_personal_datas.map((pathologie: Pathologie) => 
+              (<RecapSuivi objet={pathologie}/>)):null}
+            <Button
+              text={i18n.t('commons.newsuivi')}
+              onPress={ValidateButtonNewSuiviPressed}
+            />
+          </>
+          }
         
       
-      
+        </ScrollView>
       </View>
     </Container>
   );

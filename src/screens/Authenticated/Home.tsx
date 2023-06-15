@@ -21,7 +21,7 @@ import EmojiRed from '@assets/images/red-emoji.png';
 
 import { registerForPushNotificationsAsync } from '@helpers/notifications';
 import { BottomTabParamList } from '@navigation/types';
-import { useReportsStore } from '@store/store';
+import { useReportsStore, useUserStore } from '@store/store';
 
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
@@ -43,6 +43,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   const [image, setImage] = useState<ImageSourcePropType>({});
   const [textReco, setTextReco] = useState<string>('');
   const [reports] = useReportsStore({ disease: MALADIE1 });
+  const [user, ] = useUserStore({ disease: MALADIE1 });
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -87,8 +88,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        <HomeComponent isDataEmpty={false}/>
-        
+        <HomeComponent isDataEmpty={user.my_personal_datas && user.my_personal_datas.length>0?false:true}/>
       </View>
     </Container>
     

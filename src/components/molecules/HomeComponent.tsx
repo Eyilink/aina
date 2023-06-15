@@ -7,6 +7,12 @@ import { View,Text,StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
 import  {DATE_TODAY} from '@constants/constants';
+import NewSuivi from './NewSuivi';
+import { Ionicons } from '@expo/vector-icons';
+import layout from '@styles/layout';
+import colors from '@styles/colors';
+import Container from './Container';
+
 
 type Props = {
   isDataEmpty?: boolean;
@@ -16,31 +22,54 @@ type Props = {
 const HomeComponent = ({
     isDataEmpty
 }: Props): ReactElement => {
-  
+  const [ButtonClicked, setButtonClicked] = React.useState(false);
+
+
+  const ValidatePressed = () => {
+    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
+    // Vous pouvez ajouter votre logique ou vos actions ici
+    setButtonClicked(!ButtonClicked);
+  };
 
   return (
-    <View style={styles.container}>
+    <Container style={styles.container}>
     <Title
           text={DATE_TODAY}
-          style={styles.title}
         />
+    {!ButtonClicked?
+      <>
+      {isDataEmpty ? 
+        <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
+      : 
+      <>
+        <HistoryFollowedSymptoms/>
+        {/* <Button
+          text="Renseigner une donnée ponctuelle"
+          onPress={()=>{}}
+          stretch
+        /> */}
+      </>}
 
-    {isDataEmpty ? (<>
-          <Text style={styles.title}>Vous ne suivez actuellement aucune données.</Text>
-          <Button
-        text="Lancer un suivi"
+      <Button
+        text={i18n.t('commons.newsuivi')}
         style={{minWidth: '90%'}}
-        onPress={()=>{}}
+        onPress={ValidatePressed}
         stretch
-      /></>) : <><HistoryFollowedSymptoms/></>
+      /></>
+    :<>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={layout.navigation.previousIcon.size}
+        color={colors.black}
+        onPress={ValidatePressed}
+        style={{marginLeft:12}}
+      />
+      <View style={styles.newsuivicontainer}>
+      <NewSuivi onPress={ValidatePressed}/>
+      </View>
+    </>
     }
-    <Button
-      text="Renseigner une donnée ponctuelle"
-      onPress={()=>{}}
-      stretch
-    />
-
-    </View>
+    </Container>
   );
 };
 
@@ -62,6 +91,10 @@ const styles = StyleSheet.create({
       color: 'black',
       textAlign: 'center',
       marginBottom: '60%'
+    },
+    newsuivicontainer: {
+      flex: 1,
+      
     }
   });
   
