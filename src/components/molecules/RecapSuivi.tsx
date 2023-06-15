@@ -9,13 +9,15 @@ import i18n from '@i18n/i18n';
 import ListSymptome from '@components/atoms/ListSymptome';
 import { Pathologie } from '@store/types';
 import EndSuiviPopUp from '@components/popUp/EndSuiviPopUp';
+import { useUserStore } from '@store/store';
+import { MALADIE1 } from '@constants/constants';
 
 type Props = {
   objet: Pathologie;
 };
 
 const RecapSuivi = ({ objet }: Props) => {
-  
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [showPopUp, setShowPopUp] = useState(false);
 
   const onValidate = () => {
