@@ -9,6 +9,7 @@ import {  MALADIE1 } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
 import { Pathologie } from '@store/types';
 type Props = {};
+// import {value} from '@components/molecules/Slider';
 
 const data = [
   { id: 1, title: 'Pathologie', subtitle: 'Coude-Gauche' },
@@ -25,7 +26,6 @@ type CustomComponentProps = {
   title: string;
   subtitle: string;
 };
-
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
@@ -37,10 +37,30 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  const generatePictogrammeTemperature = (value: number ) => {
+    let backgroundColor;
+    console.log(value);
+    value=Math.floor(value);
+    if (value === 1 ||value === 2  ) {
+    
+      backgroundColor= '#00FF00'; //vert
+    }
+     else if (value === 3 || value ===  4 || value === 5 || value == 6 ) {
+      backgroundColor = '#FFFF00'; // Jaune
+    } else {
+      backgroundColor = '#FF0000'; // Rouge
+    }
+
+    return backgroundColor;
+  };
 
   return (
     <View style={styles.customComponentContainer}>
-      <View style={styles.circle} />
+      <View style={{ width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor:generatePictogrammeTemperature(value) ,
+    marginRight: 20,}} />
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{title}</Text>
         <Text style={styles.subtitle_custom}>{subtitle}</Text>
@@ -48,15 +68,17 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
       <Button text="+" onPress={handlePress} style={styles.addButton} />
       <Modal visible={isModalVisible} transparent>
        
-            <CustomSlider isVisible onCancel={()=>{}} onConfirm={closeModal}
-            step={1} 
-            initialValue={1}
-            type='temperature'
-            min={1}
-            max={10}
-            title='Temperature'
-            hasPainSymptoms={false}
-            
+            <CustomSlider isVisible onCancel={() => { } } onConfirm={closeModal}
+        step={1}
+        initialValue={1}
+        type='temperature'
+        min={1}
+        max={10}
+        title='Temperature'
+        hasPainSymptoms={false}  
+        value={value}   
+        handleValue={handleValue} 
+        roundvalue={value}    
             />
       </Modal>
     </View>

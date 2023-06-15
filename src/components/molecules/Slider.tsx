@@ -25,6 +25,9 @@ type Props = {
   type: 'pain' | 'temperature';
   title: string;
   hasPainSymptoms: boolean;
+  roundvalue: number;
+  value: number;
+  handleValue: Function;
 };
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -40,22 +43,28 @@ const CustomSlider = ({
   max,
   title,
   hasPainSymptoms,
+  value,
+  handleValue,
 }: Props): ReactElement => {
   const sliderRef = useRef<View | null>(null);
-  const [value, setValue] = useState<number>(initialValue);
   const [updatedPainSymptoms, setPainSymptoms] = useState<PainSymptoms>(
     PAIN_SYMPTOMS,
   );
 
   const roundValue = (value: number): number => {
+   
+    value=Math.floor(value);
+   
     if (!step) return value;
+   
+    console.log(value);
 
     const dividend = 1 / step;
     return Math.round(value / step) / dividend;
   };
 
   const onValueChangeRound = (value: number): void => {
-    setValue(roundValue(value));
+    handleValue(roundValue(value));
   };
 
   const onConfirmSlider = (): void => {
@@ -74,7 +83,7 @@ const CustomSlider = ({
     const { locationX } = event.nativeEvent;
     const width = screenWidth - 40; // Adjust the padding/margin as needed
     const newValue = (locationX / width) * (max - min) + min;
-    setValue(newValue);
+    handleValue(newValue);
   };
 
   return (
