@@ -29,6 +29,13 @@ type CustomComponentProps = {
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [value, setValue] = useState(1);
+
+
+  const handleValue = (value: number) => {
+    setValue(value);
+  }
+
 
   const handlePress = () => {
     setModalVisible(true);
