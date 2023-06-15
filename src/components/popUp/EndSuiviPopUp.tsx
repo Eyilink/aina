@@ -4,7 +4,7 @@ import Button from '@components/atoms/Button';
 import i18n from '@i18n/i18n';
 import { Pathologie } from '@store/types';
 import { useUserStore } from '@store/store';
-import { MALADIE1 } from '@constants/constants';
+import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 
 type AskPopUpProps = {
   onClose: () => void;
@@ -16,7 +16,18 @@ const EndSuiviPopUp = ({ onClose, pathologieRemove }: AskPopUpProps) => {
 
   const yesPressed = (): void => {const pathologiesUser: Pathologie[]= Object.values(user.my_personal_datas);
     actions.editUserProfile({key: 'my_personal_datas' , value: user.my_personal_datas.filter((item: Pathologie) => item.id !== pathologieRemove.id)});
-    console.log(user);
+    pathologieRemove.dateend=DATE_TODAY;
+    if (user.my_previous_personal_datas){
+      const pathologie: Pathologie[]=[...user.my_previous_personal_datas, pathologieRemove];;
+      actions.editUserProfile({key: 'my_previous_personal_datas' , value: pathologie});
+      console.log("E datas",user.my_previous_personal_datas);
+    }
+    else {
+      const pathologie: Pathologie[]=[pathologieRemove];
+      actions.editUserProfile({key: 'my_previous_personal_datas' , value: pathologie});
+      console.log("N datas",user.my_previous_personal_datas);
+    }
+    // console.log(user.my_previous_personal_datas+=(pathologieRemove));
     onClose();
   };
   return (
