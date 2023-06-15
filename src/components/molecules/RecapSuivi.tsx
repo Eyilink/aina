@@ -22,13 +22,10 @@ const RecapSuivi = ({ objet }: Props) => {
 
   const onValidate = () => {
     setShowPopUp(true);
-    console.log(user.my_previous_personal_datas);
-    console.log("Now",user.my_personal_datas);
   };
 
   const onClosePopUp = () => {
     setShowPopUp(false);
-    console.log(user.my_previous_personal_datas);
   };
 
   return (
