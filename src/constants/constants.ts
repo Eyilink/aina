@@ -2,8 +2,9 @@ import { format } from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
-
-import { PainSymptoms } from '@store/types';
+import pathologies from '@assets/json/pathologies.json'
+import symptoms from '@assets/json/symptomes.json'
+import { PainSymptoms, Pathologie, Symptome } from '@store/types';
 
 // Local Storage Keys
 export const ASYNC_STORAGE_AUTH_KEY = `@${Constants.manifest.slug}:auth`;
@@ -39,3 +40,16 @@ export const PHONE_OS = Platform.OS;
 
 // Other
 export const CGU_URL = 'http://aina.io/monsuivisante-cgu/';
+
+export const symptomeJSON: Symptome[] = symptoms.map((item: Symptome) => ({
+  id: item.id,
+  name: item.name,
+  type: item.type,
+}));
+
+export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
+  id: item.id,
+  name: item.name,
+//    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
+  symptoms: symptomeJSON.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id)))
+}));
