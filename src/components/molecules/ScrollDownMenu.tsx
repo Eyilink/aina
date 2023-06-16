@@ -6,23 +6,14 @@ import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
-import { CGU_URL, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
+import { Pathologie, Symptome } from '@store/types';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
 }
-type Symptome = {
-    id: number;
-    name: string;
-    type: string;
-  };
-interface Pathologie  {
-    id: string;
-    name: string;
-    symptoms: Symptome[];
-    icon?: ImageSourcePropType
-  };
+
 interface DropdownMenuProps {
   items: Pathologie[];
   setButtonNewSuiviClicked? : React.Dispatch<React.SetStateAction<boolean>>;
@@ -138,6 +129,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
+        date: DATE_TODAY,
       };
       return newE;
     });

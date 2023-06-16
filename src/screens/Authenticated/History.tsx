@@ -12,7 +12,7 @@ import Button from '@components/atoms/Button';
 import AppText from '@components/atoms/AppText';
 
 import { BottomTabParamList } from '@navigation/types';
-import { useReportsStore } from '@store/store';
+import { useReportsStore, useUserStore } from '@store/store';
 
 import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
@@ -71,7 +71,8 @@ const History = ({ navigation }: Props): ReactElement => {
   const [isClicked, setIsClicked] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [graph, graphClicked] = React.useState(false);
-  
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
+
 
   const onPressPath = (index : number): void =>{
     setIsClicked(true);
@@ -169,9 +170,21 @@ const History = ({ navigation }: Props): ReactElement => {
         </>
       : 
         <> 
-        <AppText text={"Historique"} style={styles.pagetitle} />   
+        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
         {
           exempleList.map((object, index) => {    
+            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
+          })
+        }  
+        <AppText text={"TODO : "+i18n.t('navigation.authenticated.history')+" User"} style={styles.pagetitle} />   
+        {
+          user.my_personal_datas?.map((object, index) => {    
+            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
+          })
+        }  
+        <AppText text={i18n.t('navigation.authenticated.history')+" Previous"} style={styles.pagetitle} />   
+        {
+          user.my_previous_personal_datas?.map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
         }  
