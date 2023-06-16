@@ -146,7 +146,7 @@ const RecapSuivi = ({ objet }: Props) => {
           <EndSuiviPopUp onClose={onClosePopUp} pathologieRemove={objet} />
         </View>
       </Modal>
-            
+      <View style={styles.separator} />      
     </View>
   );
 

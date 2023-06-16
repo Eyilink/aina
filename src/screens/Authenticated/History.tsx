@@ -54,6 +54,7 @@ const ExempleData2 : Data[] = [
 const exempleSymList : Symptome[]=[
   {id: 1, name: "Poids",frequence:"tous les 7 jours",data:ExempleData,type:"kg"},
   {id: 2, name: "Douleur",frequence:"Tous les jours",data:ExempleData2,type:"num"},
+  {id: 2, name: "Température",frequence:"Tous les jours",type:"num"},
 ]
 
 const exempleList: Pathologie[] = [
@@ -130,7 +131,7 @@ const History = ({ navigation }: Props): ReactElement => {
           </View>
           <View style= {styles.buttonsContainer}>
             <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
-            <Button style={styles.button} text={"Graph"} onPress={graphpress} isSelected ={graph ? true : false}/> 
+            <Button style={styles.button} text={"Graphique"} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
           {graph ? 
             (  
@@ -138,11 +139,16 @@ const History = ({ navigation }: Props): ReactElement => {
             {
             exempleList[currentIndex].symptoms.map((object, index) => {    
                 return (
-                 
+                  <>
+                 {object.data ?
                   <View key= {index}>
                   <AppText  text={object.name} style={styles.pagetitle} />
                   {object.data ? <ChartSymptome  objet = {object}/> : null}
                   </View>
+                  :
+                  null
+                  }
+                  </>
              
                 );      
               }) 

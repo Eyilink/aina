@@ -27,6 +27,7 @@ import colors from '@styles/colors';
 
 
 
+
 const Suivi = (): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
