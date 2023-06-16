@@ -1,22 +1,89 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, Alert, Modal, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, View, Alert, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
 import BoxHistorique from '@components/atoms/BoxHistorique';
 import Button from '@components/atoms/Button';
+import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import ListSymptome from '@components/atoms/ListSymptome';
-import { Pathologie } from '@store/types';
+import { Pathologie, Symptome } from '@store/types';
+import AppText from '@components/atoms/AppText';
 import EndSuiviPopUp from '@components/popUp/EndSuiviPopUp';
 import ScrollDownMenu from './ScrollDownMenu';
 import { Chk_Box } from './ScrollDownMenu';
+import { useAuthStore, useUserStore } from '@store/store';
+import { MALADIE1 } from '@constants/constants';
+import dataSymp from '@assets/json/symptomes.json'
+import dataPath from '@assets/json/pathologies.json'
 
 
 type Props = {
   objet: Pathologie;
 };
-
+type scrollProps = {
+  index: number,
+  item: Symptome,
+  id_p: string
+}
+const ScrollItem = ({index,item,id_p} : scrollProps) => {
+  const [isChecked,setIsChecked] = useState<boolean>(false);
+  const [user, ] = useUserStore({ disease: MALADIE1 });
+  const [,actions] = useAuthStore();
+  useEffect(()=>{
+    const isSympchecked = user.my_personal_datas.find((obj)=> obj.id === id_p)?.symptoms.find((o)=> o.id === item.id)
+    if(isSympchecked)
+      setIsChecked(true);
+  },[]);
+  useEffect(()=>{
+    if(isChecked)
+    {
+      const updatedPathos = user.my_personal_datas.map((obj) => {
+        if (obj.id === id_p) {
+          return {
+            ...obj,
+            symptoms: [...obj.symptoms, item],
+          };
+        }
+        return obj;
+      });
+      actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
+      
+    }
+    else
+    {
+      const updatedPathos = user.my_personal_datas.map((obj) => {
+        if (obj.id === id_p) {
+          return {
+            ...obj,
+            symptoms: obj.symptoms.filter((symptom) => symptom.id !== item.id),
+          };
+        }
+        return obj;
+      });
+      actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
+       
+    }
+  },[isChecked]);
+  const handleIsChecked = () => {
+    setIsChecked(!isChecked);
+  }
+  return (
+    <TouchableOpacity
+    key={index}
+    style={[styles.itemContainer, isChecked && styles.checkedItemContainer]}
+    onPress={handleIsChecked}
+  >
+    <View style={[styles.checkbox, isChecked && styles.checkedCheckbox]}>
+      {isChecked && <Entypo name="check" size={24} color="#ffffff" style={{}}/>}
+    </View>
+    <View style={styles.itemTitleContainer}>
+      <AppText style={styles.itemTitle} text={item.name} />
+    </View>
+  </TouchableOpacity>
+  )
+}
 const RecapSuivi = ({ objet }: Props) => {
   const [ButtonEdit, setButtonEdit] = useState(false);
 
@@ -26,7 +93,8 @@ const RecapSuivi = ({ objet }: Props) => {
   };
 
   const [showPopUp, setShowPopUp] = useState(false);
-
+  
+  
   const onValidate = () => {
     setShowPopUp(true);
   };
@@ -34,26 +102,40 @@ const RecapSuivi = ({ objet }: Props) => {
   const onClosePopUp = () => {
     setShowPopUp(false);
   };
-
+  useEffect(()=>{
+    console.log("Les symptomes d'objet " + objet.symptoms.length)
+  },[])
   return (
     <View>
       <BoxHistorique objet={objet}/>
       {ButtonEdit?
-                  <>
-                  {objet.map((item, index) => {
-                    if (isWhichP === item.id) {
-                      return (
-                        <React.Fragment key={index}>
-                          {item.symptoms.map((symptom, idx) => (
-                            <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
-                          ))}
-                        </React.Fragment>
-                      );
-                    } else {
-                      return null;
+                  <View>
+                  <ScrollView>
+                    
+                  {
+                    dataPath.find((obj)=> obj.id === objet.id)?.symptoms.split('\,').map((s,idx)=>{
+                      const sFound = dataSymp.find((obj)=> obj.id.toString() === s);
+                      if(sFound)
+                      {const sFoundSymp : Symptome = {
+                        id: sFound.id,
+                        name: sFound.name,
+                        type: sFound.type
+                      }
+                      return <ScrollItem index={idx} item={sFoundSymp} id_p={objet.id} />
+                      }
+                    })
                     }
-                  })}
-                </ScrollView></>: <ListSymptome objets={objet.symptoms} onPress={onPress}/>}
+                 
+                </ScrollView>
+                 <Button
+                 text={i18n.t('commons.validate')}
+                 onPress={()=>{setButtonEdit(false)}}
+                 isValidate
+                 stretch
+                 
+               />
+               </View>
+                 : <ListSymptome objets={objet.symptoms} onPress={onPress}/>}
       
 
       <Button text={i18n.t('suivi.end')} 
@@ -77,6 +159,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    backgroundColor: '#ffffff', // Set the white background color for each item
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginTop: 10,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 5
+  },
+  itemIconContainer: {
+    marginRight: 16,
+  },
+  itemTitleContainer: {
+    flex: 1,
+  },
+  itemTitle: {
+    fontSize: 16,
+    color: '#000000', // Set the color of the title
+  },
+  checkbox: {
+    width: 28,
+    height: 28,
+    borderWidth: 2,
+    borderColor: '#00cc00',
+    borderRadius: 4,
+    marginRight: 16,
+  },
+  checkedCheckbox: {
+    backgroundColor: '#00cc00',
+    borderColor: '#ffffff',
+  },
+  checkedItemContainer: {
+    // backgroundColor: '#00cc00',
   },
 });
 
