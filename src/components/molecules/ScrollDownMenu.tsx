@@ -6,9 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
-import { CGU_URL, MALADIE1 } from '@constants/constants';
-import pathos_all from '@assets/json/pathologies.json';
-import symptomsJSON from '@assets/json/symptomes.json';
+import { CGU_URL, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
 interface DropdownItem {
   title: string;
@@ -126,11 +124,11 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
-      const nm = pathos_all.find((obj) => obj.id === objet[0])?.name;
+      const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
       const newE: Pathologie = {
         id: objet[0],
         name: nm ? nm : "",
-        symptoms: symptomsJSON
+        symptoms: symptomeJSON
           .filter((obj) => objet.slice(1).includes(obj.id.toString()))
           .map((filteredObj) => ({
             id: filteredObj.id,
@@ -138,7 +136,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             type: filteredObj.type,
           })),
         icon: getIconPath(
-          pathos_all.find((obj) => obj.id === objet[0])?.icon?.toString()
+          pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
       };
       return newE;
