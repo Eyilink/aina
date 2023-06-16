@@ -14,9 +14,7 @@ import EndSuiviPopUp from '@components/popUp/EndSuiviPopUp';
 import ScrollDownMenu from './ScrollDownMenu';
 import { Chk_Box } from './ScrollDownMenu';
 import { useAuthStore, useUserStore } from '@store/store';
-import { MALADIE1 } from '@constants/constants';
-import dataSymp from '@assets/json/symptomes.json'
-import dataPath from '@assets/json/pathologies.json'
+import { MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
 
 
 type Props = {
@@ -113,14 +111,10 @@ const RecapSuivi = ({ objet }: Props) => {
                   <ScrollView>
                     
                   {
-                    dataPath.find((obj)=> obj.id.toString() === objet.id)?.symptoms.split('\,').map((s,idx)=>{
-                      const sFound = dataSymp.find((obj)=> obj.id.toString() === s);
+                    pathologieJSON.find((obj)=> obj.id === objet.id)?.symptoms.map((s,idx)=>{
+                      const sFound = symptomeJSON.find((obj)=> obj.id === s.id);
                       if(sFound)
-                      {const sFoundSymp : Symptome = {
-                        id: sFound.id,
-                        name: sFound.name,
-                        type: sFound.type
-                      }
+                      {const sFoundSymp : Symptome = sFound;
                       return <ScrollItem index={idx} item={sFoundSymp} id_p={objet.id} />
                       }
                     })
