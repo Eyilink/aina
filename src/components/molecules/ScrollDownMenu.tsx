@@ -27,7 +27,7 @@ interface Pathologie  {
   };
 interface DropdownMenuProps {
   items: Pathologie[];
-  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
+  setButtonNewSuiviClicked? : React.Dispatch<React.SetStateAction<boolean>>;
   
 }
 
@@ -41,7 +41,7 @@ interface chk_BoxProps {
   }
 
 
-const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
+export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
