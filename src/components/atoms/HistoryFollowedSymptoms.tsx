@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text,Dimensions, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { View, Text,Dimensions, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Modal, {ModalProps} from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
 import Button from '@components/atoms/Button';
 import { he } from 'date-fns/locale';
@@ -7,7 +8,7 @@ import layout from '@styles/layout';
 import CustomSlider from '@components/molecules/Slider';
 import {  MALADIE1 } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
-import { Pathologie } from '@store/types';
+import { Pathologie, Symptome } from '@store/types';
 import InputSymptome from '@components/molecules/AskSymptoms'
 type Props = {};
 
@@ -28,12 +29,27 @@ type CustomComponentProps = {
 };
 
 const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
-  const [isInputVisible, setInputVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const handlePress = () => {
     console.log(user.my_personal_datas[0].symptoms[0].name);
-    setInputVisible(true);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const symptomeInstance: Symptome = {
+    id: 1,
+    name: 'Température',
+    frequence: '...',
+    data: [],
+    type: 'num',
+    question: 'Quelle est votre température',
+    valMin: 36,
+    valMax: 42,
   };
 
   return (
@@ -44,9 +60,23 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
         <Text style={styles.subtitle_custom}>{subtitle}</Text>
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
-      if (isInputVisible){
-      <InputSymptome {...user.my_personal_datas[0].symptoms[0]}/>
-      }
+
+      <Modal 
+        visible={isModalVisible} 
+        animationType="slide" 
+        transparent
+        // onBackdropPress={closeModal}
+        // onBackButtonPress={closeModal}
+        // animationIn="slideInDown"
+        // animationOut="slideOutUp"
+        >
+
+        <View style={styles.modalContainer}>
+          <InputSymptome s={symptomeInstance} onClose={closeModal} />
+        </View>
+      </Modal>
+      
+      
       
     </View>
   );
@@ -100,6 +130,12 @@ const styls = StyleSheet.create({
     height: 6,
     backgroundColor: '#ffc000',
     borderRadius: 3,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

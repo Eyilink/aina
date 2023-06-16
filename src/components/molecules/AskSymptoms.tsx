@@ -16,8 +16,13 @@ import fonts from '@styles/fonts';
 import layout from '@styles/layout';
 import { Symptome } from '@store/types';
 
+type InputSymptomeProps = {
+  s: Symptome;
+  onClose: () => void; // onClose function prop
+};
 
-const InputBox = (s: Symptome) => {
+
+const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [hasUserChosen, setHasUserChosen] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
@@ -34,11 +39,13 @@ const InputBox = (s: Symptome) => {
   const handleValidate = () => {
     onChange(true);
     console.log(sliderValue);
+    onClose();
   };
 
   const handleYesNoSymptome = () => {
     console.log(`Symptom: ${s.name}`);
     console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
+    onClose();
   };
 
   let symptomText = null;
@@ -62,7 +69,7 @@ const InputBox = (s: Symptome) => {
 
     symptomText = (
       <View>
-        <SliderFooter type={s.type} />
+        <SliderFooter symptome={s} />
         <Slider
           style={styles.slider}
           value={sliderValue}
@@ -83,7 +90,7 @@ const InputBox = (s: Symptome) => {
       </View>
     );
   // if the symptom is yes / no, we display a oui/non box
-  } else if (s.type == 'oui/non' || s.type == 'oui/non eval') {
+  } else if (s.type == 'oui/non') {
     symptomText = (
       <View>
         <Button
@@ -115,28 +122,22 @@ const InputBox = (s: Symptome) => {
 
 
 
-
-const InputSymptome = (s : Symptome): ReactElement => {
+const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
 
 
   return (
-    <Container noMarginBottom>
-      {/* header */}
-      <View><Text>{'\n'}{'\n'}En-tête{'\n'}{'\n'}</Text></View>
-
-
+    <Container >
+ 
       {/* display question */}
-      <View style={styles.container}>
+      <View style={styles.popUpContainer}>
         <Text style={styles.subtitle}>
-          {'\n'}{'\n'}{'\n'}{'\n'}
+          {'\n'}{'\n'}
           {s.question}
-          {'\n'}
+          {'\n'}{'\n'}
         </Text>
-      </View>
 
         {/* display the input box  */}
-      <View>
-        <InputBox {...s} />
+        <InputBox s={s} onClose={onClose} />
         
       </View>
       
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     paddingBottom: layout.padding / 2,
   },
   subtitle: {
-    marginTop: layout.padding,
+    margin: 10,
     textAlign: 'center',
     fontSize: fonts.subtitle.fontSize - 1,
   },
@@ -176,5 +177,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },slider: {
     height: 10,
+  },
+  popUpContainer: {
+    backgroundColor: 'white',
+    padding: 25,
+    borderRadius: 10,
   },
 });

@@ -5,28 +5,30 @@ import fonts from '@styles/fonts';
 import colors from '@styles/colors';
 import i18n from '@i18n/i18n';
 import { PHONE_OS } from '@constants/constants';
+import { Symptome } from '@store/types';
 
-const SliderFooter = ({ type }: { type: string }): ReactElement => (
+const SliderFooter = ({ symptome }: { symptome: Symptome }): ReactElement => (
   <>
     <View style={styles.lines}>
       <View style={styles.lineExtremity} />
       <View style={styles.line} />
-      {type === 'temperature' && <View style={styles.line} />}
+      {symptome.name === 'Température' && <View style={styles.line} />}
       <View style={styles.lineExtremity} />
     </View>
 
-    {type === 'pain' ? (
+    {symptome.name === 'Température' ? (
       <View style={styles.units}>
-        <Text style={styles.unit}>{i18n.t('report.nonexistent')}</Text>
-        <Text style={styles.unit}>{i18n.t('report.max')}</Text>
-      </View>
+      <Text style={styles.unit}>{i18n.t('report.37')}</Text>
+      <Text style={styles.unit}>{i18n.t('report.38')}</Text>
+      <Text style={styles.unit}>{i18n.t('report.39')}</Text>
+      <Text style={styles.unit}>{i18n.t('report.40')}</Text>
+    </View>
     ) : (
+      
       <View style={styles.units}>
-        <Text style={styles.unit}>{i18n.t('report.37')}</Text>
-        <Text style={styles.unit}>{i18n.t('report.38')}</Text>
-        <Text style={styles.unit}>{i18n.t('report.39')}</Text>
-        <Text style={styles.unit}>{i18n.t('report.40')}</Text>
-      </View>
+      <Text style={styles.unit}>{i18n.t('report.nonexistent')}</Text>
+      <Text style={styles.unit}>{i18n.t('report.max')}</Text>
+    </View>
     )}
   </>
 );
