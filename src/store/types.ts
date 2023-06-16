@@ -1,4 +1,5 @@
 import { MALADIE1 } from '@constants/constants';
+import { ImageSourcePropType } from 'react-native';
 
 type Reminder = {
   isActive: boolean;
@@ -108,6 +109,7 @@ export type Pathologie = {
   date?: string;
   more?: string;
   namelogo?: string;
+  icon?: ImageSourcePropType;
   symptoms: Symptome[];
   dateend?: string;
 };
