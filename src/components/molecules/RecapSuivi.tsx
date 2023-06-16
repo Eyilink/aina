@@ -113,7 +113,7 @@ const RecapSuivi = ({ objet }: Props) => {
                   <ScrollView>
                     
                   {
-                    dataPath.find((obj)=> obj.id === objet.id)?.symptoms.split('\,').map((s,idx)=>{
+                    dataPath.find((obj)=> obj.id.toString() === objet.id)?.symptoms.split('\,').map((s,idx)=>{
                       const sFound = dataSymp.find((obj)=> obj.id.toString() === s);
                       if(sFound)
                       {const sFoundSymp : Symptome = {
