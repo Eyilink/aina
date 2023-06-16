@@ -10,7 +10,9 @@ import {  MALADIE1 } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
 import { Pathologie, Symptome } from '@store/types';
 import InputSymptome from '@components/molecules/AskSymptoms'
-type Props = {};
+type Props = {
+  currentSymptom: Symptome;
+};
 
 const data = [
   { id: 1, title: 'Pathologie', subtitle: 'Coude-Gauche' },
@@ -23,17 +25,17 @@ const symptomsData = [
   // Add more symptom items as needed
 ];
 
-type CustomComponentProps = {
-  title: string;
-  subtitle: string;
-};
+// type CustomComponentProps = {
+//   title: string;
+//   subtitle: string;
+// };
 
-const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
+const CustomComponent = ({ currentSymptom }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const handlePress = () => {
-    console.log(user.my_personal_datas[0].symptoms[0].name);
+    console.log(currentSymptom.name);
     setModalVisible(true);
   };
 
@@ -41,23 +43,12 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
     setModalVisible(false);
   };
 
-  const symptomeInstance: Symptome = {
-    id: 1,
-    name: 'Température',
-    frequence: '...',
-    data: [],
-    type: 'num',
-    question: 'Quelle est votre température',
-    valMin: 36,
-    valMax: 42,
-  };
 
   return (
     <View style={styles.customComponentContainer}>
       <View style={styles.circle} />
       <View style={styles.textContainer}>
-        <Text style={styles.title_custom}>{title}</Text>
-        <Text style={styles.subtitle_custom}>{subtitle}</Text>
+        <Text style={styles.title_custom}>{currentSymptom.name}</Text>
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
 
@@ -72,7 +63,7 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
         >
 
         <View style={styles.modalContainer}>
-          <InputSymptome s={symptomeInstance} onClose={closeModal} />
+          <InputSymptome s={currentSymptom} onClose={closeModal} />
         </View>
       </Modal>
       
@@ -84,24 +75,24 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const SliderExample = () => {
-  const [sliderValue, setSliderValue] = useState(1);
+// const SliderExample = () => {
+//   const [sliderValue, setSliderValue] = useState(1);
 
-  // const handleSliderChange = (value) => {
-  //   setSliderValue(value);
-  // };
+//   // const handleSliderChange = (value) => {
+//   //   setSliderValue(value);
+//   // };
 
-  return (
-    <View style={styls.container}>
-      <View style={styls.slider}>
-        <View style={styls.redPoint} />
-        <View style={styls.sliderTrack} />
-        <View style={[styls.sliderValue, { width: ((SCREEN_WIDTH / 2) * sliderValue) / 10 }]} />
-        <View style={styls.redPoint} />
-      </View>
-    </View>
-  );
-};
+//   return (
+//     <View style={styls.container}>
+//       <View style={styls.slider}>
+//         <View style={styls.redPoint} />
+//         <View style={styls.sliderTrack} />
+//         <View style={[styls.sliderValue, { width: ((SCREEN_WIDTH / 2) * sliderValue) / 10 }]} />
+//         <View style={styls.redPoint} />
+//       </View>
+//     </View>
+//   );
+// };
 
 const styls = StyleSheet.create({
   container: {
@@ -151,13 +142,14 @@ const renderItem = ({ item }: { item: Pathologie }) => (
     <View style={styles.itemContainer}>
       <AntDesign name="forward" size={24} color="#ffc000" style={styles.icon} />
       <View style={styles.textContainer}>
+        {/* Affichage nom de la pathologie */}
         <Text style={styles.title_comp}>{item.name}</Text>
         <Text style={styles.subtitle}>{item.more}</Text>
       </View>
     </View>
     <View style={styles.Symptome}>
     {item.symptoms.map((item) => (
-      <CustomComponent key={item.id}  title={item.name} subtitle={item.name} />
+      <CustomComponent currentSymptom={item} />
     ))}
     </View>
   </View>

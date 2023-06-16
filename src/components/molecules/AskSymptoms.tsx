@@ -50,7 +50,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
   let symptomText = null;
   // If the symptom is numeric, we display a slider
-  if (s.type === 'num') {
+  if (s.type === 'Num.' || s.type === 'Oui/non éval') {
     let minimumValue = 0;
     let maximumValue = 10;
     let step = 1;
@@ -132,7 +132,7 @@ const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
       <View style={styles.popUpContainer}>
         <Text style={styles.subtitle}>
           {'\n'}{'\n'}
-          {s.question}
+          {s.question? s.question : "Evaluez votre "+s.name}
           {'\n'}{'\n'}
         </Text>
 
