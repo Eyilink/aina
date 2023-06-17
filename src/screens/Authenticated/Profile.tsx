@@ -12,15 +12,12 @@ import { format, fromUnixTime } from 'date-fns';
 import * as WebBrowser from 'expo-web-browser';
 import * as FileSystem from 'expo-file-system'
 import * as DocumentPicker from 'expo-document-picker'
-
 import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import SubTitle from '@components/atoms/SubTitle';
 import AppText from '@components/atoms/AppText';
 import Button from '@components/atoms/Button';
-
 import { useUserStore } from '@store/store';
-
 import colors from '@styles/colors';
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
@@ -29,8 +26,6 @@ import { CGU_URL, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import Evaluate from '@screens/Authenticated/Evaluate';
-
-
 function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
@@ -49,6 +44,74 @@ function Profile(): ReactElement {
       { cancelable: false }
     );
   };
+
+  const obj = {
+    "pathologies": [
+      {
+        "id": "6",
+        "name": "Grippe",
+      },
+      {
+        "id": "3",
+        "name": "Covid",
+      }
+    ],
+    "symptoms": [
+      {
+        "id":"33",
+        "name": "cough",
+        "data":[
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          }
+        ]
+      },
+      {
+        "id":"33",
+        "name": "cough",
+        "data":[
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          },
+          {
+            "date":"18474453983",
+            "value":"33"
+          }
+        ]
+      }
+    ]   
+  }
+
  const ValidateButtonNewSuiviPressed = (): void => {
     <NewSuivi/>
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
@@ -150,8 +213,6 @@ function Profile(): ReactElement {
             />
           )}
         
-          
-          
               
           {!showElements && (
           <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
@@ -172,7 +233,21 @@ function Profile(): ReactElement {
             text={"Importer des données"}
             onPress={async()=>{
               const document = await DocumentPicker.getDocumentAsync()
-              const content = await FileSystem.readAsStringAsync(document.uri)
+              const content = await FileSystem.readAsStringAsync(
+                document.uri
+              )
+              actions.editUserData({
+                key: "my_personal_datas",
+                value: JSON.parse(content)
+              })
+            }}
+          />
+          <Button text={"Sauvegarder les données"}
+            onPress={async()=>{
+              await FileSystem.writeAsStringAsync(
+                FileSystem.documentDirectory+"saved.json",
+                JSON.stringify(user.my_personal_datas)
+              )
             }}
           />
           <TouchableOpacity onPress={onPressCGU}>
