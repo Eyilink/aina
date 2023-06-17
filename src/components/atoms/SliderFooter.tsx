@@ -18,10 +18,10 @@ const SliderFooter = ({ symptome }: { symptome: Symptome }): ReactElement => (
 
     {symptome.name === 'Température' ? (
       <View style={styles.units}>
-      <Text style={styles.unit}>{i18n.t('report.37')}</Text>
+      <Text style={styles.unit}>{i18n.t('report.36')}</Text>
       <Text style={styles.unit}>{i18n.t('report.38')}</Text>
-      <Text style={styles.unit}>{i18n.t('report.39')}</Text>
       <Text style={styles.unit}>{i18n.t('report.40')}</Text>
+      <Text style={styles.unit}>{i18n.t('report.42')}</Text>
     </View>
     ) : (
       
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
+    marginVertical: 10,
   },
   unit: {
     fontFamily: fonts.weight.regular.fontFamily,

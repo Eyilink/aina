@@ -93,6 +93,8 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
     if (s.name === 'Température') {
       step = 0.1;
+      minimumValue = 36;
+      maximumValue = 42;
     }
 
     if (typeof s.valMin !== 'undefined') {
