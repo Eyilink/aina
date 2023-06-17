@@ -26,6 +26,7 @@ import { CGU_URL, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import Evaluate from '@screens/Authenticated/Evaluate';
+import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
 function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
@@ -45,72 +46,52 @@ function Profile(): ReactElement {
     );
   };
 
-  const obj = {
-    "pathologies": [
+  function generateData(){
+    const data = new Array(33).fill()
+    const debut = new Date(2013,1,3).getTime()
+    const fin = new Date(2014,1,6).getTime()
+    data.forEach((el,i)=>{
+      const date = debut+Math.random()*(fin-debut)
+      const value = parseFloat((33*Math.random()).toPrecision(4))
+      data[i] = {
+        date: parseInt(date),
+        value: value
+      }
+    })
+    return data
+  }
+
+function generateObj() {
+  const symptoms = [
+    {
+      "id":"33",
+      "name": "Toux",
+      "data":generateData()
+    },
+    {
+      "id":"31",
+      "name": "Température",
+      "data":generateData()
+    }
+  ]
+
+  return [
       {
         "id": "6",
         "name": "Grippe",
+        "symptoms": [
+          symptoms[0]
+        ]
       },
       {
         "id": "3",
         "name": "Covid",
-      }
-    ],
-    "symptoms": [
-      {
-        "id":"33",
-        "name": "cough",
-        "data":[
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          }
-        ]
-      },
-      {
-        "id":"33",
-        "name": "cough",
-        "data":[
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          },
-          {
-            "date":"18474453983",
-            "value":"33"
-          }
+        "symptoms": [
+          symptoms[1]
         ]
       }
-    ]   
-  }
+    ]
+}
 
  const ValidateButtonNewSuiviPressed = (): void => {
     <NewSuivi/>
@@ -240,6 +221,7 @@ function Profile(): ReactElement {
                 key: "my_personal_datas",
                 value: JSON.parse(content)
               })
+
             }}
           />
           <Button text={"Sauvegarder les données"}
@@ -248,6 +230,67 @@ function Profile(): ReactElement {
                 FileSystem.documentDirectory+"saved.json",
                 JSON.stringify(user.my_personal_datas)
               )
+
+            }}
+          />
+          <Button
+            text={"Exporter les données"}
+            onPress={async()=>{
+
+              function tohtml(re){
+                if(typeof re!="object") {
+                  return re
+                } else if(re.map) {
+                  return re.map(tohtml).join("")
+                } else if(re.type.call) {
+                  return tohtml(re.type(re.props))
+                }else {
+                  return (
+                    "<"+re.type+" "+Object.keys(re.props).map(p=>{
+                      if(p=="children")return"";
+                      return p+"="+'"'+re.props[p]+'"'
+                    }).join("")+">"+(()=>{
+                      let children
+                      if(!re.props.children)
+                        children=[]
+                      else if (!re.props.children.map)
+                        children = [re.props.children]
+                      else
+                        children = re.props.children
+                      return tohtml(children)
+                    })()+"</"+re.type+">"
+                  )
+                }
+              }
+
+              function getUserData(user) {
+                const symptoms = new Map()
+                const pathologies = user.my_personal_datas
+                pathologies.forEach(patho=>{
+                  patho.symptoms.forEach(spt=>{
+                    symptoms.set(
+                      spt.id.toString(),
+                      spt
+                    )
+                  })
+                })
+                return {
+                  pathologies:user.my_personal_datas,
+                  symptoms:[...symptoms.values()],
+                  user: user
+                }
+              }
+              const my_personal_datas = generateObj()
+              const html = console.log(tohtml(GeneratedDocument({
+                userData:getUserData({
+                  my_personal_datas:generateObj()
+                })
+              })))
+
+              const { uri } = await Print.printToFileAsync({
+                html,
+                "base64":true
+              });
             }}
           />
           <TouchableOpacity onPress={onPressCGU}>
