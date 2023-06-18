@@ -16,6 +16,8 @@ import fonts from '@styles/fonts';
 import layout from '@styles/layout';
 import { Symptome } from '@store/types';
 import { MALADIE1 } from '@constants/constants';
+import { Ionicons } from '@expo/vector-icons';
+import colors from '@styles/colors';
 
 type InputSymptomeProps = {
   s: Symptome;
@@ -107,6 +109,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
     symptomText = (
       <View>
+
         <SliderFooter symptome={s} />
         <Slider
           style={styles.slider}
@@ -168,6 +171,13 @@ const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
  
       {/* display question */}
       <View style={styles.popUpContainer}>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={layout.navigation.previousIcon.size}
+        color={colors.black}
+        onPress={onClose}
+        style={{marginLeft:12}}
+      />
         <Text style={styles.subtitle}>
           {'\n'}{'\n'}
           {s.question? s.question : "Evaluez votre "+s.name}

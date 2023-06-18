@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text,Dimensions, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Modal, {ModalProps} from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
 import Button from '@components/atoms/Button';
@@ -43,7 +43,6 @@ const CustomComponent = ({ currentSymptom }: Props) => {
     setModalVisible(false);
   };
 
-
   return (
     <View style={styles.customComponentContainer}>
       <View style={styles.circle} />
@@ -56,8 +55,8 @@ const CustomComponent = ({ currentSymptom }: Props) => {
         visible={isModalVisible} 
         animationType="slide" 
         transparent
-        // onBackdropPress={closeModal}
-        // onBackButtonPress={closeModal}
+        onBackdropPress={closeModal}
+        onBackButtonPress={closeModal}
         // animationIn="slideInDown"
         // animationOut="slideOutUp"
         >
@@ -124,9 +123,9 @@ const styls = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 
