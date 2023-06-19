@@ -36,7 +36,7 @@ type Pathologie = {
 type Props = {
   isFirstLog?: boolean;
   onPress?: () => void;
-  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
+  setButtonNewSuiviClicked ?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const dropdownItems = [
   { title: 'Personnalisé', icon: require('@assets/images/1_i.png') },
