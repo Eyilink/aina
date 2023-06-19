@@ -72,7 +72,9 @@ const Home = ({ navigation }: Props): ReactElement => {
           setTextReco(i18n.t('home.end3'));
           break;
       }
+    
     }
+    
   }, [reports]);
 
   const handleNotification = (notification: Notification): void => {
@@ -80,12 +82,16 @@ const Home = ({ navigation }: Props): ReactElement => {
     if (origin === 'selected') navigation.navigate('Suivi');
   };
 
+
+
+
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
         <HomeComponent isDataEmpty={user.my_personal_datas && user.my_personal_datas.length>0?false:true}/>
       </View>
     </Container>
+    
   );
 };
 

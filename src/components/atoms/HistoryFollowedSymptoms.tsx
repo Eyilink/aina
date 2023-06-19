@@ -33,6 +33,13 @@ const symptomsData = [
 const CustomComponent = ({ currentSymptom }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [value, setValue] = useState(1);
+
+
+  const handleValue = (value: number) => {
+    setValue(value);
+  }
+
 
   const handlePress = () => {
     console.log(currentSymptom.name);
@@ -42,10 +49,30 @@ const CustomComponent = ({ currentSymptom }: Props) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  const generatePictogrammeTemperature = (value: number ) => {
+    let backgroundColor;
+    console.log(value);
+    value=Math.floor(value);
+    if (value === 1 ||value === 2  ) {
+    
+      backgroundColor= '#00FF00'; //vert
+    }
+     else if (value === 3 || value ===  4 || value === 5 || value == 6 ) {
+      backgroundColor = '#FFFF00'; // Jaune
+    } else {
+      backgroundColor = '#FF0000'; // Rouge
+    }
+
+    return backgroundColor;
+  };
 
   return (
     <View style={styles.customComponentContainer}>
-      <View style={styles.circle} />
+      <View style={{ width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor:generatePictogrammeTemperature(value) ,
+    marginRight: 20,}} />
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{currentSymptom.name}</Text>
       </View>
