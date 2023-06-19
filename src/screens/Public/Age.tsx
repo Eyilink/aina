@@ -40,7 +40,7 @@ const BirthDateForm = ({ navigation }: Props) => {
 
   const calculateAge = (birthDate: string): string => {
     const currentDate = new Date();
-    const [year, month, day] = birthDate.split('-').map(Number);
+    const [day, month, year] = birthDate.split('-').map(Number);
   
     const yearsDiff = currentDate.getFullYear() - year;
     const monthsDiff = currentDate.getMonth() + 1 - month;
@@ -62,7 +62,8 @@ const BirthDateForm = ({ navigation }: Props) => {
     if (!isValidDate) {
       alert('Invalid date');
     } else {
-      const birthDate = `${year}-${month}-${day}`;
+      const birthDate = `${day}-${month + 1}-${year}`;
+      console.log(birthDate);
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
