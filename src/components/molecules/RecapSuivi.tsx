@@ -154,7 +154,7 @@ const RecapSuivi = ({ objet }: Props) => {
                   >
 
                 <View style={styles.modalContainer}>
-                  <FreqPopUp path={objet} onClose={closeModal} />
+                  <FreqPopUp pato={objet} onClose={closeModal} />
                 </View>
                 </Modal>
 
