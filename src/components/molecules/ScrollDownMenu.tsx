@@ -9,6 +9,7 @@ import { useAuthStore, useUserStore } from '@store/store';
 import { CGU_URL, DATE_TODAY, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
 import { Pathologie, Symptome } from '@store/types';
+import colors from '@styles/colors';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -200,17 +201,26 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         <ScrollView>
           {items.map((item, index) => (
             <TouchableOpacity
-              key={index}
-              style={styles.itemContainer}
-              onPress={()=>handleItemPress(item.id)}
-            >
-              <View style={styles.itemIconContainer}>
-                <Image style={{ width: 40, height: 40 }} source={item?.icon ? item.icon : getIconPath("")} />
-              </View>
-              <View style={styles.itemTitleContainer}>
-                <AppText style={styles.itemTitle} text={item.name ? item.name :  ""} />
-              </View>
-            </TouchableOpacity>
+            key={index}
+            style={[
+              styles.itemContainer,
+              user.my_personal_datas.find((obj) => obj.id === item.id)
+                ? { backgroundColor: colors.primary }
+                : null,
+            ]}
+            onPress={() => handleItemPress(item.id)}
+          >
+            <View style={styles.itemIconContainer}>
+              <Image
+                style={{ width: 40, height: 40 }}
+                source={item?.icon ? item.icon : getIconPath('')}
+              />
+            </View>
+            <View style={styles.itemTitleContainer}>
+              <AppText style={styles.itemTitle} text={item.name ? item.name : ''} />
+            </View>
+          </TouchableOpacity>
+          
           ))}
         </ScrollView>
       )}
