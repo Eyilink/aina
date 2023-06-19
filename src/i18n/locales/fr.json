@@ -110,7 +110,10 @@
     "end": "Terminer ce suivi",
     "start": "Renseignez maintenant vos symptômes",
     "restart": "Vous avez-déjà rempli aujourd'hui le questionnaire, voulez-vous le refaire ?",
-    "erase": "Si vous continuez, vos nouvelles réponses remplaçeront celles déjà remplies pour aujourd'hui."
+    "erase": "Si vous continuez, vos nouvelles réponses remplaçeront celles déjà remplies pour aujourd'hui.",
+    "questionfrequence": "A quelle fréquence voulez-vous suivre les paramètres ?",
+    "askfrequence": "Modifier les fréquences"
+  
   },
   "report": {
     "temperature": "Température",
