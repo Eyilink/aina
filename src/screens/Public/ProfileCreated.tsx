@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -21,6 +21,7 @@ import Previous from '@components/atoms/Previous';
 
 const ProfilCreated = (): ReactElement => {
   const [ButtonValidateClicked, setButtonValidateClicked] = React.useState(false);
+  const [isPathAdded,setIsPathAdded] = useState<boolean>(true);
   const [,actions]=useAuthStore();
   const ValidatePressed = (): void => {
     setButtonValidateClicked(true);
@@ -33,7 +34,11 @@ const ProfilCreated = (): ReactElement => {
   const onNoValidate = (): void => {
     actions.signupUser();
   };
-
+  useEffect(()=>{
+    console.log("path added true or false :"+isPathAdded);
+    if(!isPathAdded)
+      actions.signupUser();
+  },[isPathAdded])
 
   return (
     <Container>
@@ -49,7 +54,7 @@ const ProfilCreated = (): ReactElement => {
             color={colors.black}
             onPress={ValidateButtonNewSuiviPressed}
           />
-          <NewSuivi isFirstLog={true}/></View></>: 
+          <NewSuivi isFirstLog={true}  setButtonNewSuiviClicked={setIsPathAdded} /></View></>: 
           <>
             
             <View style={styles.messageContainer}>
