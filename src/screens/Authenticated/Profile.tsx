@@ -29,6 +29,7 @@ import Evaluate from '@screens/Authenticated/Evaluate';
 import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
 import * as Print from "expo-print"
 import * as Sharing from "expo-sharing"
+
 function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
@@ -223,7 +224,6 @@ function generateObj() {
                 key: "my_personal_datas",
                 value: JSON.parse(content)
               })
-
             }}
           />
           <Button text={"Sauvegarder les données"}
@@ -281,13 +281,12 @@ function generateObj() {
                   user: user
                 }
               }
-
               const html = tohtml(GeneratedDocument({
                 userData:getUserData({
                   my_personal_datas:generateObj()
                 })
               }))
-
+              
               const { uri } = await Print.printToFileAsync({
                 html
               })
