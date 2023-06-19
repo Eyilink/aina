@@ -10,17 +10,58 @@ import Container from '@components/molecules/Container';
 import Button from '@components/atoms/Button';
 import SliderFooter from '@components/atoms/SliderFooter';
 
-
+import { useAuthStore, useUserStore } from '@store/store';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import layout from '@styles/layout';
 import { Symptome } from '@store/types';
+import { MALADIE1 } from '@constants/constants';
+import { Ionicons } from '@expo/vector-icons';
+import colors from '@styles/colors';
+
+type InputSymptomeProps = {
+  s: Symptome;
+  onClose: () => void; // onClose function prop
+};
 
 
-const InputBox = (s: Symptome) => {
+
+const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [hasUserChosen, setHasUserChosen] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
+
+  const addValueUser = (sympt: Symptome, val: number) => {
+    const currentDate = new Date().toISOString(); // Get the current date in ISO format
+  
+    // Iterate over each pathology in my_personal_datas
+    user.my_personal_datas.forEach((pathology) => {
+      // Find the symptoms with the same id as the provided sympt
+      const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
+  
+      // Update the data field of each matching symptom
+
+      if (symptomsToUpdate[0]) {
+      
+      const newData = { date: currentDate, valeur: val };
+
+      if (!symptomsToUpdate[0].data) {
+        // If data field doesn't exist, create a new array with the new data
+        symptomsToUpdate[0].data = [newData];
+      } else {
+        // If data field already exists, concatenate the new data to the existing array
+        symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+        }
+      }
+
+    console.log(pathology.symptoms);    
+    });
+  
+    // Call the appropriate action to save the modified user profile
+    // actions.editUserProfile({ key: 'my_personal_datas', value: user.my_personal_datas });
+  };
+  
 
   const onChange = (value: boolean) => {
     setHasUserChosen(true);
@@ -34,22 +75,28 @@ const InputBox = (s: Symptome) => {
   const handleValidate = () => {
     onChange(true);
     console.log(sliderValue);
+    addValueUser(s, sliderValue);
+    onClose();
   };
 
   const handleYesNoSymptome = () => {
     console.log(`Symptom: ${s.name}`);
     console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
+    addValueUser(s, Number(`${symptom ? 10 : 0}`));
+    onClose();
   };
 
   let symptomText = null;
   // If the symptom is numeric, we display a slider
-  if (s.type === 'num') {
+  if (s.type === 'Num.' || s.type === 'Oui/non éval') {
     let minimumValue = 0;
     let maximumValue = 10;
     let step = 1;
 
     if (s.name === 'Température') {
       step = 0.1;
+      minimumValue = 36;
+      maximumValue = 42;
     }
 
     if (typeof s.valMin !== 'undefined') {
@@ -62,7 +109,8 @@ const InputBox = (s: Symptome) => {
 
     symptomText = (
       <View>
-        <SliderFooter type={s.name} />
+
+        <SliderFooter symptome={s} />
         <Slider
           style={styles.slider}
           value={sliderValue}
@@ -83,7 +131,7 @@ const InputBox = (s: Symptome) => {
       </View>
     );
   // if the symptom is yes / no, we display a oui/non box
-  } else if (s.type == 'oui/non' || s.type == 'oui/non eval') {
+  } else if (s.type === 'Oui/non' || s.type === 'oui/non') {
     symptomText = (
       <View>
         <Button
@@ -115,35 +163,29 @@ const InputBox = (s: Symptome) => {
 
 
 
-
-const InputSymptome = (s : Symptome): ReactElement => {
-//   const s: Symptome = {
-//     name: 'Toux',
-//     type: 'oui/non',
-//     question: "Avez vous de la toux ?",
-//     // valMin: 36,
-//     // valMax: 42,
-//   };  
+const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
 
 
   return (
-    <Container noMarginBottom>
-      {/* header */}
-      <View><Text>{'\n'}{'\n'}En-tête{'\n'}{'\n'}</Text></View>
-
-
+    <Container >
+ 
       {/* display question */}
-      <View style={styles.container}>
+      <View style={styles.popUpContainer}>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={layout.navigation.previousIcon.size}
+        color={colors.black}
+        onPress={onClose}
+        style={{marginLeft:12}}
+      />
         <Text style={styles.subtitle}>
-          {'\n'}{'\n'}{'\n'}{'\n'}
-          {s.question}
-          {'\n'}
+          {'\n'}{'\n'}
+          {s.question? s.question : "Evaluez votre "+s.name}
+          {'\n'}{'\n'}
         </Text>
-      </View>
 
         {/* display the input box  */}
-      <View>
-        <InputBox {...s} />
+        <InputBox s={s} onClose={onClose} />
         
       </View>
       
@@ -163,7 +205,7 @@ const styles = StyleSheet.create({
     paddingBottom: layout.padding / 2,
   },
   subtitle: {
-    marginTop: layout.padding,
+    margin: 10,
     textAlign: 'center',
     fontSize: fonts.subtitle.fontSize - 1,
   },
@@ -183,5 +225,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },slider: {
     height: 10,
+  },
+  popUpContainer: {
+    backgroundColor: 'white',
+    padding: 25,
+    borderRadius: 10,
   },
 });

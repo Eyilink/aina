@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text,Dimensions, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Modal, {ModalProps} from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
 import Button from '@components/atoms/Button';
 import { he } from 'date-fns/locale';
@@ -7,9 +8,11 @@ import layout from '@styles/layout';
 import CustomSlider from '@components/molecules/Slider';
 import {  MALADIE1 } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
-import { Pathologie } from '@store/types';
-type Props = {};
-// import {value} from '@components/molecules/Slider';
+import { Pathologie, Symptome } from '@store/types';
+import InputSymptome from '@components/molecules/AskSymptoms'
+type Props = {
+  currentSymptom: Symptome;
+};
 
 const data = [
   { id: 1, title: 'Pathologie', subtitle: 'Coude-Gauche' },
@@ -22,11 +25,12 @@ const symptomsData = [
   // Add more symptom items as needed
 ];
 
-type CustomComponentProps = {
-  title: string;
-  subtitle: string;
-};
-const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
+// type CustomComponentProps = {
+//   title: string;
+//   subtitle: string;
+// };
+
+const CustomComponent = ({ currentSymptom }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [value, setValue] = useState(1);
@@ -38,6 +42,7 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
 
 
   const handlePress = () => {
+    console.log(currentSymptom.name);
     setModalVisible(true);
   };
 
@@ -69,49 +74,51 @@ const CustomComponent = ({ title, subtitle }: CustomComponentProps) => {
     backgroundColor:generatePictogrammeTemperature(value) ,
     marginRight: 20,}} />
       <View style={styles.textContainer}>
-        <Text style={styles.title_custom}>{title}</Text>
-        <Text style={styles.subtitle_custom}>{subtitle}</Text>
+        <Text style={styles.title_custom}>{currentSymptom.name}</Text>
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
-      <Modal visible={isModalVisible} transparent>
-       
-            <CustomSlider isVisible onCancel={() => { } } onConfirm={closeModal}
-        step={1}
-        initialValue={1}
-        type='temperature'
-        min={1}
-        max={10}
-        title='Temperature'
-        hasPainSymptoms={false}  
-        value={value}   
-        handleValue={handleValue} 
-        roundvalue={value}    
-            />
+
+      <Modal 
+        visible={isModalVisible} 
+        animationType="slide" 
+        transparent
+        onBackdropPress={closeModal}
+        onBackButtonPress={closeModal}
+        // animationIn="slideInDown"
+        // animationOut="slideOutUp"
+        >
+
+        <View style={styles.modalContainer}>
+          <InputSymptome s={currentSymptom} onClose={closeModal} />
+        </View>
       </Modal>
+      
+      
+      
     </View>
   );
 };
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const SliderExample = () => {
-  const [sliderValue, setSliderValue] = useState(1);
+// const SliderExample = () => {
+//   const [sliderValue, setSliderValue] = useState(1);
 
-  // const handleSliderChange = (value) => {
-  //   setSliderValue(value);
-  // };
+//   // const handleSliderChange = (value) => {
+//   //   setSliderValue(value);
+//   // };
 
-  return (
-    <View style={styls.container}>
-      <View style={styls.slider}>
-        <View style={styls.redPoint} />
-        <View style={styls.sliderTrack} />
-        <View style={[styls.sliderValue, { width: ((SCREEN_WIDTH / 2) * sliderValue) / 10 }]} />
-        <View style={styls.redPoint} />
-      </View>
-    </View>
-  );
-};
+//   return (
+//     <View style={styls.container}>
+//       <View style={styls.slider}>
+//         <View style={styls.redPoint} />
+//         <View style={styls.sliderTrack} />
+//         <View style={[styls.sliderValue, { width: ((SCREEN_WIDTH / 2) * sliderValue) / 10 }]} />
+//         <View style={styls.redPoint} />
+//       </View>
+//     </View>
+//   );
+// };
 
 const styls = StyleSheet.create({
   container: {
@@ -141,6 +148,12 @@ const styls = StyleSheet.create({
     backgroundColor: '#ffc000',
     borderRadius: 3,
   },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 
@@ -155,13 +168,14 @@ const renderItem = ({ item }: { item: Pathologie }) => (
     <View style={styles.itemContainer}>
       <AntDesign name="forward" size={24} color="#ffc000" style={styles.icon} />
       <View style={styles.textContainer}>
+        {/* Affichage nom de la pathologie */}
         <Text style={styles.title_comp}>{item.name}</Text>
         <Text style={styles.subtitle}>{item.more}</Text>
       </View>
     </View>
     <View style={styles.Symptome}>
     {item.symptoms.map((item) => (
-      <CustomComponent key={item.id}  title={item.name} subtitle={item.name} />
+      <CustomComponent currentSymptom={item} />
     ))}
     </View>
   </View>
