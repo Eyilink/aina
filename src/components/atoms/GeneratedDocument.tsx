@@ -1,16 +1,7 @@
 import React from "react"
 import SvgPlot from "@components/atoms/SvgPlot.jsx"
 const GeneratedDocument = ({userData})=>{
-	function format(date){
-		const dateobj = new Date(date)
-		return (
-			(dateobj.getDate()<10?"0"+dateobj.getDate():dateobj.getDate())
-			+"/"+
-			(dateobj.getMonth()+1<10?"0"+(dateobj.getMonth()+1):dateobj.getMonth()+1)
-			+"/"+
-			dateobj.getFullYear()
-		)+" "+dateobj.toTimeString()
-	}
+	
 	return (
 		<html>
 		<head>
@@ -72,20 +63,22 @@ const GeneratedDocument = ({userData})=>{
 								<th>Valeur</th>
 							</thead>
 							<tbody>{
-							spt.data.map(el=>el).sort((a,b)=>{
+							spt.data&&spt.data.map(el=>el).sort((a,b)=>{
 								return a.date-b.date
 							}).map((data,i)=>{
 								return(
 									<tr class={i%2?"odd":"even"}>
-									<td>{format(data.date)}</td>
-									<td>{data.value}</td>
+									<td>{data.date}</td>
+									<td>{data.valeur}</td>
 									</tr>
 								)
 							})
 							}</tbody>
 						</table>
+						{spt.data&&
 						<h3>Evolution dans le temps</h3>
-						{SvgPlot({
+						}
+						{spt.data&&SvgPlot({
 							data:spt.data
 						})}
 					</div>

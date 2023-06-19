@@ -3,15 +3,33 @@ const SvgPlot = (object)=>{
 	const {
 		data
 	}=object
-
 	const Xmin = 33
 	const Ymin = 277
 	const Xmax = 601
 	const Ymax = 53
-
+	function fromString(s) {
+		if(s.includes("T"))return new Date(s);
+		const [jour,mois,annee] = s.split(" ")[0].split("/")
+		const [heure,minute] = s.split(" ")[1].split(":")
+		return new Date(annee,mois-1,jour,heure,minute)
+	}
+	function toString(date){
+		const dateobj = new Date(date)
+		return (
+			(dateobj.getDate()<10?"0"+dateobj.getDate():dateobj.getDate())
+			+"/"+
+			(dateobj.getMonth()+1<10?"0"+(dateobj.getMonth()+1):dateobj.getMonth()+1)
+			+"/"+
+			dateobj.getFullYear()
+			+" "+
+			(dateobj.getHours()<10?"0"+dateobj.getHours():dateobj.getHours())
+			+"h"+
+			(dateobj.getMinutes()<10?"0"+dateobj.getMinutes():dateobj.getMinutes())
+		)
+	}
 	const datalist = data.map(el=>({
-		value: parseFloat(el.value),
-		date: parseInt(el.date)
+		value: parseFloat(el.valeur),
+		date: fromString(el.date).getTime(),
 	})).sort((a,b)=>{
 		return a.date-b.date
 	})
@@ -20,7 +38,7 @@ const SvgPlot = (object)=>{
 	):(0)
 	const valMax = datalist.length>1?(
 		datalist.map(el=>el.value).sort((a,b)=>b-a)[0]
-	):(valmin+11)
+	):(valMin+11)
 	const dateMin = datalist.length?(
 		datalist[0].date
 	):(Date.now()-2*24*3600*1000)
@@ -32,14 +50,7 @@ const SvgPlot = (object)=>{
 	labelsX.forEach((el,i)=>{
 		const totaltime = dateMax-dateMin
 		const date = dateMin+totaltime*i/6
-		const dateobj = new Date(date)
-		labelsX[i] = (
-			(dateobj.getDate()<10?"0"+dateobj.getDate():dateobj.getDate())
-			+"/"+
-			(dateobj.getMonth()+1<10?"0"+(dateobj.getMonth()+1):dateobj.getMonth()+1)
-			+"/"+
-			dateobj.getFullYear()
-		)
+		labelsX[i] = toString(new Date(date)).split(" ")[0]
 	})
 	const labelsY = new Array(6).fill()
 	labelsY.forEach((el,i)=>{

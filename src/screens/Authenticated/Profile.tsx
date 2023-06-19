@@ -32,7 +32,7 @@ import * as Sharing from "expo-sharing"
 
 function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
-  const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [user,actions] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const onEditProfile = (): void => {
     Alert.alert(
@@ -220,7 +220,7 @@ function generateObj() {
               const content = await FileSystem.readAsStringAsync(
                 document.uri
               )
-              actions.editUserData({
+              actions.editUserProfile({
                 key: "my_personal_datas",
                 value: JSON.parse(content)
               })
@@ -231,6 +231,9 @@ function generateObj() {
               await FileSystem.writeAsStringAsync(
                 FileSystem.documentDirectory+"saved.json",
                 JSON.stringify(user.my_personal_datas)
+              )
+              await Sharing.shareAsync(
+                FileSystem.documentDirectory+"saved.json"
               )
             }}
           />
@@ -245,7 +248,7 @@ function generateObj() {
                   return re.map(tohtml).join("")
                 } else if(re.type.call) {
                   return tohtml(re.type(re.props))
-                }else {
+                }else{
                   return (
                     "<"+re.type+" "+Object.keys(re.props).map(p=>{
                       if(p=="children")return"";
@@ -282,14 +285,15 @@ function generateObj() {
                 }
               }
               const html = tohtml(GeneratedDocument({
-                userData:getUserData({
-                  my_personal_datas:generateObj()
-                })
+                userData:getUserData(user)
               }))
               
               const { uri } = await Print.printToFileAsync({
                 html
               })
+              await Sharing.shareAsync(
+                uri
+              )
             }}
           />
           <TouchableOpacity onPress={onPressCGU}>
