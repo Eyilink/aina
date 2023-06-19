@@ -1,4 +1,4 @@
-import React, { Component, ReactElement , useState} from 'react';
+import React, { Component, ReactElement , useEffect, useState} from 'react';
 import {
   Text,
   StyleSheetProperties,
@@ -7,6 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Image,
+  ImageSourcePropType, 
 } from 'react-native';
 import { format, fromUnixTime } from 'date-fns';
 import * as WebBrowser from 'expo-web-browser';
@@ -24,16 +26,20 @@ import colors from '@styles/colors';
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
-import { CGU_URL, MALADIE1 } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
-import Evaluate from '@screens/Authenticated/Evaluate';
+import { Pathologie, Symptome } from '@store/types';
 
 
-function Profile(): ReactElement {
-  const [showElements, setShowElements] = useState(false);
+const Profile = (): ReactElement =>{
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
+  const [CouleurPictoVert, setCouleurPictoVert] = React.useState(false);
+
+
+  // ATTENTION À NE PAS ENLEVER
+  useEffect(()=>(console.log("")),[]);
   const onEditProfile = (): void => {
     Alert.alert(
       i18n.t('commons.attention'),
@@ -48,140 +54,190 @@ function Profile(): ReactElement {
       { cancelable: false }
     );
   };
- const ValidateButtonNewSuiviPressed = (): void => {
-    <NewSuivi/>
-    setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
-  };
-  let couleur = 0;
-  const symptoms = [
-    { id: 1, date: '2023-06-01', metric: 30, value: 'Fever' },
-    { id: 2, date: '2023-06-02', metric: 10, value: 'Cough' },
-    { id: 3, date: '2023-06-03', metric: 20, value: 'Headache' },
-  ];
 
-  const onPressCGU = async (): Promise<void> => {
-    await WebBrowser.openBrowserAsync(CGU_URL);
-  };
+  
 
-  const genererPictogrammeTemperature = (id, metric) => {
-    let couleur;
+//  const ValidateButtonNewSuiviPressed = (): void => {
+//     <NewSuivi/>
+//     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
+//   };
+//   let couleur = 0;
+//   const symptoms = [
+//     { id: 1, date: '2023-06-01', metric: 30, value: 'Fever' },
+//     { id: 2, date: '2023-06-02', metric: 10, value: 'Cough' },
+//     { id: 3, date: '2023-06-03', metric: 20, value: 'Headache' },
+//   ];
 
-    if (metric < 10) {
-      couleur = '#00FFFF'; // Bleu clair
-    } else if (metric >= 10 && metric < 20) {
-      couleur = '#00FF00'; // Vert
-    } else if (metric >= 20 && metric < 30) {
-      couleur = '#FFFF00'; // Jaune
-    } else {
-      couleur = '#FF0000'; // Rouge
-    }
+//   const onPressCGU = async (): Promise<void> => {
+//     await WebBrowser.openBrowserAsync(CGU_URL);
+//   };
 
-    return couleur;
-  };
+//   const genererPictogrammeTemperature = (id, metric) => {
+//     let couleur;
 
-  const handleButtonPress = () => {
-    setShowElements(!showElements); // Inverse la valeur de showElements à chaque pression du bouton
-  };
+//     if (metric < 10) {
+//       couleur = '#00FFFF'; // Bleu clair
+//     } else if (metric >= 10 && metric < 20) {
+//       couleur = '#00FF00'; // Vert
+//     } else if (metric >= 20 && metric < 30) {
+//       couleur = '#FFFF00'; // Jaune
+//     } else {
+//       couleur = '#FF0000'; // Rouge
+//     }
 
-  const SymptomTable = () => (
-    <View style={styles.container}>
-      {symptoms.map((symptom) => (
-        <TouchableOpacity key={symptom.value} onPress={onPressCGU}>
-          <View style={styles.symptomDetails}>
+//     return couleur;
+//   };
 
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                display: showElements ? "none" :"flex",
-              }}
-            >
-              <View
-                style={{
-                  width: 25,
-                  height: 25,
-                  borderRadius: 25,
-                  display: showElements ? "none" :"flex",
-                  backgroundColor: genererPictogrammeTemperature(
-                    symptom.id,
-                    symptom.metric
+    //const genererPictogrammePathologie=fonction qui permet de choper si la date d'aujourdh'ui est renseigné en valeur ou pas 
+  const genererPictogrammePathologie=(pathologie: Pathologie) => {
+    var isRempli: Boolean =true;
+    pathologie.symptoms.forEach(symptome => {
+      if (Array.isArray(symptome.data) && symptome.data.length > 0){
+        if (!(isRempli&&(symptome.data[symptome.data.length - 1]?.date?.localeCompare(DATE_TODAY)))) {
+          isRempli=false;
+          console.log("La derniere valeur  pas aujourd'hui");
+          console.log(symptome.data[symptome.data.length - 1]);
+        }
+        else {
+          console.log("La derniere valeur  aujourd'hui");
+          console.log(symptome.data[symptome.data.length - 1]);
+        }
+      }
+      else {
+        console.log("Tableau : "+symptome.data+" vide");
+        isRempli=false;
+      }
+      
+    });
+
+    // var isRempli: boolean = pathologie.symptoms.every(symptome => {
+    //   return isRempli && (symptome.data?.[symptome.data.length - 1]?.date?.localeCompare(DATE_TODAY)) === 0;
+    // });
+    let color;
+    // if (isRempli) {
+    //   setCouleurPictoVert(true);
+    //   color = '#00FF00'; // Vert
+    // } else {
+    //   setCouleurPictoVert(false);
+    //   color = '#FF0000'; // Vert
+    // }
+    return isRempli;
+  }
+
+
+  // const SymptomTable = () => (
+  //   <View style={styles.container}>
+  //     {symptoms.map((symptom) => (
+  //       <TouchableOpacity key={symptom.value} onPress={onPressCGU}>
+  //         <View style={styles.symptomDetails}>
+
+  //           <View
+  //             style={{
+  //               flexDirection: 'row',
+  //               alignItems: 'center',
+  //               display: showElements ? "none" :"flex",
+  //             }}
+  //           >
+  //             <View
+  //               style={{
+  //                 width: 25,
+  //                 height: 25,
+  //                 borderRadius: 25,
+  //                 display: showElements ? "none" :"flex",
+  //                 backgroundColor: genererPictogrammeTemperature(
+  //                   symptom.id,
+  //                   symptom.metric
                     
-                  ),
-                }} />
-              <Text style={styles.value}>{symptom.value}</Text>
+  //                 ),
+  //               }} />
+  //             <Text style={styles.value}>{symptom.value}</Text>
                
-              <Text style={styles.id}>{symptom.id}</Text>
-            </View>
-          </View>
-          <Text style={styles.date}>{symptom.date}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
+  //             <Text style={styles.id}>{symptom.id}</Text>
+  //           </View>
+  //         </View>
+  //         <Text style={styles.date}>{symptom.date}</Text>
+  //       </TouchableOpacity>
+  //     ))}
+  //   </View>
+  // );
 
+  const getIconPath = (iconName: string): ImageSourcePropType => {
+    switch (iconName) {
+      case '1_i.png':
+        return require('@assets/images/1_i.png');
+      case '2_i.png':
+        return require('@assets/images/2_i.png');
+      case '3_i.png':
+        return require('@assets/images/3_i.png');
+      case '4_i.png':
+        return require('@assets/images/4_i.png');
+      case '5_i.png':
+        return require('@assets/images/5_i.png');
+      case '6_i.png':
+        return require('@assets/images/6_i.png');
+      default:
+        return require('@assets/images/6_i.png'); // Provide a default image path
+    }
+  };
 
 
   return (
     <Container noMarginBottom>
     
-      <View style={styles.container}>
+      <View style={styles.container} key={refreshKey}>
         <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
-        <ScrollView persistentScrollbar>
+        <ScrollView>
        
           <View style={styles.titleContainer}>
-          {!showElements &&(
             <SubTitle text={user.username} style={styles.username} />
-          )}
           </View>
           <View style={styles.infosContainer}>
-            {!showElements &&(
             <SubTitle
-              text={`${user.age.toString()} ${i18n.t('commons.units.years')}`}
+              text={user.birthDate}
               style={styles.info} />
-            )}
 
           </View>
           
-          {user.pregnant && (
-            <SubTitle
-              text={i18n.t('profile.pregnant')}
-              style={styles.pregnant}
-            />
-          )}
-        
+          {user.my_personal_datas?.map((pathologie: Pathologie) => {
+            return(
+            <>
+              <View style={styles.pathologieContainer}>
+              {pathologie.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(pathologie.namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
+                <AppText text={pathologie.name} style={styles.text} />
+                {genererPictogrammePathologie(pathologie) ? (
+                  <View style={styles.couleurVert} />
+                ) : (
+                  <View style={styles.couleurRouge} />
+                )}
+              </View>
+            </>);
+          })}
           
-          
-              
-          {!showElements && (
-          <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
+
+
+          {/* <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
               text={user.reminder?.isActive
                 ? format(fromUnixTime(user.reminder.date!), "kk'h'mm")
                 : i18n.t('commons.none')}
-              style={styles.reminder} /></>
-          )}
+              style={styles.reminder} /></> */}
 
-
-
-
-
-
-
-        
-         
+          <Button
+            text={i18n.t('profile.edit')}
+            onPress={onEditProfile}
+            isValidate
+            style={styles.editButton} />
           
-         {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
+         {/* {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
            
           <Button
             text={'Modifier mon profil'}
             onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
             isValidate
             style={styles.editButton} /> )
-            
-            
-            }
-          <TouchableOpacity onPress={onPressCGU}>
+            } */}
+          {/* <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
       </View>
     </Container>
@@ -191,6 +247,7 @@ function Profile(): ReactElement {
 
 
 
+export default Profile;
 
 
 
@@ -199,7 +256,6 @@ const styles = StyleSheet.create({
     paddingTop: layout.padding,
     flex: 1,
     flexDirection:'column',
-    
   },
   titleContainer: {
     flexDirection: 'row',
@@ -215,6 +271,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: layout.padding,
+  },
+  pathologieContainer: {
+    padding: 10,
+    marginBottom: 10,
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor:colors.greyLight,
+    borderRadius: 20,
   },
   info: {
     marginBottom: 0,
@@ -282,10 +347,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     fontSize: 20,
-    
-
-
-    
   },
   date: {
     fontStyle: 'italic',
@@ -298,22 +359,34 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   couleur: {
-
     width: 50,
-     height: 50,
+    height: 50,
     //backgroundColor: genererPictogrammeTemperature(symptoms.id),
     backgroundColor: colors.black
 
+  },
+  couleurVert:{
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: colors.green
+  },
+  couleurRouge:{
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: colors.orange
   },
   pictogramme: {
     width: 50,
     height: 50,
     borderRadius: 25,
   },
-
+  text: {
+    marginLeft: 25,
+    lineHeight: fonts.subtitle.fontSize + 3,
+    textAlign: 'center',
+  },
  
  
 });
-export default Profile;
-
-
