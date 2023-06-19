@@ -39,14 +39,24 @@ const ScrollItem = ({index,item,id_p} : scrollProps) => {
     {
       const updatedPathos = user.my_personal_datas.map((obj) => {
         if (obj.id === id_p) {
+          const updatedSymptoms = [...obj.symptoms];
+          const hasDuplicate = updatedSymptoms.some((symptom) => symptom.id === item.id);
+      
+          if (!hasDuplicate) {
+            updatedSymptoms.push(item);
+          }
+      
           return {
             ...obj,
-            symptoms: [...obj.symptoms, item],
+            symptoms: updatedSymptoms,
           };
         }
         return obj;
       });
+      
+      console.log(updatedPathos);
       actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
+      
       
     }
     else
