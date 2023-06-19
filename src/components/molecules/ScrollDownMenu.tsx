@@ -143,7 +143,10 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   const handleButtonPress = () => {
     processDatas();
    if(setButtonNewSuiviClicked)
+   {
      setButtonNewSuiviClicked(false);
+     actions.signupUser();
+   }
 
   };
   useEffect(()=>{
