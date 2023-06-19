@@ -65,7 +65,7 @@ const HomeComponent = ({
         style={{marginLeft:12}}
       />
       <View style={styles.newsuivicontainer}>
-      <NewSuivi onPress={ValidatePressed}/>
+      <NewSuivi onPress={ValidatePressed} setButtonNewSuiviClicked={setButtonClicked}/>
       </View>
     </>
     }
