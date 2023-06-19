@@ -14,16 +14,31 @@ type AskPopUpProps = {
 const EndSuiviPopUp = ({ onClose, pathologieRemove }: AskPopUpProps) => {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
+  const empty = (): boolean => { 
+    let variable : boolean = true; 
+    
+    pathologieRemove.symptoms.forEach((object) => {
+     if (Array.isArray(object.data) && object.data.length > 0){
+      variable = false;
+    }
+   })
+   return variable;
+  }
+
   const yesPressed = (): void => {
     actions.editUserProfile({key: 'my_personal_datas' , value: user.my_personal_datas.filter((item: Pathologie) => item.id !== pathologieRemove.id)});
     pathologieRemove.dateend=DATE_TODAY;
-    if (user.my_previous_personal_datas){
-      const pathologie: Pathologie[]=[...user.my_previous_personal_datas, pathologieRemove];;
-      actions.editUserProfile({key: 'my_previous_personal_datas' , value: pathologie});
-    }
-    else {
-      const pathologie: Pathologie[]=[pathologieRemove];
-      actions.editUserProfile({key: 'my_previous_personal_datas' , value: pathologie});
+    
+
+    if(!empty()) {
+      if (user.my_previous_personal_datas){
+        const pathologie: Pathologie[]=[...user.my_previous_personal_datas, pathologieRemove];;
+        actions.editUserProfile({key: 'my_previous_personal_datas' , value: pathologie});
+      }
+      else {
+        const pathologie: Pathologie[]=[pathologieRemove];
+        actions.editUserProfile({key: 'my_previous_personal_datas' , value: pathologie});
+      }
     }
     // console.log(user.my_previous_personal_datas+=(pathologieRemove));
     onClose();
