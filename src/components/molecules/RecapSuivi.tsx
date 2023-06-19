@@ -15,6 +15,7 @@ import ScrollDownMenu from './ScrollDownMenu';
 import { Chk_Box } from './ScrollDownMenu';
 import { useAuthStore, useUserStore } from '@store/store';
 import { MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
+import FreqPopUp from '@components/popUp/FrequencePopUp';
 
 
 type Props = {
@@ -113,9 +114,18 @@ const RecapSuivi = ({ objet }: Props) => {
   useEffect(()=>{
     console.log("Les symptomes d'objet " + objet.symptoms.length)
   },[])
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const modifyFrequence = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View>
-      <BoxHistorique objet={objet}/>
+      <BoxHistorique objet={objet} edit={ButtonEdit}/>
       {ButtonEdit?
                   <View>
                   <ScrollView>
@@ -131,6 +141,23 @@ const RecapSuivi = ({ objet }: Props) => {
                     }
                  
                 </ScrollView>
+                <Button
+                  text={i18n.t('suivi.askfrequence')}
+                  onPress={modifyFrequence}
+                />
+                <Modal 
+                  visible={isModalVisible} 
+                  animationType="slide" 
+                  transparent
+                  onBackdropPress={closeModal}
+                  onBackButtonPress={closeModal}
+                  >
+
+                <View style={styles.modalContainer}>
+                  <FreqPopUp path={objet} onClose={closeModal} />
+                </View>
+                </Modal>
+
                  <Button
                  text={i18n.t('commons.validate')}
                  onPress={()=>{setButtonEdit(false)}}
