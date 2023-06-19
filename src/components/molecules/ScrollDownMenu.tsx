@@ -6,28 +6,17 @@ import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
-import { CGU_URL, MALADIE1 } from '@constants/constants';
-import pathos_all from '@assets/json/pathologies.json';
-import symptomsJSON from '@assets/json/symptomes.json';
+import { CGU_URL, DATE_TODAY, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
+import { Pathologie, Symptome } from '@store/types';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
 }
-type Symptome = {
-    id: number;
-    name: string;
-    type: string;
-  };
-interface Pathologie  {
-    id: string;
-    name: string;
-    symptoms: Symptome[];
-    icon?: ImageSourcePropType
-  };
+
 interface DropdownMenuProps {
   items: Pathologie[];
-  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
+  setButtonNewSuiviClicked? : React.Dispatch<React.SetStateAction<boolean>>;
   
 }
 
@@ -41,7 +30,7 @@ interface chk_BoxProps {
   }
 
 
-const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
+export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
@@ -126,11 +115,11 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
-      const nm = pathos_all.find((obj) => obj.id === objet[0])?.name;
+      const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
       const newE: Pathologie = {
         id: objet[0],
         name: nm ? nm : "",
-        symptoms: symptomsJSON
+        symptoms: symptomeJSON
           .filter((obj) => objet.slice(1).includes(obj.id.toString()))
           .map((filteredObj) => ({
             id: filteredObj.id,
@@ -138,8 +127,9 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             type: filteredObj.type,
           })),
         icon: getIconPath(
-          pathos_all.find((obj) => obj.id === objet[0])?.icon?.toString()
+          pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
+        date: DATE_TODAY,
       };
       return newE;
     });

@@ -3,11 +3,6 @@ import { AsyncStorage, ImageSourcePropType, SafeAreaView, StyleSheet, View } fro
 import BoxPathologie from '../atoms/BoxPathologie';
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import { ScrollView } from 'react-native-gesture-handler';
-
-
-
-import pathologiesJSON from '@assets/json/pathologies.json'
-import symptomsJSON from '@assets/json/symptomes.json'
 import DropDownMenu from './DropDownMenu';
 import AddBoutton from '@components/atoms/AddBoutton';
 import Container from './Container';
@@ -16,7 +11,7 @@ import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import Button from '@components/atoms/Button';
 import { useAuthStore } from '@store/store';
-import { ASYNC_STORAGE_AUTH_KEY } from '@constants/constants';
+import { ASYNC_STORAGE_AUTH_KEY, pathologieJSON } from '@constants/constants';
 import { StoreActionApi } from 'react-sweet-state';
 import { RootState, SymptomeJSON } from '@store/types';
 import AppText from '@components/atoms/AppText';
@@ -72,24 +67,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
 };
 const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
-  const [, actions] = useAuthStore();
-
-  const symptomeData: Symptome[] = symptomsJSON.map((item: SymptomeJSON) => {
-    return{
-    id: item.id,
-    name: item.name,
-    type: item.type
-    }
-  });
-
-  const pathologieData: Pathologie[] = pathologiesJSON.map((item: any) => ({
-    id: item.id,
-    name: item.name,
-    symptoms: symptomeData.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id))),
-    icon: getIconPath(item.icon), // Use a function to get the static image path
-  }));
-  
-  
+  const [, actions] = useAuthStore(); 
   
   const handlePress = () => {
     //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
@@ -113,7 +91,7 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
     {ButtonClicked ? (<> 
       <SafeAreaView>
         <ScrollView>
-          <DropDownMenu objets={pathologieData} ischeckeable={true}/> 
+          <DropDownMenu objets={pathologieJSON} ischeckeable={true}/> 
         </ScrollView>
         <Button
           text={i18n.t('commons.validate')}
@@ -126,7 +104,7 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
     <>
       {/* <DropDownMenu objets={pathologieData} ischeckeable={false}/> */}
       {/* <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton> */}
-      <ScrollDownMenu items={pathologieData} setButtonNewSuiviClicked={setButtonNewSuiviClicked}/>
+      <ScrollDownMenu items={pathologieJSON} setButtonNewSuiviClicked={setButtonNewSuiviClicked}/>
      
     </>
     )}
