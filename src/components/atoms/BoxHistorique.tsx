@@ -34,7 +34,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
 const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
   return (
     <TouchableOpacity onPress={onPress} style = {styles.container}>
-      {objet.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(objet.namelogo)} /> : null}
+      {objet.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(objet.namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
       <View style = {styles.content}>
         <AppText text={objet.name} style={styles.title} />
         {objet.more ? <AppText text={objet.more} style={styles.subtitle} /> : null}

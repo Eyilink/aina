@@ -63,7 +63,6 @@ const exempleList: Pathologie[] = [
   { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"4_i.png",symptoms:exempleSymList, dateend:"15/02/2023" },
   ]
 
-  
 
 
 
@@ -72,11 +71,19 @@ const History = ({ navigation }: Props): ReactElement => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [graph, graphClicked] = React.useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [isPrevious, setPrevious] = React.useState(false);
+  const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas : user.my_personal_datas ;
 
 
   const onPressPath = (index : number): void =>{
     setIsClicked(true);
     setCurrentIndex(index);
+    setPrevious(false);
+  }
+  const onPressPathPrev = (index : number): void =>{
+    setIsClicked(true);
+    setCurrentIndex(index);
+    setPrevious(true);
   }
   const prev = ():void =>{
     setIsClicked(false);
@@ -106,10 +113,13 @@ const History = ({ navigation }: Props): ReactElement => {
     }
   };
 
+  
+  
+
   return ( 
     
     <Container>
-       
+       <ScrollView>
        {isClicked ?
         <>
           <Ionicons
@@ -119,14 +129,14 @@ const History = ({ navigation }: Props): ReactElement => {
             onPress={prev}
           />
           <View style= {styles.container}> 
-            {exempleList[currentIndex].namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(exempleList[currentIndex].namelogo)} /> : null}
+            {liste[currentIndex].namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(liste[currentIndex].namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
             <View style = {styles.content}>
-              <AppText text={exempleList[currentIndex].name} style={styles.title} />
-              {exempleList[currentIndex].more ? <AppText text={exempleList[currentIndex].more} style={styles.subtitle} /> : null}
-              {exempleList[currentIndex].dateend ? 
-                <AppText text= {"Du " + exempleList[currentIndex].date + " Au " + exempleList[currentIndex].dateend} style={styles.text} />
+              <AppText text={liste[currentIndex].name} style={styles.title} />
+              {liste[currentIndex].more ? <AppText text={liste[currentIndex].more} style={styles.subtitle} /> : null}
+              {liste[currentIndex].dateend ? 
+                <AppText text= {"Du " + liste[currentIndex].date + " Au " + liste[currentIndex].dateend} style={styles.text} />
                 :
-                <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
+                <AppText text= {"Depuis le " + liste[currentIndex].date} style={styles.text} />
               }
             </View>
           </View>
@@ -138,7 +148,7 @@ const History = ({ navigation }: Props): ReactElement => {
             (  
               <>
             {
-            exempleList[currentIndex].symptoms.map((object, index) => {    
+            liste[currentIndex].symptoms.map((object, index) => {    
                 return (
                   <>
                  {object.data ?
@@ -160,7 +170,7 @@ const History = ({ navigation }: Props): ReactElement => {
             :
             <>
             {
-              exempleList[currentIndex].symptoms.map((object, index) => {    
+              liste[currentIndex].symptoms.map((object, index) => {    
                 return (<BoxSymptome key={index} objet={object}/>);      
               })
             }
@@ -170,28 +180,28 @@ const History = ({ navigation }: Props): ReactElement => {
         </>
       : 
         <> 
-        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
+        {/* <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
         {
           exempleList.map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
-        }  
-        <AppText text={"TODO : "+i18n.t('navigation.authenticated.history')+" User"} style={styles.pagetitle} />   
+        }   */}
+        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
         {
           user.my_personal_datas?.map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
         }  
-        <AppText text={i18n.t('navigation.authenticated.history')+" Previous"} style={styles.pagetitle} />   
+        <View style={styles.separator} />   
         {
           user.my_previous_personal_datas?.map((object, index) => {    
-            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
+            return (<BoxHistorique onPress={() => onPressPathPrev(index)} key={index} objet={object}/>);      
           })
         }  
         </>
       }
     
-      
+    </ScrollView>
     </Container>
   );
 };
@@ -217,6 +227,11 @@ const styles = StyleSheet.create({
     marginLeft:20,
     //justifyContent: 'center',
 
+  },
+  separator: {
+    height: 2,
+    backgroundColor: 'black',
+    margin: 30, // Ajustez la marge horizontale selon vos besoins
   },
   pagetitle :{
     fontSize: 28,
