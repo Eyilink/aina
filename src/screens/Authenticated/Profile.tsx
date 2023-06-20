@@ -179,17 +179,6 @@ function Profile(): ReactElement {
             style={styles.editButton} /> )
           }
 
-          <Button text={"Sauvegarder les données"}
-            onPress={async()=>{
-              await FileSystem.writeAsStringAsync(
-                FileSystem.documentDirectory+"saved.json",
-                JSON.stringify(user.my_personal_datas||[])
-              )
-              await Sharing.shareAsync(
-                FileSystem.documentDirectory+"saved.json"
-              )
-            }}
-          />
           <Button
             text={"Exporter les données"}
             onPress={async()=>{
