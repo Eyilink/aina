@@ -228,7 +228,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             key={index}
             style={[
               styles.itemContainer,
-              user.my_personal_datas.find((obj) => obj.id === item.id)
+              user.my_personal_datas?.find((obj) => obj.id === item.id)
                 ? { backgroundColor: colors.primary }
                 : null,
             ]}
