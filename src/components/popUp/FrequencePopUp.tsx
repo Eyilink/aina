@@ -23,9 +23,29 @@ const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
   const [selectedValues, setSelectedValues] = useState<{ [key: number]: string }>({});
 
   const handleValidate = (): void => {
+    const updatedData = user.my_personal_datas.map((pathology) => {
+      if (pathology.id === pato.id) {
+        const updatedSymptoms = pathology.symptoms.map((symptom) => {
+          return {
+            ...symptom,
+            frequency: selectedValues[symptom.id] || '2/jour',
+          };
+        });
   
+        return {
+          ...pathology,
+          symptoms: updatedSymptoms,
+        };
+      }
+      return pathology;
+    });
+  
+    actions.editUserProfile({ key: 'my_personal_datas', value: updatedData });
+    console.log("user :    \n");
+    console.log(user.my_personal_datas);
     onClose();
   };
+  
 
 const handlePickerChange = (itemValue: string, symptomId: number): void => {
     setSelectedValues((prevValues) => ({
@@ -34,7 +54,8 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
     }));
   };
 
-  const numberToFreq = (n: number): string => {
+  const numberToFreq = (freq: string): string => {
+    const n = parseFloat(freq);
     switch (n) {
       case 0.5:
         return '2/jour';
@@ -51,7 +72,7 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
       case 365:
         return '1/an';
       default:
-        return '';
+        return 'Fréquence non référencée';
     }
   };
 
@@ -61,7 +82,14 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
     user.my_personal_datas.forEach((pathology) => {
       if (pathology.id === pato.id) {
         pathology.symptoms.forEach((symptom) => {
-          initialValues[symptom.id] = '2/jour';
+          console.log("freq ?");
+          console.log(symptom);
+          if (symptom.frequence){
+          initialValues[symptom.id] = numberToFreq(symptom.frequence);
+          }
+          else {
+            initialValues[symptom.id] = "1/semaine";
+          }
         });
       }
     });
