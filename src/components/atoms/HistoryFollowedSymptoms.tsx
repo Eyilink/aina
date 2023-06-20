@@ -84,6 +84,7 @@ const CustomComponent = ({ currentSymptom }: Props) => {
         )}
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{currentSymptom.name}</Text>
+        {currentSymptom.data && (currentSymptom.data.length) ? <Text style={styles.subtitle}>{currentSymptom.data[currentSymptom.data.length-1].date}</Text>:null}
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
 
@@ -205,7 +206,7 @@ const renderItem = ({ item }: { item: Pathologie }) => (
   </View>
 );
 
-function HistoryFollowedSymptoms({}: Props) {
+function HistoryFollowedSymptoms() {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   
   return (
@@ -269,7 +270,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 12,
+    margin: 5,
   },
   subtitle_custom: {
     fontSize: 10,
