@@ -11,7 +11,11 @@ type Props = {
     onPress?: () => void;
   };
 
-
+// The ListSymptome function is a reusable component that renders a list of symptoms.
+// It takes objets as a prop, which is an array of symptom objects to be displayed.
+// Each symptom is rendered as an AppText component with a bullet point ("-") preceding the symptom name.
+// The onPress prop allows for customization of an event when the edit icon is pressed.
+// The function provides a visually appealing and interactive way to display a list of symptoms.
 const ListSymptome = ({objets, onPress}: Props): ReactElement => {
   
     return(

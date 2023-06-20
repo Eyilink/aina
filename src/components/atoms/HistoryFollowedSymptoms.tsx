@@ -35,12 +35,14 @@ const CustomComponent = ({ currentSymptom }: Props) => {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [value, setValue] = useState(1);
 
-
+// The handleValue function is a callback function that updates the value state based on the provided value parameter.
+// It takes a number as an argument and sets the value state to that number using the setValue function.
+// This function is typically used to update the value in response to user interactions or data changes.
   const handleValue = (value: number) => {
     setValue(value);
   }
 
-
+// Same 
   const handlePress = () => {
     console.log(currentSymptom.name);
     setModalVisible(true);
@@ -49,18 +51,20 @@ const CustomComponent = ({ currentSymptom }: Props) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  // secondary function which changes the color of the picto
   const generatePictogrammeTemperature = (value: number ) => {
     let backgroundColor;
     console.log(value);
     value=Math.floor(value);
+    console.log(value);
     if (value === 1 ||value === 2  ) {
     
-      backgroundColor= '#00FF00'; //vert
+      backgroundColor= '#00FF00'; //Green 
     }
      else if (value === 3 || value ===  4 || value === 5 || value == 6 ) {
-      backgroundColor = '#FFFF00'; // Jaune
+      backgroundColor = '#FFFF00'; // Yellow
     } else {
-      backgroundColor = '#FF0000'; // Rouge
+      backgroundColor = '#FF0000'; // Red
     }
 
     return backgroundColor;

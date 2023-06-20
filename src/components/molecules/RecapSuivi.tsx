@@ -30,11 +30,13 @@ const ScrollItem = ({index,item,id_p} : scrollProps) => {
   const [user, ] = useUserStore({ disease: MALADIE1 });
   const [,actions] = useAuthStore();
   useEffect(()=>{
+    // Check if the symptom is already selected by the user
     const isSympchecked = user.my_personal_datas.find((obj)=> obj.id === id_p)?.symptoms.find((o)=> o.id === item.id)
     if(isSympchecked)
       setIsChecked(true);
   },[]);
   useEffect(()=>{
+    // Update the user's symptom selection when isChecked state changes
     if(isChecked)
     {
       const updatedPathos = user.my_personal_datas.map((obj) => {
@@ -117,6 +119,7 @@ const RecapSuivi = ({ objet }: Props) => {
     <View>
       <BoxHistorique objet={objet}/>
       {ButtonEdit?
+       // Render the symptom selection list in edit mode
                   <View>
                   <ScrollView>
                     

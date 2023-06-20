@@ -6,10 +6,10 @@ import colors from '@styles/colors';
 import { Pathologie } from '@store/types';
 
 type Props = {
-  objet: Pathologie;
+  objet: Pathologie;// Props type declaration, expecting an object of type Pathologie
   onPress?: () => void;
 };
-
+//fonction returning the path to an image depending on the iconName 
 const getIconPath = (iconName: string): ImageSourcePropType => {
   switch (iconName) {
     case 'avq.png':
@@ -52,6 +52,8 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
 };
 
 
+ // This component represents a box displaying pathology information.
+  // It takes an object of type Pathologie as a prop, along with an optional onPress function.
 
 
 const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
@@ -75,7 +77,7 @@ const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
 };
 
 export default BoxPathologie;
-    
+    // styles 
 const styles = StyleSheet.create({
   title: {
     fontSize: 24,

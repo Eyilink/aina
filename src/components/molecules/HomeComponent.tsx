@@ -19,16 +19,18 @@ type Props = {
   isDataEmpty?: boolean;
   
 };
-
+// HomeComponent represents the main home screen of the application.
 const HomeComponent = ({
     isDataEmpty
 }: Props): ReactElement => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [user, ] = useUserStore({ disease: MALADIE1 });
 
+    // ValidatePressed is triggered when the validation button is pressed.
+  // It toggles the ButtonClicked state.
+
   const ValidatePressed = () => {
-    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    // Vous pouvez ajouter votre logique ou vos actions ici
+    
     setButtonClicked(!ButtonClicked);
   };
   const dateString = DATE_TODAY;
@@ -42,8 +44,9 @@ const parsedDate = `${day}/${month}`;
     <Title
           text={user.username+"   " + parsedDate}
         />
-    {!ButtonClicked?
+    {!ButtonClicked? 
       <>
+        {/* If isDataEmpty is true, display a message indicating no data */}
       {isDataEmpty ? 
         <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
       : 
@@ -55,7 +58,7 @@ const parsedDate = `${day}/${month}`;
           stretch
         /> */}
       </>}
-
+{/* Display the validation button */}
       <Button
         text={i18n.t('commons.newsuivi')}
         style={{minWidth: '90%'}}
@@ -63,6 +66,7 @@ const parsedDate = `${day}/${month}`;
         stretch
       /></>
     :<>
+        {/* Display the back button that allows to go back to the previous screen */}
       <Ionicons
         name="ios-arrow-round-back"
         size={layout.navigation.previousIcon.size}

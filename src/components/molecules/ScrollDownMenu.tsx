@@ -35,6 +35,7 @@ interface chk_BoxProps {
 export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
+      // Check if the symptom is already selected by the user
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
         
         setIsChecked(checked);
@@ -57,6 +58,7 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
                 });
                 setTDArray(updatedArray);
             } else {
+              // Object with id_p does not exist, create a new object with id_p and symptomId
                 const updatedArray = [...twoDArray , [id_p,symptom.id.toString()]];
                 setTDArray(updatedArray);
             }
@@ -122,6 +124,19 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
   }
 };
 
+
+
+/*
+
+This component represents a scrollable dropdown menu.
+It takes in an array of items and a callback function to handle the "New Suivi" button click event.
+The component maintains state for tracking whether a symptom is selected, the selected pathology ID,
+the selected symptoms in a 2D array format, and a flag for triggering rendering updates.
+*/
+
+
+
+
 const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviClicked }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
   const [isWhichP , setIsWichP] = useState<string>("");
@@ -136,7 +151,12 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
     setIsWichP(id);
   };
 
-  
+  /**
+ * This function processes the selected symptoms and updates the user's personal data.
+ * It maps through the 2D array of selected symptoms and creates a new object for each pathology.
+ * The new object includes the pathology ID, name, selected symptoms, icon, and current date.
+ * The updated array of pathologies is then stored in the user's profile.
+ */
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
@@ -163,10 +183,17 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
     actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
     console.log(updatedPathos)
   };
-  
+  /**
+ * This function handles the click event of the arrow button in the dropdown menu.
+ * It toggles the state variable `isSymptom` to show or hide the symptoms of a selected pathology.
+ */
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
+  /**
+ * This function handles the button press event for validating the selected symptoms and updating the user's profile.
+ * It calls the `processDatas` function to update the user's personal data and performs additional actions if the `setButtonNewSuiviClicked` callback is provided.
+ */
   const handleButtonPress = () => {
     processDatas();
    if(setButtonNewSuiviClicked)
@@ -176,10 +203,18 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
    }
 
   };
+  /**
+ * This effect hook is triggered when the `twoDArray` state variable is updated.
+ * It sets the `render` state variable to true to trigger re-rendering and logs the updated `twoDArray`.
+ */
   useEffect(()=>{
     setRender(true);
     console.log(twoDArray)
   },[twoDArray])
+  /**
+ * This effect hook is triggered when the component is mounted.
+ * It initializes the `twoDArray` state variable by mapping the user's personal data and constructing a 2D array of selected symptoms.
+ */
   useEffect(()=>{
     console.log("In useeffect ...");
     if(user.my_personal_datas)
