@@ -83,54 +83,6 @@ useEffect(()=>{console.log("useefect profile works")},[])
     await WebBrowser.openBrowserAsync(CGU_URL);
   };
 
-    //const genererPictogrammePathologie=fonction qui permet de choper si la date d'aujourdh'ui est renseigné en valeur ou pas 
-  const genererPictogrammePathologie=(pathologie: Pathologie) => {
-    var isRempli: Boolean =true;
-    pathologie.symptoms.forEach(symptome => {
-      if (Array.isArray(symptome.data) && symptome.data.length > 0){
-        if (!(isRempli&&(symptome.data[symptome.data.length - 1]?.date?.localeCompare(DATE_TODAY)))) {
-          isRempli=false;
-          console.log("La derniere valeur  pas aujourd'hui");
-          console.log(symptome.data[symptome.data.length - 1]);
-        }
-        else {
-          isRempli=true;
-          console.log("La derniere valeur  aujourd'hui");
-          console.log(symptome.data[symptome.data.length - 1]);
-
-        }
-      }
-      else {
-        console.log("Tableau : "+symptome.data+" vide");
-
-        isRempli=false;
-
-      }
-      
-    });
-    return isRempli;
-
-  }
-
-  const getIconPath = (iconName: string): ImageSourcePropType => {
-    switch (iconName) {
-      case '1_i.png':
-        return require('@assets/images/1_i.png');
-      case '2_i.png':
-        return require('@assets/images/2_i.png');
-      case '3_i.png':
-        return require('@assets/images/3_i.png');
-      case '4_i.png':
-        return require('@assets/images/4_i.png');
-      case '5_i.png':
-        return require('@assets/images/5_i.png');
-      case '6_i.png':
-        return require('@assets/images/6_i.png');
-      default:
-        return require('@assets/images/6_i.png'); // Provide a default image path
-    }
-  };
-
 
   return (
     <Container noMarginBottom>
