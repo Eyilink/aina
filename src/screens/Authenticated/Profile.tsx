@@ -28,8 +28,9 @@ import { CGU_URL, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import Evaluate from '@screens/Authenticated/Evaluate';
-
-
+import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
+import * as Sharing from "expo-sharing"
+import * as Print from "expo-print"
 function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
@@ -176,9 +177,77 @@ function Profile(): ReactElement {
             onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
             isValidate
             style={styles.editButton} /> )
-            
-            
-            }
+          }
+
+          <Button text={"Sauvegarder les données"}
+            onPress={async()=>{
+              await FileSystem.writeAsStringAsync(
+                FileSystem.documentDirectory+"saved.json",
+                JSON.stringify(user.my_personal_datas||[])
+              )
+              await Sharing.shareAsync(
+                FileSystem.documentDirectory+"saved.json"
+              )
+            }}
+          />
+          <Button
+            text={"Exporter les données"}
+            onPress={async()=>{
+
+              function tohtml(re){
+                if(typeof re!="object") {
+                  return re
+                } else if(re.map) {
+                  return re.map(tohtml).join("")
+                } else if(re.type.call) {
+                  return tohtml(re.type(re.props))
+                }else{
+                  return (
+                    "<"+re.type+" "+Object.keys(re.props).map(p=>{
+                      if(p=="children")return"";
+                      return p+"="+'"'+re.props[p]+'"'
+                    }).join("")+">"+(()=>{
+                      let children
+                      if(!re.props.children)
+                        children=[]
+                      else if (!re.props.children.map)
+                        children = [re.props.children]
+                      else
+                        children = re.props.children
+                      return tohtml(children)
+                    })()+"</"+re.type+">"
+                  )
+                }
+              }
+
+              function getUserData(user) {
+                const symptoms = new Map()
+                const pathologies = user.my_personal_datas||[]
+                pathologies.forEach(patho=>{
+                  patho.symptoms.forEach(spt=>{
+                    symptoms.set(
+                      spt.id.toString(),
+                      spt
+                    )
+                  })
+                })
+                return {
+                  pathologies:pathologies,
+                  symptoms:[...symptoms.values()]
+                }
+              }
+              const html = tohtml(GeneratedDocument({
+                userData:getUserData(user)
+              }))
+              
+              const { uri } = await Print.printToFileAsync({
+                html: html
+              })
+              await Sharing.shareAsync(
+                uri
+              )
+            }}
+          />
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
