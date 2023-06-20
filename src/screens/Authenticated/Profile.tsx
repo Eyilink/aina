@@ -29,7 +29,8 @@ import i18n from '@i18n/i18n';
 import { CGU_URL, DATE_TODAY, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
-import Evaluate from '@screens/Authenticated/Evaluate';
+import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
+import { Pathologie } from '@store/types';
 
 
 function Profile(): ReactElement {
@@ -192,10 +193,7 @@ useEffect(()=>{console.log("useefect profile works")},[])
             text={i18n.t('profile.edit')}
             onPress={onEditProfile}
             isValidate
-            style={styles.editButton} /> )
-            
-            
-            }
+            style={styles.editButton} /> 
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
