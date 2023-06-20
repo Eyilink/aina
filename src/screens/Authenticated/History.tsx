@@ -173,15 +173,15 @@ const History = ({ navigation }: Props): ReactElement => {
               <AppText text={liste[currentIndex].name} style={styles.title} />
               {liste[currentIndex].more ? <AppText text={liste[currentIndex].more} style={styles.subtitle} /> : null}
               {liste[currentIndex].dateend ? 
-                <AppText text= {"Du " + liste[currentIndex].date + " Au " + liste[currentIndex].dateend} style={styles.text} />
+                <AppText text= {i18n.t('history.du') + liste[currentIndex].date + i18n.t('history.au') + liste[currentIndex].dateend} style={styles.text} />
                 :
-                <AppText text= {"Depuis le " + liste[currentIndex].date} style={styles.text} />
+                <AppText text= {i18n.t('history.Depuis') + liste[currentIndex].date} style={styles.text} />
               }
             </View>
           </View>
           <View style= {styles.buttonsContainer}>
-            <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
-            <Button style={styles.button} text={"Graphique"} onPress={graphpress} isSelected ={graph ? true : false}/> 
+            <Button style={styles.button} text={i18n.t('history.data')} onPress={graphpress} isSelected={graph ? false : true} />
+            <Button style={styles.button} text={i18n.t('history.graph')} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
           {graph ?
               
