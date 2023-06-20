@@ -10,14 +10,16 @@ import {
 } from 'react-native';
 import { format, fromUnixTime } from 'date-fns';
 import * as WebBrowser from 'expo-web-browser';
-import * as FileSystem from 'expo-file-system'
-import * as DocumentPicker from 'expo-document-picker'
+
+
 import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import SubTitle from '@components/atoms/SubTitle';
 import AppText from '@components/atoms/AppText';
 import Button from '@components/atoms/Button';
+
 import { useUserStore } from '@store/store';
+
 import colors from '@styles/colors';
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
@@ -26,13 +28,11 @@ import { CGU_URL, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import Evaluate from '@screens/Authenticated/Evaluate';
-import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
-import * as Print from "expo-print"
-import * as Sharing from "expo-sharing"
+
 
 function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
-  const [user,actions] = useUserStore({ disease: MALADIE1 });
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const onEditProfile = (): void => {
     Alert.alert(
@@ -48,8 +48,6 @@ function Profile(): ReactElement {
       { cancelable: false }
     );
   };
-
-
  const ValidateButtonNewSuiviPressed = (): void => {
     <NewSuivi/>
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
@@ -151,6 +149,8 @@ function Profile(): ReactElement {
             />
           )}
         
+          
+          
               
           {!showElements && (
           <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
@@ -159,6 +159,16 @@ function Profile(): ReactElement {
                 : i18n.t('commons.none')}
               style={styles.reminder} /></>
           )}
+
+
+
+
+
+
+
+        
+         
+          
          {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
            
           <Button
@@ -166,91 +176,9 @@ function Profile(): ReactElement {
             onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
             isValidate
             style={styles.editButton} /> )
-          }
-
-          <Button
-            text={"Importer des données"}
-            onPress={async()=>{
-              const document = await DocumentPicker.getDocumentAsync()
-              const content = await FileSystem.readAsStringAsync(
-                document.uri
-              )
-              actions.editUserProfile({
-                key: "my_personal_datas",
-                value: JSON.parse(content)
-              })
-            }}
-          />
-          <Button text={"Sauvegarder les données"}
-            onPress={async()=>{
-              await FileSystem.writeAsStringAsync(
-                FileSystem.documentDirectory+"saved.json",
-                JSON.stringify(user.my_personal_datas||[])
-              )
-              await Sharing.shareAsync(
-                FileSystem.documentDirectory+"saved.json"
-              )
-            }}
-          />
-          <Button
-            text={"Exporter les données"}
-            onPress={async()=>{
-
-              function tohtml(re){
-                if(typeof re!="object") {
-                  return re
-                } else if(re.map) {
-                  return re.map(tohtml).join("")
-                } else if(re.type.call) {
-                  return tohtml(re.type(re.props))
-                }else{
-                  return (
-                    "<"+re.type+" "+Object.keys(re.props).map(p=>{
-                      if(p=="children")return"";
-                      return p+"="+'"'+re.props[p]+'"'
-                    }).join("")+">"+(()=>{
-                      let children
-                      if(!re.props.children)
-                        children=[]
-                      else if (!re.props.children.map)
-                        children = [re.props.children]
-                      else
-                        children = re.props.children
-                      return tohtml(children)
-                    })()+"</"+re.type+">"
-                  )
-                }
-              }
-
-              function getUserData(user) {
-                const symptoms = new Map()
-                const pathologies = user.my_personal_datas||[]
-                pathologies.forEach(patho=>{
-                  patho.symptoms.forEach(spt=>{
-                    symptoms.set(
-                      spt.id.toString(),
-                      spt
-                    )
-                  })
-                })
-                return {
-                  pathologies:user.my_personal_datas,
-                  symptoms:[...symptoms.values()],
-                  user:user
-                }
-              }
-              const html = tohtml(GeneratedDocument({
-                userData:getUserData(user)
-              }))
-              
-              const { uri } = await Print.printToFileAsync({
-                html
-              })
-              await Sharing.shareAsync(
-                uri
-              )
-            }}
-          />
+            
+            
+            }
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
