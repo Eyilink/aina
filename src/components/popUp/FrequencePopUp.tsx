@@ -42,19 +42,27 @@ const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
       </View>
 
       <View>
-        <ScrollView>
-         {
-          user.my_personal_datas.forEach((pathology) => {
-            if (pathology.id===pato.id) {
-              pathology.symptoms.forEach((symptChecked) => {
-                console.log(symptChecked.name);
-                  return <Button text={symptChecked.name} onPress={onClose}/>
-              })
-            }
-          })
-        }
-      </ScrollView>
-    </View>  
+  {/* <ScrollView> */}
+  {user.my_personal_datas.map((pathology) => {
+    if (pathology.id === pato.id) {
+      return pathology.symptoms.map((symptChecked) => (
+        <View key={symptChecked.id} style={styles.symptomContainer}>
+          <Text style={styles.symptomName}>{symptChecked.name}</Text>
+          <Dropdown
+            data={['2/jour', '1/jour', '2/semaine', '1/semaine', '1/mois', '1/3mois']}
+            containerStyle={styles.dropdownContainer}
+            textStyle={styles.dropdownText}
+            dropdownStyle={styles.dropdownMenu}
+            // Add event handler for dropdown selection if needed
+          />
+        </View>
+      ));
+    }
+  })}
+  {/* </ScrollView> */}
+</View>
+
+ 
       
         <Button
           text={i18n.t('commons.validate')}
@@ -75,6 +83,26 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom:15,
     textAlign: 'center',
+  },
+  symptomContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  symptomName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  dropdownContainer: {
+    width: 150,
+  },
+  dropdownText: {
+    fontSize: 14,
+    color: 'black',
+  },
+  dropdownMenu: {
+    marginTop: 10,
   },
 });
 
