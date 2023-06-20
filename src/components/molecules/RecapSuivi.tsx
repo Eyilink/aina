@@ -205,6 +205,11 @@ const styles = StyleSheet.create({
   checkedItemContainer: {
     // backgroundColor: '#00cc00',
   },
+  separator: {
+    height: 2,
+    backgroundColor: 'black',
+    margin: 30, // Ajustez la marge horizontale selon vos besoins
+  },
 });
 
 export default RecapSuivi;

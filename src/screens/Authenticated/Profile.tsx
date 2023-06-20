@@ -146,8 +146,7 @@ useEffect(()=>{console.log("useefect profile works")},[])
             text={i18n.t('profile.edit')}
             onPress={onEditProfile}
             isValidate
-            style={styles.editButton} /> )
-          }
+            style={styles.editButton} />
 
           <Button
             text={"Exporter les données"}
