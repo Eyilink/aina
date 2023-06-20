@@ -18,7 +18,7 @@ import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import colors from '@styles/colors';
-import { MALADIE1 } from '@constants/constants';
+import { MALADIE1, getIconPath } from '@constants/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
 import BoxHistorique from '@components/atoms/BoxHistorique';
@@ -97,46 +97,7 @@ const History = ({ navigation }: Props): ReactElement => {
     graphClicked(!graph);
   }
 
-  const getIconPath = (iconName: string): ImageSourcePropType => {
-    switch (iconName) {
-      case 'avq.png':
-        return require('@assets/images/avq.png');
-      case 'barthel.png':
-        return require('@assets/images/barthel.png');
-      case 'braden.png':
-        return require('@assets/images/braden.png');
-      case 'clinimetre.png':
-        return require('@assets/images/clinimetre.png');
-      case 'coeur.png':
-        return require('@assets/images/coeur.png');
-      case 'colonne.png':
-        return require('@assets/images/colonne.png');
-      case 'covid.png' :
-        return require('@assets/images/covid.png');
-      case 'dentaire.png' :
-        return require('@assets/images/dentaire.png');
-      case 'genou.png' :
-        return require('@assets/images/genou.png');
-      case 'grippe.png' :
-        return require('@assets/images/grippe.png');
-      case 'grossesse.png' :
-        return require('@assets/images/grossesse.png');
-      case 'insh.png' :
-        return require('@assets/images/insh.png');
-      case 'mif.png' :
-        return require('@assets/images/mif.png');
-      case 'orl.png' :
-        return require('@assets/images/orl.png');
-      case 'peau.png' :
-        return require('@assets/images/peau.png');
-      case 'poumon.png' :
-        return require('@assets/images/poumon.png');
-      case 'yeux.png' :
-        return require('@assets/images/yeux.png');
-      default:
-        return require('@assets/images/6_i.png'); // Provide a default image path
-    }
-  };
+  
   const empty = (): boolean => {
     
     let empt = true;
