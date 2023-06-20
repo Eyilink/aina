@@ -14,7 +14,7 @@ type Props = {
   };
 
 
-
+// set the display of the graphics  in history 
   const ChartSymptome = ({ objet }: Props): ReactElement => {
     
       const labels : String[] = objet.data ? objet.data.map(item => [item.date.split('/')[0],'/',item.date.split('/')[1]]) : [''];

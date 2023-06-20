@@ -7,6 +7,12 @@ import i18n from '@i18n/i18n';
 import { PHONE_OS } from '@constants/constants';
 import { Symptome } from '@store/types';
 
+// SliderFooter function renders a footer component with lines and units based on the provided symptome prop.
+// If the symptom name is 'Température', it renders an additional line and displays specific unit texts.
+// Otherwise, it displays different unit texts.
+// This component is typically used to provide visual indicators and units in a slider or a similar UI element.
+
+
 const SliderFooter = ({ symptome }: { symptome: Symptome }): ReactElement => (
   <>
     <View style={styles.lines}>

@@ -13,7 +13,7 @@ import layout from '@styles/layout';
 import { Pathologie, Symptome } from '@store/types';
 
 type Props = {
-  objet: Symptome|Pathologie;
+  objet: Symptome|Pathologie; // Props type declaration, expects an object of type Symptome or Pathologie
   objets?: Symptome[]|Pathologie[];
   ischeckeable : boolean;
   onCheckboxChange: () => void;
@@ -22,11 +22,11 @@ type Props = {
 
 
 const BoxPathologie = ({ objet, objets, ischeckeable}: Props): ReactElement => {
-  const [open, setOpen] = React.useState(false);
-  const [checked, setChecked] = React.useState(false);
+  const [open, setOpen] = React.useState(false);// State variable to track whether the box is open or closed
+  const [checked, setChecked] = React.useState(false); // State variable to track whether the checkbox is checked or not
   const onPress = (): void => {
-    setOpen(!open);
-    setChecked(!checked);
+    setOpen(!open); // Toggle the open state when the box is pressed
+    setChecked(!checked); // Toggle the checked state when the box is pressed
   };
 
   return(
@@ -65,7 +65,8 @@ const BoxPathologie = ({ objet, objets, ischeckeable}: Props): ReactElement => {
         </View>
         
 
-        {objets && open ? (<DropDownMenu objets={objets} ischeckeable= {ischeckeable}/>) : null}
+        {objets && open ? (// If objets is provided and the box is open
+        <DropDownMenu objets={objets} ischeckeable= {ischeckeable}/>) : null}
       </TouchableOpacity>
     </View>
 
