@@ -49,52 +49,6 @@ function Profile(): ReactElement {
     );
   };
 
-  function generateData(){
-    const data = new Array(33).fill()
-    const debut = new Date(2013,1,3).getTime()
-    const fin = new Date(2014,1,6).getTime()
-    data.forEach((el,i)=>{
-      const date = debut+Math.random()*(fin-debut)
-      const value = parseFloat((33*Math.random()).toPrecision(4))
-      data[i] = {
-        date: parseInt(date),
-        value: value
-      }
-    })
-    return data
-  }
-
-function generateObj() {
-  const symptoms = [
-    {
-      "id":"33",
-      "name": "Toux",
-      "data":generateData()
-    },
-    {
-      "id":"31",
-      "name": "Température",
-      "data":generateData()
-    }
-  ]
-
-  return [
-      {
-        "id": "6",
-        "name": "Grippe",
-        "symptoms": [
-          symptoms[0]
-        ]
-      },
-      {
-        "id": "3",
-        "name": "Covid",
-        "symptoms": [
-          symptoms[1]
-        ]
-      }
-    ]
-}
 
  const ValidateButtonNewSuiviPressed = (): void => {
     <NewSuivi/>
@@ -213,6 +167,7 @@ function generateObj() {
             isValidate
             style={styles.editButton} /> )
           }
+
           <Button
             text={"Importer des données"}
             onPress={async()=>{
@@ -230,7 +185,7 @@ function generateObj() {
             onPress={async()=>{
               await FileSystem.writeAsStringAsync(
                 FileSystem.documentDirectory+"saved.json",
-                JSON.stringify(user.my_personal_datas)
+                JSON.stringify(user.my_personal_datas||[])
               )
               await Sharing.shareAsync(
                 FileSystem.documentDirectory+"saved.json"
@@ -269,7 +224,7 @@ function generateObj() {
 
               function getUserData(user) {
                 const symptoms = new Map()
-                const pathologies = user.my_personal_datas
+                const pathologies = user.my_personal_datas||[]
                 pathologies.forEach(patho=>{
                   patho.symptoms.forEach(spt=>{
                     symptoms.set(
@@ -281,7 +236,7 @@ function generateObj() {
                 return {
                   pathologies:user.my_personal_datas,
                   symptoms:[...symptoms.values()],
-                  user: user
+                  user:user
                 }
               }
               const html = tohtml(GeneratedDocument({
