@@ -115,7 +115,7 @@ const RecapSuivi = ({ objet }: Props) => {
   },[])
   return (
     <View>
-      <BoxHistorique objet={objet}/>
+      <BoxHistorique objet={objet} isWhite/>
       {ButtonEdit?
                   <View>
                   <ScrollView>
