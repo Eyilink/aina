@@ -6,10 +6,11 @@ import Button from '@components/atoms/Button';
 import { he } from 'date-fns/locale';
 import layout from '@styles/layout';
 import CustomSlider from '@components/molecules/Slider';
-import {  MALADIE1 } from '@constants/constants';
+import {  DATE_TODAY, MALADIE1 } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
 import { Pathologie, Symptome } from '@store/types';
 import InputSymptome from '@components/molecules/AskSymptoms'
+import colors from '@styles/colors';
 type Props = {
   currentSymptom: Symptome;
 };
@@ -35,12 +36,14 @@ const CustomComponent = ({ currentSymptom }: Props) => {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [value, setValue] = useState(1);
 
-
+// The handleValue function is a callback function that updates the value state based on the provided value parameter.
+// It takes a number as an argument and sets the value state to that number using the setValue function.
+// This function is typically used to update the value in response to user interactions or data changes.
   const handleValue = (value: number) => {
     setValue(value);
   }
 
-
+// Same 
   const handlePress = () => {
     console.log(currentSymptom.name);
     setModalVisible(true);
@@ -49,30 +52,36 @@ const CustomComponent = ({ currentSymptom }: Props) => {
   const closeModal = () => {
     setModalVisible(false);
   };
-  const generatePictogrammeTemperature = (value: number ) => {
-    let backgroundColor;
-    console.log(value);
-    value=Math.floor(value);
-    if (value === 1 ||value === 2  ) {
-    
-      backgroundColor= '#00FF00'; //vert
-    }
-     else if (value === 3 || value ===  4 || value === 5 || value == 6 ) {
-      backgroundColor = '#FFFF00'; // Jaune
-    } else {
-      backgroundColor = '#FF0000'; // Rouge
-    }
 
-    return backgroundColor;
-  };
+  //const genererPictogrammePathologie=fonction qui permet de choper si la date d'aujourdh'ui est renseigné en valeur ou pas 
+  const genererPictogrammePathologie=(symptome: Symptome) => {
+    var isRempli: Boolean =true;
+    if (Array.isArray(symptome.data) && symptome.data.length > 0){
+      if (!(isRempli&&(symptome.data[symptome.data.length - 1]?.date?.localeCompare(DATE_TODAY)))) {
+        isRempli=false;
+        console.log("La derniere valeur  pas aujourd'hui");
+        console.log(symptome.data[symptome.data.length - 1]);
+      }
+      else {
+        isRempli=true;
+        console.log("La derniere valeur  aujourd'hui");
+        console.log(symptome.data[symptome.data.length - 1]);
+      }
+    }
+    else {
+      isRempli=false;
+    }
+    return isRempli;
+
+  }
 
   return (
     <View style={styles.customComponentContainer}>
-      <View style={{ width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor:generatePictogrammeTemperature(value) ,
-    marginRight: 20,}} />
+      {genererPictogrammePathologie(currentSymptom)?(
+          <View style={styls.couleurVert} />
+        ) : (
+          <View style={styls.couleurRouge} />
+        )}
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{currentSymptom.name}</Text>
       </View>
@@ -154,6 +163,18 @@ const styls = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  couleurVert:{
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: colors.green
+  },
+  couleurRouge:{
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: colors.orange
+  },
 });
 
 
@@ -202,6 +223,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
 };
+
 const renderItem = ({ item }: { item: Pathologie }) => (
   <View style={styles.custom}>
     <View style={styles.itemContainer}>

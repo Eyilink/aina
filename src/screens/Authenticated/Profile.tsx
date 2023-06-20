@@ -1,4 +1,4 @@
-import React, { Component, ReactElement , useState} from 'react';
+import React, { Component, ReactElement , useEffect, useReducer, useState} from 'react';
 import {
   Text,
   StyleSheetProperties,
@@ -7,6 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Image,
+  ImageSourcePropType, 
 } from 'react-native';
 import { format, fromUnixTime } from 'date-fns';
 import * as WebBrowser from 'expo-web-browser';
@@ -24,10 +26,11 @@ import colors from '@styles/colors';
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
-import { CGU_URL, MALADIE1 } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
-import Evaluate from '@screens/Authenticated/Evaluate';
+import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
+import { Pathologie } from '@store/types';
 import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
 import * as Sharing from "expo-sharing"
 import * as Print from "expo-print"
@@ -35,6 +38,22 @@ function Profile(): ReactElement {
   const [showElements, setShowElements] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
+  const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
+  const [forceRefresh, setForceRefresh] = useState<boolean>(false);
+useEffect(()=>{console.log("useefect profile works")},[])
+//   useEffect(() => {
+//     const updateCouleursPictos = () => {
+//       const couleurs: Boolean[] = user.my_personal_datas?.map((pathologie: Pathologie) =>
+//         genererPictogrammePathologie(pathologie)
+//       ) || [];
+//       setCouleursPictos(couleurs);
+//     };
+
+//     updateCouleursPictos();
+//   }, [user.my_personal_datas]);
+  
+//   // ATTENTION À NE PAS ENLEVER
+//   useEffect(()=>(console.log("")),[]);
   const onEditProfile = (): void => {
     Alert.alert(
       i18n.t('commons.attention'),
@@ -45,6 +64,7 @@ function Profile(): ReactElement {
           text: i18n.t('commons.errors.ok'),
           onPress: (): Promise<void> => actions.resetUserSession(),
         },
+        
       ],
       { cancelable: false }
     );
@@ -64,117 +84,67 @@ function Profile(): ReactElement {
     await WebBrowser.openBrowserAsync(CGU_URL);
   };
 
-  const genererPictogrammeTemperature = (id, metric) => {
-    let couleur;
-
-    if (metric < 10) {
-      couleur = '#00FFFF'; // Bleu clair
-    } else if (metric >= 10 && metric < 20) {
-      couleur = '#00FF00'; // Vert
-    } else if (metric >= 20 && metric < 30) {
-      couleur = '#FFFF00'; // Jaune
-    } else {
-      couleur = '#FF0000'; // Rouge
-    }
-
-    return couleur;
-  };
-
-  const handleButtonPress = () => {
-    setShowElements(!showElements); // Inverse la valeur de showElements à chaque pression du bouton
-  };
-
-  const SymptomTable = () => (
-    <View style={styles.container}>
-      {symptoms.map((symptom) => (
-        <TouchableOpacity key={symptom.value} onPress={onPressCGU}>
-          <View style={styles.symptomDetails}>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                display: showElements ? "none" :"flex",
-              }}
-            >
-              <View
-                style={{
-                  width: 25,
-                  height: 25,
-                  borderRadius: 25,
-                  display: showElements ? "none" :"flex",
-                  backgroundColor: genererPictogrammeTemperature(
-                    symptom.id,
-                    symptom.metric
-                    
-                  ),
-                }} />
-              <Text style={styles.value}>{symptom.value}</Text>
-               
-              <Text style={styles.id}>{symptom.id}</Text>
-            </View>
-          </View>
-          <Text style={styles.date}>{symptom.date}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-
-
 
   return (
     <Container noMarginBottom>
     
       <View style={styles.container}>
         <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
-        <ScrollView persistentScrollbar>
+        <ScrollView>
        
           <View style={styles.titleContainer}>
-          {!showElements &&(
             <SubTitle text={user.username} style={styles.username} />
-          )}
           </View>
           <View style={styles.infosContainer}>
-            {!showElements &&(
             <SubTitle
-              text={`${user.age.toString()} ${i18n.t('commons.units.years')}`}
+              text={user.birthDate}
               style={styles.info} />
-            )}
 
           </View>
           
-          {user.pregnant && (
-            <SubTitle
-              text={i18n.t('profile.pregnant')}
-              style={styles.pregnant}
-            />
-          )}
-        
-          
-          
-              
-          {!showElements && (
-          <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
-              text={user.reminder?.isActive
-                ? format(fromUnixTime(user.reminder.date!), "kk'h'mm")
-                : i18n.t('commons.none')}
-              style={styles.reminder} /></>
-          )}
+          {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))}
+{/* 
+          return (
+            <>
+            <View style={styles.pathologieContainer}>
+              {pathologie.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(pathologie.namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
+                <AppText text={pathologie.name} style={styles.text} />
+                {couleursPictos[index] ? (
+                // {genererPictogrammePathologie(pathologie)?(
+                  <View style={styles.couleurVert} />
+                ) : (
+                  <View style={styles.couleurRouge} />
+                )}
+              </View>
+            </>);
+
+          })} */}
+
+
+          {/* {couleursPictos.map((couleur: Boolean, index: number)=> {
+            return (<>
+              <View style={styles.pathologieContainer}>
+                {user.my_personal_datas[index].namelogo ? 
+                  <Image style={{ width: 40, height: 40 }} source={getIconPath(user.my_personal_datas[index].namelogo)} />
+                  : 
+                  <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />
+                }
+                <AppText text={user.my_personal_datas[index].name} style={styles.text} />
+                {couleursPictos[index] ? (
+                  // {genererPictogrammePathologie(pathologie)?(
+                  <View style={styles.couleurVert} />
+                ) : (
+                  <View style={styles.couleurRouge} />
+                )}
+              </View>
+            </>);
+          })} */}
 
 
 
-
-
-
-
-        
-         
-          
-         {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
-           
           <Button
-            text={'Modifier mon profil'}
-            onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
+            text={i18n.t('profile.edit')}
+            onPress={onEditProfile}
             isValidate
             style={styles.editButton} /> )
           }
@@ -249,6 +219,7 @@ function Profile(): ReactElement {
 
 
 
+export default Profile;
 
 
 
@@ -257,7 +228,6 @@ const styles = StyleSheet.create({
     paddingTop: layout.padding,
     flex: 1,
     flexDirection:'column',
-    
   },
   titleContainer: {
     flexDirection: 'row',
@@ -273,6 +243,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: layout.padding,
+  },
+  pathologieContainer: {
+    padding: 10,
+    marginBottom: 10,
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor:colors.greyLight,
+    borderRadius: 20,
   },
   info: {
     marginBottom: 0,
@@ -340,10 +319,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     fontSize: 20,
-    
-
-
-    
   },
   date: {
     fontStyle: 'italic',
@@ -356,22 +331,34 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   couleur: {
-
     width: 50,
-     height: 50,
+    height: 50,
     //backgroundColor: genererPictogrammeTemperature(symptoms.id),
     backgroundColor: colors.black
 
+  },
+  couleurVert:{
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: colors.green
+  },
+  couleurRouge:{
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: colors.orange
   },
   pictogramme: {
     width: 50,
     height: 50,
     borderRadius: 25,
   },
-
+  text: {
+    marginLeft: 25,
+    lineHeight: fonts.subtitle.fontSize + 3,
+    textAlign: 'center',
+  },
  
  
 });
-export default Profile;
-
-

@@ -81,6 +81,7 @@ const History = ({ navigation }: Props): ReactElement => {
     setPrevious(false);
     console.log(liste[currentIndex].icon);
     console.log(liste[currentIndex].namelogo);
+    console.log(liste[currentIndex].symptoms[0].unit);
   }
   const onPressPathPrev = (index : number): void =>{
     setIsClicked(true);
@@ -136,6 +137,20 @@ const History = ({ navigation }: Props): ReactElement => {
         return require('@assets/images/6_i.png'); // Provide a default image path
     }
   };
+  const empty = (): boolean => {
+    
+    let empt = true;
+    liste[currentIndex].symptoms.map((object, index) => {
+      
+      if (Array.isArray(object.data) && object.data.length > 0){
+        empt = false;
+      }
+     })
+     return empt;
+
+
+  }
+  
 
   
   
@@ -158,24 +173,27 @@ const History = ({ navigation }: Props): ReactElement => {
               <AppText text={liste[currentIndex].name} style={styles.title} />
               {liste[currentIndex].more ? <AppText text={liste[currentIndex].more} style={styles.subtitle} /> : null}
               {liste[currentIndex].dateend ? 
-                <AppText text= {"Du " + liste[currentIndex].date + " Au " + liste[currentIndex].dateend} style={styles.text} />
+                <AppText text= {i18n.t('history.du') + liste[currentIndex].date + i18n.t('history.au') + liste[currentIndex].dateend} style={styles.text} />
                 :
-                <AppText text= {"Depuis le " + liste[currentIndex].date} style={styles.text} />
+                <AppText text= {i18n.t('history.Depuis') + liste[currentIndex].date} style={styles.text} />
               }
             </View>
           </View>
           <View style= {styles.buttonsContainer}>
-            <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
-            <Button style={styles.button} text={"Graphique"} onPress={graphpress} isSelected ={graph ? true : false}/> 
+            <Button style={styles.button} text={i18n.t('history.data')} onPress={graphpress} isSelected={graph ? false : true} />
+            <Button style={styles.button} text={i18n.t('history.graph')} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
-          {graph ? 
-            (  
-              <>
+          {graph ?
+              
+            ( 
+             !empty() ? 
+            (  <>
             {
-            liste[currentIndex].symptoms.map((object, index) => {    
+            liste[currentIndex].symptoms.map((object, index) => {
+              let bool : boolean = object.data ? true : false ;   
                 return (
                   <>
-                 {object.data ?
+                 {object.data && object.data.length > 1 ?
                   <View key= {index}>
                   <AppText  text={object.name} style={styles.pagetitle} />
                   {object.data ? <ChartSymptome  objet = {object}/> : null}
@@ -190,6 +208,9 @@ const History = ({ navigation }: Props): ReactElement => {
             }
             
               </>
+            ) 
+            : 
+            <Text style={styles.nodata}>{i18n.t('history.nodata')}</Text>
             )
             :
             <>
@@ -238,6 +259,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold' as 'bold',
     marginBottom: 2,
     
+  },
+  nodata:{
+    fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 2,
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  flex: 1,
+  textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,

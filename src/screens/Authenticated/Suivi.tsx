@@ -36,6 +36,7 @@ const Suivi = (): ReactElement => {
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
   };
+  
   // const onStartReport = (): void => {
   //   if (!isNewReportOfDay) {
   //     Alert.alert(
@@ -80,7 +81,10 @@ const Suivi = (): ReactElement => {
           <>
             <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
             {user.my_personal_datas?user.my_personal_datas.map((pathologie: Pathologie) => 
-              (<RecapSuivi objet={pathologie}/>)):null}
+              
+                pathologie && pathologie.symptoms && pathologie.symptoms.length > 0 && (<RecapSuivi objet={pathologie} />)
+              ):null
+              }
             <Button
               text={i18n.t('commons.newsuivi')}
               onPress={ValidateButtonNewSuiviPressed}
@@ -112,6 +116,11 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  separator: {
+    height: 2,
+    backgroundColor: 'black',
+    margin: 30, // Ajustez la marge horizontale selon vos besoins
   },
   
 });

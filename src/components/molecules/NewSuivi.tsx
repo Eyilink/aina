@@ -47,6 +47,7 @@ const dropdownItems = [
   { title: 'Cardiovasculaire', icon: require('@assets/images/6_i.png') },
   // Add more items as needed
 ];
+// getIconPath is a helper function that returns the image source based on the iconName provided.
 const getIconPath = (iconName: string): ImageSourcePropType => {
   switch (iconName) {
     case '1_i.png':
@@ -60,7 +61,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
     case '5_i.png':
       return require('@assets/images/5_i.png');
     case '6_i.png':
-      return require('@assets/images/6_i.png');
+      return require('@assets/images/6_i.png');// Provide a default image path
     default:
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
@@ -70,14 +71,14 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   const [, actions] = useAuthStore(); 
   
   const handlePress = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
+     // handlePress is called when the ADD button is clicked.
+    
     setButtonClicked(!ButtonClicked);
   };
 
   const ValidatePressed = () => {
-    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    // Vous pouvez ajouter votre logique ou vos actions ici
+     // ValidatePressed is called when the validation button is clicked.
+    // You can add your logic or actions here
     setButtonClicked(!ButtonClicked);
     if (isFirstLog) {
       actions.signupUser();
@@ -88,7 +89,9 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   return (
     <View style={styles.container}>
     <AppText text='Choix du Suivi' style={styles.text}></AppText>
-    {ButtonClicked ? (<> 
+    {ButtonClicked ? (
+      // When ButtonClicked is true, render the DropDownMenu component with checkable items
+        <> 
       <SafeAreaView>
         <ScrollView>
           <DropDownMenu objets={pathologieJSON} ischeckeable={true}/> 

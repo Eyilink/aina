@@ -162,6 +162,14 @@
     "firstTime": "Afin de pouvoir suivre l'historique de votre état de santé, nous avons besoin de connaître vos symptômes.",
     "chart": "Graphique",
     "list": "Liste",
-    "type": "Type"
+    "type": "Type",
+    "nodata" : "Vous n'avez pas encore renseigné de symptome",
+    "Depuis" : "Depuis le ",
+    "du" : "Du ",
+    "au" : " Au",
+    "data" : "Données",
+    "Historique" : "Historique",
+    "graph" : "Graphique"
+
   }
 }
