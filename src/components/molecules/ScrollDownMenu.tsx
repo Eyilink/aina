@@ -229,8 +229,8 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
               <Image
   style={{ width: 40, height: 40 }}
   source={
-    (json_p.find((obj) => obj.id.toString() === item.id)?.logo
-      ? getIconPath(json_p.find((obj) => obj.id.toString() === item.id)!.logo)
+    ( item?.icon
+      ? item.icon
       : getIconPath(""))
   }
 />
