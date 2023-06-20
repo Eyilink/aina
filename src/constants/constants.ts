@@ -41,7 +41,7 @@ export const PHONE_OS = Platform.OS;
 // Other
 export const CGU_URL = 'http://aina.io/monsuivisante-cgu/';
 
-const getIconPath = (iconName: string): ImageSourcePropType => {
+export const getIconPath = (iconName: string): ImageSourcePropType => {
   switch (iconName) {
     case 'avq.png':
       return require('@assets/images/avq.png');
@@ -65,6 +65,8 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
       return require('@assets/images/grippe.png');
     case 'grossesse.png' :
       return require('@assets/images/grossesse.png');
+    case 'hanche.png' :
+      return require('@assets/images/hanche.png');
     case 'insh.png' :
       return require('@assets/images/insh.png');
     case 'mif.png' :

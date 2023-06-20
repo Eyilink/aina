@@ -47,25 +47,6 @@ const dropdownItems = [
   { title: 'Cardiovasculaire', icon: require('@assets/images/6_i.png') },
   // Add more items as needed
 ];
-// getIconPath is a helper function that returns the image source based on the iconName provided.
-const getIconPath = (iconName: string): ImageSourcePropType => {
-  switch (iconName) {
-    case '1_i.png':
-      return require('@assets/images/1_i.png');
-    case '2_i.png':
-      return require('@assets/images/2_i.png');
-    case '3_i.png':
-      return require('@assets/images/3_i.png');
-    case '4_i.png':
-      return require('@assets/images/4_i.png');
-    case '5_i.png':
-      return require('@assets/images/5_i.png');
-    case '6_i.png':
-      return require('@assets/images/6_i.png');// Provide a default image path
-    default:
-      return require('@assets/images/6_i.png'); // Provide a default image path
-  }
-};
 const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore(); 
