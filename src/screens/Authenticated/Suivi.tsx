@@ -36,6 +36,7 @@ const Suivi = (): ReactElement => {
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
   };
+  
   // const onStartReport = (): void => {
   //   if (!isNewReportOfDay) {
   //     Alert.alert(

@@ -26,6 +26,7 @@ const BirthDateForm = ({ navigation }: Props) => {
   const [year, setYear] = useState('2023');
   const [, actions] = useAuthStore();
 
+  
   const onChangeDay = (value : string) => {
     setDay(value);
   };
