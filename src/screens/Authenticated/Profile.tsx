@@ -1,4 +1,4 @@
-import React, { Component, ReactElement , useEffect, useState} from 'react';
+import React, { Component, ReactElement , useEffect, useReducer, useState} from 'react';
 import {
   Text,
   StyleSheetProperties,
@@ -30,62 +30,40 @@ import { CGU_URL, DATE_TODAY, MALADIE1 } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import { Pathologie, Symptome } from '@store/types';
+import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
 
 
-const Profile = (): ReactElement =>{
-  const [user, actions] = useUserStore({ disease: MALADIE1 });
-  const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
-  const [CouleurPictoVert, setCouleurPictoVert] = React.useState(false);
+// const Profile = (): ReactElement =>{
+//   const [user, actions] = useUserStore({ disease: MALADIE1 });
+//   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
+//   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
 
+//   useEffect(() => {
+//     const updateCouleursPictos = () => {
+//       const couleurs: Boolean[] = user.my_personal_datas?.map((pathologie: Pathologie) =>
+//         genererPictogrammePathologie(pathologie)
+//       ) || [];
+//       setCouleursPictos(couleurs);
+//     };
 
-  // ATTENTION À NE PAS ENLEVER
-  useEffect(()=>(console.log("")),[]);
-  const onEditProfile = (): void => {
-    Alert.alert(
-      i18n.t('commons.attention'),
-      i18n.t('profile.erase'),
-      [
-        { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
-        {
-          text: i18n.t('commons.errors.ok'),
-          onPress: (): Promise<void> => actions.resetUserSession(),
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
+//     updateCouleursPictos();
+//   }, [user.my_personal_datas]);
   
-
-//  const ValidateButtonNewSuiviPressed = (): void => {
-//     <NewSuivi/>
-//     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
-//   };
-//   let couleur = 0;
-//   const symptoms = [
-//     { id: 1, date: '2023-06-01', metric: 30, value: 'Fever' },
-//     { id: 2, date: '2023-06-02', metric: 10, value: 'Cough' },
-//     { id: 3, date: '2023-06-03', metric: 20, value: 'Headache' },
-//   ];
-
-//   const onPressCGU = async (): Promise<void> => {
-//     await WebBrowser.openBrowserAsync(CGU_URL);
-//   };
-
-//   const genererPictogrammeTemperature = (id, metric) => {
-//     let couleur;
-
-//     if (metric < 10) {
-//       couleur = '#00FFFF'; // Bleu clair
-//     } else if (metric >= 10 && metric < 20) {
-//       couleur = '#00FF00'; // Vert
-//     } else if (metric >= 20 && metric < 30) {
-//       couleur = '#FFFF00'; // Jaune
-//     } else {
-//       couleur = '#FF0000'; // Rouge
-//     }
-
-//     return couleur;
+//   // ATTENTION À NE PAS ENLEVER
+//   useEffect(()=>(console.log("")),[]);
+//   const onEditProfile = (): void => {
+//     Alert.alert(
+//       i18n.t('commons.attention'),
+//       i18n.t('profile.erase'),
+//       [
+//         { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
+//         {
+//           text: i18n.t('commons.errors.ok'),
+//           onPress: (): Promise<void> => actions.resetUserSession(),
+//         },
+//       ],
+//       { cancelable: false }
+//     );
 //   };
 
     //const genererPictogrammePathologie=fonction qui permet de choper si la date d'aujourdh'ui est renseigné en valeur ou pas 
@@ -99,67 +77,23 @@ const Profile = (): ReactElement =>{
           console.log(symptome.data[symptome.data.length - 1]);
         }
         else {
+          isRempli=true;
           console.log("La derniere valeur  aujourd'hui");
           console.log(symptome.data[symptome.data.length - 1]);
+
         }
       }
       else {
         console.log("Tableau : "+symptome.data+" vide");
+
         isRempli=false;
+
       }
       
     });
-
-    // var isRempli: boolean = pathologie.symptoms.every(symptome => {
-    //   return isRempli && (symptome.data?.[symptome.data.length - 1]?.date?.localeCompare(DATE_TODAY)) === 0;
-    // });
-    let color;
-    // if (isRempli) {
-    //   setCouleurPictoVert(true);
-    //   color = '#00FF00'; // Vert
-    // } else {
-    //   setCouleurPictoVert(false);
-    //   color = '#FF0000'; // Vert
-    // }
     return isRempli;
+
   }
-
-
-  // const SymptomTable = () => (
-  //   <View style={styles.container}>
-  //     {symptoms.map((symptom) => (
-  //       <TouchableOpacity key={symptom.value} onPress={onPressCGU}>
-  //         <View style={styles.symptomDetails}>
-
-  //           <View
-  //             style={{
-  //               flexDirection: 'row',
-  //               alignItems: 'center',
-  //               display: showElements ? "none" :"flex",
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 width: 25,
-  //                 height: 25,
-  //                 borderRadius: 25,
-  //                 display: showElements ? "none" :"flex",
-  //                 backgroundColor: genererPictogrammeTemperature(
-  //                   symptom.id,
-  //                   symptom.metric
-                    
-  //                 ),
-  //               }} />
-  //             <Text style={styles.value}>{symptom.value}</Text>
-               
-  //             <Text style={styles.id}>{symptom.id}</Text>
-  //           </View>
-  //         </View>
-  //         <Text style={styles.date}>{symptom.date}</Text>
-  //       </TouchableOpacity>
-  //     ))}
-  //   </View>
-  // );
 
   const getIconPath = (iconName: string): ImageSourcePropType => {
     switch (iconName) {
@@ -184,7 +118,7 @@ const Profile = (): ReactElement =>{
   return (
     <Container noMarginBottom>
     
-      <View style={styles.container} key={refreshKey}>
+      <View style={styles.container}>
         <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
         <ScrollView>
        
@@ -198,46 +132,52 @@ const Profile = (): ReactElement =>{
 
           </View>
           
-          {user.my_personal_datas?.map((pathologie: Pathologie) => {
-            return(
+          {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))}
+{/* 
+          return (
             <>
-              <View style={styles.pathologieContainer}>
+            <View style={styles.pathologieContainer}>
               {pathologie.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(pathologie.namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
                 <AppText text={pathologie.name} style={styles.text} />
-                {genererPictogrammePathologie(pathologie) ? (
+                {couleursPictos[index] ? (
+                // {genererPictogrammePathologie(pathologie)?(
                   <View style={styles.couleurVert} />
                 ) : (
                   <View style={styles.couleurRouge} />
                 )}
               </View>
             </>);
-          })}
-          
+
+          })} */}
 
 
-          {/* <><SubTitle text={i18n.t('profile.reminder')} style={styles.diseases} /><AppText
-              text={user.reminder?.isActive
-                ? format(fromUnixTime(user.reminder.date!), "kk'h'mm")
-                : i18n.t('commons.none')}
-              style={styles.reminder} /></> */}
+          {/* {couleursPictos.map((couleur: Boolean, index: number)=> {
+            return (<>
+              <View style={styles.pathologieContainer}>
+                {user.my_personal_datas[index].namelogo ? 
+                  <Image style={{ width: 40, height: 40 }} source={getIconPath(user.my_personal_datas[index].namelogo)} />
+                  : 
+                  <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />
+                }
+                <AppText text={user.my_personal_datas[index].name} style={styles.text} />
+                {couleursPictos[index] ? (
+                  // {genererPictogrammePathologie(pathologie)?(
+                  <View style={styles.couleurVert} />
+                ) : (
+                  <View style={styles.couleurRouge} />
+                )}
+              </View>
+            </>);
+          })} */}
+
+
 
           <Button
             text={i18n.t('profile.edit')}
             onPress={onEditProfile}
             isValidate
             style={styles.editButton} />
-          
-         {/* {ButtonNewSuiviClicked? ( <NewSuivi />  ):(
-           
-          <Button
-            text={'Modifier mon profil'}
-            onPress={() => {ValidateButtonNewSuiviPressed(), handleButtonPress()}}
-            isValidate
-            style={styles.editButton} /> )
-            } */}
-          {/* <TouchableOpacity onPress={onPressCGU}>
-            <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
-          </TouchableOpacity> */}
+         
         </ScrollView>
       </View>
     </Container>

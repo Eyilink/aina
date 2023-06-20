@@ -26,6 +26,7 @@ const BirthDateForm = ({ navigation }: Props) => {
   const [year, setYear] = useState('');
   const [, actions] = useAuthStore();
 
+  
   const onChangeDay = (value : string) => {
     setDay(value);
   };
@@ -67,6 +68,7 @@ const BirthDateForm = ({ navigation }: Props) => {
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
       navigation.navigate("MoreData");
+      console.log(birthDate);
     }
   };
 
