@@ -117,7 +117,7 @@ const RecapSuivi = ({ objet }: Props) => {
   },[])
   return (
     <View>
-      <BoxHistorique objet={objet}/>
+      <BoxHistorique objet={objet} isWhite/>
       {ButtonEdit?
        // Render the symptom selection list in edit mode
                   <View>

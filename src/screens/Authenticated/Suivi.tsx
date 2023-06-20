@@ -117,5 +117,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  separator: {
+    height: 2,
+    backgroundColor: 'black',
+    margin: 30, // Ajustez la marge horizontale selon vos besoins
+  },
   
 });
