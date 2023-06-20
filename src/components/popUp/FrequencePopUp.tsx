@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Picker } from 'react-native';
 import Button from '@components/atoms/Button';
 import i18n from '@i18n/i18n';
@@ -20,11 +20,55 @@ type AskPopUpProps = {
 
 const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
-  const [selectedValue, setSelectedValue] = useState('2/jour');
+  const [selectedValues, setSelectedValues] = useState<{ [key: number]: string }>({});
 
-  const yesPressed = (): void => {
-    console.log("doSmth");
+  const handleValidate = (): void => {
+  
+    onClose();
   };
+
+const handlePickerChange = (itemValue: string, symptomId: number): void => {
+    setSelectedValues((prevValues) => ({
+      ...prevValues,
+      [symptomId]: itemValue,
+    }));
+  };
+
+  const numberToFreq = (n: number): string => {
+    switch (n) {
+      case 0.5:
+        return '2/jour';
+      case 1:
+        return '1/jour';
+      case 3:
+        return '2/semaine';
+      case 7:
+        return '1/semaine';
+      case 30:
+        return '1/mois';
+      case 90:
+        return '1/3mois';
+      case 365:
+        return '1/an';
+      default:
+        return '';
+    }
+  };
+
+  useEffect(() => {
+    // Initialize selectedValues when user.my_personal_datas changes
+    const initialValues: { [key: number]: string } = {};
+    user.my_personal_datas.forEach((pathology) => {
+      if (pathology.id === pato.id) {
+        pathology.symptoms.forEach((symptom) => {
+          initialValues[symptom.id] = '2/jour';
+        });
+      }
+    });
+    setSelectedValues(initialValues);
+  }, [user.my_personal_datas, pato.id]);
+
+
 
 return (
   <View style={styles.popUpContainer}>
@@ -46,9 +90,9 @@ return (
               <View style={styles.symptomContainer} key={symptChecked.id}>
                 <Text style={styles.symptomName}>{symptChecked.name}</Text>
                 <Picker
-                  selectedValue={selectedValue}
+                  selectedValue={selectedValues[symptChecked.id] || '2/jour'}
                   style={styles.dropdownContainer}
-                  onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                  onValueChange={(itemValue) => handlePickerChange(itemValue, symptChecked.id)}
                 >
                   <Picker.Item label="2/jour" value="2/jour" />
                   <Picker.Item label="1/jour" value="1/jour" />
@@ -63,7 +107,7 @@ return (
         })}
       </ScrollView>
 
-      <Button text={i18n.t('commons.validate')} onPress={onClose} />
+      <Button text={i18n.t('commons.validate')} onPress={handleValidate} />
     </View>
   );
 };
