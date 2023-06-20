@@ -33,7 +33,7 @@ export const PAIN_SYMPTOMS: PainSymptoms = {
 };
 
 // Dates
-export const DATE_TODAY = format(new Date(), 'dd/MM HH:mm', { locale: fr });
+export const DATE_TODAY = format(new Date(), 'dd/MM', { locale: fr });
 
 // Phone
 export const PHONE_OS = Platform.OS;

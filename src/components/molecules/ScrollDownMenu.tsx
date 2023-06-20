@@ -154,7 +154,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
-        date: DATE_TODAY,
+        date: user.my_personal_datas?.find((obj)=>obj.id == objet[0])?.date ? user.my_personal_datas.find((obj)=>obj.id == objet[0])?.date :  DATE_TODAY,
         namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
       };
       return newE;
