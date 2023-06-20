@@ -16,21 +16,39 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
       };
       const dateString = objet.data ? objet.data[objet.data.length - 1].date : "(tr";
       const date = moment(dateString, 'DD/MM/YYYY');
-      const formattedDate = objet.data ? date.locale('fr').format('dddd D MMMM') : "à Renseigner";
+      
+      let formattedDate = objet.data ? date.locale('fr').format('dddd D MMMM') : "à Renseigner";
+      // //let formattedDate;
+      // const empty = (): boolean => { 
+      //   let variable : boolean = true; 
+      //   console.log("zizi");
+      //   if (Array.isArray(objet.data) && objet.data.length > 0){
+      //     variable = false;
+      //     console.log("zizi DUR");
+      //   }
+      //  return variable;
+      // }
+
+      // // if(empty()){
+      // //   formattedDate =  "à Renseigner";
+      // // }
+      // // else{
+      // //   formattedDate =  date.locale('fr').format('dddd D MMMM');
+      // // }
     
   
       return (
         <TouchableOpacity onPress={onPressnath} style={styles.namestyle}>
           <View>
             <AppText text={objet.name} style={styles.title} />
-            {objet.frequence ? <AppText text={formattedDate} style={styles.subtitle} /> : null}
+            <AppText text={formattedDate} style={styles.subtitle} />
           </View>
           <View style={styles.valuestyle}>
             {objet.data && objet.type ? (
-              objet.type === "num" ? (
+              objet.type === "Oui/non éval" ? (
                 <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " /10"} />
               ) : (
-                <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " " + objet.type} />
+                <AppText text={objet.data[objet.data.length - 1].valeur.toString() + " " + objet.unit} />
               )
             ) : null}
           </View>
@@ -50,8 +68,10 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
 
 const styles = StyleSheet.create({
   namestyle: {
-    justifyContent:'space-around',
+    justifyContent:'space-between',
     flexDirection: 'row',
+    paddingLeft:50,
+    paddingRight:50,
     marginTop:20,
 
   },

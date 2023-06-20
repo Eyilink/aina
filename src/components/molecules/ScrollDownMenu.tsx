@@ -8,6 +8,7 @@ import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
 import { CGU_URL, DATE_TODAY, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
+import json_p from '@assets/json/pathologies.json'
 import { Pathologie, Symptome } from '@store/types';
 import colors from '@styles/colors';
 interface DropdownItem {
@@ -82,20 +83,42 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
     )
 
 }
-const getIconPath = (iconName?: string): ImageSourcePropType => {
+const getIconPath = (iconName: string): ImageSourcePropType => {
   switch (iconName) {
-    case '1_i.png':
-      return require('@assets/images/1_i.png');
-    case '2_i.png':
-      return require('@assets/images/2_i.png');
-    case '3_i.png':
-      return require('@assets/images/3_i.png');
-    case '4_i.png':
-      return require('@assets/images/4_i.png');
-    case '5_i.png':
-      return require('@assets/images/5_i.png');
-    case '6_i.png':
-      return require('@assets/images/6_i.png');
+    case 'avq.png':
+      return require('@assets/images/avq.png');
+    case 'barthel.png':
+      return require('@assets/images/barthel.png');
+    case 'braden.png':
+      return require('@assets/images/braden.png');
+    case 'clinimetre.png':
+      return require('@assets/images/clinimetre.png');
+    case 'coeur.png':
+      return require('@assets/images/coeur.png');
+    case 'colonne.png':
+      return require('@assets/images/colonne.png');
+    case 'covid.png' :
+      return require('@assets/images/covid.png');
+    case 'dentaire.png' :
+      return require('@assets/images/dentaire.png');
+    case 'genou.png' :
+      return require('@assets/images/genou.png');
+    case 'grippe.png' :
+      return require('@assets/images/grippe.png');
+    case 'grossesse.png' :
+      return require('@assets/images/grossesse.png');
+    case 'insh.png' :
+      return require('@assets/images/insh.png');
+    case 'mif.png' :
+      return require('@assets/images/mif.png');
+    case 'orl.png' :
+      return require('@assets/images/orl.png');
+    case 'peau.png' :
+      return require('@assets/images/peau.png');
+    case 'poumon.png' :
+      return require('@assets/images/poumon.png');
+    case 'yeux.png' :
+      return require('@assets/images/yeux.png');
     default:
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
@@ -146,16 +169,19 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             id: filteredObj.id,
             name: filteredObj.name,
             type: filteredObj.type,
+            unit: filteredObj.unit,
           })),
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
         date: DATE_TODAY,
+        namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
       };
       return newE;
     });
 
     actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
+    console.log(updatedPathos)
   };
   /**
  * This function handles the click event of the arrow button in the dropdown menu.
@@ -239,8 +265,8 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             key={index}
             style={[
               styles.itemContainer,
-              user.my_personal_datas.find((obj) => obj.id === item.id)
-                ? { backgroundColor: colors.primary }
+              user.my_personal_datas?.find((obj) => obj.id === item.id)
+                ? { backgroundColor: colors.grey }
                 : null,
             ]}
             onPress={() => handleItemPress(item.id)}

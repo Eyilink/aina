@@ -79,6 +79,9 @@ const History = ({ navigation }: Props): ReactElement => {
     setIsClicked(true);
     setCurrentIndex(index);
     setPrevious(false);
+    console.log(liste[currentIndex].icon);
+    console.log(liste[currentIndex].namelogo);
+    console.log(liste[currentIndex].symptoms[0].unit);
   }
   const onPressPathPrev = (index : number): void =>{
     setIsClicked(true);
@@ -96,22 +99,58 @@ const History = ({ navigation }: Props): ReactElement => {
 
   const getIconPath = (iconName: string): ImageSourcePropType => {
     switch (iconName) {
-      case '1_i.png':
-        return require('@assets/images/1_i.png');
-      case '2_i.png':
-        return require('@assets/images/2_i.png');
-      case '3_i.png':
-        return require('@assets/images/3_i.png');
-      case '4_i.png':
-        return require('@assets/images/4_i.png');
-      case '5_i.png':
-        return require('@assets/images/5_i.png');
-      case '6_i.png':
-        return require('@assets/images/6_i.png');
+      case 'avq.png':
+        return require('@assets/images/avq.png');
+      case 'barthel.png':
+        return require('@assets/images/barthel.png');
+      case 'braden.png':
+        return require('@assets/images/braden.png');
+      case 'clinimetre.png':
+        return require('@assets/images/clinimetre.png');
+      case 'coeur.png':
+        return require('@assets/images/coeur.png');
+      case 'colonne.png':
+        return require('@assets/images/colonne.png');
+      case 'covid.png' :
+        return require('@assets/images/covid.png');
+      case 'dentaire.png' :
+        return require('@assets/images/dentaire.png');
+      case 'genou.png' :
+        return require('@assets/images/genou.png');
+      case 'grippe.png' :
+        return require('@assets/images/grippe.png');
+      case 'grossesse.png' :
+        return require('@assets/images/grossesse.png');
+      case 'insh.png' :
+        return require('@assets/images/insh.png');
+      case 'mif.png' :
+        return require('@assets/images/mif.png');
+      case 'orl.png' :
+        return require('@assets/images/orl.png');
+      case 'peau.png' :
+        return require('@assets/images/peau.png');
+      case 'poumon.png' :
+        return require('@assets/images/poumon.png');
+      case 'yeux.png' :
+        return require('@assets/images/yeux.png');
       default:
         return require('@assets/images/6_i.png'); // Provide a default image path
     }
   };
+  const empty = (): boolean => {
+    
+    let empt = true;
+    liste[currentIndex].symptoms.map((object, index) => {
+      
+      if (Array.isArray(object.data) && object.data.length > 0){
+        empt = false;
+      }
+     })
+     return empt;
+
+
+  }
+  
 
   
   
@@ -144,14 +183,17 @@ const History = ({ navigation }: Props): ReactElement => {
             <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
             <Button style={styles.button} text={"Graphique"} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
-          {graph ? 
-            (  
-              <>
+          {graph ?
+              
+            ( 
+             !empty() ? 
+            (  <>
             {
-            liste[currentIndex].symptoms.map((object, index) => {    
+            liste[currentIndex].symptoms.map((object, index) => {
+              let bool : boolean = object.data ? true : false ;   
                 return (
                   <>
-                 {object.data ?
+                 {object.data && object.data.length > 1 ?
                   <View key= {index}>
                   <AppText  text={object.name} style={styles.pagetitle} />
                   {object.data ? <ChartSymptome  objet = {object}/> : null}
@@ -166,6 +208,9 @@ const History = ({ navigation }: Props): ReactElement => {
             }
             
               </>
+            ) 
+            : 
+            <Text style={styles.nodata}>{i18n.t('history.nodata')}</Text>
             )
             :
             <>
@@ -214,6 +259,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold' as 'bold',
     marginBottom: 2,
     
+  },
+  nodata:{
+    fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 2,
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  flex: 1,
+  textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,

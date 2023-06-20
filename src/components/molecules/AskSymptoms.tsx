@@ -18,6 +18,7 @@ import { Symptome } from '@store/types';
 import { MALADIE1 } from '@constants/constants';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
+import moment from 'moment';
 
 type InputSymptomeProps = {
   s: Symptome;
@@ -33,8 +34,12 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const addValueUser = (sympt: Symptome, val: number) => {
-    const currentDate = new Date().toISOString(); // Get the current date in ISO format
-  
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
     // Iterate over each pathology in my_personal_datas
     user.my_personal_datas.forEach((pathology) => {
       // Find the symptoms with the same id as the provided sympt
@@ -44,7 +49,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
       if (symptomsToUpdate[0]) {
       
-      const newData = { date: currentDate, valeur: val };
+      const newData = { date: formattedDate, valeur: val };
 
       if (!symptomsToUpdate[0].data) {
         // If data field doesn't exist, create a new array with the new data

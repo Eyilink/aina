@@ -12,18 +12,40 @@ type Props = {
 //fonction returning the path to an image depending on the iconName 
 const getIconPath = (iconName: string): ImageSourcePropType => {
   switch (iconName) {
-    case '1_i.png':
-      return require('@assets/images/1_i.png');
-    case '2_i.png':
-      return require('@assets/images/2_i.png');
-    case '3_i.png':
-      return require('@assets/images/3_i.png');
-    case '4_i.png':
-      return require('@assets/images/4_i.png');
-    case '5_i.png':
-      return require('@assets/images/5_i.png');
-    case '6_i.png':
-      return require('@assets/images/6_i.png');
+    case 'avq.png':
+      return require('@assets/images/avq.png');
+    case 'barthel.png':
+      return require('@assets/images/barthel.png');
+    case 'braden.png':
+      return require('@assets/images/braden.png');
+    case 'clinimetre.png':
+      return require('@assets/images/clinimetre.png');
+    case 'coeur.png':
+      return require('@assets/images/coeur.png');
+    case 'colonne.png':
+      return require('@assets/images/colonne.png');
+    case 'covid.png' :
+      return require('@assets/images/covid.png');
+    case 'dentaire.png' :
+      return require('@assets/images/dentaire.png');
+    case 'genou.png' :
+      return require('@assets/images/genou.png');
+    case 'grippe.png' :
+      return require('@assets/images/grippe.png');
+    case 'grossesse.png' :
+      return require('@assets/images/grossesse.png');
+    case 'insh.png' :
+      return require('@assets/images/insh.png');
+    case 'mif.png' :
+      return require('@assets/images/mif.png');
+    case 'orl.png' :
+      return require('@assets/images/orl.png');
+    case 'peau.png' :
+      return require('@assets/images/peau.png');
+    case 'poumon.png' :
+      return require('@assets/images/poumon.png');
+    case 'yeux.png' :
+      return require('@assets/images/yeux.png');
     default:
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
@@ -32,6 +54,7 @@ const getIconPath = (iconName: string): ImageSourcePropType => {
 
  // This component represents a box displaying pathology information.
   // It takes an object of type Pathologie as a prop, along with an optional onPress function.
+
 
 const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
   return (
