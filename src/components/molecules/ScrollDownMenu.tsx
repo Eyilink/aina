@@ -229,7 +229,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             style={[
               styles.itemContainer,
               user.my_personal_datas?.find((obj) => obj.id === item.id)
-                ? { backgroundColor: colors.primary }
+                ? { backgroundColor: colors.grey }
                 : null,
             ]}
             onPress={() => handleItemPress(item.id)}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, FlatList, TouchableOpacity, ImageSourcePropType , Image } from 'react-native';
 import Modal, {ModalProps} from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
 import Button from '@components/atoms/Button';
@@ -162,11 +162,53 @@ type Item = {
   title: string;
   subtitle: string;
 };
-
+const getIconPath = (iconName: string): ImageSourcePropType => {
+  switch (iconName) {
+    case 'avq.png':
+      return require('@assets/images/avq.png');
+    case 'barthel.png':
+      return require('@assets/images/barthel.png');
+    case 'braden.png':
+      return require('@assets/images/braden.png');
+    case 'clinimetre.png':
+      return require('@assets/images/clinimetre.png');
+    case 'coeur.png':
+      return require('@assets/images/coeur.png');
+    case 'colonne.png':
+      return require('@assets/images/colonne.png');
+    case 'covid.png' :
+      return require('@assets/images/covid.png');
+    case 'dentaire.png' :
+      return require('@assets/images/dentaire.png');
+    case 'genou.png' :
+      return require('@assets/images/genou.png');
+    case 'grippe.png' :
+      return require('@assets/images/grippe.png');
+    case 'grossesse.png' :
+      return require('@assets/images/grossesse.png');
+    case 'insh.png' :
+      return require('@assets/images/insh.png');
+    case 'mif.png' :
+      return require('@assets/images/mif.png');
+    case 'orl.png' :
+      return require('@assets/images/orl.png');
+    case 'peau.png' :
+      return require('@assets/images/peau.png');
+    case 'poumon.png' :
+      return require('@assets/images/poumon.png');
+    case 'yeux.png' :
+      return require('@assets/images/yeux.png');
+    default:
+      return require('@assets/images/6_i.png'); // Provide a default image path
+  }
+};
 const renderItem = ({ item }: { item: Pathologie }) => (
   <View style={styles.custom}>
     <View style={styles.itemContainer}>
-      <AntDesign name="forward" size={24} color="#ffc000" style={styles.icon} />
+    <Image
+         style={{ width: 40, height: 40 }}
+         source={item?.namelogo ? getIconPath(item.namelogo) : getIconPath('')}
+              />
       <View style={styles.textContainer}>
         {/* Affichage nom de la pathologie */}
         <Text style={styles.title_comp}>{item.name}</Text>
