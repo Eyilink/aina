@@ -163,7 +163,13 @@
     "chart": "Graphique",
     "list": "Liste",
     "type": "Type",
-    "nodata" : "Vous n'avez pas encore renseigné de symptome"
+    "nodata" : "Vous n'avez pas encore renseigné de symptome",
+    "Depuis" : "Depuis le ",
+    "du" : "Du ",
+    "au" : " Au",
+    "data" : "Données",
+    "Historique" : "Historique",
+    "graph" : "Graphique"
 
   }
 }
