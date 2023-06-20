@@ -6,12 +6,13 @@ import Title from '@components/atoms/Title';
 import { View,Text,StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
-import  {DATE_TODAY} from '@constants/constants';
+import  {DATE_TODAY, MALADIE1} from '@constants/constants';
 import NewSuivi from './NewSuivi';
 import { Ionicons } from '@expo/vector-icons';
 import layout from '@styles/layout';
 import colors from '@styles/colors';
 import Container from './Container';
+import { useUserStore } from '@store/store';
 
 
 type Props = {
@@ -23,18 +24,23 @@ const HomeComponent = ({
     isDataEmpty
 }: Props): ReactElement => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
-
+  const [user, ] = useUserStore({ disease: MALADIE1 });
 
   const ValidatePressed = () => {
     // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
     // Vous pouvez ajouter votre logique ou vos actions ici
     setButtonClicked(!ButtonClicked);
   };
+  const dateString = DATE_TODAY;
+  const [date, time] = dateString.split(' ');
+  const [day, month] = date.split('/');
+
+const parsedDate = `${day}/${month}`;
 
   return (
     <Container style={styles.container}>
     <Title
-          text={DATE_TODAY}
+          text={user.username+"   " + parsedDate}
         />
     {!ButtonClicked?
       <>
