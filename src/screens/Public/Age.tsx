@@ -21,9 +21,9 @@ type Props = {
 };
 
 const BirthDateForm = ({ navigation }: Props) => {
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [day, setDay] = useState('1');
+  const [month, setMonth] = useState('1');
+  const [year, setYear] = useState('2023');
   const [, actions] = useAuthStore();
 
   const onChangeDay = (value : string) => {
@@ -43,7 +43,7 @@ const BirthDateForm = ({ navigation }: Props) => {
     const [day, month, year] = birthDate.split('-').map(Number);
   
     const yearsDiff = currentDate.getFullYear() - year;
-    const monthsDiff = currentDate.getMonth() + 1 - month;
+    const monthsDiff = currentDate.getMonth() - month +1;
     const daysDiff = currentDate.getDate() - day;
   
     // Adjust the age if the current date is before the birth date
@@ -62,16 +62,17 @@ const BirthDateForm = ({ navigation }: Props) => {
     if (!isValidDate) {
       alert('Invalid date');
     } else {
-      const birthDate = `${day}-${month + 1}-${year}`;
+      const birthDate = `${day}-${parseInt(month) + 1}-${year}`;
       console.log(birthDate);
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
       navigation.navigate("MoreData");
+      console.log(birthDate);
     }
   };
 
-  const validateDate = (day, month, year) => {
+  const validateDate = (day: string, month: string, year: string) => {
     // Perform validation logic here
     return true; // Replace this with your validation logic
   };
