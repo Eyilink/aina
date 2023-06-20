@@ -37,7 +37,8 @@ const Profile = (): ReactElement =>{
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
-
+  const [forceRefresh, setForceRefresh] = useState<boolean>(false);
+useEffect(()=>{console.log("useefect profile works")},[])
 //   useEffect(() => {
 //     const updateCouleursPictos = () => {
 //       const couleurs: Boolean[] = user.my_personal_datas?.map((pathologie: Pathologie) =>

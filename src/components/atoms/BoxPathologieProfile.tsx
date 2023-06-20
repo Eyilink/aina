@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { ImageSourcePropType, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import { View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
@@ -20,6 +20,20 @@ type Props = {
 
 
 const BoxPathologieProfile = ({ objet }: Props): ReactElement => {
+  const [refresh, setRefresh] = useState<boolean>(false); // State variable for refreshing
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log('bonjour');
+      setRefresh((prevState: boolean) => !prevState); // Update the state variable to trigger refresh
+    }, 1000); // 1000 milliseconds = 1 second
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+  
     //const genererPictogrammePathologie=fonction qui permet de choper si la date d'aujourdh'ui est renseigné en valeur ou pas 
     const genererPictogrammePathologie=(pathologie: Pathologie) => {
       var isRempli: Boolean =true;
