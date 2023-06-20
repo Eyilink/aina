@@ -101,6 +101,7 @@ export type Symptome = {
   question?: String,
   valMin?: number,
   valMax?: number,
+  unit?:string
 };
   
 export type Pathologie = {
