@@ -1,4 +1,4 @@
-{
+[{
 "id": 1,
 "name": "REMARQUE",
 "type": "Texte",
@@ -2064,4 +2064,4 @@
 "type": "Oui/non éval",
 "unit": "",
 "frequency": 1
-}
+}]

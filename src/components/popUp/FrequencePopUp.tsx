@@ -54,9 +54,8 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
     }));
   };
 
-  const numberToFreq = (freq: string): string => {
-    const n = parseFloat(freq);
-    switch (n) {
+  const numberToFreq = (freq: number): string => {
+    switch (freq) {
       case 0.5:
         return '2/jour';
       case 1:
@@ -84,8 +83,8 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
         pathology.symptoms.forEach((symptom) => {
           console.log("freq ?");
           console.log(symptom);
-          if (symptom.frequence){
-          initialValues[symptom.id] = numberToFreq(symptom.frequence);
+          if (symptom.frequency){
+          initialValues[symptom.id] = numberToFreq(symptom.frequency);
           }
           else {
             initialValues[symptom.id] = "1/semaine";
