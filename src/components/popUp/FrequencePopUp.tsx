@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Picker } from 'react-native';
 import Button from '@components/atoms/Button';
 import i18n from '@i18n/i18n';
 import { Pathologie, Symptome } from '@store/types';
@@ -13,65 +13,60 @@ import { MALADIE1 } from '@constants/constants';
 import AppText from '@components/atoms/AppText';
 // import Symptome from '@store/types';
 
-
 type AskPopUpProps = {
   pato: Pathologie;
   onClose: () => void;
 };
 
-
 const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
-
   const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [selectedValue, setSelectedValue] = useState('2/jour');
 
   const yesPressed = (): void => {
-      console.log("doSmth");
-    };
+    console.log("doSmth");
+  };
 
-  return (
-    <View style={styles.popUpContainer}>
-      <Ionicons
-        name="ios-arrow-round-back"
-        size={layout.navigation.previousIcon.size}
-        color={colors.black}
-        onPress={onClose}
-        style={{marginLeft:12}}
-      />
-        <View>
-        <Text style={styles.text}>{i18n.t('suivi.questionfrequence')}</Text>
-      </View>
-
+return (
+  <View style={styles.popUpContainer}>
+    <Ionicons
+      name="ios-arrow-round-back"
+      size={layout.navigation.previousIcon.size}
+      color={colors.black}
+      onPress={onClose}
+      style={{marginLeft:12}}
+    />
       <View>
-  {/* <ScrollView> */}
-  {user.my_personal_datas.map((pathology) => {
-    if (pathology.id === pato.id) {
-      return pathology.symptoms.map((symptChecked) => (
-        <View key={symptChecked.id} style={styles.symptomContainer}>
-          <Text style={styles.symptomName}>{symptChecked.name}</Text>
-          <Dropdown
-            data={['2/jour', '1/jour', '2/semaine', '1/semaine', '1/mois', '1/3mois']}
-            containerStyle={styles.dropdownContainer}
-            textStyle={styles.dropdownText}
-            dropdownStyle={styles.dropdownMenu}
-            // Add event handler for dropdown selection if needed
-          />
-        </View>
-      ));
-    }
-  })}
-  {/* </ScrollView> */}
-</View>
+      <Text style={styles.text}>{i18n.t('suivi.questionfrequence')}</Text>
+    </View>
 
- 
-      
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={onClose}
-        />      
+    <ScrollView>
+        {user.my_personal_datas.map((pathology) => {
+          if (pathology.id === pato.id) {
+            return pathology.symptoms.map((symptChecked) => (
+              <View style={styles.symptomContainer} key={symptChecked.id}>
+                <Text style={styles.symptomName}>{symptChecked.name}</Text>
+                <Picker
+                  selectedValue={selectedValue}
+                  style={styles.dropdownContainer}
+                  onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                >
+                  <Picker.Item label="2/jour" value="2/jour" />
+                  <Picker.Item label="1/jour" value="1/jour" />
+                  <Picker.Item label="2/semaine" value="2/semaine" />
+                  <Picker.Item label="1/semaine" value="1/semaine" />
+                  <Picker.Item label="1/mois" value="1/mois" />
+                  <Picker.Item label="1/3mois" value="1/3mois" />
+                </Picker>
+              </View>
+            ));
+          }
+        })}
+      </ScrollView>
+
+      <Button text={i18n.t('commons.validate')} onPress={onClose} />
     </View>
   );
 };
-export default FreqPopUp;
 
 const styles = StyleSheet.create({
   popUpContainer: {
@@ -79,9 +74,9 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 10,
   },
-  text:{
+  text: {
     fontSize: 22,
-    marginBottom:15,
+    marginBottom: 15,
     textAlign: 'center',
   },
   symptomContainer: {
@@ -106,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
+export default FreqPopUp;
