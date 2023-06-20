@@ -33,10 +33,10 @@ import { Pathologie, Symptome } from '@store/types';
 import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
 
 
-// const Profile = (): ReactElement =>{
-//   const [user, actions] = useUserStore({ disease: MALADIE1 });
-//   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
-//   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
+const Profile = (): ReactElement =>{
+  const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
+  const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
 
 //   useEffect(() => {
 //     const updateCouleursPictos = () => {
@@ -51,20 +51,21 @@ import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
   
 //   // ATTENTION À NE PAS ENLEVER
 //   useEffect(()=>(console.log("")),[]);
-//   const onEditProfile = (): void => {
-//     Alert.alert(
-//       i18n.t('commons.attention'),
-//       i18n.t('profile.erase'),
-//       [
-//         { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
-//         {
-//           text: i18n.t('commons.errors.ok'),
-//           onPress: (): Promise<void> => actions.resetUserSession(),
-//         },
-//       ],
-//       { cancelable: false }
-//     );
-//   };
+  const onEditProfile = (): void => {
+    Alert.alert(
+      i18n.t('commons.attention'),
+      i18n.t('profile.erase'),
+      [
+        { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
+        {
+          text: i18n.t('commons.errors.ok'),
+          onPress: (): Promise<void> => actions.resetUserSession(),
+        },
+        
+      ],
+      { cancelable: false }
+    );
+  };
 
     //const genererPictogrammePathologie=fonction qui permet de choper si la date d'aujourdh'ui est renseigné en valeur ou pas 
   const genererPictogrammePathologie=(pathologie: Pathologie) => {
