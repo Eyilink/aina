@@ -13,7 +13,10 @@ import DateTimePicker from '@components/molecules/DateTimePicker';
 import { useAuthStore } from '@store/store';
 import { PublicStackParamList } from '@navigation/types';
 import { alertError } from '@helpers/utils';
-import { registerForPushNotificationsAsync } from '@helpers/notifications';
+import {
+  registerForPushNotificationsAsync,
+  scheduleLocalNotification
+} from '@helpers/notifications';
 
 import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
@@ -32,28 +35,29 @@ const Reminder = ({ navigation }: Props): ReactElement => {
 
   const onValidate = async (): Promise<void> => {
     if (!hasUserChosen) alertError({});
-    else if (date && reminder) {
+    else if (reminder) {
+      setIsPickerVisible(false)
       setIsLoading(true);
-      const token = await registerForPushNotificationsAsync();
-      if (token) {
-        actions.editUserProfile({
-          key: 'reminder',
-          value: {
-            isActive: reminder,
-            date: getUnixTime(new Date(date)),
-            token,
-          },
-        });
-      }
+      await registerForPushNotificationsAsync();
+      await scheduleLocalNotification(
+        getUnixTime(date)
+      )
+      actions.editUserProfile({
+        key: 'reminder',
+        value: {
+          isActive: reminder,
+          date: getUnixTime(date)
+        }
+      });
       setIsLoading(false);
-      navigation.navigate('Confirmation');
+      navigation.navigate('ProfileCreated');
     } else if (!reminder) {
       actions.editUserProfile({
         key: 'reminder',
         value: { isActive: reminder },
       });
-      navigation.navigate('Confirmation');
-    } else navigation.navigate('Confirmation');
+      navigation.navigate('ProfileCreated');
+    } else navigation.navigate('ProfileCreated');
   };
 
   const onCancelPicker = (): void => {
@@ -61,9 +65,11 @@ const Reminder = ({ navigation }: Props): ReactElement => {
     setHasUserChosen(false);
   };
 
-  const onConfirmDate = (date: Date): void => {
-    setIsPickerVisible(false);
-    setDate(date);
+  const onConfirmDate = (date:Date): void => {
+    setIsPickerVisible(false)
+    setDate(
+      new Date(date.nativeEvent.timestamp)
+    )
   };
 
   const onPressYes = (): void => {
@@ -76,6 +82,7 @@ const Reminder = ({ navigation }: Props): ReactElement => {
     setHasUserChosen(true);
     setReminder(false);
     setDate(null);
+    setIsPickerVisible(false)
   };
 
   return (
@@ -114,13 +121,13 @@ const Reminder = ({ navigation }: Props): ReactElement => {
             disabled={isLoading}
             isValidate
           />
+          {reminder&&isPickerVisible&&<DateTimePicker
+            onCancel={onCancelPicker}
+            onConfirm={onConfirmDate}
+            mode="time"
+            isVisible={true}
+          />}
         </ScrollView>
-        <DateTimePicker
-          isVisible={isPickerVisible}
-          onCancel={onCancelPicker}
-          onConfirm={onConfirmDate}
-          mode="time"
-        />
       </View>
     </Container>
   );

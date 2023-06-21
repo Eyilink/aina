@@ -45,11 +45,6 @@ const Home = ({ navigation }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const [user, ] = useUserStore({ disease: MALADIE1 });
 
-  useEffect(() => {
-    registerForPushNotificationsAsync();
-    Notifications.addListener(handleNotification);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (reports) {
@@ -76,13 +71,6 @@ const Home = ({ navigation }: Props): ReactElement => {
     }
     
   }, [reports]);
-
-  const handleNotification = (notification: Notification): void => {
-    const { origin } = notification;
-    if (origin === 'selected') navigation.navigate('Suivi');
-  };
-
-
 
 
   return (

@@ -26,10 +26,9 @@ const PublicNavigator = (): ReactElement => (
     <Stack.Screen name="MoreData" component={MoreData} />
     <Stack.Screen name="ComplementaryData" component={ComplementaryData} />
     <Stack.Screen name="Weight" component={Weight} />
-
+    <Stack.Screen name="Reminder" component={Reminder} />
     {/* <Stack.Screen name="Diseases" component={Diseases} />
     <Stack.Screen name="Pregnant" component={Pregnant} />
-    <Stack.Screen name="Reminder" component={Reminder} />
     <Stack.Screen name="Confirmation" component={Confirmation} /> */}
   </Stack.Navigator>
 );
