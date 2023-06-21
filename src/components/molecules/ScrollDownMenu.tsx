@@ -130,7 +130,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             id: filteredObj.id,
             name: filteredObj.name,
             type: filteredObj.type,
-            unit: filteredObj.unit,
+            frequency: filteredObj.frequency,
           })),
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()

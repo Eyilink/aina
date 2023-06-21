@@ -2,1769 +2,2066 @@
 "id": 1,
 "name": "REMARQUE",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 2,
 "name": "Température",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 1
 },
 {
 "id": 3,
 "name": "Ressenti température",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 4,
 "name": "Frissons",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 5,
 "name": "DOULEUR",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 6,
 "name": "Ressenti douleur",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 7,
 "name": "Fatigue",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 8,
 "name": "Engourdissement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 9,
 "name": "Dépression",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 10,
 "name": "Mal être",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 11,
 "name": "Appétit",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 12,
 "name": "Ecoeurement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 13,
 "name": "Sommeil",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 0.5
 },
 {
 "id": 14,
 "name": "Endormissement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 15,
 "name": "Anxiété",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 16,
 "name": "Thymie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 17,
 "name": "Hyperdynamisme",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 18,
 "name": "Médication",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 0.5
 },
 {
 "id": 19,
 "name": "Génétique",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 20,
 "name": "MORPHOLOGIE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 21,
 "name": "Taille",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 365
 },
 {
 "id": 22,
 "name": "Poids",
 "type": "Num.",
-"unit": "kg"
+"unit": "kg",
+"frequency": 90
 },
 {
 "id": 23,
 "name": "IMC",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 90
 },
 {
 "id": 24,
 "name": "Périmètre niveau hanche",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 25,
 "name": "Périmètre abdominal",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 26,
 "name": "Pér. Sternal inspiration",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 27,
 "name": "Pér. Sternal expiration",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 28,
 "name": "Périmètre niveau Mam",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 29,
 "name": "Périmètre ceinture scapulaire",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 30,
 "name": "Périmètre cou",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 31,
 "name": "Périmètre Cranien",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 32,
 "name": "Périmètre Cuisse G 5 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 33,
 "name": "Périmètre Cuisse Dr 5 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 34,
 "name": "Périmètre Cuisse G 10 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 35,
 "name": "Périmètre Cuisse Dr 10 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 36,
 "name": "Périmètre Cuisse G 10 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 37,
 "name": "Périmètre Cuisse Dr 15 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 38,
 "name": "Périmètre Cuisse G 15 cm",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 39,
 "name": "Périmètre Rotulien  DR",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 40,
 "name": "Périmètre Rotulien  G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 41,
 "name": "Périmètre maléolaire  DR",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 42,
 "name": "Périmètre mollet  G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 43,
 "name": "Périmètre mollet Dr",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 44,
 "name": "Périmètre maléolaire  G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 45,
 "name": "Périmètre maléolaire  Dr",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 46,
 "name": "Distance intermaléolaire",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 47,
 "name": "Longueur du pas",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 48,
 "name": "Distance genou G mam Dr",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 49,
 "name": "Distance genou Dr mam G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 50,
 "name": "Distance genou G mam Dr",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 51,
 "name": "Distance genou Dr mam G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 52,
 "name": "Distance talon fesse Dr",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 53,
 "name": "Distance talon fesse G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 54,
 "name": "Flèche cervicale",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 55,
 "name": "Flèche lombaire",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 56,
 "name": "Distance menton sternum",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 57,
 "name": "Inclinaison cervicale G",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 58,
 "name": "Inclinaison cervicale Dr",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 59,
 "name": "Distence main-sol",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 7
 },
 {
 "id": 60,
 "name": "ALIMENTATION",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 61,
 "name": "Alimentation/évaluée",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 62,
 "name": "Hydratation",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 0.5
 },
 {
 "id": 63,
 "name": "Préparation repas",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 64,
 "name": "Régime",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 90
 },
 {
 "id": 65,
 "name": "Couper la viande",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 66,
 "name": "porter à la bouche",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 67,
 "name": "Gout",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 68,
 "name": "Attente",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 69,
 "name": "Toilette",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 70,
 "name": "Toilette haut",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 71,
 "name": "Toilette bas",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 72,
 "name": "Soins d'apparence",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 73,
 "name": "HABILLAGE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 74,
 "name": "Habillage/évaluée",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 75,
 "name": "Habillage Sup",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 76,
 "name": "Habillage moyen",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 77,
 "name": "Habillage Inf",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 78,
 "name": "WC",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 79,
 "name": "Baignoire/ Douche",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 80,
 "name": "SPHINCTER",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 81,
 "name": "SPHINCTERS/évaluée",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 82,
 "name": "Utilisation des toilettes",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 83,
 "name": "Vessie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 84,
 "name": "Intestin",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 85,
 "name": "Urine",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 86,
 "name": "Selles",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 87,
 "name": "Infection urinaire",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 88,
 "name": "Elim urinaire",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 89,
 "name": "Elim. Fécale",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 90,
 "name": "TRANSFERT",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 91,
 "name": "Transfert/évaluée",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 92,
 "name": "Transfert lit chaise",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 93,
 "name": "Transfert Toilette",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 94,
 "name": "Transfert Fauteuil",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 95,
 "name": "Transfert baignoire",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 96,
 "name": "Transfert douche",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 97,
 "name": "Transfert avec planche",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 98,
 "name": "Transfert voiture",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 99,
 "name": "Transfert Tierce personne",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 100,
 "name": "DEPLACEMENT",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 101,
 "name": "Déplacement intérieur",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 102,
 "name": "Marche",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 103,
 "name": "Déplacement extérieur",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 104,
 "name": "Fauteuil roulant",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 105,
 "name": "Escalier",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 106,
 "name": "Lever",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 107,
 "name": "Station Debout",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 108,
 "name": "Extérieur",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 109,
 "name": "Transport en commun",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 110,
 "name": "SENSORIEL",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 90
 },
 {
 "id": 111,
 "name": "audition",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 112,
 "name": "Compréhension auditive",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 113,
 "name": "Vue",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 114,
 "name": "comprehension visuellle",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 115,
 "name": "Expression",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 116,
 "name": "Expression verbale",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 117,
 "name": "Expression non verbale",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 118,
 "name": "Odorat",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 119,
 "name": "Toucher",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 120,
 "name": "COGNITIF",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 121,
 "name": "Repères espace",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 122,
 "name": "Résolution des problèmes",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 123,
 "name": "Mémoire",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 124,
 "name": "Orientation Temporelle ",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 125,
 "name": "Jugement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 126,
 "name": "Raisonnement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 127,
 "name": "Calcul",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 128,
 "name": "Stratégie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 129,
 "name": "Comportement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 130,
 "name": "Alerte",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 131,
 "name": "Suivi traitement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 132,
 "name": "SOCIAL",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 133,
 "name": "Interaction sociale",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 134,
 "name": "Habitation",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 135,
 "name": "Travail",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 136,
 "name": "Loisirs",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 137,
 "name": "Vie seul",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 138,
 "name": "étage",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 139,
 "name": "Associatif",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 140,
 "name": "Amis",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 141,
 "name": "Isolé",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 142,
 "name": "Musculaire",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 143,
 "name": "force",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 144,
 "name": "crampe",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 145,
 "name": "fibrilation",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 146,
 "name": "Tendon",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 147,
 "name": "Oedème",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 148,
 "name": "Hématome",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 149,
 "name": "Déchirure",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 150,
 "name": "Tremblement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 151,
 "name": "Trophie (a/dys)",
 "type": "Texte",
-"unit": "a / d"
+"unit": "a / d",
+"frequency": 365
 },
 {
 "id": 152,
 "name": "CARDIAQUE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 153,
 "name": "Pouls",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 154,
 "name": "Pouls irrégulier",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 155,
 "name": "TA max",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 156,
 "name": "TA min",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 157,
 "name": "Hyperythmie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 90
 },
 {
 "id": 158,
 "name": "Angor",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 159,
 "name": "Insuffisance cardiaque",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 160,
 "name": "Intervention chirurgicale cardiaque",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 161,
 "name": "Hypertension",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
+
 },
 {
 "id": 162,
 "name": "PULMONAIRE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 163,
 "name": "spiromètre",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 164,
 "name": "oxymètre",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 165,
 "name": "Essoufflement ",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+
+"frequency": 1
 },
 {
 "id": 166,
 "name": "Toux",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 167,
 "name": "Crachat",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 168,
 "name": "Asthme",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 169,
 "name": "Angoisse",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 170,
 "name": "Hémoptysie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 171,
 "name": "Apnée",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 172,
 "name": "RENAL",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 173,
 "name": "Calcul",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 174,
 "name": "Infection urinaire",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 175,
 "name": "Insuffisance rénale",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 176,
 "name": "Dystrophie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 177,
 "name": "Anurie",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 178,
 "name": "Incontinence",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 179,
 "name": "Dysurie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 180,
 "name": "Rein artificiel",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 181,
 "name": "Suivi",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 182,
 "name": "DIGESTIF",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 183,
 "name": "Diarrhée",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 184,
 "name": "Vomissement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 185,
 "name": "Spasme",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 186,
 "name": "Constipation",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 187,
 "name": "Regurgitation",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 188,
 "name": "Colite",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 189,
 "name": "Sigmoidite",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 190,
 "name": "Anus artificiel",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 191,
 "name": "Intolérence",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 192,
 "name": "CUTANEE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 193,
 "name": "Cicatrisation",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 194,
 "name": "bourgeonnement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 195,
 "name": "nécrose",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 196,
 "name": "écoulement",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 197,
 "name": "Aspect de la peau",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 198,
 "name": "Aspect du talon",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 199,
 "name": "aspect des fesses",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 200,
 "name": "Bouton",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 3
 },
 {
 "id": 201,
 "name": "Verrue",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 202,
 "name": "ENDOCRINOLOGIE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 203,
 "name": "Diabète",
 "type": "Num.",
-"unit": "g/l"
+"unit": "g/l",
+"frequency": 30
 },
 {
 "id": 204,
 "name": "Diabète insulino dep",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 0.5
 },
 {
 "id": 205,
 "name": "Surrénale",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 206,
 "name": "Hypophyse",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 207,
 "name": "Thyroïde",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 208,
 "name": "Croissance",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 209,
 "name": "Pancréas",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 90
 },
 {
 "id": 210,
 "name": "ALLERGIE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 211,
 "name": "Allergie pollen",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 212,
 "name": "Allergie chat",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 213,
 "name": "allergie médicamenteuse",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 214,
 "name": "Bilan allergie",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 215,
 "name": "VACCINATIONS",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 216,
 "name": "Tétanos",
 "type": "Date",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 217,
 "name": "Hépatite",
 "type": "Date",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 218,
 "name": "Tuberculose",
 "type": "Date",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 219,
 "name": "Grippe",
 "type": "Date",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 220,
 "name": "ARTICULAIRE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 221,
 "name": "Localisation ",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 222,
 "name": "Mobilité",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 223,
 "name": "Flexion coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 224,
 "name": "Flexion coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 225,
-"name": "Extention coude Dr",
+"name": "extension coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 226,
-"name": "Extention coude G",
+"name": "extension coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 227,
 "name": "Flexion genou G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 228,
 "name": "Flexion genou Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 229,
-"name": "Extention  genou Dr",
+"name": "extension  genou Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 230,
-"name": "Extention  genou G",
+"name": "extension  genou G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 231,
 "name": "Abduction",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 232,
 "name": "Adduction",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 233,
 "name": "Flexion coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 234,
 "name": "Flexion coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 235,
-"name": "Extention coude Dr",
+"name": "extension coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 236,
-"name": "Extention coude G",
+"name": "extension coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 237,
 "name": "Flexion coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 238,
 "name": "Flexion coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 239,
-"name": "Extention coude Dr",
+"name": "extension coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 240,
-"name": "Extention coude G",
+"name": "extension coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 241,
 "name": "Flexion coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 242,
 "name": "Flexion coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 243,
-"name": "Extention coude Dr",
+"name": "extension coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 244,
-"name": "Extention coude G",
+"name": "extension coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 245,
 "name": "Flexion coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 246,
 "name": "Flexion coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 247,
-"name": "Extention coude Dr",
+"name": "extension coude Dr",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 248,
-"name": "Extention coude G",
+"name": "extension coude G",
 "type": "Num.",
-"unit": "°"
+"unit": "°",
+"frequency": 7
 },
 {
 "id": 249,
 "name": "HUMEUR",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 250,
 "name": "Thymie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 251,
 "name": "Stress",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 252,
 "name": "Fatigue",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 253,
 "name": "Condition physique",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 254,
 "name": "Degré de mobilité",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 255,
 "name": "Condition mentale",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 256,
 "name": "Facteur médicament",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 257,
 "name": "ESCARRES",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 258,
 "name": "Gravité pathologique escarre",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 259,
 "name": "Risque temps d'appui escarre",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 260,
 "name": "Risque défaut de surveillance escarre",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 261,
 "name": "OBSTETRIQUE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 262,
 "name": "Date dernière règle",
 "type": "Date",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 263,
 "name": "Date de conception",
 "type": "Date",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 264,
 "name": "Périmètre abdominal",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 30
 },
 {
 "id": 265,
 "name": "Hauteur utérus",
 "type": "Num.",
-"unit": "cm"
+"unit": "cm",
+"frequency": 30
 },
 {
 "id": 266,
 "name": "Contraction",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 7
 },
 {
 "id": 267,
 "name": "Mouvement utérus",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 268,
 "name": "hémorragie",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 90
 },
 {
 "id": 269,
 "name": "poche",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 270,
 "name": "perte",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 30
 },
 {
 "id": 271,
 "name": "Antécédents",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 272,
 "name": "Cancer",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 273,
 "name": "tuberculose",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 274,
 "name": "Infectieux",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 275,
 "name": "arthrite",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 276,
 "name": "arthrose",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 277,
 "name": "uvéite",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 278,
 "name": "mycologie",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 279,
 "name": "Glaucome",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 280,
 "name": "autre",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 281,
 "name": "BIOLOGIE",
 "type": "Oui/non",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 282,
 "name": "Glycémie",
 "type": "Num.",
-"unit": "g/l"
+"unit": "g/l",
+"frequency": 365
 },
 {
 "id": 283,
 "name": "GR",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 284,
 "name": "Hématocrite",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 285,
 "name": "Créatinémie",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 286,
 "name": "Iono",
 "type": "Num.",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 287,
 "name": "localisation douleur",
 "type": "Texte",
-"unit": ""
+"unit": "",
+"frequency": 365
 },
 {
 "id": 288,
 "name": "Douleurs de tête",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 289,
 "name": "Douleurs musculaires ",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 290,
 "name": "Douleurs articulaires",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 291,
 "name": "Douleurs viscérales",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 292,
 "name": "Douleurs membres inférieurs ",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 293,
 "name": "Douleurs membres supérieurs",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 294,
 "name": "Douleurs colonne vertébrale",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 },
 {
 "id": 295,
 "name": "Douleurs mains ",
 "type": "Oui/non éval",
-"unit": ""
+"unit": "",
+"frequency": 1
 }]

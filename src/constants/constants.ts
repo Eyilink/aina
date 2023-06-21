@@ -88,7 +88,7 @@ export const symptomeJSON: Symptome[] = symptoms.map((item: Symptome) => ({
   id: item.id,
   name: item.name,
   type: item.type,
-  unit: item.unit,
+  frequency: item.frequency
 }));
 
 export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
@@ -99,5 +99,4 @@ export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
   icon: getIconPath(item.logo)
   
 }));
-
 
