@@ -36,7 +36,7 @@ const ComplementaryData = ({ navigation }: Props): ReactElement => {
       actions.editUserProfile({ key: 'weight', value: parseInt(weight, 10) });
       actions.editUserProfile({ key: 'size', value: parseInt(size, 10) });
       Keyboard.dismiss();
-      navigation.navigate('ProfileCreated');
+      navigation.navigate('Reminder');
       if (AllergyClicked){
         actions.editUserProfile({ key: 'allergy', value: true});
       }

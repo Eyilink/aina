@@ -22,19 +22,19 @@ const DateTimePicker = ({
   };
 
   return (
-    // <DateTimePickerModal
-    //   isVisible={isVisible}
-    //   mode={mode}
-    //   onConfirm={handleConfirm}
-    //   onCancel={onCancel}
-    //   cancelTextIOS={i18n.t('commons.errors.cancel')}
-    //   confirmTextIOS={i18n.t('commons.confirm')}
-    //   headerTextIOS={i18n.t('signup.date')}
-    //   locale={i18n.currentLocale()}
-    //   is24Hour
-    //   date={new Date()}
-    // />
-    <View></View>
+    <DateTimePickerModal
+      isVisible={isVisible}
+      mode={mode}
+      onConfirm={handleConfirm}
+      onCancel={onCancel}
+      cancelTextIOS={i18n.t('commons.errors.cancel')}
+      confirmTextIOS={i18n.t('commons.confirm')}
+      headerTextIOS={i18n.t('signup.date')}
+      locale={i18n.currentLocale()}
+      is24Hour
+      value={new Date()}
+      onChange={handleConfirm}
+    />
   );
 };
 

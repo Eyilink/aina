@@ -36,13 +36,6 @@ export const registerForPushNotificationsAsync = async (): Promise<
       });
       return null;
     }
-
-    // Get the token that uniquely identifies this device
-    try {
-      token = await Notifications.getExpoPushTokenAsync();
-    } catch (error) {
-      alert(error);
-    }
   } else {
     alert('Must use physical device for Push Notifications');
   }
@@ -64,18 +57,16 @@ export const scheduleLocalNotification = async ({
 }: {
   date: number;
 }): Promise<void> => {
-  const schedulingOptions = {
-    time: fromUnixTime(date),
-    repeat: 'day',
-  };
-
   const localNotification = {
     title: i18n.t('notification.title'),
     body: i18n.t('notification.message'),
     ios: { sound: true },
     android: { sound: true, priority: 'high', vibrate: true },
   };
-
+  const schedulingOptions = {
+    time: fromUnixTime(date+30),
+    repeat: 'day',
+  };
   await Notifications.cancelAllScheduledNotificationsAsync();
   Notifications.scheduleLocalNotificationAsync(
     localNotification,

@@ -34,7 +34,7 @@ const MoreData = ({ navigation }: Props): ReactElement => {
   };
 
   const onNoValidate = (): void => {
-    navigation.navigate('ProfileCreated');
+    navigation.navigate('Reminder');
   };
 
   return (
