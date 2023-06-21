@@ -16,6 +16,7 @@ import { alertError, isNumeric } from '@helpers/utils';
 import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = {
   navigation: StackNavigationProp<PublicStackParamList, 'MoreData'>;
@@ -38,7 +39,7 @@ const MoreData = ({ navigation }: Props): ReactElement => {
   };
 
   return (
-    <Container>
+    <ScrollView>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Title text={i18n.t('signup.sectionTitle')} />
@@ -61,7 +62,7 @@ const MoreData = ({ navigation }: Props): ReactElement => {
           />
         </View>
       </View>
-    </Container>
+    </ScrollView>
   );
 };
 

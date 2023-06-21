@@ -8,7 +8,6 @@ import {
 
 import Container from '@components/molecules/Container';
 import Button from '@components/atoms/Button';
-import SliderFooter from '@components/atoms/SliderFooter';
 
 import { useAuthStore, useUserStore } from '@store/store';
 import i18n from '@i18n/i18n';
@@ -18,6 +17,7 @@ import { Symptome } from '@store/types';
 import { MALADIE1 } from '@constants/constants';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
+import moment from 'moment';
 
 type InputSymptomeProps = {
   s: Symptome;
@@ -29,12 +29,17 @@ type InputSymptomeProps = {
 const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [hasUserChosen, setHasUserChosen] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
+  const initialSliderValue = s.name === "Température" ? 36 : 0;
+  const [sliderValue, setSliderValue] = useState(initialSliderValue);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const addValueUser = (sympt: Symptome, val: number) => {
-    const currentDate = new Date().toISOString(); // Get the current date in ISO format
-  
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
     // Iterate over each pathology in my_personal_datas
     user.my_personal_datas.forEach((pathology) => {
       // Find the symptoms with the same id as the provided sympt
@@ -44,7 +49,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
       if (symptomsToUpdate[0]) {
       
-      const newData = { date: currentDate, valeur: val };
+      const newData = { date: formattedDate, valeur: val };
 
       if (!symptomsToUpdate[0].data) {
         // If data field doesn't exist, create a new array with the new data
@@ -57,11 +62,11 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
     console.log(pathology.symptoms);    
     });
-  
-    // Call the appropriate action to save the modified user profile
-    // actions.editUserProfile({ key: 'my_personal_datas', value: user.my_personal_datas });
   };
   
+  const fixedVal = (value: number): number => {
+    return Number(value.toFixed(1));
+  };
 
   const onChange = (value: boolean) => {
     setHasUserChosen(true);
@@ -69,13 +74,14 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   };
 
   const handleSliderChange = (value: number) => {
-    setSliderValue(value);
+    setSliderValue(fixedVal(value));
   };
 
   const handleValidate = () => {
     onChange(true);
     console.log(sliderValue);
-    addValueUser(s, sliderValue);
+    addValueUser(s, fixedVal(sliderValue));
+    actions.signupUser();
     onClose();
   };
 
@@ -83,6 +89,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     console.log(`Symptom: ${s.name}`);
     console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
     addValueUser(s, Number(`${symptom ? 10 : 0}`));
+    actions.signupUser();
     onClose();
   };
 
@@ -110,7 +117,13 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     symptomText = (
       <View>
 
-        <SliderFooter symptome={s} />
+    <View style={styles.lines}>
+          <View style={styles.lineExtremity} />
+          <View style={styles.line} />
+          {s.name === 'Température' && <View style={styles.line} />}
+          <View style={styles.lineExtremity} />
+        </View>
+
         <Slider
           style={styles.slider}
           value={sliderValue}
@@ -121,6 +134,22 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
           minimumTrackTintColor="red"
           thumbTintColor="red"
         />
+
+        {s.name === 'Température' ? (
+          <View style={styles.units}>
+          <Text style={styles.unit}>{i18n.t('report.36')}</Text>
+          <Text style={styles.unit}>{i18n.t('report.38')}</Text>
+          <Text style={styles.unit}>{i18n.t('report.40')}</Text>
+          <Text style={styles.unit}>{i18n.t('report.42')}</Text>
+        </View>
+        ) : (
+          
+          <View style={styles.units}>
+          <Text style={styles.unit}>{i18n.t('report.nonexistent')}</Text>
+          <Text style={styles.unit}>{i18n.t('report.max')}</Text>
+        </View>
+        )}
+        
         <Text style={styles.valueText}>Intensité: {sliderValue}</Text>
         <Text style={styles.subtitle}></Text>
         <Button
@@ -221,14 +250,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
 
-  },button: {
+  },
+  button: {
     marginBottom: 40,
-  },slider: {
+  },
+  slider: {
     height: 10,
+    // marginTop: -12
   },
   popUpContainer: {
     backgroundColor: 'white',
     padding: 25,
     borderRadius: 10,
+  },
+  lines: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    zIndex: 1,
+  },
+  lineExtremity: {
+    borderLeftWidth: 1,
+    height: 30,
+    borderLeftColor: colors.black,
+    marginHorizontal: 12,
+    marginBottom: -10
+    // marginTop: PHONE_OS === 'ios' ? -35 : -25,
+    // marginHorizontal: PHONE_OS === 'ios' ? 0 : 15,
+  },
+  line: {
+    borderLeftWidth: 1,
+    borderLeftColor: colors.black,
+    height: 20,
+    // marginBottom: -10,
+    // marginTop: PHONE_OS === 'ios' ? -30 : -20,
+  },
+  units: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+  },
+  unit: {
+    fontFamily: fonts.weight.regular.fontFamily,
   },
 });

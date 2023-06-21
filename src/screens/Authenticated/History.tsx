@@ -18,7 +18,7 @@ import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import colors from '@styles/colors';
-import { MALADIE1 } from '@constants/constants';
+import { MALADIE1, getIconPath } from '@constants/constants';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
 import BoxHistorique from '@components/atoms/BoxHistorique';
@@ -63,7 +63,6 @@ const exempleList: Pathologie[] = [
   { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"4_i.png",symptoms:exempleSymList, dateend:"15/02/2023" },
   ]
 
-  
 
 
 
@@ -72,11 +71,22 @@ const History = ({ navigation }: Props): ReactElement => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [graph, graphClicked] = React.useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [isPrevious, setPrevious] = React.useState(false);
+  const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas : user.my_personal_datas ;
 
 
   const onPressPath = (index : number): void =>{
     setIsClicked(true);
     setCurrentIndex(index);
+    setPrevious(false);
+    console.log(liste[currentIndex].icon);
+    console.log(liste[currentIndex].namelogo);
+    console.log(liste[currentIndex].symptoms[0].unit);
+  }
+  const onPressPathPrev = (index : number): void =>{
+    setIsClicked(true);
+    setCurrentIndex(index);
+    setPrevious(true);
   }
   const prev = ():void =>{
     setIsClicked(false);
@@ -87,29 +97,29 @@ const History = ({ navigation }: Props): ReactElement => {
     graphClicked(!graph);
   }
 
-  const getIconPath = (iconName: string): ImageSourcePropType => {
-    switch (iconName) {
-      case '1_i.png':
-        return require('@assets/images/1_i.png');
-      case '2_i.png':
-        return require('@assets/images/2_i.png');
-      case '3_i.png':
-        return require('@assets/images/3_i.png');
-      case '4_i.png':
-        return require('@assets/images/4_i.png');
-      case '5_i.png':
-        return require('@assets/images/5_i.png');
-      case '6_i.png':
-        return require('@assets/images/6_i.png');
-      default:
-        return require('@assets/images/6_i.png'); // Provide a default image path
-    }
-  };
+  
+  const empty = (): boolean => {
+    
+    let empt = true;
+    liste[currentIndex].symptoms.map((object, index) => {
+      
+      if (Array.isArray(object.data) && object.data.length > 0){
+        empt = false;
+      }
+     })
+     return empt;
+
+
+  }
+  
+
+  
+  
 
   return ( 
     
     <Container>
-       
+       <ScrollView>
        {isClicked ?
         <>
           <Ionicons
@@ -119,29 +129,32 @@ const History = ({ navigation }: Props): ReactElement => {
             onPress={prev}
           />
           <View style= {styles.container}> 
-            {exempleList[currentIndex].namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(exempleList[currentIndex].namelogo)} /> : null}
+            {liste[currentIndex].namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(liste[currentIndex].namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
             <View style = {styles.content}>
-              <AppText text={exempleList[currentIndex].name} style={styles.title} />
-              {exempleList[currentIndex].more ? <AppText text={exempleList[currentIndex].more} style={styles.subtitle} /> : null}
-              {exempleList[currentIndex].dateend ? 
-                <AppText text= {"Du " + exempleList[currentIndex].date + " Au " + exempleList[currentIndex].dateend} style={styles.text} />
+              <AppText text={liste[currentIndex].name} style={styles.title} />
+              {liste[currentIndex].more ? <AppText text={liste[currentIndex].more} style={styles.subtitle} /> : null}
+              {liste[currentIndex].dateend ? 
+                <AppText text= {i18n.t('history.du') + liste[currentIndex].date + i18n.t('history.au') + liste[currentIndex].dateend} style={styles.text} />
                 :
-                <AppText text= {"Depuis le " + exempleList[currentIndex].date} style={styles.text} />
+                <AppText text= {i18n.t('history.Depuis') + liste[currentIndex].date} style={styles.text} />
               }
             </View>
           </View>
           <View style= {styles.buttonsContainer}>
-            <Button style={styles.button} text={"Données"} onPress={graphpress} isSelected={graph ? false : true} />
-            <Button style={styles.button} text={"Graphique"} onPress={graphpress} isSelected ={graph ? true : false}/> 
+            <Button style={styles.button} text={i18n.t('history.data')} onPress={graphpress} isSelected={graph ? false : true} />
+            <Button style={styles.button} text={i18n.t('history.graph')} onPress={graphpress} isSelected ={graph ? true : false}/> 
           </View>
-          {graph ? 
-            (  
-              <>
+          {graph ?
+              
+            ( 
+             !empty() ? 
+            (  <>
             {
-            exempleList[currentIndex].symptoms.map((object, index) => {    
+            liste[currentIndex].symptoms.map((object, index) => {
+              let bool : boolean = object.data ? true : false ;   
                 return (
                   <>
-                 {object.data ?
+                 {object.data && object.data.length > 1 ?
                   <View key= {index}>
                   <AppText  text={object.name} style={styles.pagetitle} />
                   {object.data ? <ChartSymptome  objet = {object}/> : null}
@@ -156,11 +169,14 @@ const History = ({ navigation }: Props): ReactElement => {
             }
             
               </>
+            ) 
+            : 
+            <Text style={styles.nodata}>{i18n.t('history.nodata')}</Text>
             )
             :
             <>
             {
-              exempleList[currentIndex].symptoms.map((object, index) => {    
+              liste[currentIndex].symptoms.map((object, index) => {    
                 return (<BoxSymptome key={index} objet={object}/>);      
               })
             }
@@ -170,28 +186,28 @@ const History = ({ navigation }: Props): ReactElement => {
         </>
       : 
         <> 
-        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
+        {/* <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
         {
           exempleList.map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
-        }  
-        <AppText text={"TODO : "+i18n.t('navigation.authenticated.history')+" User"} style={styles.pagetitle} />   
+        }   */}
+        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
         {
           user.my_personal_datas?.map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
         }  
-        <AppText text={i18n.t('navigation.authenticated.history')+" Previous"} style={styles.pagetitle} />   
+        <View style={styles.separator} />   
         {
           user.my_previous_personal_datas?.map((object, index) => {    
-            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
+            return (<BoxHistorique onPress={() => onPressPathPrev(index)} key={index} objet={object}/>);      
           })
         }  
         </>
       }
     
-      
+    </ScrollView>
     </Container>
   );
 };
@@ -205,6 +221,16 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     
   },
+  nodata:{
+    fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 2,
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  flex: 1,
+  textAlign: 'center',
+  },
   subtitle: {
     fontSize: 16,
     marginBottom: 5,
@@ -217,6 +243,11 @@ const styles = StyleSheet.create({
     marginLeft:20,
     //justifyContent: 'center',
 
+  },
+  separator: {
+    height: 2,
+    backgroundColor: 'black',
+    margin: 30, // Ajustez la marge horizontale selon vos besoins
   },
   pagetitle :{
     fontSize: 28,

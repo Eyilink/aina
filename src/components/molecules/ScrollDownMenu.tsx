@@ -6,9 +6,11 @@ import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
-import { CGU_URL, DATE_TODAY, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1, getIconPath, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
+import json_p from '@assets/json/pathologies.json'
 import { Pathologie, Symptome } from '@store/types';
+import colors from '@styles/colors';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -33,6 +35,7 @@ interface chk_BoxProps {
 export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     useEffect(()=>{
+      // Check if the symptom is already selected by the user
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
         
         setIsChecked(checked);
@@ -55,6 +58,7 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
                 });
                 setTDArray(updatedArray);
             } else {
+              // Object with id_p does not exist, create a new object with id_p and symptomId
                 const updatedArray = [...twoDArray , [id_p,symptom.id.toString()]];
                 setTDArray(updatedArray);
             }
@@ -79,24 +83,20 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
     )
 
 }
-const getIconPath = (iconName?: string): ImageSourcePropType => {
-  switch (iconName) {
-    case '1_i.png':
-      return require('@assets/images/1_i.png');
-    case '2_i.png':
-      return require('@assets/images/2_i.png');
-    case '3_i.png':
-      return require('@assets/images/3_i.png');
-    case '4_i.png':
-      return require('@assets/images/4_i.png');
-    case '5_i.png':
-      return require('@assets/images/5_i.png');
-    case '6_i.png':
-      return require('@assets/images/6_i.png');
-    default:
-      return require('@assets/images/6_i.png'); // Provide a default image path
-  }
-};
+
+
+
+
+/*
+
+This component represents a scrollable dropdown menu.
+It takes in an array of items and a callback function to handle the "New Suivi" button click event.
+The component maintains state for tracking whether a symptom is selected, the selected pathology ID,
+the selected symptoms in a 2D array format, and a flag for triggering rendering updates.
+*/
+
+
+
 
 const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviClicked }) => {
   const [isSymptom, setIsSymptom] = useState<boolean>(false);
@@ -112,7 +112,12 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
     setIsWichP(id);
   };
 
-  
+  /**
+ * This function processes the selected symptoms and updates the user's personal data.
+ * It maps through the 2D array of selected symptoms and creates a new object for each pathology.
+ * The new object includes the pathology ID, name, selected symptoms, icon, and current date.
+ * The updated array of pathologies is then stored in the user's profile.
+ */
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
@@ -130,26 +135,47 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
-        date: DATE_TODAY,
+        date: user.my_personal_datas?.find((obj)=>obj.id == objet[0])?.date ? user.my_personal_datas.find((obj)=>obj.id == objet[0])?.date :  DATE_TODAY,
+        namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
       };
       return newE;
     });
 
     actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
+    console.log(updatedPathos)
   };
-  
+  /**
+ * This function handles the click event of the arrow button in the dropdown menu.
+ * It toggles the state variable `isSymptom` to show or hide the symptoms of a selected pathology.
+ */
   const handleArrowClick = () => {
     setIsSymptom(!isSymptom);
   };
+  /**
+ * This function handles the button press event for validating the selected symptoms and updating the user's profile.
+ * It calls the `processDatas` function to update the user's personal data and performs additional actions if the `setButtonNewSuiviClicked` callback is provided.
+ */
   const handleButtonPress = () => {
     processDatas();
-    setButtonNewSuiviClicked(false);
+   if(setButtonNewSuiviClicked)
+   {
+     setButtonNewSuiviClicked(false);
+     actions.signupUser();
+   }
 
   };
+  /**
+ * This effect hook is triggered when the `twoDArray` state variable is updated.
+ * It sets the `render` state variable to true to trigger re-rendering and logs the updated `twoDArray`.
+ */
   useEffect(()=>{
     setRender(true);
     console.log(twoDArray)
   },[twoDArray])
+  /**
+ * This effect hook is triggered when the component is mounted.
+ * It initializes the `twoDArray` state variable by mapping the user's personal data and constructing a 2D array of selected symptoms.
+ */
   useEffect(()=>{
     console.log("In useeffect ...");
     if(user.my_personal_datas)
@@ -197,17 +223,26 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         <ScrollView>
           {items.map((item, index) => (
             <TouchableOpacity
-              key={index}
-              style={styles.itemContainer}
-              onPress={()=>handleItemPress(item.id)}
-            >
-              <View style={styles.itemIconContainer}>
-                <Image style={{ width: 40, height: 40 }} source={item?.icon ? item.icon : getIconPath("")} />
-              </View>
-              <View style={styles.itemTitleContainer}>
-                <AppText style={styles.itemTitle} text={item.name ? item.name :  ""} />
-              </View>
-            </TouchableOpacity>
+            key={index}
+            style={[
+              styles.itemContainer,
+              user.my_personal_datas?.find((obj) => obj.id === item.id)
+                ? { backgroundColor: colors.grey }
+                : null,
+            ]}
+            onPress={() => handleItemPress(item.id)}
+          >
+            <View style={styles.itemIconContainer}>
+              <Image
+                style={{ width: 40, height: 40 }}
+                source={item?.icon ? item.icon : getIconPath('')}
+              />
+            </View>
+            <View style={styles.itemTitleContainer}>
+              <AppText style={styles.itemTitle} text={item.name ? item.name : ''} />
+            </View>
+          </TouchableOpacity>
+          
           ))}
         </ScrollView>
       )}

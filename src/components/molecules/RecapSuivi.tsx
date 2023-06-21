@@ -31,11 +31,13 @@ const ScrollItem = ({index,item,id_p} : scrollProps) => {
   const [user, ] = useUserStore({ disease: MALADIE1 });
   const [,actions] = useAuthStore();
   useEffect(()=>{
+    // Check if the symptom is already selected by the user
     const isSympchecked = user.my_personal_datas.find((obj)=> obj.id === id_p)?.symptoms.find((o)=> o.id === item.id)
     if(isSympchecked)
       setIsChecked(true);
   },[]);
   useEffect(()=>{
+    // Update the user's symptom selection when isChecked state changes
     if(isChecked)
     {
       const updatedPathos = user.my_personal_datas.map((obj) => {
@@ -125,8 +127,9 @@ const RecapSuivi = ({ objet }: Props) => {
 
   return (
     <View>
-      <BoxHistorique objet={objet} edit={ButtonEdit}/>
+      <BoxHistorique objet={objet} isWhite/>
       {ButtonEdit?
+       // Render the symptom selection list in edit mode
                   <View>
                   <ScrollView>
                     
@@ -228,6 +231,11 @@ const styles = StyleSheet.create({
   },
   checkedItemContainer: {
     // backgroundColor: '#00cc00',
+  },
+  separator: {
+    height: 2,
+    backgroundColor: 'black',
+    margin: 30, // Ajustez la marge horizontale selon vos besoins
   },
 });
 

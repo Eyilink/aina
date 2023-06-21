@@ -4,55 +4,46 @@ import { View } from 'react-native';
 import AppText from '@components/atoms/AppText';
 import colors from '@styles/colors';
 import { Pathologie } from '@store/types';
+import { getIconPath } from '@constants/constants';
 
 type Props = {
-  objet: Pathologie;
+  objet: Pathologie;// Props type declaration, expecting an object of type Pathologie
   onPress?: () => void;
-};
-
-const getIconPath = (iconName: string): ImageSourcePropType => {
-  switch (iconName) {
-    case '1_i.png':
-      return require('@assets/images/1_i.png');
-    case '2_i.png':
-      return require('@assets/images/2_i.png');
-    case '3_i.png':
-      return require('@assets/images/3_i.png');
-    case '4_i.png':
-      return require('@assets/images/4_i.png');
-    case '5_i.png':
-      return require('@assets/images/5_i.png');
-    case '6_i.png':
-      return require('@assets/images/6_i.png');
-    default:
-      return require('@assets/images/6_i.png'); // Provide a default image path
-  }
+  isWhite?: boolean;
 };
 
 
+ // This component represents a box displaying pathology information.
+  // It takes an object of type Pathologie as a prop, along with an optional onPress function.
 
-const BoxPathologie = ({ objet, onPress }: Props): ReactElement => {
+
+const BoxPathologie = ({ objet, onPress, isWhite }: Props): ReactElement => {
   return (
-    <TouchableOpacity onPress={onPress} style = {styles.container}>
-      {objet.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(objet.namelogo)} /> : null}
-      <View style = {styles.content}>
-        <AppText text={objet.name} style={styles.title} />
-        {objet.more ? <AppText text={objet.more} style={styles.subtitle} /> : null}
-        {objet.date ?
-          objet.dateend ? 
-            <AppText text= {"Du " + objet.date + " au " + objet.dateend } style={styles.text} /> 
-            :
-            <AppText text= {"Depuis le " + objet.date} style={styles.text} />
-         :
-          null}
-        
-      </View>
-    </TouchableOpacity>
+    <View style={isWhite ? { backgroundColor: colors.white } : null}>
+      <TouchableOpacity onPress={onPress} style={[
+        styles.container,
+        isWhite ? { backgroundColor: colors.white } : { backgroundColor: colors.greyLight }
+      ]}>
+        {objet.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(objet.namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
+        <View style = {styles.content}>
+          <AppText text={objet.name} style={styles.title} />
+          {objet.more ? <AppText text={objet.more} style={styles.subtitle} /> : null}
+          {objet.date ?
+            objet.dateend ? 
+              <AppText text= {"Du " + objet.date + " au " + objet.dateend } style={styles.text} /> 
+              :
+              <AppText text= {"Depuis le " + objet.date} style={styles.text} />
+          :
+            null}
+          
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 export default BoxPathologie;
-    
+    // styles 
 const styles = StyleSheet.create({
   title: {
     fontSize: 24,
@@ -70,7 +61,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     flexDirection:'row',
-    backgroundColor:colors.greyLight,
     borderRadius: 20,
   },
   content:{

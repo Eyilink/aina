@@ -21,11 +21,12 @@ type Props = {
 };
 
 const BirthDateForm = ({ navigation }: Props) => {
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [day, setDay] = useState('1');
+  const [month, setMonth] = useState('0');
+  const [year, setYear] = useState('2023');
   const [, actions] = useAuthStore();
 
+  
   const onChangeDay = (value : string) => {
     setDay(value);
   };
@@ -40,10 +41,10 @@ const BirthDateForm = ({ navigation }: Props) => {
 
   const calculateAge = (birthDate: string): string => {
     const currentDate = new Date();
-    const [year, month, day] = birthDate.split('-').map(Number);
+    const [day, month, year] = birthDate.split('-').map(Number);
   
     const yearsDiff = currentDate.getFullYear() - year;
-    const monthsDiff = currentDate.getMonth() + 1 - month;
+    const monthsDiff = currentDate.getMonth() - month +1;
     const daysDiff = currentDate.getDate() - day;
   
     // Adjust the age if the current date is before the birth date
@@ -58,21 +59,22 @@ const BirthDateForm = ({ navigation }: Props) => {
   
 
   const onValidate = () => {
-    const isValidDate = validateDate(day, month, year);
+    const birthDate = `${day}-${parseInt(month) + 1}-${year}`;
+    const isValidDate = validateDate(birthDate);
     if (!isValidDate) {
       alert('Invalid date');
     } else {
-      const birthDate = `${year}-${month}-${day}`;
+      console.log(birthDate);
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
       navigation.navigate("MoreData");
+      console.log(birthDate);
     }
   };
 
-  const validateDate = (day, month, year) => {
-    // Perform validation logic here
-    return true; // Replace this with your validation logic
+  const validateDate = (birthDate: string) => {
+    return parseInt(calculateAge(birthDate))>=0; // Replace this with your validation logic
   };
 
   const monthNames = [

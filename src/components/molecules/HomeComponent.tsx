@@ -6,38 +6,47 @@ import Title from '@components/atoms/Title';
 import { View,Text,StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
-import  {DATE_TODAY} from '@constants/constants';
+import  {DATE_TODAY, MALADIE1} from '@constants/constants';
 import NewSuivi from './NewSuivi';
 import { Ionicons } from '@expo/vector-icons';
 import layout from '@styles/layout';
 import colors from '@styles/colors';
 import Container from './Container';
+import { useUserStore } from '@store/store';
 
 
 type Props = {
   isDataEmpty?: boolean;
   
 };
-
+// HomeComponent represents the main home screen of the application.
 const HomeComponent = ({
     isDataEmpty
 }: Props): ReactElement => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
+  const [user, ] = useUserStore({ disease: MALADIE1 });
 
+    // ValidatePressed is triggered when the validation button is pressed.
+  // It toggles the ButtonClicked state.
 
   const ValidatePressed = () => {
-    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    // Vous pouvez ajouter votre logique ou vos actions ici
+    
     setButtonClicked(!ButtonClicked);
   };
+  const dateString = DATE_TODAY;
+  const [date, time] = dateString.split(' ');
+  const [day, month] = date.split('/');
+
+const parsedDate = `${day}/${month}`;
 
   return (
     <Container style={styles.container}>
     <Title
-          text={DATE_TODAY}
+          text={user.username+"   " + parsedDate}
         />
-    {!ButtonClicked?
+    {!ButtonClicked? 
       <>
+        {/* If isDataEmpty is true, display a message indicating no data */}
       {isDataEmpty ? 
         <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
       : 
@@ -49,7 +58,7 @@ const HomeComponent = ({
           stretch
         /> */}
       </>}
-
+{/* Display the validation button */}
       <Button
         text={i18n.t('commons.newsuivi')}
         style={{minWidth: '90%'}}
@@ -57,6 +66,7 @@ const HomeComponent = ({
         stretch
       /></>
     :<>
+        {/* Display the back button that allows to go back to the previous screen */}
       <Ionicons
         name="ios-arrow-round-back"
         size={layout.navigation.previousIcon.size}
@@ -65,7 +75,7 @@ const HomeComponent = ({
         style={{marginLeft:12}}
       />
       <View style={styles.newsuivicontainer}>
-      <NewSuivi onPress={ValidatePressed}/>
+      <NewSuivi onPress={ValidatePressed} setButtonNewSuiviClicked={setButtonClicked}/>
       </View>
     </>
     }

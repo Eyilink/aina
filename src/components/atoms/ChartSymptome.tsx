@@ -14,11 +14,17 @@ type Props = {
   };
 
 
-
+// set the display of the graphics  in history 
   const ChartSymptome = ({ objet }: Props): ReactElement => {
     
-      const labels : String[] = objet.data ? objet.data.map(item => [item.date.split('/')[0],'/',item.date.split('/')[1]]) : [''];
+    const labels: string[] = objet.data ? objet.data.map(item => {
+      const dateParts = item.date.split('/');
+      return `${dateParts[0]}/${dateParts[1]}`;
+    }) : [''];
       const values = objet.data ? objet.data.map(item => item.valeur) : [0];
+
+
+      console.log(labels[0]);
       return (
 
         <View style={{ marginRight:20,marginLeft:20,height:150, flexDirection: 'row'}}>

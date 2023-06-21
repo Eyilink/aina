@@ -36,7 +36,7 @@ type Pathologie = {
 type Props = {
   isFirstLog?: boolean;
   onPress?: () => void;
-  setButtonNewSuiviClicked : React.Dispatch<React.SetStateAction<boolean>>;
+  setButtonNewSuiviClicked ?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const dropdownItems = [
   { title: 'Personnalisé', icon: require('@assets/images/1_i.png') },
@@ -47,37 +47,19 @@ const dropdownItems = [
   { title: 'Cardiovasculaire', icon: require('@assets/images/6_i.png') },
   // Add more items as needed
 ];
-const getIconPath = (iconName: string): ImageSourcePropType => {
-  switch (iconName) {
-    case '1_i.png':
-      return require('@assets/images/1_i.png');
-    case '2_i.png':
-      return require('@assets/images/2_i.png');
-    case '3_i.png':
-      return require('@assets/images/3_i.png');
-    case '4_i.png':
-      return require('@assets/images/4_i.png');
-    case '5_i.png':
-      return require('@assets/images/5_i.png');
-    case '6_i.png':
-      return require('@assets/images/6_i.png');
-    default:
-      return require('@assets/images/6_i.png'); // Provide a default image path
-  }
-};
 const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [, actions] = useAuthStore(); 
   
   const handlePress = () => {
-    //     // Fonction vide qui s'active lorsque vous cliquez sur le bouton ADD
-    //     // Vous pouvez ajouter votre logique ou vos actions ici
+     // handlePress is called when the ADD button is clicked.
+    
     setButtonClicked(!ButtonClicked);
   };
 
   const ValidatePressed = () => {
-    // Fonction vide qui s'active lorsque vous cliquez sur le bouton Validé
-    // Vous pouvez ajouter votre logique ou vos actions ici
+     // ValidatePressed is called when the validation button is clicked.
+    // You can add your logic or actions here
     setButtonClicked(!ButtonClicked);
     if (isFirstLog) {
       actions.signupUser();
@@ -88,7 +70,9 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   return (
     <View style={styles.container}>
     <AppText text='Choix du Suivi' style={styles.text}></AppText>
-    {ButtonClicked ? (<> 
+    {ButtonClicked ? (
+      // When ButtonClicked is true, render the DropDownMenu component with checkable items
+        <> 
       <SafeAreaView>
         <ScrollView>
           <DropDownMenu objets={pathologieJSON} ischeckeable={true}/> 
