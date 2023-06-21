@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 import { View } from 'react-native';
 import AppText from '@components/atoms/AppText';
-import { StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { StyleSheet, TouchableOpacity} from 'react-native';
 import { Symptome } from '@store/types';
 import moment from 'moment';
+import 'moment/locale/fr'
 
 import 'moment/locale/fr'
 
@@ -20,23 +21,6 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
       const date = moment(dateString, 'DD/MM/YYYY').locale('fr');
       
       let formattedDate = objet.data ? date.locale('fr').format('dddd D MMMM') : "à Renseigner";
-      // //let formattedDate;
-      // const empty = (): boolean => { 
-      //   let variable : boolean = true; 
-      //   console.log("zizi");
-      //   if (Array.isArray(objet.data) && objet.data.length > 0){
-      //     variable = false;
-      //     console.log("zizi DUR");
-      //   }
-      //  return variable;
-      // }
-
-      // // if(empty()){
-      // //   formattedDate =  "à Renseigner";
-      // // }
-      // // else{
-      // //   formattedDate =  date.locale('fr').format('dddd D MMMM');
-      // // }
     
   
       return (

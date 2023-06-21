@@ -1,31 +1,24 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import React, { ReactElement  } from 'react';
+import { ImageSourcePropType, StyleSheet, Text, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Feather } from '@expo/vector-icons';
-
-import HistoryTimeline from '@components/molecules/HistoryTimeline';
-import HistoryCharts from '@components/molecules/HistoryCharts';
 import Container from '@components/molecules/Container';
-import Title from '@components/atoms/Title';
-import Subtitle from '@components/atoms/SubTitle';
 import Button from '@components/atoms/Button';
 import AppText from '@components/atoms/AppText';
 
 import { BottomTabParamList } from '@navigation/types';
-import { useReportsStore, useUserStore } from '@store/store';
+import { useUserStore } from '@store/store';
 
 import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import colors from '@styles/colors';
-import { MALADIE1, getIconPath } from '@constants/constants';
+import { MALADIE1 } from '@constants/constants';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AntDesign } from '@expo/vector-icons';
 import BoxHistorique from '@components/atoms/BoxHistorique';
 import { Ionicons } from '@expo/vector-icons';
 import BoxSymptome from '@components/atoms/BoxSymptome';
 import ChartSymptome from '@components/atoms/ChartSymptome';
-import { Symptome, Pathologie, Data } from '@store/types';
+import { Pathologie } from '@store/types';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
@@ -33,40 +26,8 @@ type Props = {
 
 
 
-const ExempleData : Data[] = [
-  {date:'08/05/2023', valeur: 12},
-  {date:'15/05/2023', valeur: 32},
-  {date:'25/05/2023', valeur: 20},
-  {date:'01/06/2023', valeur: 12},
-  {date:'12/06/2023', valeur: 32},
-  {date:'25/06/2023', valeur: 20},
-]
 
-const ExempleData2 : Data[] = [
-  {date:'08/05/2023', valeur: 5},
-  {date:'15/05/2023', valeur: 6},
-  {date:'25/05/2023', valeur: 9},
-  {date:'01/06/2023', valeur: 5},
-  {date:'12/06/2023', valeur: 4},
-  {date:'25/06/2023', valeur: 1},
-]
-
-const exempleSymList : Symptome[]=[
-  {id: 1, name: "Poids",frequence:"tous les 7 jours",data:ExempleData,type:"kg"},
-  {id: 2, name: "Douleur",frequence:"Tous les jours",data:ExempleData2,type:"num"},
-  {id: 2, name: "Température",frequence:"Tous les jours",type:"num"},
-]
-
-const exempleList: Pathologie[] = [
-  { id:"1",name: 'Articulaire',date:"15/01/2023", more:"Coude - Gauche",namelogo:'3_i.png',symptoms:exempleSymList },
-  { id:"2",name: 'Artie',date:"15/01/2023", more:"Coude - Gauche",namelogo:"6_i.png",symptoms:exempleSymList  },
-  { id:"3",name: 'Articaire',date:"15/01/2023", more:"Coude - Gau",namelogo:"4_i.png",symptoms:exempleSymList, dateend:"15/02/2023" },
-  ]
-
-
-
-
-const History = ({ navigation }: Props): ReactElement => {
+const History = ({ }: Props): ReactElement => {
   const [isClicked, setIsClicked] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [graph, graphClicked] = React.useState(false);
@@ -79,9 +40,6 @@ const History = ({ navigation }: Props): ReactElement => {
     setIsClicked(true);
     setCurrentIndex(index);
     setPrevious(false);
-    console.log(liste[currentIndex].icon);
-    console.log(liste[currentIndex].namelogo);
-    console.log(liste[currentIndex].symptoms[0].unit);
   }
   const onPressPathPrev = (index : number): void =>{
     setIsClicked(true);
@@ -97,7 +55,46 @@ const History = ({ navigation }: Props): ReactElement => {
     graphClicked(!graph);
   }
 
-  
+  const getIconPath = (iconName: string): ImageSourcePropType => {
+    switch (iconName) {
+      case 'avq.png':
+        return require('@assets/images/avq.png');
+      case 'barthel.png':
+        return require('@assets/images/barthel.png');
+      case 'braden.png':
+        return require('@assets/images/braden.png');
+      case 'clinimetre.png':
+        return require('@assets/images/clinimetre.png');
+      case 'coeur.png':
+        return require('@assets/images/coeur.png');
+      case 'colonne.png':
+        return require('@assets/images/colonne.png');
+      case 'covid.png' :
+        return require('@assets/images/covid.png');
+      case 'dentaire.png' :
+        return require('@assets/images/dentaire.png');
+      case 'genou.png' :
+        return require('@assets/images/genou.png');
+      case 'grippe.png' :
+        return require('@assets/images/grippe.png');
+      case 'grossesse.png' :
+        return require('@assets/images/grossesse.png');
+      case 'insh.png' :
+        return require('@assets/images/insh.png');
+      case 'mif.png' :
+        return require('@assets/images/mif.png');
+      case 'orl.png' :
+        return require('@assets/images/orl.png');
+      case 'peau.png' :
+        return require('@assets/images/peau.png');
+      case 'poumon.png' :
+        return require('@assets/images/poumon.png');
+      case 'yeux.png' :
+        return require('@assets/images/yeux.png');
+      default:
+        return require('@assets/images/6_i.png'); // Provide a default image path
+    }
+  };
   const empty = (): boolean => {
     
     let empt = true;
@@ -186,12 +183,6 @@ const History = ({ navigation }: Props): ReactElement => {
         </>
       : 
         <> 
-        {/* <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
-        {
-          exempleList.map((object, index) => {    
-            return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
-          })
-        }   */}
         <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
         {
           user.my_personal_datas?.map((object, index) => {    
@@ -239,15 +230,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   content:{
-    //textAlign: 'right',
     marginLeft:20,
-    //justifyContent: 'center',
 
   },
   separator: {
     height: 2,
     backgroundColor: 'black',
-    margin: 30, // Ajustez la marge horizontale selon vos besoins
+    margin: 30, 
   },
   pagetitle :{
     fontSize: 28,
@@ -260,13 +249,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection:'row',
     alignItems:'center',
-    //flex: 1,
-    //paddingTop: layout.padding,
   },
-  // subtitle: {
-  //   marginTop: layout.padding,
-  //   textAlign: 'center',
-  // },
   buttonsContainer: {
     flexDirection: 'row',
     

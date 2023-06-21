@@ -1,10 +1,8 @@
-import { Symptome, Data } from '@store/types';
+import { Symptome } from '@store/types';
 import React, { ReactElement } from 'react';
-import { LineChart, YAxis, XAxis, Grid  } from 'react-native-svg-charts';
-import { View, Dimensions } from 'react-native';
-import { Line } from 'react-native-svg';
+import { LineChart, YAxis, XAxis  } from 'react-native-svg-charts';
+import { View } from 'react-native';
 import * as shape from 'd3-shape';
-import { Circle } from 'react-native-svg';
 import colors from '@styles/colors';
 
 
@@ -41,20 +39,9 @@ type Props = {
             data={values}
             svg={{ stroke: colors.primary }}
             contentInset={{ top: 20, bottom: 20 }}
-            //showGrid={false} // Suppression de la grille pour éviter de superposer les points
             curve={shape.curveNatural} // Utilisation de la courbe arrondie (curveNatural)
           >
-          
-       {/* {values.map((value, index) => (
-        <Circle
-          key={index}
-          cx={index * 66} // Coordonnée x du point
-          cy={value} // Coordonnée y du point
-          r={4} // Rayon des points
-          stroke={'grey'}
-          fill={'white'}
-        />
-      ))}  */}
+        
 
             
           </LineChart>
