@@ -6,7 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
-import { CGU_URL, DATE_TODAY, MALADIE1, pathologieJSON, symptomeJSON } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1, getIconPath, pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
 import json_p from '@assets/json/pathologies.json'
 import { Pathologie, Symptome } from '@store/types';
@@ -83,46 +83,7 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
     )
 
 }
-const getIconPath = (iconName: string): ImageSourcePropType => {
-  switch (iconName) {
-    case 'avq.png':
-      return require('@assets/images/avq.png');
-    case 'barthel.png':
-      return require('@assets/images/barthel.png');
-    case 'braden.png':
-      return require('@assets/images/braden.png');
-    case 'clinimetre.png':
-      return require('@assets/images/clinimetre.png');
-    case 'coeur.png':
-      return require('@assets/images/coeur.png');
-    case 'colonne.png':
-      return require('@assets/images/colonne.png');
-    case 'covid.png' :
-      return require('@assets/images/covid.png');
-    case 'dentaire.png' :
-      return require('@assets/images/dentaire.png');
-    case 'genou.png' :
-      return require('@assets/images/genou.png');
-    case 'grippe.png' :
-      return require('@assets/images/grippe.png');
-    case 'grossesse.png' :
-      return require('@assets/images/grossesse.png');
-    case 'insh.png' :
-      return require('@assets/images/insh.png');
-    case 'mif.png' :
-      return require('@assets/images/mif.png');
-    case 'orl.png' :
-      return require('@assets/images/orl.png');
-    case 'peau.png' :
-      return require('@assets/images/peau.png');
-    case 'poumon.png' :
-      return require('@assets/images/poumon.png');
-    case 'yeux.png' :
-      return require('@assets/images/yeux.png');
-    default:
-      return require('@assets/images/6_i.png'); // Provide a default image path
-  }
-};
+
 
 
 
@@ -160,6 +121,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
+      const pd_obj =  user.my_personal_datas?.find((obj)=>obj.id == objet[0]);
       const newE: Pathologie = {
         id: objet[0],
         name: nm ? nm : "",
@@ -169,13 +131,15 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             id: filteredObj.id,
             name: filteredObj.name,
             type: filteredObj.type,
-            unit: filteredObj.unit,
+            frequency: filteredObj.frequency,
+            data: pd_obj ? pd_obj.symptoms.find((s)=> s.id == filteredObj.id)?.data : null,
           })),
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
         date: user.my_personal_datas?.find((obj)=>obj.id == objet[0])?.date ? user.my_personal_datas.find((obj)=>obj.id == objet[0])?.date :  DATE_TODAY,
         namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
+        
       };
       return newE;
     });
@@ -199,7 +163,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
    if(setButtonNewSuiviClicked)
    {
      setButtonNewSuiviClicked(false);
-     actions.signupUser();
+     actions.saveUserProfile();
    }
 
   };

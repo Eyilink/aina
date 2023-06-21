@@ -6,7 +6,7 @@ import Button from '@components/atoms/Button';
 import { he } from 'date-fns/locale';
 import layout from '@styles/layout';
 import CustomSlider from '@components/molecules/Slider';
-import {  DATE_TODAY, MALADIE1 } from '@constants/constants';
+import {  DATE_TODAY, MALADIE1, getIconPath } from '@constants/constants';
 import { useReportsStore, useUserStore } from '@store/store';
 import { Pathologie, Symptome } from '@store/types';
 import InputSymptome from '@components/molecules/AskSymptoms'
@@ -84,6 +84,7 @@ const CustomComponent = ({ currentSymptom }: Props) => {
         )}
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{currentSymptom.name}</Text>
+        {currentSymptom.data && (currentSymptom.data.length) ? <Text style={styles.subtitle}>{currentSymptom.data[currentSymptom.data.length-1].date}</Text>:null}
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
 
@@ -183,46 +184,6 @@ type Item = {
   title: string;
   subtitle: string;
 };
-const getIconPath = (iconName: string): ImageSourcePropType => {
-  switch (iconName) {
-    case 'avq.png':
-      return require('@assets/images/avq.png');
-    case 'barthel.png':
-      return require('@assets/images/barthel.png');
-    case 'braden.png':
-      return require('@assets/images/braden.png');
-    case 'clinimetre.png':
-      return require('@assets/images/clinimetre.png');
-    case 'coeur.png':
-      return require('@assets/images/coeur.png');
-    case 'colonne.png':
-      return require('@assets/images/colonne.png');
-    case 'covid.png' :
-      return require('@assets/images/covid.png');
-    case 'dentaire.png' :
-      return require('@assets/images/dentaire.png');
-    case 'genou.png' :
-      return require('@assets/images/genou.png');
-    case 'grippe.png' :
-      return require('@assets/images/grippe.png');
-    case 'grossesse.png' :
-      return require('@assets/images/grossesse.png');
-    case 'insh.png' :
-      return require('@assets/images/insh.png');
-    case 'mif.png' :
-      return require('@assets/images/mif.png');
-    case 'orl.png' :
-      return require('@assets/images/orl.png');
-    case 'peau.png' :
-      return require('@assets/images/peau.png');
-    case 'poumon.png' :
-      return require('@assets/images/poumon.png');
-    case 'yeux.png' :
-      return require('@assets/images/yeux.png');
-    default:
-      return require('@assets/images/6_i.png'); // Provide a default image path
-  }
-};
 
 const renderItem = ({ item }: { item: Pathologie }) => (
   <View style={styles.custom}>
@@ -245,7 +206,7 @@ const renderItem = ({ item }: { item: Pathologie }) => (
   </View>
 );
 
-function HistoryFollowedSymptoms({}: Props) {
+function HistoryFollowedSymptoms() {
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   
   return (
@@ -309,7 +270,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 12,
+    margin: 5,
   },
   subtitle_custom: {
     fontSize: 10,

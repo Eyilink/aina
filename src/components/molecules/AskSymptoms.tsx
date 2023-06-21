@@ -29,7 +29,8 @@ type InputSymptomeProps = {
 const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [hasUserChosen, setHasUserChosen] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
+  const initialSliderValue = s.name === "Température" ? 36 : 0;
+  const [sliderValue, setSliderValue] = useState(initialSliderValue);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
   const addValueUser = (sympt: Symptome, val: number) => {
@@ -61,11 +62,11 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
     console.log(pathology.symptoms);    
     });
-  
-    // Call the appropriate action to save the modified user profile
-    // actions.editUserProfile({ key: 'my_personal_datas', value: user.my_personal_datas });
   };
   
+  const fixedVal = (value: number): number => {
+    return Number(value.toFixed(1));
+  };
 
   const onChange = (value: boolean) => {
     setHasUserChosen(true);
@@ -73,14 +74,14 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   };
 
   const handleSliderChange = (value: number) => {
-    setSliderValue(value);
+    setSliderValue(fixedVal(value));
   };
 
   const handleValidate = () => {
     onChange(true);
     console.log(sliderValue);
-    addValueUser(s, sliderValue);
-    actions.signupUser();
+    addValueUser(s, fixedVal(sliderValue));
+    actions.saveUserProfile();
     onClose();
   };
 
@@ -88,7 +89,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     console.log(`Symptom: ${s.name}`);
     console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
     addValueUser(s, Number(`${symptom ? 10 : 0}`));
-    actions.signupUser();
+    actions.saveUserProfile();
     onClose();
   };
 

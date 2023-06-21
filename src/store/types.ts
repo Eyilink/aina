@@ -95,7 +95,7 @@ export type Data = {
 export type Symptome = {
   id: number;
   name: string,
-  frequence?: string,
+  frequency: number,
   data?:Data[],
   type: string;
   question?: String,
