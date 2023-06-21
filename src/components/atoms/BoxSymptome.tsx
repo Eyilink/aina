@@ -5,6 +5,8 @@ import { StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Symptome } from '@store/types';
 import moment from 'moment';
 
+import 'moment/locale/fr'
+
 
   type Props = {
     objet:Symptome;
@@ -15,7 +17,7 @@ const BoxSymptome = ({ objet }: Props): ReactElement => {
 
       };
       const dateString = objet.data ? objet.data[objet.data.length - 1].date : "(tr";
-      const date = moment(dateString, 'DD/MM/YYYY');
+      const date = moment(dateString, 'DD/MM/YYYY').locale('fr');
       
       let formattedDate = objet.data ? date.locale('fr').format('dddd D MMMM') : "à Renseigner";
       // //let formattedDate;
