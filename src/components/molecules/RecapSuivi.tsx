@@ -97,7 +97,7 @@ const ScrollItem = ({index,item,id_p} : scrollProps) => {
 }
 const RecapSuivi = ({ objet }: Props) => {
   const [ButtonEdit, setButtonEdit] = useState(false);
-
+  const [,actions] = useAuthStore();
   const onPress = () => {
     console.log("Press");
     setButtonEdit(!ButtonEdit);
@@ -112,6 +112,7 @@ const RecapSuivi = ({ objet }: Props) => {
 
   const onClosePopUp = () => {
     setShowPopUp(false);
+    actions.saveUserProfile();
   };
   useEffect(()=>{
     console.log("Les symptomes d'objet " + objet.symptoms.length)
