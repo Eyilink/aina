@@ -28,7 +28,7 @@ const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
         const updatedSymptoms = pathology.symptoms.map((symptom) => {
           return {
             ...symptom,
-            frequency: selectedValues[symptom.id] || '2/jour',
+            frequency: freqToNumber(selectedValues[symptom.id]) || 1,
           };
         });
   
@@ -75,6 +75,27 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
     }
   };
 
+  const freqToNumber = (freq: string): number => {
+    switch (freq) {
+      case '2/jour':
+        return 0.5;
+      case '1/jour':
+        return 1;
+      case '2/semaine':
+        return 3;
+      case '1/semaine':
+        return 7;
+      case '1/mois':
+        return 30;
+      case '1/3mois':
+        return 90;
+      case '1/an':
+        return 365;
+      default:
+        return -1;
+    }
+  };
+  
   useEffect(() => {
     // Initialize selectedValues when user.my_personal_datas changes
     const initialValues: { [key: number]: string } = {};
@@ -84,6 +105,9 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
           console.log("freq ?");
           console.log(symptom);
           if (symptom.frequency){
+            console.log("symptom.freq :  ");
+            console.log(symptom.frequency);
+            console.log(numberToFreq(symptom.frequency));
           initialValues[symptom.id] = numberToFreq(symptom.frequency);
           }
           else {
