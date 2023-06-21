@@ -11,7 +11,6 @@ import { pathologieJSON, symptomeJSON } from '@constants/constants';
 import { useAuthStore, useUserStore } from '@store/store';
 import { MALADIE1 } from '@constants/constants';
 import AppText from '@components/atoms/AppText';
-// import Symptome from '@store/types';
 
 type AskPopUpProps = {
   pato: Pathologie;
@@ -28,7 +27,7 @@ const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
         const updatedSymptoms = pathology.symptoms.map((symptom) => {
           return {
             ...symptom,
-            frequency: freqToNumber(selectedValues[symptom.id]) || 1,
+            frequency: freqToNumber(selectedValues[symptom.id]) || -1,
           };
         });
   
@@ -41,8 +40,6 @@ const FreqPopUp = ({ pato, onClose }: AskPopUpProps) => {
     });
   
     actions.editUserProfile({ key: 'my_personal_datas', value: updatedData });
-    console.log("user :    \n");
-    console.log(user.my_personal_datas);
     onClose();
   };
   
@@ -102,12 +99,7 @@ const handlePickerChange = (itemValue: string, symptomId: number): void => {
     user.my_personal_datas.forEach((pathology) => {
       if (pathology.id === pato.id) {
         pathology.symptoms.forEach((symptom) => {
-          console.log("freq ?");
-          console.log(symptom);
           if (symptom.frequency){
-            console.log("symptom.freq :  ");
-            console.log(symptom.frequency);
-            console.log(numberToFreq(symptom.frequency));
           initialValues[symptom.id] = numberToFreq(symptom.frequency);
           }
           else {
