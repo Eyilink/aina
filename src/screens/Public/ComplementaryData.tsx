@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import {ScrollView} from "react-native"
 import Container from '@components/molecules/Container';
 import Title from '@components/atoms/Title';
 import SubTitle from '@components/atoms/SubTitle';
@@ -70,6 +70,7 @@ const ComplementaryData = ({ navigation }: Props): ReactElement => {
 
   return (
     <Container>
+      <ScrollView>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Title text={i18n.t('signup.sectionTitle')} />
@@ -138,6 +139,7 @@ const ComplementaryData = ({ navigation }: Props): ReactElement => {
           isSelected
         />
       </View>
+      </ScrollView>
     </Container>
   );
 };
