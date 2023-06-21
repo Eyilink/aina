@@ -121,6 +121,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
+      const pd_obj =  user.my_personal_datas?.find((obj)=>obj.id == objet[0]);
       const newE: Pathologie = {
         id: objet[0],
         name: nm ? nm : "",
@@ -131,12 +132,14 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             name: filteredObj.name,
             type: filteredObj.type,
             frequency: filteredObj.frequency,
+            data: pd_obj ? pd_obj.symptoms.find((s)=> s.id == filteredObj.id)?.data : null,
           })),
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
         date: user.my_personal_datas?.find((obj)=>obj.id == objet[0])?.date ? user.my_personal_datas.find((obj)=>obj.id == objet[0])?.date :  DATE_TODAY,
         namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
+        
       };
       return newE;
     });
@@ -160,7 +163,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
    if(setButtonNewSuiviClicked)
    {
      setButtonNewSuiviClicked(false);
-     actions.signupUser();
+     actions.saveUserProfile();
    }
 
   };

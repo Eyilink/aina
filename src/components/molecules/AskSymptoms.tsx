@@ -81,7 +81,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     onChange(true);
     console.log(sliderValue);
     addValueUser(s, fixedVal(sliderValue));
-    actions.signupUser();
+    actions.saveUserProfile();
     onClose();
   };
 
@@ -89,7 +89,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     console.log(`Symptom: ${s.name}`);
     console.log(`User selection: ${symptom ? 'Oui' : 'Non'}`);
     addValueUser(s, Number(`${symptom ? 10 : 0}`));
-    actions.signupUser();
+    actions.saveUserProfile();
     onClose();
   };
 

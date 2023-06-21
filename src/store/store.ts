@@ -118,6 +118,37 @@ const actions = {
       console.warn('ERROR > addNewReport: ', error);
     }
   },
+  saveUserProfile: () => async ({ setState, getState }: StoreApi): Promise<void> => {
+    try {
+      const { disease } = getState();
+      const currentUser = getState().auth.user; // Access the current user from the auth state
+
+      setState({
+        auth: {
+          ...getState().auth,
+          user: currentUser, // Keep the current user in the auth state
+        },
+        disease: {
+          ...disease,
+          [MALADIE1]: {
+            ...disease[MALADIE1],
+            user: getState().disease.maladie1.user, // Keep the current user in the disease state
+          },
+        },
+      });
+
+      await AsyncStorage.setItem(
+        ASYNC_STORAGE_AUTH_KEY,
+        JSON.stringify(getState().auth), // Store the updated auth state
+      );
+      await AsyncStorage.setItem(
+        ASYNC_STORAGE_DISEASE_KEY,
+        JSON.stringify(disease),
+      );
+    } catch (error) {
+      console.warn('ERROR > saveUserProfile: ', error);
+    }
+  },
 
   editUserProfile: ({ key, value }: EditUserProfileProps) => async ({
     setState,
