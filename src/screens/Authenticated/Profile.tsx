@@ -35,25 +35,16 @@ import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
 import * as Sharing from "expo-sharing"
 import * as Print from "expo-print"
 function Profile(): ReactElement {
+  // State variable to toggle the visibility of elements
   const [showElements, setShowElements] = useState(false);
+   // Custom hooks for accessing user data
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
+  // State variable to manage the colors of pictos
   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
   const [forceRefresh, setForceRefresh] = useState<boolean>(false);
 useEffect(()=>{console.log("useefect profile works")},[])
-//   useEffect(() => {
-//     const updateCouleursPictos = () => {
-//       const couleurs: Boolean[] = user.my_personal_datas?.map((pathologie: Pathologie) =>
-//         genererPictogrammePathologie(pathologie)
-//       ) || [];
-//       setCouleursPictos(couleurs);
-//     };
-
-//     updateCouleursPictos();
-//   }, [user.my_personal_datas]);
-  
-//   // ATTENTION À NE PAS ENLEVER
-//   useEffect(()=>(console.log("")),[]);
+// Function to handle editing the profile
   const onEditProfile = (): void => {
     Alert.alert(
       i18n.t('commons.attention'),
@@ -69,6 +60,7 @@ useEffect(()=>{console.log("useefect profile works")},[])
       { cancelable: false }
     );
   };
+    // Function to handle the button click for new suivi
  const ValidateButtonNewSuiviPressed = (): void => {
     <NewSuivi/>
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
@@ -79,7 +71,7 @@ useEffect(()=>{console.log("useefect profile works")},[])
     { id: 2, date: '2023-06-02', metric: 10, value: 'Cough' },
     { id: 3, date: '2023-06-03', metric: 20, value: 'Headache' },
   ];
-
+  // Function to handle pressing the CGU link
   const onPressCGU = async (): Promise<void> => {
     await WebBrowser.openBrowserAsync(CGU_URL);
   };
@@ -103,42 +95,9 @@ useEffect(()=>{console.log("useefect profile works")},[])
           </View>
           
           {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))}
-{/* 
-          return (
-            <>
-            <View style={styles.pathologieContainer}>
-              {pathologie.namelogo ? <Image style={{ width: 40, height: 40 }} source={getIconPath(pathologie.namelogo)} /> : <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />}
-                <AppText text={pathologie.name} style={styles.text} />
-                {couleursPictos[index] ? (
-                // {genererPictogrammePathologie(pathologie)?(
-                  <View style={styles.couleurVert} />
-                ) : (
-                  <View style={styles.couleurRouge} />
-                )}
-              </View>
-            </>);
-
-          })} */}
 
 
-          {/* {couleursPictos.map((couleur: Boolean, index: number)=> {
-            return (<>
-              <View style={styles.pathologieContainer}>
-                {user.my_personal_datas[index].namelogo ? 
-                  <Image style={{ width: 40, height: 40 }} source={getIconPath(user.my_personal_datas[index].namelogo)} />
-                  : 
-                  <Image style={{ width: 40, height: 40 }} source={getIconPath("")} />
-                }
-                <AppText text={user.my_personal_datas[index].name} style={styles.text} />
-                {couleursPictos[index] ? (
-                  // {genererPictogrammePathologie(pathologie)?(
-                  <View style={styles.couleurVert} />
-                ) : (
-                  <View style={styles.couleurRouge} />
-                )}
-              </View>
-            </>);
-          })} */}
+     
 
 
 

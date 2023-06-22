@@ -28,6 +28,7 @@ type Props = {
 
 
 const History = ({ }: Props): ReactElement => {
+   // State variables
   const [isClicked, setIsClicked] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [graph, graphClicked] = React.useState(false);
@@ -35,17 +36,19 @@ const History = ({ }: Props): ReactElement => {
   const [isPrevious, setPrevious] = React.useState(false);
   const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas : user.my_personal_datas ;
 
-
+// Handler for clicking on a path
   const onPressPath = (index : number): void =>{
     setIsClicked(true);
     setCurrentIndex(index);
     setPrevious(false);
   }
+   // Handler for clicking on a previous path
   const onPressPathPrev = (index : number): void =>{
     setIsClicked(true);
     setCurrentIndex(index);
     setPrevious(true);
   }
+  // Handler for going back
   const prev = ():void =>{
     setIsClicked(false);
     graphClicked(false);
@@ -54,7 +57,7 @@ const History = ({ }: Props): ReactElement => {
   const graphpress = ():void =>{
     graphClicked(!graph);
   }
-
+// function that assigns logos 
   const getIconPath = (iconName: string): ImageSourcePropType => {
     switch (iconName) {
       case 'avq.png':
@@ -102,6 +105,8 @@ const History = ({ }: Props): ReactElement => {
       
       if (Array.isArray(object.data) && object.data.length > 0){
         empt = false;
+         // If the object's data is an array and it has at least one element,
+      // set empt to false
       }
      })
      return empt;
@@ -204,7 +209,7 @@ const History = ({ }: Props): ReactElement => {
 };
 
 export default History;
-
+//styles
 const styles = StyleSheet.create({
   title: {
     fontSize: 24,

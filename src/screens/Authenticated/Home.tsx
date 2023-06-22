@@ -34,10 +34,11 @@ type Props = {
 };
 
 type Notification = {
-  origin: 'selected' | 'received' | 'selected';
-  data: object;
-  remote: boolean;
+  origin: 'selected' | 'received' | 'selected';// Possible values for the origin property
+  data: object;// Data object associated with the notification
+  remote: boolean;// Boolean flag indicating whether the notification is remote or not
 };
+
 
 const Home = ({ navigation }: Props): ReactElement => {
   const [image, setImage] = useState<ImageSourcePropType>({});
@@ -47,6 +48,7 @@ const Home = ({ navigation }: Props): ReactElement => {
 
 
   useEffect(() => {
+    // When reports data is available, determine the recommendation and update image and text accordingly
     if (reports) {
       const recommandation = getRecommandation(reports);
       switch (recommandation) {
