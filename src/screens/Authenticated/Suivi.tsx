@@ -27,49 +27,26 @@ import colors from '@styles/colors';
 
 
 const Suivi = (): ReactElement => {
+   // Custom hook for accessing reports data
   const [reports] = useReportsStore({ disease: MALADIE1 });
+   // Check if there is a new report for the day
   const isNewReportOfDay = !reports || !hasPreviousReportToday(reports);
+   // State variable to track the click on the new suivi button
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
+    // Custom hooks for accessing user data
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
-
+// Function to handle the click on the new suivi button
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
   };
   
-  // const onStartReport = (): void => {
-  //   if (!isNewReportOfDay) {
-  //     Alert.alert(
-  //       i18n.t('commons.attention'),
-  //       i18n.t('evaluate.erase'),
-  //       [
-  //         { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
-  //         {
-  //           text: i18n.t('commons.errors.ok'),
-  //           onPress: (): void => navigation.navigate('Temperature'),
-  //         },
-  //       ],
-  //       { cancelable: false },
-  //     );
-  //   } else navigation.navigate('Temperature');
-  // };
-
+ 
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
         <ScrollView>
-          {/* <Title isPrimary isDate isCenter text={DATE_TODAY} />
-          {!isNewReportOfDay ? (
-            <SubTitle text={i18n.t('evaluate.restart')} style={styles.subtitle} />
-          ) : (
-            <SubTitle text={i18n.t('evaluate.start')} style={styles.subtitle} />
-          )}
-          <Button
-            text={i18n.t('commons.validate')}
-            onPress={onStartReport}
-            isValidate
-            stretch
-          /> */}
+          
           {ButtonNewSuiviClicked? <>
             <Ionicons
               name="ios-arrow-round-back"
