@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign, Feather } from '@expo/vector-icons';
 
@@ -11,6 +11,9 @@ import Profile from '@screens/Authenticated/Profile';
 import layout from '@styles/layout';
 import colors from '@styles/colors';
 import { BottomTabParamList } from './types';
+import { TouchableOpacity, View } from 'react-native';
+import AppText from '@components/atoms/AppText';
+import { ImageContext } from '@components/molecules/ImageContext';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -39,19 +42,21 @@ const renderTabBarIcon = ({
   throw new Error('renderTabBarIcon: No route found');
 };
 
+
 const BottomTabNavigator = (): ReactElement => (
+  
   <Tab.Navigator
-    initialRoute="Home"
-    screenOptions={({ route }): object => ({
-      tabBarIcon: ({ color }: { color: string }): ReactElement =>
-        renderTabBarIcon({ color, route }),
-    })}
-    tabBarOptions={{
-      activeTintColor: colors.primary,
-      inactiveTintColor: colors.greyDark,
-      style: { paddingVertical: 6 },
-    }}
-  >
+      initialRoute="Home"
+      screenOptions={({ route }): object => ({
+        tabBarIcon: ({ color }: { color: string }): ReactElement =>
+          renderTabBarIcon({ color, route }),
+      })}
+      tabBarOptions={{
+        activeTintColor: colors.primary,
+        inactiveTintColor: colors.greyDark,
+        style: { paddingVertical: 6 },
+      }}
+    >
     <Tab.Screen
       name="Home"
       component={Home}

@@ -1,4 +1,4 @@
-import React, { Component, ReactElement , useEffect, useReducer, useState} from 'react';
+import React, { Component, ReactElement , useContext, useEffect, useReducer, useState} from 'react';
 import {
   Text,
   StyleSheetProperties,
@@ -34,6 +34,8 @@ import { Pathologie } from '@store/types';
 import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
 import * as Sharing from "expo-sharing"
 import * as Print from "expo-print"
+import { ImageContext } from '@components/molecules/ImageContext';
+import ProfileAskPersonal from '@components/molecules/ProfileAskPersonnal';
 function Profile(): ReactElement {
   // State variable to toggle the visibility of elements
   const [showElements, setShowElements] = useState(false);
@@ -43,7 +45,8 @@ function Profile(): ReactElement {
   // State variable to manage the colors of pictos
   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
   const [forceRefresh, setForceRefresh] = useState<boolean>(false);
-useEffect(()=>{console.log("useefect profile works")},[])
+  const {imageProp, setImageProp } = useContext(ImageContext);
+useEffect(()=>{console.log("useefect profile works");setImageProp('avq.png')},[])
 // Function to handle editing the profile
   const onEditProfile = (): void => {
     Alert.alert(
@@ -81,10 +84,12 @@ useEffect(()=>{console.log("useefect profile works")},[])
     <Container noMarginBottom>
     
       <View style={styles.container}>
+        <View style={styles.container2}>
         <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
+        </View>
         <ScrollView>
        
-          <View style={styles.titleContainer}>
+          {/* <View style={styles.titleContainer}>
             <SubTitle text={user.username} style={styles.username} />
           </View>
           <View style={styles.infosContainer}>
@@ -94,11 +99,18 @@ useEffect(()=>{console.log("useefect profile works")},[])
 
           </View>
           
-          {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))}
+          {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))} */}
 
 
-     
+          <ProfileAskPersonal nameText={'Nom : '} inputPlaceholder={'Entrer votre nom'} displayPersonal />
+          <ProfileAskPersonal nameText={'Date de nais. : '} inputPlaceholder={'Entrer votre date de naissance'} displayPersonal />
+          <ProfileAskPersonal nameText={'Prénom : '} inputPlaceholder={''} displayPersonal={false}  />
+          <ProfileAskPersonal nameText={'Code : '} inputPlaceholder={''} displayPersonal={false}  />
+          <ProfileAskPersonal nameText={'Tel : '} inputPlaceholder={''} displayPersonal />
+          <ProfileAskPersonal nameText={'Mail : '} inputPlaceholder={''} displayPersonal />
+          <Button text={'Valider'} isSelected onPress={function (): void {
 
+          } } />
 
 
           <Button
@@ -183,9 +195,18 @@ export default Profile;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: layout.padding,
+
     flex: 1,
     flexDirection:'column',
+
+  },
+  container2: {
+    
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    padding: 10
+
   },
   titleContainer: {
     flexDirection: 'row',

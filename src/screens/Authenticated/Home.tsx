@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -28,6 +28,7 @@ import fonts from '@styles/fonts';
 import layout from '@styles/layout';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 import { getRecommandation } from '@helpers/utils';
+import { ImageContext } from '@components/molecules/ImageContext';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'Home'>;
@@ -45,8 +46,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   const [textReco, setTextReco] = useState<string>('');
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const [user, ] = useUserStore({ disease: MALADIE1 });
-
-
+  
   useEffect(() => {
     // When reports data is available, determine the recommendation and update image and text accordingly
     if (reports) {
