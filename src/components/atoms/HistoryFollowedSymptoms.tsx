@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet, FlatList, TouchableOpacity, ImageSourcePropType , Image } from 'react-native';
 import Modal, {ModalProps} from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';

@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
-    borderWidth: 1,
-    borderColor: 'salmon',
+    
   },
   touchable_1: {
     width: 70,
@@ -48,6 +47,8 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
   },
   touchable: {
     width: 40,

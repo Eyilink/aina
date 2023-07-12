@@ -26,7 +26,7 @@ import colors from '@styles/colors';
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
-import { CGU_URL, DATE_TODAY, MALADIE1 } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1, symptomeJSON } from '@constants/constants';
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
@@ -46,7 +46,10 @@ function Profile(): ReactElement {
   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
   const [forceRefresh, setForceRefresh] = useState<boolean>(false);
   const {imageProp, setImageProp } = useContext(ImageContext);
-useEffect(()=>{console.log("useefect profile works");setImageProp('avq.png')},[])
+
+useEffect(()=>{console.log("useefect profile wks");
+
+setImageProp('avq.png')},[])
 // Function to handle editing the profile
   const onEditProfile = (): void => {
     Alert.alert(
@@ -79,7 +82,7 @@ useEffect(()=>{console.log("useefect profile works");setImageProp('avq.png')},[]
     await WebBrowser.openBrowserAsync(CGU_URL);
   };
 
-
+const [vali , setValid] = useState(false);
   return (
     <Container noMarginBottom>
     
@@ -101,16 +104,60 @@ useEffect(()=>{console.log("useefect profile works");setImageProp('avq.png')},[]
           
           {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))} */}
 
+{!vali ? (
+  <>
+    <ProfileAskPersonal
+      nameText={'Nom : '}
+      inputPlaceholder={'Entrer votre nom'}
+      displayPersonal
+    />
+    <ProfileAskPersonal
+      nameText={'Date de nais. : '}
+      inputPlaceholder={'Entrer votre date de naissance'}
+      displayPersonal
+    />
+    <ProfileAskPersonal
+      nameText={'Prénom : '}
+      inputPlaceholder={''}
+      displayPersonal={false}
+    />
+    <ProfileAskPersonal
+      nameText={'Code : '}
+      inputPlaceholder={''}
+      displayPersonal={false}
+    />
+    <ProfileAskPersonal
+      nameText={'Tel : '}
+      inputPlaceholder={''}
+      displayPersonal
+    />
+    <ProfileAskPersonal
+      nameText={'Mail : '}
+      inputPlaceholder={''}
+      displayPersonal
+    />
+  </>
+) : (<>{symptomeJSON.filter((item) => {
+  return (
+    item.id === 41 ||
+    item.id === 42 ||
+    item.id === 43 ||
+    item.id === 122 ||
+    item.id === 133 ||
+    item.id === 131 ||
+    item.id === 251 ||
+    item.id === 252 ||
+    item.id === 253 ||
+    item.id === 254 ||
+    item.id === 255 ||
+    item.id === 256 ||
+    item.id === 257
+  );
+}).map((item)=>{
+  return <ProfileAskPersonal nameText={item.name} inputPlaceholder={''} displayPersonal={item.caractere == "Perso" ? true : false} />
+})}</>)}
 
-          <ProfileAskPersonal nameText={'Nom : '} inputPlaceholder={'Entrer votre nom'} displayPersonal />
-          <ProfileAskPersonal nameText={'Date de nais. : '} inputPlaceholder={'Entrer votre date de naissance'} displayPersonal />
-          <ProfileAskPersonal nameText={'Prénom : '} inputPlaceholder={''} displayPersonal={false}  />
-          <ProfileAskPersonal nameText={'Code : '} inputPlaceholder={''} displayPersonal={false}  />
-          <ProfileAskPersonal nameText={'Tel : '} inputPlaceholder={''} displayPersonal />
-          <ProfileAskPersonal nameText={'Mail : '} inputPlaceholder={''} displayPersonal />
-          <Button text={'Valider'} isSelected onPress={function (): void {
-
-          } } />
+          <Button text={'Valider'} isSelected onPress={()=>{setValid(!vali)} } />
 
 
           <Button
