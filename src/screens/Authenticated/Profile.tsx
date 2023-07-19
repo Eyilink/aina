@@ -20,7 +20,7 @@ import SubTitle from '@components/atoms/SubTitle';
 import AppText from '@components/atoms/AppText';
 import Button from '@components/atoms/Button';
 
-import { useUserStore } from '@store/store';
+import { useAuthStore, useUserStore } from '@store/store';
 
 import colors from '@styles/colors';
 import layout from '@styles/layout';
@@ -30,41 +30,83 @@ import { CGU_URL, DATE_TODAY, MALADIE1, symptomeJSON } from '@constants/constant
 import Symptoms from './Report/Symptoms';
 import NewSuivi from '@components/molecules/NewSuivi';
 import BoxPathologieProfile from '@components/atoms/BoxPathologieProfile';
-import { Pathologie } from '@store/types';
+import { Pathologie, Symptome } from '@store/types';
 import GeneratedDocument from "@components/atoms/GeneratedDocument.tsx"
 import * as Sharing from "expo-sharing"
 import * as Print from "expo-print"
 import { ImageContext } from '@components/molecules/ImageContext';
 import ProfileAskPersonal from '@components/molecules/ProfileAskPersonnal';
+import { InformationContext } from '@components/molecules/InformationContext';
+import { useFocusEffect } from '@react-navigation/native';
+import Diseases from '@screens/Public/Diseases';
 function Profile(): ReactElement {
   // State variable to toggle the visibility of elements
   const [showElements, setShowElements] = useState(false);
    // Custom hooks for accessing user data
-  const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const [, actions] = useAuthStore();
+  const [user, ] = useUserStore({ disease: MALADIE1 });
   const [ButtonNewSuiviClicked, setButtonNewSuiviClicked] = React.useState(false);
   // State variable to manage the colors of pictos
   const [couleursPictos, setCouleursPictos] = React.useState<Boolean[]>([true]);
   const [forceRefresh, setForceRefresh] = useState<boolean>(false);
   const {imageProp, setImageProp } = useContext(ImageContext);
+  const {infoText,setinfoText} = useContext(InformationContext);
+  const [isMod , setIsMod] = useState(false);
+  const [code,setCode] = useState<string>();
+  const [nom, setNom] = useState<string>('');
+  const [dateNaissance, setDateNaissance] = useState<string>('');
+  const [prenom, setPrenom] = useState<string>('');
+  const [tel, setTel] = useState<string>('');
+  const [mail, setMail] = useState<string>('');
 
-useEffect(()=>{console.log("useefect profile wks");
-
-setImageProp('avq.png')},[])
+  useFocusEffect(
+    React.useCallback(() => {
+      // Code to execute when the component becomes active (tab is focused)
+      console.log('Mon utilisateur date naissance est :' + user.birthDate);
+      console.log('Mon utilisateur date naissance est :' + user.code);
+      console.log('Mon utilisateur date naissance est :' + user.nom);
+      console.log('Mon utilisateur date naissance est :' + user.prenom);
+      console.log('Mon utilisateur date naissance est :' + user.tel);
+      console.log('Mon utilisateur date naissance est :' + user.mail);
+      user.my_personal_datas.forEach(p => p.symptoms.filter(item => item.id === 41 ||
+        item.id === 42 ||
+        item.id === 43 ||
+        item.id === 122 ||
+        item.id === 133 ||
+        item.id === 131 ||
+        item.id === 251 ||
+        item.id === 252 ||
+        item.id === 253 ||
+        item.id === 254 ||
+        item.id === 255 ||
+        item.id === 256 ||
+        item.id === 257).forEach(f=> console.log(f.name + "| +++ |" + f.data)));
+      setinfoText("Je suis dans la page profile !");
+      setImageProp('avq.png');
+      return () => {
+        // Code to execute when the component becomes inactive (tab is unfocused)
+        console.log('Component is unfocused');
+        setinfoText("");
+      };
+    }, [])
+  );
 // Function to handle editing the profile
   const onEditProfile = (): void => {
-    Alert.alert(
-      i18n.t('commons.attention'),
-      i18n.t('profile.erase'),
-      [
-        { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
-        {
-          text: i18n.t('commons.errors.ok'),
-          onPress: (): Promise<void> => actions.resetUserSession(),
-        },
+    // Alert.alert(
+    //   i18n.t('commons.attention'),
+    //   i18n.t('profile.erase'),
+    //   [
+    //     { text: i18n.t('commons.errors.cancel'), style: 'cancel' },
+    //     {
+    //       text: i18n.t('commons.errors.ok'),
+    //       onPress: (): Promise<void> => actions.resetUserSession(),
+    //     },
         
-      ],
-      { cancelable: false }
-    );
+    //   ],
+    //   { cancelable: false }
+    // );
+    setValid(false)
+    setIsMod(true);
   };
     // Function to handle the button click for new suivi
  const ValidateButtonNewSuiviPressed = (): void => {
@@ -81,6 +123,36 @@ setImageProp('avq.png')},[])
   const onPressCGU = async (): Promise<void> => {
     await WebBrowser.openBrowserAsync(CGU_URL);
   };
+  const addValueUser = (sympt: Symptome, val: string) => {
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    // Iterate over each pathology in my_personal_datas
+    user.my_personal_datas.forEach((pathology) => {
+      // Find the symptoms with the same id as the provided sympt
+      const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
+  
+      // Update the data field of each matching symptom
+
+      if (symptomsToUpdate[0]) {
+      
+      const newData = { date: formattedDate, valeur: val };
+
+      if (!symptomsToUpdate[0].data) {
+        // If data field doesn't exist, create a new array with the new data
+        symptomsToUpdate[0].data = [newData];
+      } else {
+        // If data field already exists, concatenate the new data to the existing array
+        symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+        }
+      }
+
+    console.log(pathology.symptoms);    
+    });
+  };
 
 const [vali , setValid] = useState(false);
   return (
@@ -88,142 +160,143 @@ const [vali , setValid] = useState(false);
     
       <View style={styles.container}>
         <View style={styles.container2}>
-        <Title isPrimary text={i18n.t('navigation.authenticated.profile')} />
+        {/* <Title isPrimary text={i18n.t('navigation.authenticated.profile')} /> */}
         </View>
         <ScrollView>
-       
-          {/* <View style={styles.titleContainer}>
-            <SubTitle text={user.username} style={styles.username} />
-          </View>
-          <View style={styles.infosContainer}>
-            <SubTitle
-              text={user.birthDate}
-              style={styles.info} />
-
-          </View>
-          
-          {user.my_personal_datas?.map((pathologie: Pathologie) => (<BoxPathologieProfile objet={pathologie}/>))} */}
-
-{!vali ? (
+        {!isMod ? (
   <>
-    <ProfileAskPersonal
-      nameText={'Nom : '}
-      inputPlaceholder={'Entrer votre nom'}
-      displayPersonal
+    {/* Content for the condition when isMod is false */}
+    
+    <View style={styles.infosContainer}>
+      {/* <SubTitle text={user.birthDate} style={styles.info} /> */}
+    </View>
+    {/* {user.my_personal_datas?.map((pathologie: Pathologie) => (
+      <BoxPathologieProfile objet={pathologie} />
+    ))} */}
+    <Button
+      text={i18n.t('profile.edit')}
+      onPress={onEditProfile}
+      isValidate
+      style={styles.editButton}
     />
-    <ProfileAskPersonal
-      nameText={'Date de nais. : '}
-      inputPlaceholder={'Entrer votre date de naissance'}
-      displayPersonal
-    />
-    <ProfileAskPersonal
-      nameText={'Prénom : '}
-      inputPlaceholder={''}
-      displayPersonal={false}
-    />
-    <ProfileAskPersonal
-      nameText={'Code : '}
-      inputPlaceholder={''}
-      displayPersonal={false}
-    />
-    <ProfileAskPersonal
-      nameText={'Tel : '}
-      inputPlaceholder={''}
-      displayPersonal
-    />
-    <ProfileAskPersonal
-      nameText={'Mail : '}
-      inputPlaceholder={''}
-      displayPersonal
+    <Button
+      text={'Exporter les données'}
+      onPress={async () => {
+        // Export data logic
+      }}
     />
   </>
-) : (<>{symptomeJSON.filter((item) => {
-  return (
-    item.id === 41 ||
-    item.id === 42 ||
-    item.id === 43 ||
-    item.id === 122 ||
-    item.id === 133 ||
-    item.id === 131 ||
-    item.id === 251 ||
-    item.id === 252 ||
-    item.id === 253 ||
-    item.id === 254 ||
-    item.id === 255 ||
-    item.id === 256 ||
-    item.id === 257
-  );
-}).map((item)=>{
-  return <ProfileAskPersonal nameText={item.name} inputPlaceholder={''} displayPersonal={item.caractere == "Perso" ? true : false} />
-})}</>)}
+) : (
+  <>
+    {/* Content for the condition when isMod is true */}
+    {!vali ? (
+      <>
+        {/* Content for the condition when vali is false */}
+        <ProfileAskPersonal
+                      nameText={'Nom : '}
+                      inputPlaceholder={''}
+                      displayPersonal
+                      onTextChange={(text: string) => setNom(text)} 
+                      initValue={user.nom}                  />
+                  <ProfileAskPersonal
+                    nameText={'Date de nais. : '}
+                    inputPlaceholder={''}
+                    displayPersonal
+                    onTextChange={(text: string) => setDateNaissance(text)}
+                    initValue={user.birthDate} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Prénom : '}
+                    inputPlaceholder={''}
+                    displayPersonal={false}
+                    onTextChange={(text: string) => setPrenom(text)}
+                    initValue={user.prenom} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Code : '}
+                    inputPlaceholder={''}
+                    displayPersonal={false}
+                    onTextChange={(text: string) => setCode(text)}
+                    initValue={user.code} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Tel : '}
+                    inputPlaceholder={''}
+                    displayPersonal
+                    onTextChange={(text: string) => setTel(text)}
+                    initValue={user.tel} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Mail : '}
+                    inputPlaceholder={''}
+                    displayPersonal
+                    onTextChange={(text: string) => setMail(text)}
+                    initValue={user.mail} 
+                  />
+                  <Button
+                    text={'Valider'}
+                    isSelected
+                    onPress={() => {
+                      setValid(!vali);
+                      actions.editUserProfile({ key: 'code', value: code ? code.trim() : "" });
+                      actions.editUserProfile({ key: 'nom', value: nom ? nom.trim() : "" });
+                      actions.editUserProfile({ key: 'birthDate', value: dateNaissance ? dateNaissance.trim() : "" });
+                      actions.editUserProfile({ key: 'prenom', value: prenom ? prenom.trim() : "" });
+                      actions.editUserProfile({ key: 'tel', value: tel ? tel.trim() : "" });
+                      actions.editUserProfile({ key: 'mail', value: mail ? mail.trim() : "" });
+                     
+                    }}
+                  />
+      </>
+    ) : (
+      <>
+        {/* Content for the condition when vali is true */}
+        {symptomeJSON
+          .filter((item) => {
+            return (
+              item.id === 41 ||
+              item.id === 42 ||
+              item.id === 43 ||
+              item.id === 122 ||
+              item.id === 133 ||
+              item.id === 131 ||
+              item.id === 251 ||
+              item.id === 252 ||
+              item.id === 253 ||
+              item.id === 254 ||
+              item.id === 255 ||
+              item.id === 256 ||
+              item.id === 257
+            );
+          })
+          .map((item) => {
+            return (
+              <ProfileAskPersonal
+                nameText={item.name}
+                inputPlaceholder={''}
+                displayPersonal={item.caractere === 'Perso'}
+                initValue=''
+                onTextChange={(text:string)=>{ addValueUser(item,text);
+                }}
+              />
+            );
+          })}
+           <Button
+      text={'Valider'}
+      isSelected
+      onPress={() => {
+        setIsMod(!isMod);
+        actions.saveUserProfile();
+        actions.signupUser();
+      }}
+    />
+      </>
+    )}
+   
+  </>
+)}
 
-          <Button text={'Valider'} isSelected onPress={()=>{setValid(!vali)} } />
-
-
-          <Button
-            text={i18n.t('profile.edit')}
-            onPress={onEditProfile}
-            isValidate
-            style={styles.editButton} />
-
-          <Button
-            text={"Exporter les données"}
-            onPress={async()=>{
-
-              function tohtml(re){
-                if(typeof re!="object") {
-                  return re
-                } else if(re.map) {
-                  return re.map(tohtml).join("")
-                } else if(re.type.call) {
-                  return tohtml(re.type(re.props))
-                }else{
-                  return (
-                    "<"+re.type+" "+Object.keys(re.props).map(p=>{
-                      if(p=="children")return"";
-                      return p+"="+'"'+re.props[p]+'"'
-                    }).join("")+">"+(()=>{
-                      let children
-                      if(!re.props.children)
-                        children=[]
-                      else if (!re.props.children.map)
-                        children = [re.props.children]
-                      else
-                        children = re.props.children
-                      return tohtml(children)
-                    })()+"</"+re.type+">"
-                  )
-                }
-              }
-
-              function getUserData(user) {
-                const symptoms = new Map()
-                const pathologies = user.my_personal_datas||[]
-                pathologies.forEach(patho=>{
-                  patho.symptoms.forEach(spt=>{
-                    symptoms.set(
-                      spt.id.toString(),
-                      spt
-                    )
-                  })
-                })
-                return {
-                  pathologies:pathologies,
-                  symptoms:[...symptoms.values()]
-                }
-              }
-              const html = tohtml(GeneratedDocument({
-                userData:getUserData(user)
-              }))
-              
-              const { uri } = await Print.printToFileAsync({
-                html: html
-              })
-              await Sharing.shareAsync(
-                uri
-              )
-            }}
-          />
+          
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
@@ -306,13 +379,12 @@ const styles = StyleSheet.create({
     marginHorizontal: layout.padding,
   },
   editButton: {
-    marginTop:layout.padding * 5,
-    marginBottom: layout.padding ,
+    
   },
   cgu: {
     textAlign: 'center',
     fontSize: fonts.label.fontSize,
-    marginTop:(-25),
+
     marginBottom: layout.padding,
     textDecorationLine: 'underline',
     color: colors.greyDark,

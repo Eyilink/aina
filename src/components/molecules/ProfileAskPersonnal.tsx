@@ -7,6 +7,7 @@ interface ProfileAskPersonalProps {
   inputPlaceholder: string;
   displayPersonal: boolean;
   onTextChange?: (text: string) => void;
+  initValue: string,
 }
 
 const ProfileAskPersonal = ({
@@ -14,8 +15,9 @@ const ProfileAskPersonal = ({
   inputPlaceholder,
   displayPersonal,
   onTextChange,
+  initValue
 }: ProfileAskPersonalProps) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState(initValue);
   const [isPersonal, setIsPersonal] = useState(false);
   const [isDataComp, setIsDataComp] = useState(false);
   const handleTextChange = (text: string) => {

@@ -29,6 +29,8 @@ import layout from '@styles/layout';
 import { DATE_TODAY, MALADIE1 } from '@constants/constants';
 import { getRecommandation } from '@helpers/utils';
 import { ImageContext } from '@components/molecules/ImageContext';
+import { InformationContext } from '@components/molecules/InformationContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'Home'>;
@@ -46,8 +48,22 @@ const Home = ({ navigation }: Props): ReactElement => {
   const [textReco, setTextReco] = useState<string>('');
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const [user, ] = useUserStore({ disease: MALADIE1 });
+  const {infoText,setinfoText} = useContext(InformationContext);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Code to execute when the component becomes active (tab is focused)
+      console.log('Component is focused');
+      setinfoText("Je suis dans la page home !")
+      return () => {
+        // Code to execute when the component becomes inactive (tab is unfocused)
+        console.log('Component is unfocused');
+        setinfoText("");
+      };
+    }, [])
+  );
   
   useEffect(() => {
+    setinfoText("Je suis dans la page home !");
     // When reports data is available, determine the recommendation and update image and text accordingly
     if (reports) {
       const recommandation = getRecommandation(reports);
@@ -70,6 +86,9 @@ const Home = ({ navigation }: Props): ReactElement => {
           break;
       }
     
+    }
+    return () => {
+      setinfoText("");
     }
     
   }, [reports]);

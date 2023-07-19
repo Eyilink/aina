@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Image, ImageSourcePropType, TouchableOpacity, Text } from 'react-native';
 import AppText from '@components/atoms/AppText';
 import { AntDesign } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import json_p from '@assets/json/pathologies.json'
 import { Pathologie, Symptome } from '@store/types';
 import colors from '@styles/colors';
+import { ImageContext } from './ImageContext';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -34,10 +35,13 @@ interface chk_BoxProps {
 
 export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const {imageProp,setImageProp} = useContext(ImageContext);
     useEffect(()=>{
       // Check if the symptom is already selected by the user
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
-        
+        const path = json_p.find((item)=>item.id.toString() == id_p);
+        if(path)
+          setImageProp(path.logo);
         setIsChecked(checked);
 
     },[])

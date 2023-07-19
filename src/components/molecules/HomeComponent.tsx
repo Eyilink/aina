@@ -41,9 +41,7 @@ const parsedDate = `${day}/${month}`;
 
   return (
     <Container style={styles.container}>
-    <Title
-          text={user.username+"   " + parsedDate}
-        />
+    
     {!ButtonClicked? 
       <>
         {/* If isDataEmpty is true, display a message indicating no data */}
@@ -86,8 +84,7 @@ const parsedDate = `${day}/${month}`;
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+
     },
     custom_title: { 
       fontSize: 30,
