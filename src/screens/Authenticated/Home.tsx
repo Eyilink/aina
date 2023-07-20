@@ -109,7 +109,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: layout.padding,
+
   },
   title: {
     paddingBottom: layout.padding / 2,

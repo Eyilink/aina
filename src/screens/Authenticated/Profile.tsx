@@ -52,12 +52,12 @@ function Profile(): ReactElement {
   const {imageProp, setImageProp } = useContext(ImageContext);
   const {infoText,setinfoText} = useContext(InformationContext);
   const [isMod , setIsMod] = useState(false);
-  const [code,setCode] = useState<string>();
-  const [nom, setNom] = useState<string>('');
-  const [dateNaissance, setDateNaissance] = useState<string>('');
-  const [prenom, setPrenom] = useState<string>('');
-  const [tel, setTel] = useState<string>('');
-  const [mail, setMail] = useState<string>('');
+  const [code,setCode] = useState<string>(user.code);
+  const [nom, setNom] = useState<string>(user.nom);
+  const [dateNaissance, setDateNaissance] = useState<string>(user.birthDate);
+  const [prenom, setPrenom] = useState<string>(user.prenom);
+  const [tel, setTel] = useState<string>(user.tel);
+  const [mail, setMail] = useState<string>(user.mail);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -160,19 +160,20 @@ const [vali , setValid] = useState(false);
     
       <View style={styles.container}>
         <View style={styles.container2}>
-        {/* <Title isPrimary text={i18n.t('navigation.authenticated.profile')} /> */}
+        {!isMod ? null : (!vali ? <Title isPrimary text={i18n.t('navigation.authenticated.profile')} /> : null)}
         </View>
         <ScrollView>
         {!isMod ? (
   <>
     {/* Content for the condition when isMod is false */}
     
-    <View style={styles.infosContainer}>
-      {/* <SubTitle text={user.birthDate} style={styles.info} /> */}
-    </View>
-    {/* {user.my_personal_datas?.map((pathologie: Pathologie) => (
+    {/* <View style={styles.infosContainer}>
+      <SubTitle text={user.birthDate} style={styles.info} />
+    </View> */}
+    
+    {user.my_personal_datas?.map((pathologie: Pathologie) => (
       <BoxPathologieProfile objet={pathologie} />
-    ))} */}
+    ))}
     <Button
       text={i18n.t('profile.edit')}
       onPress={onEditProfile}
@@ -275,7 +276,7 @@ const [vali , setValid] = useState(false);
                 nameText={item.name}
                 inputPlaceholder={''}
                 displayPersonal={item.caractere === 'Perso'}
-                initValue=''
+                initValue={''}
                 onTextChange={(text:string)=>{ addValueUser(item,text);
                 }}
               />
@@ -285,7 +286,7 @@ const [vali , setValid] = useState(false);
       text={'Valider'}
       isSelected
       onPress={() => {
-        setIsMod(!isMod);
+        setIsMod(false);
         actions.saveUserProfile();
         actions.signupUser();
       }}

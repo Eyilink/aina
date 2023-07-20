@@ -220,6 +220,13 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
                   {item.symptoms.map((symptom, idx) => (
                     <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
                   ))}
+                  <Button
+          text={i18n.t('commons.validate')}
+          onPress={()=>{handleButtonPress();}}
+          isSelected
+         
+          style={{}}
+        />
                 </React.Fragment>
               );
             } else {
@@ -255,7 +262,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         </ScrollView>
       )}
       </View>
-      {!isSymptom &&
+      {/* {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
           onPress={()=>{handleButtonPress();}}
@@ -263,7 +270,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
           stretch
           style={{marginTop: 10}}
         />
-      }
+      } */}
       
     </View>
   ) : null;

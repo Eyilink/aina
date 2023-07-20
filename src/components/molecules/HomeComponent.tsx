@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
@@ -25,6 +25,8 @@ const HomeComponent = ({
 }: Props): ReactElement => {
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [user, ] = useUserStore({ disease: MALADIE1 });
+  const [carryOnSuivi, setCarryOnsuivi] = useState(false);
+  const [rData,setRData] = useState(false);
 
     // ValidatePressed is triggered when the validation button is pressed.
   // It toggles the ButtonClicked state.
@@ -40,7 +42,7 @@ const HomeComponent = ({
 const parsedDate = `${day}/${month}`;
 
   return (
-    <Container style={styles.container}>
+    <View style={styles.container}>
     
     {!ButtonClicked? 
       <>
@@ -49,7 +51,10 @@ const parsedDate = `${day}/${month}`;
         <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
       : 
       <>
+        {carryOnSuivi ? <>
         <HistoryFollowedSymptoms/>
+        <Button text={'Fermer les suivis'} onPress={()=>{setCarryOnsuivi(false)}}/>
+         </>: null }
         {/* <Button
           text="Renseigner une donnée ponctuelle"
           onPress={()=>{}}
@@ -57,12 +62,26 @@ const parsedDate = `${day}/${month}`;
         /> */}
       </>}
 {/* Display the validation button */}
+{carryOnSuivi ? null : (<>
+<Button
+        text={'Continuer un suivi'}
+        style={{minWidth: '90%'}}
+        onPress={()=>{setCarryOnsuivi(true)}}
+        
+      />
       <Button
-        text={i18n.t('commons.newsuivi')}
+        text={'Lancer un suivi'}
         style={{minWidth: '90%'}}
         onPress={ValidatePressed}
-        stretch
-      /></>
+        
+      />
+      <Button
+        text={'Renseigner une donnée'}
+        style={{minWidth: '90%'}}
+        onPress={()=>{}}
+        
+      /></>) }
+      </>
     :<>
         {/* Display the back button that allows to go back to the previous screen */}
       <Ionicons
@@ -77,13 +96,14 @@ const parsedDate = `${day}/${month}`;
       </View>
     </>
     }
-    </Container>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent: 'center'
 
     },
     custom_title: { 

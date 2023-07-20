@@ -188,7 +188,7 @@ const History = ({ }: Props): ReactElement => {
         </>
       : 
         <> 
-        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
+        {/* <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />    */}
         {
           user.my_personal_datas?.map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
