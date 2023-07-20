@@ -16,6 +16,7 @@ import { useAuthStore, useUserStore } from '@store/store';
 import { useFocusEffect } from '@react-navigation/native';
 import { Pathologie } from '@store/types';
 import json_p from '@assets/json/pathologies.json'
+import DataAddPopUp from '@components/popUp/DataAddPopUp';
 
 
 type Props = {
@@ -161,9 +162,11 @@ const parsedDate = `${day}/${month}`;
       <Button
         text={'Renseigner une donnée'}
         style={{minWidth: '90%'}}
-        onPress={()=>{}}
+        onPress={()=>{setRData(true)}}
         
-      /></>) }
+      />
+      <DataAddPopUp isVisible={rData} onClose={()=>{setRData(false)}} />
+      </>) }
       </>
     :<>
         {/* Display the back button that allows to go back to the previous screen */}

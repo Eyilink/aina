@@ -22,6 +22,7 @@ import moment from 'moment';
 type InputSymptomeProps = {
   s: Symptome;
   onClose: () => void; // onClose function prop
+  onArrow?: ()=> void;
 };
 
 
@@ -192,7 +193,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
 
 
-const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
+const InputSymptome = ({ s, onClose , onArrow }: InputSymptomeProps): ReactElement => {
 
 
   return (
@@ -202,9 +203,9 @@ const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
       <View style={styles.popUpContainer}>
       <Ionicons
         name="ios-arrow-round-back"
-        size={layout.navigation.previousIcon.size}
+        size={48}
         color={colors.black}
-        onPress={onClose}
+        onPress={onArrow}
         style={{marginLeft:12}}
       />
         <Text style={styles.subtitle}>
