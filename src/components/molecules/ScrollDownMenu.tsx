@@ -236,7 +236,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         </ScrollView>
       ) : (
         <ScrollView>
-          {items.map((item, index) => (
+          {items.filter(p=> p.id != "21").map((item, index) => (
             <TouchableOpacity
             key={index}
             style={[

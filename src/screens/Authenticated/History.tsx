@@ -190,13 +190,13 @@ const History = ({ }: Props): ReactElement => {
         <> 
         {/* <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />    */}
         {
-          user.my_personal_datas?.map((object, index) => {    
+          user.my_personal_datas?.filter(p => p.id != "21").map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
         }  
         <View style={styles.separator} />   
         {
-          user.my_previous_personal_datas?.map((object, index) => {    
+          user.my_previous_personal_datas?.filter(p => p.id != "21").map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPathPrev(index)} key={index} objet={object}/>);      
           })
         }  

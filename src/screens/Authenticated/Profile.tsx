@@ -150,7 +150,8 @@ function Profile(): ReactElement {
         }
       }
 
-    console.log(pathology.symptoms);    
+    console.log(pathology.symptoms);  
+    console.log("Value added !")  
     });
   };
 
@@ -171,7 +172,7 @@ const [vali , setValid] = useState(false);
       <SubTitle text={user.birthDate} style={styles.info} />
     </View> */}
     
-    {user.my_personal_datas?.map((pathologie: Pathologie) => (
+    {user.my_personal_datas?.filter(p => p.id != "21").map((pathologie: Pathologie) => (
       <BoxPathologieProfile objet={pathologie} />
     ))}
     <Button

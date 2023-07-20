@@ -73,7 +73,7 @@ const Suivi = (): ReactElement => {
             <NewSuivi setButtonNewSuiviClicked={setButtonNewSuiviClicked}/></>  : 
           <>
             <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
-            {user.my_personal_datas?user.my_personal_datas.map((pathologie: Pathologie) => 
+            {user.my_personal_datas?user.my_personal_datas.filter(p=>p.id != "21").map((pathologie: Pathologie) => 
               
                 pathologie && pathologie.symptoms && pathologie.symptoms.length > 0 && (<RecapSuivi objet={pathologie} />)
               ):null
