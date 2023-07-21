@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Image, ImageSourcePropType, TouchableOpacity, Text } from 'react-native';
 import AppText from '@components/atoms/AppText';
 import { AntDesign } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import json_p from '@assets/json/pathologies.json'
 import { Pathologie, Symptome } from '@store/types';
 import colors from '@styles/colors';
+import { ImageContext } from './ImageContext';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -34,10 +35,13 @@ interface chk_BoxProps {
 
 export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const {imageProp,setImageProp} = useContext(ImageContext);
     useEffect(()=>{
       // Check if the symptom is already selected by the user
         const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
-        
+        const path = json_p.find((item)=>item.id.toString() == id_p);
+        if(path)
+          setImageProp(path.logo);
         setIsChecked(checked);
 
     },[])
@@ -134,6 +138,8 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
             frequency: filteredObj.frequency,
             data: pd_obj ? pd_obj.symptoms.find((s)=> s.id == filteredObj.id)?.data : null,
             unit: filteredObj.unit,
+            valMax: filteredObj.valMax,
+            valMin: filteredObj.valMin
           })),
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
@@ -216,6 +222,13 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
                   {item.symptoms.map((symptom, idx) => (
                     <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
                   ))}
+                  <Button
+          text={i18n.t('commons.validate')}
+          onPress={()=>{handleButtonPress();}}
+          isSelected
+         
+          style={{}}
+        />
                 </React.Fragment>
               );
             } else {
@@ -225,7 +238,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         </ScrollView>
       ) : (
         <ScrollView>
-          {items.map((item, index) => (
+          {items.filter(p=> p.id != "21").map((item, index) => (
             <TouchableOpacity
             key={index}
             style={[
@@ -251,7 +264,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         </ScrollView>
       )}
       </View>
-      {!isSymptom &&
+      {/* {!isSymptom &&
       <Button
           text={i18n.t('commons.validate')}
           onPress={()=>{handleButtonPress();}}
@@ -259,7 +272,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
           stretch
           style={{marginTop: 10}}
         />
-      }
+      } */}
       
     </View>
   ) : null;

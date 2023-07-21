@@ -34,7 +34,7 @@ const History = ({ }: Props): ReactElement => {
   const [graph, graphClicked] = React.useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   const [isPrevious, setPrevious] = React.useState(false);
-  const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas : user.my_personal_datas ;
+  const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas.filter(p=>p.id!="21") : user.my_personal_datas.filter(p=>p.id!="21") ;
 
 // Handler for clicking on a path
   const onPressPath = (index : number): void =>{
@@ -188,15 +188,15 @@ const History = ({ }: Props): ReactElement => {
         </>
       : 
         <> 
-        <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />   
+        {/* <AppText text={i18n.t('navigation.authenticated.history')} style={styles.pagetitle} />    */}
         {
-          user.my_personal_datas?.map((object, index) => {    
+          user.my_personal_datas?.filter(p => p.id != "21").map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPath(index)} key={index} objet={object}/>);      
           })
         }  
         <View style={styles.separator} />   
         {
-          user.my_previous_personal_datas?.map((object, index) => {    
+          user.my_previous_personal_datas?.filter(p => p.id != "21").map((object, index) => {    
             return (<BoxHistorique onPress={() => onPressPathPrev(index)} key={index} objet={object}/>);      
           })
         }  

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet, FlatList, TouchableOpacity, ImageSourcePropType , Image } from 'react-native';
 import Modal, {ModalProps} from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
@@ -212,7 +212,7 @@ function HistoryFollowedSymptoms() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={user.my_personal_datas}
+        data={user.my_personal_datas.filter(p => p.id != "21")}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         style={styles.flatListContainer}

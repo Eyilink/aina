@@ -29,6 +29,12 @@ export type User = {
   my_personal_datas: Pathologie[];
   my_previous_personal_datas: Pathologie[];
   reminder: Reminder;
+  code: string,
+  tel: string,
+  mail: string,
+  nom: string,
+  prenom: string
+
 };
 
 export type PainSymptoms = {
@@ -90,7 +96,7 @@ export type SymptomeJSON = {
 
 export type Data = { 
   date: string,
-  valeur:number,
+  valeur:number | string,
 };
 export type Symptome = {
   id: number;
@@ -101,7 +107,8 @@ export type Symptome = {
   question?: String,
   valMin?: number,
   valMax?: number,
-  unit?:string
+  unit?:string,
+  caractere?: string
 };
   
 export type Pathologie = {

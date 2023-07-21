@@ -1,4 +1,4 @@
-import React, { ReactElement , useState } from 'react';
+import React, { ReactElement , useContext, useEffect, useState } from 'react';
 import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -21,6 +21,8 @@ import RecapSuivi from '@components/molecules/RecapSuivi';
 import { Pathologie, Symptome } from '@store/types';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
+import { InformationContext } from '@components/molecules/InformationContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -40,7 +42,21 @@ const Suivi = (): ReactElement => {
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
   };
-  
+  const {infoText,setinfoText} = useContext(InformationContext);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Code to execute when the component becomes active (tab is focused)
+      console.log('Component is focused');
+      setinfoText("Je suis dans la page suivi !")
+      return () => {
+        // Code to execute when the component becomes inactive (tab is unfocused)
+        console.log('Component is unfocused');
+        setinfoText("");
+      };
+    }, [])
+  );
+
+ 
  
   return (
     <Container noMarginBottom>
@@ -57,7 +73,7 @@ const Suivi = (): ReactElement => {
             <NewSuivi setButtonNewSuiviClicked={setButtonNewSuiviClicked}/></>  : 
           <>
             <Title isDate text={i18n.t('commons.today')+DATE_TODAY} />
-            {user.my_personal_datas?user.my_personal_datas.map((pathologie: Pathologie) => 
+            {user.my_personal_datas?user.my_personal_datas.filter(p=>p.id != "21").map((pathologie: Pathologie) => 
               
                 pathologie && pathologie.symptoms && pathologie.symptoms.length > 0 && (<RecapSuivi objet={pathologie} />)
               ):null

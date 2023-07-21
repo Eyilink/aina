@@ -6,15 +6,30 @@ interface ProfileAskPersonalProps {
   nameText: string;
   inputPlaceholder: string;
   displayPersonal: boolean;
+  onTextChange?: (text: string) => void;
+  initValue?: string | number,
 }
 
 const ProfileAskPersonal = ({
   nameText,
   inputPlaceholder,
   displayPersonal,
+  onTextChange,
+  initValue
 }: ProfileAskPersonalProps) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState(initValue?.toString());
   const [isPersonal, setIsPersonal] = useState(false);
+  const [isDataComp, setIsDataComp] = useState(false);
+  const handleTextChange = (text: string) => {
+    setName(text);
+    if (onTextChange) {
+      onTextChange(text);
+    }
+  };
+
+  const handleCheckboxChange = (value: boolean) => {
+    setIsPersonal(value);
+  };
 
   return (
     <View style={styles.container}>
@@ -23,7 +38,7 @@ const ProfileAskPersonal = ({
         <TextInput
           style={styles.input}
           value={name}
-          onChangeText={setName}
+          onChangeText={handleTextChange}
           placeholder={inputPlaceholder}
         />
       </View>
@@ -32,7 +47,7 @@ const ProfileAskPersonal = ({
           <AppText style={styles.personalLabel} text='Strictement personnel' />
           <CheckBox
             value={isPersonal}
-            onValueChange={setIsPersonal}
+            onValueChange={handleCheckboxChange}
             style={styles.checkbox}
           />
         </View>
@@ -53,7 +68,7 @@ const styles = StyleSheet.create({
   label: {
     marginRight: 8,
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   input: {
     flex: 1,

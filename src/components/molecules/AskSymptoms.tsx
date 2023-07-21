@@ -18,22 +18,24 @@ import { MALADIE1 } from '@constants/constants';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
 import moment from 'moment';
+import ProfileAskPersonal from './ProfileAskPersonnal';
 
 type InputSymptomeProps = {
   s: Symptome;
   onClose: () => void; // onClose function prop
+  onArrow?: ()=> void;
 };
 
 
 
-const InputBox = ({ s, onClose }: InputSymptomeProps) => {
+export const InputBox = ({ s, onClose }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [hasUserChosen, setHasUserChosen] = useState(false);
   const initialSliderValue = s.name === "Température" ? 36 : 0;
   const [sliderValue, setSliderValue] = useState(initialSliderValue);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
 
-  const addValueUser = (sympt: Symptome, val: number) => {
+  const addValueUser = (sympt: Symptome, val: number | string) => {
     const currentDate = new Date();
     const day = currentDate.getDate().toString().padStart(2, '0');
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
@@ -107,11 +109,17 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     }
 
     if (typeof s.valMin !== 'undefined') {
-      minimumValue = s.valMin;
+      if(typeof s.valMin === 'string')
+        minimumValue = parseFloat(s.valMin);
+      else
+        minimumValue = s.valMin;
     }
 
     if (typeof s.valMax !== 'undefined') {
-      maximumValue = s.valMax;
+      if(typeof s.valMax === 'string')
+        maximumValue = parseFloat(s.valMax);
+      else
+        maximumValue = (s.valMax);
     }
 
     symptomText = (
@@ -184,7 +192,15 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
       </View>
     );
   } else {
-    symptomText = <Text>Type de symptome inconnu</Text>;
+    symptomText = (
+    <View>
+    <ProfileAskPersonal nameText={s.name} inputPlaceholder={''} displayPersonal={false} initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(t=>t.id==s.id)?.data?.slice(-1)[0].valeur} />
+    <Button
+          text="Validate"
+          onPress={handleValidate}
+          isSelected
+        />
+    </View>)
   }
 
   return symptomText;
@@ -192,7 +208,7 @@ const InputBox = ({ s, onClose }: InputSymptomeProps) => {
 
 
 
-const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
+const InputSymptome = ({ s, onClose , onArrow }: InputSymptomeProps): ReactElement => {
 
 
   return (
@@ -202,9 +218,9 @@ const InputSymptome = ({ s, onClose }: InputSymptomeProps): ReactElement => {
       <View style={styles.popUpContainer}>
       <Ionicons
         name="ios-arrow-round-back"
-        size={layout.navigation.previousIcon.size}
+        size={48}
         color={colors.black}
-        onPress={onClose}
+        onPress={onArrow ? onArrow : onClose}
         style={{marginLeft:12}}
       />
         <Text style={styles.subtitle}>

@@ -77,12 +77,7 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
         <ScrollView>
           <DropDownMenu objets={pathologieJSON} ischeckeable={true}/> 
         </ScrollView>
-        <Button
-          text={i18n.t('commons.validate')}
-          onPress={ValidatePressed}
-          isValidate
-          stretch
-        />
+
     </SafeAreaView>
     </>) : (
     <>
@@ -120,6 +115,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: -40
   },
 });
 

@@ -158,7 +158,10 @@
     "end2": "Vous avez un symptôme évocateur.\n\nRestez chez vous.\n\nSuivez l’évolution de vos symptômes.",
     "end2bis": "Vous n’avez pas de symptômes évocateurs aujourd’hui.\n\nVous en aviez dans les 3 derniers jours donc soyez très vigilant.",
     "end3": "Vous avez au moins deux symptômes évocateurs.\n\nRestez chez vous et contactez un médecin. Si vous l’avez déjà fait, continuez de suivre vos symptômes.\n\nContactez un médecin ou le 15 en cas d’aggravation.",
-    "nodata": "Vous ne suivez actuellement aucune données."
+    "nodata": "Vous ne suivez actuellement aucune données.",
+    "button_top" : "Continuer un suivi",
+    "button_mid" : "Lancer un suivi",
+    "button_bot" : "Renseigner un donnée"
 
   },
   "history": {
