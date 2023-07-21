@@ -277,7 +277,7 @@ const [vali , setValid] = useState(false);
                 nameText={item.name}
                 inputPlaceholder={''}
                 displayPersonal={item.caractere === 'Perso'}
-                initValue={''}
+                initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id==item.id)?.data?.slice(-1)[0].valeur}
                 onTextChange={(text:string)=>{ addValueUser(item,text);
                 }}
               />

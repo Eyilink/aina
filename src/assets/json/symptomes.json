@@ -212,7 +212,9 @@
       "id": 41,
       "name": "Taille",
       "type": "Num.",
-      "unit": "_ _ _ _ cm"
+      "unit": "_ _ _ _ cm",
+      "valMin": "130",
+      "valMax": "210"
     },
     {
       "id": 42,

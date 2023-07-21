@@ -101,6 +101,8 @@ const HomeComponent = ({
             frequency: filteredObj.frequency,
             data: pd_obj ? pd_obj.symptoms.find((s)=> s.id == filteredObj.id)?.data : null,
             unit: filteredObj.unit,
+            valMax: filteredObj.valMax,
+            valMin: filteredObj.valMin
           })),
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
@@ -148,19 +150,19 @@ const parsedDate = `${day}/${month}`;
 {/* Display the validation button */}
 {carryOnSuivi ? null : (<>
 <Button
-        text={'Continuer un suivi'}
+        text={i18n.t('home.button_top')}
         style={{minWidth: '90%'}}
         onPress={()=>{setCarryOnsuivi(true)}}
         
       />
       <Button
-        text={'Lancer un suivi'}
+        text={i18n.t('home.button_mid')}
         style={{minWidth: '90%'}}
         onPress={ValidatePressed}
         
       />
       <Button
-        text={'Renseigner une donnée'}
+        text={i18n.t('home.button_bot')}
         style={{minWidth: '90%'}}
         onPress={()=>{setRData(true)}}
         
