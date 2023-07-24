@@ -12,9 +12,11 @@ import Previous from '@components/atoms/Previous';
 import { useAuthStore } from '@store/store';
 import { PublicStackParamList } from '@navigation/types';
 import { alertError, isNumeric } from '@helpers/utils';
-
+import JsonS from '@assets/json/symptomes.json'
 import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
+import ProfileAskPersonal from '@components/molecules/ProfileAskPersonnal';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = {
   navigation: StackNavigationProp<PublicStackParamList, 'Age'>;
@@ -25,7 +27,12 @@ const BirthDateForm = ({ navigation }: Props) => {
   const [month, setMonth] = useState('0');
   const [year, setYear] = useState('2023');
   const [, actions] = useAuthStore();
-
+  const [code,setCode] = useState<string>();
+  const [nom, setNom] = useState<string>();
+  const [dateNaissance, setDateNaissance] = useState<string>();
+  const [prenom, setPrenom] = useState<string>();
+  const [tel, setTel] = useState<string>();
+  const [mail, setMail] = useState<string>();
   
   const onChangeDay = (value : string) => {
     setDay(value);
@@ -68,7 +75,7 @@ const BirthDateForm = ({ navigation }: Props) => {
       const age = calculateAge(birthDate);
       actions.editUserProfile({ key: 'birthDate', value: birthDate });
       actions.editUserProfile({ key: 'age', value: age });
-      navigation.navigate("MoreData");
+      navigation.navigate("Reminder");
       console.log(birthDate);
     }
   };
@@ -99,8 +106,8 @@ const BirthDateForm = ({ navigation }: Props) => {
           <Title text={i18n.t('signup.sectionTitle')} />
           <Previous />
         </View>
-        <SubTitle text={i18n.t('signup.questions.dateDeNaissance')} />
-        <View style={styles.pickerContainer}>
+        {/* <SubTitle text={i18n.t('signup.questions.dateDeNaissance')} /> */}
+        {/* <View style={styles.pickerContainer}>
           <View style={styles.pickerItem}>
             <Picker
               selectedValue={day}
@@ -134,10 +141,66 @@ const BirthDateForm = ({ navigation }: Props) => {
               ))}
             </Picker>
           </View>
-        </View>
-        <Button style={styles.button}
-        text={i18n.t('signup.validate')}
-        onPress={onValidate} isValidate />
+        </View> */}
+        <ScrollView>
+        <ProfileAskPersonal
+                      nameText={'Nom : '}
+                      inputPlaceholder={''}
+                      displayPersonal
+                      onTextChange={(text: string) => setNom(text)} 
+                      initValue={JsonS.find(i => i.id == 7)?.unit}                  />
+                  <ProfileAskPersonal
+                    nameText={'Date de nais. : '}
+                    inputPlaceholder={JsonS.find(i => i.id == 11)?.unit}
+                    displayPersonal
+                    onTextChange={(text: string) => setDateNaissance(text)}
+                    initValue={''} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Prénom : '}
+                    inputPlaceholder={JsonS.find(i => i.id == 8)?.unit}
+                    displayPersonal={false}
+                    onTextChange={(text: string) => setPrenom(text)}
+                    initValue={''} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Code : '}
+                    inputPlaceholder={JsonS.find(i => i.id == 6)?.unit}
+                    displayPersonal={false}
+                    onTextChange={(text: string) => setCode(text)}
+                    initValue={''} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Tel : '}
+                    inputPlaceholder={JsonS.find(i => i.id == 14)?.unit}
+                    displayPersonal
+                    onTextChange={(text: string) => setTel(text)}
+                    initValue={''} 
+                  />
+                  <ProfileAskPersonal
+                    nameText={'Mail : '}
+                    inputPlaceholder={JsonS.find(i => i.id == 15)?.unit}
+                    displayPersonal
+                    onTextChange={(text: string) => setMail(text)}
+                    initValue={''} 
+                  />
+                  <Button
+                    text={'Valider'}
+                    isSelected
+                    onPress={() => {
+                      // setValid(!vali);
+                      actions.editUserProfile({ key: 'code', value: code ? code.trim() : "" });
+                      actions.editUserProfile({ key: 'nom', value: nom ? nom.trim() : "" });
+                      actions.editUserProfile({ key: 'birthDate', value: dateNaissance ? dateNaissance.trim() : "" });
+                      actions.editUserProfile({ key: 'prenom', value: prenom ? prenom.trim() : "" });
+                      actions.editUserProfile({ key: 'tel', value: tel ? tel.trim() : "" });
+                      actions.editUserProfile({ key: 'mail', value: mail ? mail.trim() : "" });
+                      navigation.navigate("Reminder");
+                     
+                    }}
+                  />
+        </ScrollView>
+        
       </View>
     </Container>
   );
@@ -154,7 +217,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 60,
+
   },
   pickerContainer: {
     flexDirection: 'row',

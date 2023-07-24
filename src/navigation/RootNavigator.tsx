@@ -12,6 +12,7 @@ import ToolBar from '@components/molecules/ToolBar';
 import { getIconPath } from '@constants/constants';
 import { ImageProvider } from '@components/molecules/ImageContext';
 import { InfomrationProvider } from '@components/molecules/InformationContext';
+import { InfomrationProvider2 } from '@components/molecules/InformationContext2';
 
 type RootNavigatorProps = {
   isUserSignin: boolean;
@@ -29,6 +30,7 @@ const ThemeStyle = {
 const RootNavigator = ({ isUserSignin }: RootNavigatorProps): ReactElement => {
 
   return (
+    <InfomrationProvider2>
     <InfomrationProvider>
     <ImageProvider>
     <NavigationContainer theme={ThemeStyle}>
@@ -37,6 +39,7 @@ const RootNavigator = ({ isUserSignin }: RootNavigatorProps): ReactElement => {
     </NavigationContainer>
     </ImageProvider>
     </InfomrationProvider>
+    </InfomrationProvider2>
   );
 
 };

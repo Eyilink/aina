@@ -34,6 +34,7 @@ const Reminder = ({ navigation }: Props): ReactElement => {
   const [, actions] = useAuthStore();
 
   const onValidate = async (): Promise<void> => {
+    
     if (!hasUserChosen) alertError({});
     else if (reminder) {
       setIsPickerVisible(false)

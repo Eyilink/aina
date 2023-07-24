@@ -26,7 +26,7 @@ import { useReportsStore, useUserStore } from '@store/store';
 import i18n from '@i18n/i18n';
 import fonts from '@styles/fonts';
 import layout from '@styles/layout';
-import { DATE_TODAY, MALADIE1 } from '@constants/constants';
+import { DATE_TODAY, MALADIE1, getIconPath } from '@constants/constants';
 import { getRecommandation } from '@helpers/utils';
 import { ImageContext } from '@components/molecules/ImageContext';
 import { InformationContext } from '@components/molecules/InformationContext';
@@ -49,11 +49,13 @@ const Home = ({ navigation }: Props): ReactElement => {
   const [reports] = useReportsStore({ disease: MALADIE1 });
   const [user, ] = useUserStore({ disease: MALADIE1 });
   const {infoText,setinfoText} = useContext(InformationContext);
+  const {imageProp,setImageProp} = useContext(ImageContext);
   useFocusEffect(
     React.useCallback(() => {
       // Code to execute when the component becomes active (tab is focused)
       console.log('Component is focused');
-      setinfoText("Je suis dans la page home !")
+      setinfoText('@assets/images/home.png')
+      setImageProp(undefined);
       return () => {
         // Code to execute when the component becomes inactive (tab is unfocused)
         console.log('Component is unfocused');

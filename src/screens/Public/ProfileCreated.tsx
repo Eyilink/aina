@@ -37,7 +37,9 @@ const ProfilCreated = (): ReactElement => {
   useEffect(()=>{
     console.log("path added true or false :"+isPathAdded);
     if(!isPathAdded)
-      actions.signupUser();
+    {actions.saveUserProfile();
+      actions.signupUser();}
+      
   },[isPathAdded])
 
   return (
@@ -54,7 +56,7 @@ const ProfilCreated = (): ReactElement => {
             color={colors.black}
             onPress={ValidateButtonNewSuiviPressed}
           />
-          <NewSuivi isFirstLog={true}  setButtonNewSuiviClicked={setIsPathAdded} /></View></>: 
+          <NewSuivi  setButtonNewSuiviClicked={setIsPathAdded} /></View></>: 
           <>
             
             <View style={styles.messageContainer}>

@@ -82,7 +82,7 @@ function Profile(): ReactElement {
         item.id === 256 ||
         item.id === 257).forEach(f=> console.log(f.name + "| +++ |" + f.data)));
       setinfoText("Je suis dans la page profile !");
-      setImageProp('avq.png');
+      setImageProp(undefined);
       return () => {
         // Code to execute when the component becomes inactive (tab is unfocused)
         console.log('Component is unfocused');
@@ -105,7 +105,7 @@ function Profile(): ReactElement {
     //   ],
     //   { cancelable: false }
     // );
-    setValid(false)
+    setValid(true)
     setIsMod(true);
   };
     // Function to handle the button click for new suivi
@@ -155,7 +155,7 @@ function Profile(): ReactElement {
     });
   };
 
-const [vali , setValid] = useState(false);
+const [vali , setValid] = useState(true);
   return (
     <Container noMarginBottom>
     
@@ -239,7 +239,7 @@ const [vali , setValid] = useState(false);
                     text={'Valider'}
                     isSelected
                     onPress={() => {
-                      setValid(!vali);
+                      // setValid(!vali);
                       actions.editUserProfile({ key: 'code', value: code ? code.trim() : "" });
                       actions.editUserProfile({ key: 'nom', value: nom ? nom.trim() : "" });
                       actions.editUserProfile({ key: 'birthDate', value: dateNaissance ? dateNaissance.trim() : "" });
@@ -275,7 +275,7 @@ const [vali , setValid] = useState(false);
             return (
               <ProfileAskPersonal
                 nameText={item.name}
-                inputPlaceholder={''}
+                inputPlaceholder={item.unit}
                 displayPersonal={item.caractere === 'Perso'}
                 initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id==item.id)?.data?.slice(-1)[0].valeur}
                 onTextChange={(text:string)=>{ addValueUser(item,text);

@@ -120,4 +120,5 @@ export type Pathologie = {
   icon?: ImageSourcePropType;
   symptoms: Symptome[];
   dateend?: string;
+  init_symptoms?: Symptome[];
 };

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
@@ -17,6 +17,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Pathologie } from '@store/types';
 import json_p from '@assets/json/pathologies.json'
 import DataAddPopUp from '@components/popUp/DataAddPopUp';
+import { InformationContext } from './InformationContext';
+import { InformationContext2 } from './InformationContext2';
 
 
 type Props = {
@@ -32,6 +34,8 @@ const HomeComponent = ({
   const [carryOnSuivi, setCarryOnsuivi] = useState(false);
   const [rData,setRData] = useState(false);
   const [, actions] = useAuthStore();
+  const {infoText,setinfoText} = useContext(InformationContext);
+  const {infoText2,setinfoText2} = useContext(InformationContext2);
   const [twoDArray, setTDArray] = useState<string[][]>([
     [
       "21", "2", "3", "4", "5", "6", "7", "8", "9", "10",
@@ -76,6 +80,8 @@ const HomeComponent = ({
     // ValidatePressed is triggered when the validation button is pressed.
   // It toggles the ButtonClicked state.
   useFocusEffect(()=>{
+    setinfoText('home.png')
+    // setinfoText2('')
     if(isDataEmpty)
       setCarryOnsuivi(false);
     if(firstT)

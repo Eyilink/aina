@@ -4,7 +4,7 @@ import { View, Text, TextInput, CheckBox, StyleSheet } from 'react-native';
 
 interface ProfileAskPersonalProps {
   nameText: string;
-  inputPlaceholder: string;
+  inputPlaceholder?: string;
   displayPersonal: boolean;
   onTextChange?: (text: string) => void;
   initValue?: string | number,

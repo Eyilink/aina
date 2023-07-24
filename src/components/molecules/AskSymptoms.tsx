@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -24,17 +24,45 @@ type InputSymptomeProps = {
   s: Symptome;
   onClose: () => void; // onClose function prop
   onArrow?: ()=> void;
+  donotdispVButtons?: boolean;
+  recupSliderValue?: (value: number) => void; // Declare recupSliderValue as a function that takes a number argument and returns void
+  recupYesNo?: (value: boolean) => void; 
+  ouinonSameLine?: boolean;
+  recupText?: (value: string) => void;
+  recupSymp?: (value: Symptome) => void;
 };
 
 
 
-export const InputBox = ({ s, onClose }: InputSymptomeProps) => {
+export const InputBox = ({ s, onClose , donotdispVButtons , recupSliderValue , recupYesNo , ouinonSameLine , recupText , recupSymp}: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
+  const [txt, setTxt] = useState<string>('');
   const [hasUserChosen, setHasUserChosen] = useState(false);
   const initialSliderValue = s.name === "Température" ? 36 : 0;
   const [sliderValue, setSliderValue] = useState(initialSliderValue);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
-
+  useEffect(() => {
+    if(recupSymp)
+    recupSymp(s)
+    if(recupYesNo)
+      recupYesNo(symptom)
+    
+  }, [symptom])
+  useEffect(() => {
+    if(recupSymp)
+    recupSymp(s)
+    if(recupSliderValue)
+      recupSliderValue(sliderValue)
+    
+  }, [sliderValue])
+  useEffect(()=>{
+    if(recupSymp)
+    recupSymp(s)
+    if(recupText)
+      recupText(txt);
+   
+  },[txt])
+  
   const addValueUser = (sympt: Symptome, val: number | string) => {
     const currentDate = new Date();
     const day = currentDate.getDate().toString().padStart(2, '0');
@@ -83,6 +111,13 @@ export const InputBox = ({ s, onClose }: InputSymptomeProps) => {
     onChange(true);
     console.log(sliderValue);
     addValueUser(s, fixedVal(sliderValue));
+    actions.saveUserProfile();
+    onClose();
+  };
+  const handleValidateT = () => {
+    onChange(true);
+    console.log(sliderValue);
+    addValueUser(s, txt);
     actions.saveUserProfile();
     onClose();
   };
@@ -141,6 +176,8 @@ export const InputBox = ({ s, onClose }: InputSymptomeProps) => {
           step={step}
           minimumTrackTintColor="red"
           thumbTintColor="red"
+
+
         />
 
         {s.name === 'Température' ? (
@@ -160,46 +197,48 @@ export const InputBox = ({ s, onClose }: InputSymptomeProps) => {
         
         <Text style={styles.valueText}>Intensité: {sliderValue}</Text>
         <Text style={styles.subtitle}></Text>
-        <Button
+       {donotdispVButtons ? null : <Button
           text={i18n.t('commons.validate')}
           onPress={handleValidate}
           isSelected={true}
-        />
+        /> }
       </View>
     );
   // if the symptom is yes / no, we display a oui/non box
   } else if (s.type === 'Oui/non' || s.type === 'oui/non') {
     symptomText = (
       <View>
+        <View style={ouinonSameLine ? {flexDirection: 'row' , justifyContent: 'space-between' , paddingHorizontal: 80} : {flexDirection: 'column'}}>
         <Button
           text={i18n.t('commons.yes')}
           onPress={() => onChange(true)}
           isSelected={hasUserChosen && symptom}
-          stretch
+          
         />
         <Button
           text={i18n.t('commons.no')}
           onPress={() => onChange(false)}
           isSelected={hasUserChosen && !symptom}
-          stretch
+          
         />
+        </View>
         <Text style={styles.subtitle}></Text>
-        <Button
+        {donotdispVButtons ? null : <Button
           text="Validate"
           onPress={handleYesNoSymptome}
           isSelected={hasUserChosen}
-        />
+        />}
       </View>
     );
   } else {
     symptomText = (
     <View>
-    <ProfileAskPersonal nameText={s.name} inputPlaceholder={''} displayPersonal={false} initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(t=>t.id==s.id)?.data?.slice(-1)[0].valeur} />
-    <Button
+    <ProfileAskPersonal  onTextChange={(text:string)=>{setTxt(text)}} nameText={s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(t=>t.id==s.id)?.data?.slice(-1)[0].valeur} />
+    {donotdispVButtons ? null : <Button
           text="Validate"
-          onPress={handleValidate}
+          onPress={handleValidateT}
           isSelected
-        />
+        />}
     </View>)
   }
 
@@ -245,12 +284,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: layout.padding,
+    
   },
   title: {
     paddingBottom: layout.padding / 2,
   },
   subtitle: {
-    margin: 10,
+
     textAlign: 'center',
     fontSize: fonts.subtitle.fontSize - 1,
   },
@@ -273,11 +313,15 @@ const styles = StyleSheet.create({
   slider: {
     height: 10,
     // marginTop: -12
+    
   },
   popUpContainer: {
     backgroundColor: 'white',
     padding: 25,
     borderRadius: 10,
+    
+    justifyContent: 'center',
+    
   },
   lines: {
     flexDirection: 'row',

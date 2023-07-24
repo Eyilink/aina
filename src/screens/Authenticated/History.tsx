@@ -1,4 +1,4 @@
-import React, { ReactElement  } from 'react';
+import React, { ReactElement, useContext  } from 'react';
 import { ImageSourcePropType, StyleSheet, Text, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Container from '@components/molecules/Container';
@@ -19,6 +19,8 @@ import { Ionicons } from '@expo/vector-icons';
 import BoxSymptome from '@components/atoms/BoxSymptome';
 import ChartSymptome from '@components/atoms/ChartSymptome';
 import { Pathologie } from '@store/types';
+import { useFocusEffect } from '@react-navigation/native';
+import { ImageContext } from '@components/molecules/ImageContext';
 
 type Props = {
   navigation: StackNavigationProp<BottomTabParamList, 'History'>;
@@ -36,6 +38,8 @@ const History = ({ }: Props): ReactElement => {
   const [isPrevious, setPrevious] = React.useState(false);
   const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas.filter(p=>p.id!="21") : user.my_personal_datas.filter(p=>p.id!="21") ;
 
+  const {imageProp,setImageProp} = useContext(ImageContext);
+  useFocusEffect(()=>{setImageProp(undefined)})
 // Handler for clicking on a path
   const onPressPath = (index : number): void =>{
     setIsClicked(true);

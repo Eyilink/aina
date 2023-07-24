@@ -23,6 +23,7 @@ import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
 import { InformationContext } from '@components/molecules/InformationContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { ImageContext } from '@components/molecules/ImageContext';
 
 
 
@@ -38,6 +39,7 @@ const Suivi = (): ReactElement => {
     // Custom hooks for accessing user data
   const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
+  const {imageProp,setImageProp} = useContext(ImageContext);
 // Function to handle the click on the new suivi button
   const ValidateButtonNewSuiviPressed = (): void => {
     setButtonNewSuiviClicked(!ButtonNewSuiviClicked);
@@ -45,6 +47,7 @@ const Suivi = (): ReactElement => {
   const {infoText,setinfoText} = useContext(InformationContext);
   useFocusEffect(
     React.useCallback(() => {
+      setImageProp(undefined);
       // Code to execute when the component becomes active (tab is focused)
       console.log('Component is focused');
       setinfoText("Je suis dans la page suivi !")

@@ -23,8 +23,8 @@ const PublicNavigator = (): ReactElement => (
     <Stack.Screen name="ProfileCreated" component={ProfileCreated} />
     <Stack.Screen name="Username" component={Username} />
     <Stack.Screen name="Age" component={Age} />
-    <Stack.Screen name="MoreData" component={MoreData} />
-    <Stack.Screen name="ComplementaryData" component={ComplementaryData} />
+    {/* <Stack.Screen name="MoreData" component={MoreData} /> */}
+    {/* <Stack.Screen name="ComplementaryData" component={ComplementaryData} /> */}
     <Stack.Screen name="Weight" component={Weight} />
     <Stack.Screen name="Reminder" component={Reminder} />
     {/* <Stack.Screen name="Diseases" component={Diseases} />
