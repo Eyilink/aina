@@ -148,18 +148,19 @@ const setTextForPathos = (p_id: string) : void => {
     if(p_id == '4')
     {
     setinfoText2('pulmonaire_rl.png');
+    console.log("info text 2 set a pulm" + infoText2);
 
     }
-    switch(p_id){
-      case '4':
-        setinfoText2('pulmonaire_rl.png');
-        console.log("info text 2 set a pulm")
-        break;
-      default:
-        setinfoText2('');
-        break;
+    // switch(p_id){
+    //   case '4':
+    //     setinfoText2('pulmonaire_rl.png');
+    //     console.log("info text 2 set a pulm")
+    //     break;
+    //   default:
+    //     setinfoText2('');
+    //     break;
   
-    }
+    // }
   }
   const addValueUser = (sympt: Symptome, val: number | string) => {
     const currentDate = new Date();

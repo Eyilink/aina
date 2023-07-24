@@ -17,7 +17,7 @@ const Popup: React.FC<PopupProps> = ({ isVisible,isPopUpone, onClose }) => {
   const popupHeight = screenHeight * 0.8;
   const {infoText,setinfoText} = useContext(InformationContext);
   const {infoText2,setinfoText2} = useContext(InformationContext2);
-  const [imS,setImS] = useState<string>();
+
   // useFocusEffect(()=>{
   // //   if(isPopUpone)
   // //   setImS(infoText);
@@ -27,13 +27,7 @@ const Popup: React.FC<PopupProps> = ({ isVisible,isPopUpone, onClose }) => {
 
   // });
  
-   useEffect(()=>{
-  if(isPopUpone)
-    setImS(infoText);
-  else
-    setImS(infoText2);
-  console.log(imS)
-  },[infoText2,infoText2,isVisible])
+
  
   return (
     <Modal visible={isVisible} transparent>
@@ -56,8 +50,8 @@ const Popup: React.FC<PopupProps> = ({ isVisible,isPopUpone, onClose }) => {
             alignItems: 'center', // Added alignItems to center the content horizonta
           }}
         >
-           {imS && imS != '' ?  <Image
-              source={getIconPath(imS)}
+           {isPopUpone ?  (infoText && infoText != '' ? <Image
+              source={getIconPath(infoText)}
               style={{
                 width: '100%',
                 height: '80%',
@@ -65,7 +59,16 @@ const Popup: React.FC<PopupProps> = ({ isVisible,isPopUpone, onClose }) => {
                 // borderColor: 'salmon',
                 resizeMode: 'contain', // Use the desired resizeMode value here
               }}
-            /> : null}
+            /> : null ) : (infoText2 && infoText2 != '' ? <Image
+            source={getIconPath(infoText2)}
+            style={{
+              width: '100%',
+              height: '80%',
+              // borderWidth: 2,
+              // borderColor: 'salmon',
+              resizeMode: 'contain', // Use the desired resizeMode value here
+            }}
+          /> : null )}
 
           <Button text={'FERMER'} isSelected onPress={onClose} />
         </View>
