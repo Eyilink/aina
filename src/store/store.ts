@@ -40,6 +40,7 @@ const initialState: RootState = {
   auth: { user: null, token: null },
   disease: { [MALADIE1]: { user: null, reports: null } },
   twoDArray: [],
+  users: [],
 };
 
 // All the actions that mutate the store
@@ -225,6 +226,35 @@ const actions = {
       console.error('Error retrieving twoDArray from AsyncStorage:', error);
     }
   },
+  addUser: (user: User) => async ({ setState, getState }: StoreApi): Promise<void> => {
+    const users = [...getState().users, user];
+    setState({ users });
+  },
+
+  switchUser: (index: number) => async ({ setState, getState }: StoreApi): Promise<void> => {
+    const user = getState().users[index];
+    if (user) {
+      setState({
+        auth: {
+          ...getState().auth,
+          user: user.username,
+        },
+        disease: {
+          ...getState().disease,
+          [MALADIE1]: {
+            user,
+            reports: user.my_personal_datas.find(p => p.id === "21")?.symptoms.find(t => t.id === s.id)?.data?.slice(-1)[0].valeur
+          },
+        },
+      });
+      // Call any other actions to update the state based on the new user if needed
+    }
+  },
+  replaceUser: (index: number, newUser: User) => async ({ setState, getState }: StoreApi): Promise<void> => {
+    const users = [...getState().users];
+    users[index] = newUser;
+    setState({ users });
+  },
 };
 
 // Store initialization
@@ -249,7 +279,9 @@ export const useUserStore = createHook<
 >(Store, {
   selector: getUserSelector,
 });
-
+export const useUsersStore = createHook<RootState, Actions, User[], void>(Store, {
+  selector: (state) => state.users,
+});
 export const useReportsStore = createHook<
   RootState,
   Actions,

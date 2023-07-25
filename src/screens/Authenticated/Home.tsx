@@ -54,7 +54,7 @@ const Home = ({ navigation }: Props): ReactElement => {
     React.useCallback(() => {
       // Code to execute when the component becomes active (tab is focused)
       console.log('Component is focused');
-      setinfoText('@assets/images/home.png')
+      // setinfoText('@assets/images/home.png')
       setImageProp(undefined);
       return () => {
         // Code to execute when the component becomes inactive (tab is unfocused)
@@ -65,7 +65,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   );
   
   useEffect(() => {
-    setinfoText("Je suis dans la page home !");
+    // setinfoText("Je suis dans la page home !");
     // When reports data is available, determine the recommendation and update image and text accordingly
     if (reports) {
       const recommandation = getRecommandation(reports);

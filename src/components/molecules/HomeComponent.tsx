@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
@@ -19,6 +19,7 @@ import json_p from '@assets/json/pathologies.json'
 import DataAddPopUp from '@components/popUp/DataAddPopUp';
 import { InformationContext } from './InformationContext';
 import { InformationContext2 } from './InformationContext2';
+import { BooleanContext } from './BooleanContext';
 
 
 type Props = {
@@ -29,13 +30,16 @@ type Props = {
 const HomeComponent = ({
     isDataEmpty
 }: Props): ReactElement => {
-  const [ButtonClicked, setButtonClicked] = React.useState(false);
   const [user, ] = useUserStore({ disease: MALADIE1 });
+  const [ButtonClicked, setButtonClicked] = React.useState(false);
+  
   const [carryOnSuivi, setCarryOnsuivi] = useState(false);
   const [rData,setRData] = useState(false);
   const [, actions] = useAuthStore();
   const {infoText,setinfoText} = useContext(InformationContext);
-  const {infoText2,setinfoText2} = useContext(InformationContext2);
+  
+  
+  // const {infoText2,setinfoText2} = useContext(InformationContext2);
   const [twoDArray, setTDArray] = useState<string[][]>([
     [
       "21", "2", "3", "4", "5", "6", "7", "8", "9", "10",
@@ -79,18 +83,35 @@ const HomeComponent = ({
   const [firstT , setFirstT] = useState(true);
     // ValidatePressed is triggered when the validation button is pressed.
   // It toggles the ButtonClicked state.
+  // useEffect(()=>{if(boolC)
+  //   setButtonClicked(true);},[])
   useFocusEffect(()=>{
     setinfoText('home.png')
+    // console.log("user datas" + user.my_personal_datas.length);
+    // if(boolC)
+    //   setButtonClicked(!ButtonClicked);
     // setinfoText2('')
     if(isDataEmpty)
       setCarryOnsuivi(false);
     if(firstT)
     {
       
-      processDatas();
+      if(user.boolF)
+      {
+        processDatas();
+        actions.editUserProfile({key: 'boolF', value: false});
+      }
+      if(user.boolC)
+      {
+        
+      setButtonClicked(true);
+      actions.editUserProfile({key: 'boolC', value: false});
+      }
       setFirstT(false);
     }
-  })
+
+    
+      })
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
@@ -140,7 +161,8 @@ const parsedDate = `${day}/${month}`;
       <>
         {/* If isDataEmpty is true, display a message indicating no data */}
       {isDataEmpty ? 
-        <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
+        // <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
+        null
       : 
       <>
         {carryOnSuivi ? <>

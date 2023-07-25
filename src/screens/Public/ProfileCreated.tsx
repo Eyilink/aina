@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -17,14 +17,24 @@ import NewSuivi from '@components/molecules/NewSuivi';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
 import Previous from '@components/atoms/Previous';
+import { BooleanContext } from '@components/molecules/BooleanContext';
+import { InformationContext } from '@components/molecules/InformationContext';
 
-
-const ProfilCreated = (): ReactElement => {
+type Props = {
+  navigation: StackNavigationProp<PublicStackParamList, 'ProfileCreated'>;
+};
+const ProfilCreated = ({navigation}:Props): ReactElement => {
   const [ButtonValidateClicked, setButtonValidateClicked] = React.useState(false);
   const [isPathAdded,setIsPathAdded] = useState<boolean>(true);
   const [,actions]=useAuthStore();
+
+ 
   const ValidatePressed = (): void => {
-    setButtonValidateClicked(true);
+    // setButtonValidateClicked(true);
+   actions.editUserProfile({key: 'boolC',value: true});
+   actions.editUserProfile({key: 'boolF',value: true});
+    actions.signupUser();
+    
   };
 
   const ValidateButtonNewSuiviPressed = (): void => {
@@ -32,6 +42,8 @@ const ProfilCreated = (): ReactElement => {
   };
 
   const onNoValidate = (): void => {
+    actions.editUserProfile({key: 'boolC',value: false});
+    actions.editUserProfile({key: 'boolF',value: true});
     actions.signupUser();
   };
   useEffect(()=>{
