@@ -20,7 +20,7 @@ import SubTitle from '@components/atoms/SubTitle';
 import AppText from '@components/atoms/AppText';
 import Button from '@components/atoms/Button';
 
-import { useAuthStore, useUserStore } from '@store/store';
+import { useAuthStore, useUserStore, useUsersStore } from '@store/store';
 
 import colors from '@styles/colors';
 import layout from '@styles/layout';
@@ -58,7 +58,7 @@ function Profile(): ReactElement {
   const [prenom, setPrenom] = useState<string>(user.prenom);
   const [tel, setTel] = useState<string>(user.tel);
   const [mail, setMail] = useState<string>(user.mail);
-
+  const[users,actions_users] = useUsersStore();
   useFocusEffect(
     React.useCallback(() => {
       // Code to execute when the component becomes active (tab is focused)
@@ -175,6 +175,28 @@ const [vali , setValid] = useState(true);
     {user.my_personal_datas?.filter(p => p.id != "21").map((pathologie: Pathologie) => (
       <BoxPathologieProfile objet={pathologie} />
     ))}
+    <Button
+      text={"Ajouter un utilisateur"}
+      onPress={()=>{
+        actions_users.replaceUser(user);
+        
+        actions.resetUserSession();
+      }}
+      isValidate
+      style={styles.editButton}
+    />
+    <Button
+      text={"Changer d'utilisateur"}
+      onPress={()=>{
+        actions_users.switchUser(0);
+        // actions.signupUser();
+        users.map((u,i)=> console.log("Nom user numero "+ i.toString() + " : " + u.username));
+        
+       
+      }}
+      isValidate
+      style={styles.editButton}
+    />
     <Button
       text={i18n.t('profile.edit')}
       onPress={onEditProfile}

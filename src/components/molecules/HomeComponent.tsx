@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import layout from '@styles/layout';
 import colors from '@styles/colors';
 import Container from './Container';
-import { useAuthStore, useUserStore } from '@store/store';
+import { useAuthStore, useUserStore, useUsersStore } from '@store/store';
 import { useFocusEffect } from '@react-navigation/native';
 import { Pathologie } from '@store/types';
 import json_p from '@assets/json/pathologies.json'
@@ -37,7 +37,9 @@ const HomeComponent = ({
   const [rData,setRData] = useState(false);
   const [, actions] = useAuthStore();
   const {infoText,setinfoText} = useContext(InformationContext);
+  const [users,] = useUsersStore();
   
+  // const [users,actionns] = useUsersStore();
   
   // const {infoText2,setinfoText2} = useContext(InformationContext2);
   const [twoDArray, setTDArray] = useState<string[][]>([
@@ -86,6 +88,7 @@ const HomeComponent = ({
   // useEffect(()=>{if(boolC)
   //   setButtonClicked(true);},[])
   useFocusEffect(()=>{
+    users.map((u,i)=> console.log("Nom user numero "+ i.toString() + " : " + u.username));
     setinfoText('home.png')
     // console.log("user datas" + user.my_personal_datas.length);
     // if(boolC)

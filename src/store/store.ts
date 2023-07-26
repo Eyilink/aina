@@ -227,12 +227,14 @@ const actions = {
     }
   },
   addUser: (user: User) => async ({ setState, getState }: StoreApi): Promise<void> => {
-    const users = [...getState().users, user];
-    setState({ users });
+    const {users } = getState();
+    const updatedUsers = [...users, user];
+    setState({ users: updatedUsers });
   },
 
   switchUser: (index: number) => async ({ setState, getState }: StoreApi): Promise<void> => {
-    const user = getState().users[index];
+    const {users } = getState();
+    const user = users[index];
     if (user) {
       setState({
         auth: {
@@ -243,16 +245,17 @@ const actions = {
           ...getState().disease,
           [MALADIE1]: {
             user,
-            reports: user.my_personal_datas.find(p => p.id === "21")?.symptoms.find(t => t.id === s.id)?.data?.slice(-1)[0].valeur
+            reports: null,
           },
         },
       });
       // Call any other actions to update the state based on the new user if needed
     }
   },
-  replaceUser: (index: number, newUser: User) => async ({ setState, getState }: StoreApi): Promise<void> => {
+  replaceUser: ( newUser: User) => async ({ setState, getState }: StoreApi): Promise<void> => {
     const users = [...getState().users];
-    users[index] = newUser;
+    users.map((u,index)=>{if(u.username === newUser.username) users[index] = newUser;})
+    // users[index] = newUser;
     setState({ users });
   },
 };
