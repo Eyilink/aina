@@ -52,6 +52,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   const {imageProp,setImageProp} = useContext(ImageContext);
   useFocusEffect(
     React.useCallback(() => {
+      
       // Code to execute when the component becomes active (tab is focused)
       console.log('Component is focused');
       // setinfoText('@assets/images/home.png')

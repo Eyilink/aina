@@ -89,6 +89,7 @@ const HomeComponent = ({
   //   setButtonClicked(true);},[])
   useFocusEffect(()=>{
     users.map((u,i)=> console.log("Nom user numero "+ i.toString() + " : " + u.username));
+    
     setinfoText('home.png')
     // console.log("user datas" + user.my_personal_datas.length);
     // if(boolC)

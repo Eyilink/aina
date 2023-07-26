@@ -39,7 +39,7 @@ const History = ({ }: Props): ReactElement => {
   const liste : Pathologie[] = isPrevious ? user.my_previous_personal_datas.filter(p=>p.id!="21") : user.my_personal_datas.filter(p=>p.id!="21") ;
 
   const {imageProp,setImageProp} = useContext(ImageContext);
-  useFocusEffect(()=>{setImageProp(undefined)})
+  useFocusEffect(()=>{setImageProp(undefined);})
 // Handler for clicking on a path
   const onPressPath = (index : number): void =>{
     setIsClicked(true);

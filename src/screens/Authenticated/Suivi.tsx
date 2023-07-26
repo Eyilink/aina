@@ -47,6 +47,7 @@ const Suivi = (): ReactElement => {
   const {infoText,setinfoText} = useContext(InformationContext);
   useFocusEffect(
     React.useCallback(() => {
+      
       setImageProp(undefined);
       // Code to execute when the component becomes active (tab is focused)
       console.log('Component is focused');

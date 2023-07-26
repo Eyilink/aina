@@ -230,6 +230,7 @@ const actions = {
     const {users } = getState();
     const updatedUsers = [...users, user];
     setState({ users: updatedUsers });
+    // actions.saveUsersToAsyncStorage();
   },
 
   switchUser: (index: number) => async ({ setState, getState }: StoreApi): Promise<void> => {
@@ -257,6 +258,36 @@ const actions = {
     users.map((u,index)=>{if(u.username === newUser.username) users[index] = newUser;})
     // users[index] = newUser;
     setState({ users });
+    // actions.saveUsersToAsyncStorage();
+  },
+  saveUsersToAsyncStorage: () => async ({ setState, getState }: StoreApi): Promise<void> => {
+    try {
+      const {users} = getState();
+      const serializedUsers = JSON.stringify(users);
+      console.log("my s objects in save ::: ");
+      await AsyncStorage.setItem('users', serializedUsers);
+      console.log("my s objects in save after ::: ");
+    } catch (error) {
+      console.warn('Error saving users to AsyncStorage:', error);
+    }
+  },
+
+  // Function to retrieve users from AsyncStorage
+  getUsersFromAsyncStorage: () => async ({ setState }: StoreApi): Promise<void> => {
+    
+    try {
+      const serializedUsers = await AsyncStorage.getItem('users');
+     
+      if (serializedUsers) {
+        
+        const users: User[] = JSON.parse(serializedUsers);
+        console.log("first user username ::::  " + users[0].username)
+        setState({ users: users });
+
+      }
+    } catch (error) {
+      console.warn('Error retrieving users from AsyncStorage:', error);
+    }
   },
 };
 

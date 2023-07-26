@@ -37,7 +37,8 @@ const ProfilCreated = ({navigation}:Props): ReactElement => {
    actions.editUserProfile({key: 'boolC',value: true});
    actions.editUserProfile({key: 'boolF',value: true});
    actions.addUser(user);
-    actions.signupUser();
+   actions.saveUsersToAsyncStorage();
+   actions.signupUser();
     
   };
 
@@ -49,6 +50,7 @@ const ProfilCreated = ({navigation}:Props): ReactElement => {
     actions.editUserProfile({key: 'boolC',value: false});
     actions.editUserProfile({key: 'boolF',value: true});
     actions.addUser(user);
+    actions.saveUsersToAsyncStorage();
     actions.signupUser();
   };
   useEffect(()=>{

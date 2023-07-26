@@ -60,7 +60,9 @@ function Profile(): ReactElement {
   const [mail, setMail] = useState<string>(user.mail);
   const[users,actions_users] = useUsersStore();
   useFocusEffect(
+    
     React.useCallback(() => {
+      
       // Code to execute when the component becomes active (tab is focused)
       console.log('Mon utilisateur date naissance est :' + user.birthDate);
       console.log('Mon utilisateur date naissance est :' + user.code);
@@ -123,6 +125,24 @@ function Profile(): ReactElement {
   const onPressCGU = async (): Promise<void> => {
     await WebBrowser.openBrowserAsync(CGU_URL);
   };
+  function calculateBMI(weightString: string | undefined, heightString: string | undefined): number | undefined {
+    if (weightString === undefined || heightString === undefined) {
+      return undefined; // Return null if either weight or height is undefined
+    }
+  
+    const weight = parseFloat(weightString.replace(/[^\d.]/g, ''));
+    const height = parseFloat(heightString.replace(/[^\d.]/g, ''));
+  
+    if (isNaN(weight) || isNaN(height) || height === 0) {
+      return undefined; // Return null if either weight or height is not a valid number, or if height is zero to avoid division by zero
+    }
+  
+    const heightInMeters = height / 100; // Convert height from centimeters to meters
+  
+    const bmi = weight / (heightInMeters * heightInMeters);
+    return bmi;
+  }
+  
   const addValueUser = (sympt: Symptome, val: string) => {
     const currentDate = new Date();
     const day = currentDate.getDate().toString().padStart(2, '0');
@@ -179,18 +199,26 @@ const [vali , setValid] = useState(true);
       text={"Ajouter un utilisateur"}
       onPress={()=>{
         actions_users.replaceUser(user);
-        
+        actions_users.saveUsersToAsyncStorage();
         actions.resetUserSession();
       }}
       isValidate
       style={styles.editButton}
     />
-    <Button
-      text={"Changer d'utilisateur"}
+    {/* <Button
+      text={"save d'utilisateur"}
       onPress={()=>{
-        actions_users.switchUser(0);
-        // actions.signupUser();
-        users.map((u,i)=> console.log("Nom user numero "+ i.toString() + " : " + u.username));
+        actions.saveUsersToAsyncStorage();
+        
+       
+      }}
+      isValidate
+      style={styles.editButton}
+    /> */}
+    <Button
+      text={"get d'utilisateur"}
+      onPress={()=>{
+        actions.getUsersFromAsyncStorage();
         
        
       }}
@@ -299,7 +327,7 @@ const [vali , setValid] = useState(true);
                 nameText={item.name}
                 inputPlaceholder={item.unit}
                 displayPersonal={item.caractere === 'Perso'}
-                initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id==item.id)?.data?.slice(-1)[0].valeur}
+                initValue={item.id === 43 && calculateBMI(user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 42)?.data?.slice(-1)[0].valeur.toString() , user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 41)?.data?.slice(-1)[0].valeur.toString())  ? calculateBMI(user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 42)?.data?.slice(-1)[0].valeur.toString() , user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 41)?.data?.slice(-1)[0].valeur.toString())    :user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id==item.id)?.data?.slice(-1)[0].valeur}
                 onTextChange={(text:string)=>{ addValueUser(item,text);
                 }}
               />
