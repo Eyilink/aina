@@ -36,7 +36,7 @@ const ToolBar = () => {
       <TouchableOpacity style={styles.touchable_1} activeOpacity={0.7} onPress={handlePopupToggle2}>
         {imageProp && imageProp != '' && <Image source={getIconPath(imageProp)} style={styles.image} />}
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{setShowPopUpUser(!showPopUpUser)}}>
+      <TouchableOpacity onPress={()=>{actions.getUsersFromAsyncStorage();setShowPopUpUser(!showPopUpUser);}}>
       <View style={styles.textContainer}>
         <AppText style={styles.text} text={user.username} />
         <AppText style={styles.text} text={parsedDate} />

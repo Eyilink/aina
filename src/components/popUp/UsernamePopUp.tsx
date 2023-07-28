@@ -2,9 +2,9 @@ import AppText from '@components/atoms/AppText';
 import Button from '@components/atoms/Button';
 import { InformationContext } from '@components/molecules/InformationContext';
 import { InformationContext2 } from '@components/molecules/InformationContext2';
-import { getIconPath } from '@constants/constants';
+import { MALADIE1, getIconPath } from '@constants/constants';
 import { useFocusEffect } from '@react-navigation/native';
-import { useUsersStore } from '@store/store';
+import { useUserStore, useUsersStore } from '@store/store';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Modal, Text, TouchableOpacity, Dimensions,Image } from 'react-native';
 
@@ -17,6 +17,7 @@ interface PopupProps {
     const screenHeight = Dimensions.get('window').height;
     const popupHeight = screenHeight * 0.8;
     const [users, actions_users] = useUsersStore();
+    const [user,] = useUserStore({ disease: MALADIE1 });
   
     const handleOverlayPress = () => {
       onClose(); // Close the popup when the overlay is pressed
@@ -49,11 +50,13 @@ interface PopupProps {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
+                  actions_users.replaceUser(user);
+                  actions_users.saveUsersToAsyncStorage();
                   actions_users.switchUser(index);
                   onClose(); // Close the popup when a user is selected
                 }}
               >
-                <AppText text={u.username} style={{ fontSize: 24 }} />
+                <AppText text={u.username} style={{ fontSize: 24 , textDecorationLine: u.username == user.username ? 'underline' : 'none'}} />
               </TouchableOpacity>
             ))}
           </View>

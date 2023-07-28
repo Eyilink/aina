@@ -215,7 +215,7 @@ const [vali , setValid] = useState(true);
       isValidate
       style={styles.editButton}
     /> */}
-    <Button
+    {/* <Button
       text={"get d'utilisateur"}
       onPress={()=>{
         actions.getUsersFromAsyncStorage();
@@ -224,7 +224,7 @@ const [vali , setValid] = useState(true);
       }}
       isValidate
       style={styles.editButton}
-    />
+    /> */}
     <Button
       text={i18n.t('profile.edit')}
       onPress={onEditProfile}
