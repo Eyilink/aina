@@ -5,6 +5,8 @@ import Constants from 'expo-constants';
 import pathologies from '@assets/json/pathologies.json'
 import symptoms from '@assets/json/symptomes.json'
 import { PainSymptoms, Pathologie, Symptome } from '@store/types';
+import { InformationContext2 } from '@components/molecules/InformationContext2';
+import {useContext} from 'react'
 
 // Local Storage Keys
 export const ASYNC_STORAGE_AUTH_KEY = `@${Constants.manifest.slug}:auth`;
@@ -40,6 +42,8 @@ export const PHONE_OS = Platform.OS;
 
 // Other
 export const CGU_URL = 'http://aina.io/monsuivisante-cgu/';
+
+
 
 export const getIconPath = (iconName: string): ImageSourcePropType => {
   switch (iconName) {
@@ -79,6 +83,10 @@ export const getIconPath = (iconName: string): ImageSourcePropType => {
       return require('@assets/images/poumon.png');
     case 'yeux.png' :
       return require('@assets/images/yeux.png');
+    case 'home.png' :
+      return require('@assets/images/home.png');
+    case 'pulmonaire_rl.png' :
+        return require('@assets/images/pulmonaire_rl.png');
     default:
       return require('@assets/images/6_i.png'); // Provide a default image path
   }
@@ -100,7 +108,8 @@ export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
   name: item.name,
 //    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
   symptoms: symptomeJSON.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id))),
-  icon: getIconPath(item.logo)
+  icon: getIconPath(item.logo),
+  init_symptoms: symptomeJSON.filter((symptome: Symptome) => item.init_symptoms.trim().split(",").includes(String(symptome.id)))
   
 }));
 

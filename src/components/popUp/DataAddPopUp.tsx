@@ -34,7 +34,7 @@ const DataAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
           // Show the list of user.my_personal_data
           <View style={styles.popV}>
             <ScrollView style={styles.scrollContainer}>
-              {user.my_personal_datas?.find(p=> p.id == "21")?.symptoms.map((item,index) => (
+              {user.my_personal_datas?.find(p=> p.id == "21")?.symptoms.slice(20).map((item,index) => (
                 <TouchableOpacity
                   key={item.id}
                   onPress={() => handleListItemClick(item)}

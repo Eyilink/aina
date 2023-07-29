@@ -1,7 +1,7 @@
 [{
 "id": 1,
 "name": "Infection dentaire",
-"init_symptoms": "216,210,152,162,172",
+"init_symptoms": "251,240,180,190,200",
 "symptoms": "22,27,193,33,27,152",
 "frequency": 1,
 "logo": "dentaire.png"
@@ -9,15 +9,15 @@
 {
 "id": 2,
 "name": "Infection cutanée",
-"init_symptoms": "216,210,152,162,172",
+"init_symptoms": "251,240,180,190,200",
 "symptoms": "22,27,193,33,27,152",
 "frequency": 1,
-"logo": "peau.png",
+"logo": "peau.png"
 },
 {
 "id": 3,
 "name": "Infection ORL",
-"init_symptoms": "216,210,152,162,172",
+"init_symptoms": "251,240,180,190,200",
 "symptoms": "22,27,193,33,27,152",
 "frequency": 1,
 "logo": "orl.png"
@@ -25,7 +25,7 @@
 {
 "id": 4,
 "name": "Infection pulmonaire",
-"init_symptoms": "216,210,152,162,172",
+"init_symptoms": "251,240,180,190,200",
 "symptoms": "22,27,193,33,27,152",
 "frequency": 1,
 "logo": "poumon.png"
@@ -33,7 +33,7 @@
 {
 "id": 5,
 "name": "Covid",
-"init_symptoms": "216,210,152,162,172",
+"init_symptoms": "251,240,180,190,200",
 "symptoms": "22,27,193,33,27,152",
 "frequency": 1,
 "logo": "covid.png"
@@ -41,7 +41,7 @@
 {
 "id": 6,
 "name": "Grippe",
-"init_symptoms": "216,210,152,162,172",
+"init_symptoms": "251,240,180,190,200",
 "symptoms": "22,24,25,172",
 "frequency": 1,
 "logo": "grippe.png"
@@ -49,7 +49,7 @@
 {
 "id": 7,
 "name": "Colonne vertébrale",
-"init_symptoms": "21,22,183",
+"init_symptoms": "41,42,211",
 "symptoms": "259,267,122",
 "frequency": 7,
 "logo": "colonne.png"
@@ -57,7 +57,7 @@
 {
 "id": 8,
 "name": "Genou gauche",
-"init_symptoms": "271,135,105,40,53,102,22",
+"init_symptoms": "326,163,125,60,73,122,42",
 "symptoms": "25,176,122,127",
 "frequency": 3,
 "logo": "genou.png"
@@ -65,7 +65,7 @@
 {
 "id": 9,
 "name": "Genou droit",
-"init_symptoms": "271,135,105,39,52,102,22",
+"init_symptoms": "326,163,125,59,72,122,42",
 "symptoms": "25,176,122,127",
 "frequency": 3,
 "logo": "genou.png"
@@ -73,7 +73,7 @@
 {
 "id": 10,
 "name": "Hanche gauche",
-"init_symptoms": "271,135,24,46,47,49",
+"init_symptoms": "326,163,44,66,67,69",
 "symptoms": "25,122,125,127",
 "frequency": 30,
 "logo": "hanche.png"
@@ -81,7 +81,7 @@
 {
 "id": 11,
 "name": "Hanche droite",
-"init_symptoms": "271,135,24,46,47,50",
+"init_symptoms": "326,163,44,66,67,70",
 "symptoms": "25,122,125,127",
 "frequency": 30,
 "logo": "hanche.png"
@@ -89,7 +89,7 @@
 {
 "id": 12,
 "name": "Clinimètre",
-"init_symptoms": "23,152,182,162,132,142",
+"init_symptoms": "43,180,210,190,160,170",
 "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
 "frequency": 90,
 "logo": "clinimetre.png"
@@ -97,7 +97,7 @@
 {
 "id": 13,
 "name": "MIF",
-"init_symptoms": "23,152,182,162,132,142",
+"init_symptoms": "43,180,210,190,160,170",
 "symptoms": "80,92,89,95,97,102,108,109,110,98,99,122,140,135,161,142,143",
 "frequency": 90,
 "logo": "mif.png"
@@ -105,7 +105,7 @@
 {
 "id": 14,
 "name": "AVQ",
-"init_symptoms": "23,152,182,162,132,142",
+"init_symptoms": "43,180,210,190,160,170",
 "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
 "frequency": 90,
 "logo": "avq.png"
@@ -113,7 +113,7 @@
 {
 "id": 15,
 "name": "Braden",
-"init_symptoms": "21,22",
+"init_symptoms": "41,42,43",
 "symptoms": "80,90,91,95,96,97,108,109,110,121,123",
 "frequency": 90,
 "logo": "braden.png"
@@ -121,7 +121,7 @@
 {
 "id": 16,
 "name": "INSH",
-"init_symptoms": "21,22",
+"init_symptoms": "41,42,43",
 "symptoms": "80,90,91,95,96,97,108,109,110,121,123",
 "frequency": 3,
 "logo": "insh.png"
@@ -129,7 +129,7 @@
 {
 "id": 17,
 "name": "Barthel",
-"init_symptoms": "21,22,23",
+"init_symptoms": "41,42,43",
 "symptoms": "80,90,91,95,96,97,108,109,110,121,123",
 "frequency": 7,
 "logo": "barthel.png"
@@ -137,7 +137,7 @@
 {
 "id": 18,
 "name": "Grossesse",
-"init_symptoms": "21,23,262",
+"init_symptoms": "41,43,316",
 "symptoms": "317,318,319",
 "frequency": 7,
 "logo": "grossesse.png"
@@ -145,7 +145,7 @@
 {
 "id": 19,
 "name": "Affection cardio vasculaire",
-"init_symptoms": "22,21,26,28,152",
+"init_symptoms": "42,41,46,48,180",
 "symptoms": "181,183,184,187,322",
 "frequency": 1,
 "logo": "coeur.png"
@@ -153,7 +153,7 @@
 {
 "id": 20,
 "name": "Douleur ophtalmique",
-"init_symptoms": "21,22",
+"init_symptoms": "41,42,133,337",
 "symptoms": "25,133",
 "frequency": 1,
 "logo": "yeux.png"

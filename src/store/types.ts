@@ -33,7 +33,9 @@ export type User = {
   tel: string,
   mail: string,
   nom: string,
-  prenom: string
+  prenom: string,
+  boolC: boolean,
+  boolF: boolean,
 
 };
 
@@ -86,6 +88,7 @@ export type RootState = {
   isLoading: boolean;
   disease: Disease;
   twoDArray: string[][];
+  users: User[];
 };
 
 export type SymptomeJSON = {
@@ -120,4 +123,5 @@ export type Pathologie = {
   icon?: ImageSourcePropType;
   symptoms: Symptome[];
   dateend?: string;
+  init_symptoms?: Symptome[];
 };

@@ -30,7 +30,8 @@ const MoreData = ({ navigation }: Props): ReactElement => {
   //   if (size.length < 2 || size.length > 3 || !isNumeric(size)) alertError({});
   //   else {
   //     actions.editUserProfile({ key: 'size', value: parseInt(size, 10) });
-      navigation.navigate('ComplementaryData');
+      // navigation.navigate('ComplementaryData');
+      navigation.navigate('Reminder');
     // }
   };
 

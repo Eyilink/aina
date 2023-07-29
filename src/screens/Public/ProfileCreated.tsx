@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -11,20 +11,35 @@ import { AuthenticatedStackParamList, BottomTabParamList, PublicStackParamList }
 import layout from '@styles/layout';
 import fonts from '@styles/fonts';
 import i18n from '@i18n/i18n';
-import { useAuthStore } from '@store/store';
+import { useAuthStore, useUserStore, useUsersStore } from '@store/store';
 import NewSuivi from '@components/molecules/NewSuivi';
 
 import { Ionicons } from '@expo/vector-icons';
 import colors from '@styles/colors';
 import Previous from '@components/atoms/Previous';
+import { BooleanContext } from '@components/molecules/BooleanContext';
+import { InformationContext } from '@components/molecules/InformationContext';
+import { MALADIE1 } from '@constants/constants';
 
-
-const ProfilCreated = (): ReactElement => {
+type Props = {
+  navigation: StackNavigationProp<PublicStackParamList, 'ProfileCreated'>;
+};
+const ProfilCreated = ({navigation}:Props): ReactElement => {
   const [ButtonValidateClicked, setButtonValidateClicked] = React.useState(false);
   const [isPathAdded,setIsPathAdded] = useState<boolean>(true);
   const [,actions]=useAuthStore();
+  const [users,actions_users] = useUsersStore();
+  const [user, ] = useUserStore({ disease: MALADIE1 });
+
+ 
   const ValidatePressed = (): void => {
-    setButtonValidateClicked(true);
+    // setButtonValidateClicked(true);
+   actions.editUserProfile({key: 'boolC',value: true});
+   actions.editUserProfile({key: 'boolF',value: true});
+   actions.addUser(user);
+   actions.saveUsersToAsyncStorage();
+   actions.signupUser();
+    
   };
 
   const ValidateButtonNewSuiviPressed = (): void => {
@@ -32,12 +47,18 @@ const ProfilCreated = (): ReactElement => {
   };
 
   const onNoValidate = (): void => {
+    actions.editUserProfile({key: 'boolC',value: false});
+    actions.editUserProfile({key: 'boolF',value: true});
+    actions.addUser(user);
+    actions.saveUsersToAsyncStorage();
     actions.signupUser();
   };
   useEffect(()=>{
     console.log("path added true or false :"+isPathAdded);
     if(!isPathAdded)
-      actions.signupUser();
+    {actions.saveUserProfile();
+      actions.signupUser();}
+      
   },[isPathAdded])
 
   return (
@@ -54,7 +75,7 @@ const ProfilCreated = (): ReactElement => {
             color={colors.black}
             onPress={ValidateButtonNewSuiviPressed}
           />
-          <NewSuivi isFirstLog={true}  setButtonNewSuiviClicked={setIsPathAdded} /></View></>: 
+          <NewSuivi  setButtonNewSuiviClicked={setIsPathAdded} /></View></>: 
           <>
             
             <View style={styles.messageContainer}>

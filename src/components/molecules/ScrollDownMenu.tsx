@@ -6,12 +6,15 @@ import { Entypo } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Button from '@components/atoms/Button';
 import { useAuthStore, useUserStore } from '@store/store';
-import { CGU_URL, DATE_TODAY, MALADIE1, getIconPath, pathologieJSON, symptomeJSON } from '@constants/constants';
+import { CGU_URL, DATE_TODAY, MALADIE1, getIconPath, pathologieJSON, setTextForPathos, symptomeJSON } from '@constants/constants';
 import { useNavigation } from '@react-navigation/native';
 import json_p from '@assets/json/pathologies.json'
 import { Pathologie, Symptome } from '@store/types';
 import colors from '@styles/colors';
 import { ImageContext } from './ImageContext';
+import { InputBox } from './AskSymptoms';
+import { InformationContext2 } from './InformationContext2';
+import fonts from '@styles/fonts';
 interface DropdownItem {
   title: string;
   icon: ImageSourcePropType;
@@ -109,13 +112,86 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   const [, actions] = useAuthStore();
   const [user, ] = useUserStore({ disease: MALADIE1 });
   const [render, setRender] = useState<boolean>(false);
+  const [compQuestions,setCompQuestions] = useState<boolean>(false);
+  const [sliderValue, setSliderValue] = useState<number>(0);
+      const [yesNoValue, setYesNoValue] = useState<boolean>(false);
+      const [txtValue, setTxtValue] = useState<string>();
+      const [currS , setCurrS] = useState<Symptome>();
+      const {infoText2,setinfoText2} = useContext(InformationContext2);
+      const handleSliderChange = (value: number) => {
+        setSliderValue(value);
+        if(currS)
+          addValueUser(currS,value);
+      };
+      const handleSympChange = (value: Symptome) => {
+        setCurrS(value);
+      };
+      const handleTxtChange = (value: string) => {
+       setTxtValue(value);
+       if(currS)
+          addValueUser(currS,value);
+      };
 
+      const handleYesNoChange = (value: boolean) => {
+        setYesNoValue(value);
+        if(currS)
+          addValueUser(currS,value ? 1 : 0);
+      };
   
   const handleItemPress = (id : string) => {
     setIsSymptom(true);
+    setTextForPathos(id);
     setIsWichP(id);
   };
+const setTextForPathos = (p_id: string) : void => {
+    console.log("ma pathologie id" + p_id);
+    if(p_id == '4')
+    {
+    setinfoText2('pulmonaire_rl.png');
+    console.log("info text 2 set a pulm" + infoText2);
 
+    }
+    // switch(p_id){
+    //   case '4':
+    //     setinfoText2('pulmonaire_rl.png');
+    //     console.log("info text 2 set a pulm")
+    //     break;
+    //   default:
+    //     setinfoText2('');
+    //     break;
+  
+    // }
+  }
+  const addValueUser = (sympt: Symptome, val: number | string) => {
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    // Iterate over each pathology in my_personal_datas
+    user.my_personal_datas.forEach((pathology) => {
+      // Find the symptoms with the same id as the provided sympt
+      const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
+  
+      // Update the data field of each matching symptom
+
+      if (symptomsToUpdate[0]) {
+      
+      const newData = { date: formattedDate, valeur: val };
+
+      if (!symptomsToUpdate[0].data) {
+        // If data field doesn't exist, create a new array with the new data
+        symptomsToUpdate[0].data = [newData];
+      } else {
+        // If data field already exists, concatenate the new data to the existing array
+        symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+        }
+      }
+
+    console.log(pathology.symptoms);    
+    });
+  };
   /**
  * This function processes the selected symptoms and updates the user's personal data.
  * It maps through the 2D array of selected symptoms and creates a new object for each pathology.
@@ -146,7 +222,7 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
         ),
         date: user.my_personal_datas?.find((obj)=>obj.id == objet[0])?.date ? user.my_personal_datas.find((obj)=>obj.id == objet[0])?.date :  DATE_TODAY,
         namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
-        
+     
       };
       return newE;
     });
@@ -159,19 +235,22 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
  * It toggles the state variable `isSymptom` to show or hide the symptoms of a selected pathology.
  */
   const handleArrowClick = () => {
-    setIsSymptom(!isSymptom);
+    setIsSymptom(false);
+    setCompQuestions(false);
   };
   /**
  * This function handles the button press event for validating the selected symptoms and updating the user's profile.
  * It calls the `processDatas` function to update the user's personal data and performs additional actions if the `setButtonNewSuiviClicked` callback is provided.
  */
   const handleButtonPress = () => {
+   
     processDatas();
-   if(setButtonNewSuiviClicked)
-   {
-     setButtonNewSuiviClicked(false);
+  //  if(setButtonNewSuiviClicked)
+  //  {
+  //    setButtonNewSuiviClicked(false);
      actions.saveUserProfile();
-   }
+     setCompQuestions(true);
+     
 
   };
   /**
@@ -207,34 +286,76 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
   return render ? (
     
     <View style={styles.container}>
+      <AppText text={isSymptom && compQuestions ? 'Données complémentaires' : 'Choix du Suivi'} style={{fontFamily: fonts.title.fontFamily,fontSize: fonts.title.fontSize, textAlign: 'center',padding: 5 , top: -50}}></AppText>
         <View style={styles.or_background}>
       {isSymptom && (
         <TouchableOpacity style={styles.arrowContainer} onPress={handleArrowClick}>
-          <AntDesign style={styles.arrowContainer} name="arrowleft" size={24} color="black" />
+          <AntDesign style={styles.arrowIcon} name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
       )}
       {isSymptom ? (
         <ScrollView>
-          {items.map((item, index) => {
-            if (isWhichP === item.id) {
-              return (
-                <React.Fragment key={index}>
-                  {item.symptoms.map((symptom, idx) => (
-                    <Chk_Box key={idx} index={idx} symptom={symptom} id_p={item.id} twoDArray={twoDArray} setTDArray={setTDArray} pressingChkBx={()=>{}}/>
-                  ))}
-                  <Button
-          text={i18n.t('commons.validate')}
-          onPress={()=>{handleButtonPress();}}
-          isSelected
-         
-          style={{}}
-        />
-                </React.Fragment>
-              );
-            } else {
-              return null;
-            }
-          })}
+        {!compQuestions ? (
+  items.map((item, index) => {
+    if (isWhichP === item.id) {
+      return (
+        <View key={index}>
+          {item.symptoms.map((symptom, idx) => (
+            <Chk_Box
+              key={idx}
+              index={idx}
+              symptom={symptom}
+              id_p={item.id}
+              twoDArray={twoDArray}
+              setTDArray={setTDArray}
+              pressingChkBx={() => {}}
+            />
+          ))}
+          <Button
+            text={i18n.t('commons.validate')}
+            onPress={() => {
+              handleButtonPress();
+            }}
+            isSelected
+            style={{}}
+          />
+        </View>
+      );
+    } else {
+      return null;
+    }
+  })
+) : (items.map((item,ind)=>{
+      
+      if(isWhichP == item.id)
+      {
+        return (<View key={ind} style={{backgroundColor: colors.white}}>
+        {item.init_symptoms?.map(s=>{
+          // useEffect(()=>{console.log('value changed ...........')},[sliderValue,yesNoValue,txtValue]);
+          return <View style={{justifyContent: 'center'}}>
+            <AppText style={{textAlign: 'center'}} text={s.question ? s.question.toString() : s.name} />
+            <InputBox s={s} onClose={()=>{}} recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange}  donotdispVButtons ouinonSameLine/>
+          </View>
+
+        })}
+         <Button
+            text={i18n.t('commons.validate')}
+            onPress={() => {
+              console.log("Tous les initts symptoms: " + (item.init_symptoms?.map(i => i.id) || []).join(", "));
+             
+              setCompQuestions(false);
+              if(setButtonNewSuiviClicked)
+                setButtonNewSuiviClicked(false);
+            }}
+            isSelected
+            style={{top: -25}}
+          />
+        </View>)
+      }
+
+
+}))}
+
         </ScrollView>
       ) : (
         <ScrollView>
@@ -280,14 +401,18 @@ const ScrollDownMenu: React.FC<DropdownMenuProps> = ({ items,setButtonNewSuiviCl
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, },
+    flex: 1,
+    display: 'flex',
+    paddingTop: 0,
+  },
     or_background:{
-    backgroundColor: '#f2f2f2', // Set the gray background color
+    backgroundColor: '#f2f2f2',
+    top: -50 // Set the gray background color
   },
   arrowContainer: {
     alignItems: 'flex-start',
     paddingLeft: 16,
-    paddingTop: 16,
+
   },
   arrowIcon: {
     width: 24,

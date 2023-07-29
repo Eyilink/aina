@@ -69,7 +69,7 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
   
   return (
     <View style={styles.container}>
-    <AppText text='Choix du Suivi' style={styles.text}></AppText>
+    {/* <AppText text='Choix du Suivi' style={styles.text}></AppText> */}
     {ButtonClicked ? (
       // When ButtonClicked is true, render the DropDownMenu component with checkable items
         <> 
@@ -97,10 +97,8 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: fonts.title.fontFamily,
     fontSize: fonts.title.fontSize,
-  // Added fontWeight to make the text bold
-    textAlign: 'center',
-    marginTop: -40,
-    marginBottom:30 // Added textAlign to center the text horizontally
+
+ 
   },
   container: {
     flex: 1,

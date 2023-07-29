@@ -7,6 +7,7 @@ import AppText from '@components/atoms/AppText';
 import { ImageContext } from './ImageContext';
 import Popup from '@components/popUp/Popup';
 import { InformationContext } from './InformationContext';
+import UsernamePopUp from '@components/popUp/UsernamePopUp';
 
 interface Props {
 }
@@ -19,25 +20,34 @@ const ToolBar = () => {
   const { imageProp, setImageProp } = useContext(ImageContext);
   const parsedDate = `${day}/${month}`;
   const [showPopup, setShowPopup] = useState(false);
-  const {infoText,setinfoText} = useContext(InformationContext);
+  const [showPopup2, setShowPopup2] = useState(false);
+  const [showPopUpUser,setShowPopUpUser] = useState(false);
+  // const {infoText,setinfoText} = useContext(InformationContext);
 
   const handlePopupToggle = () => {
     setShowPopup(!showPopup);
   };
+  const handlePopupToggle2 = () => {
+    setShowPopup2(!showPopup2);
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.touchable_1} activeOpacity={0.7} onPress={handlePopupToggle}>
-        {imageProp && <Image source={getIconPath(imageProp)} style={styles.image} />}
+      <TouchableOpacity style={styles.touchable_1} activeOpacity={0.7} onPress={handlePopupToggle2}>
+        {imageProp && imageProp != '' && <Image source={getIconPath(imageProp)} style={styles.image} />}
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=>{actions.getUsersFromAsyncStorage();setShowPopUpUser(!showPopUpUser);}}>
       <View style={styles.textContainer}>
         <AppText style={styles.text} text={user.username} />
         <AppText style={styles.text} text={parsedDate} />
       </View>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.touchable} activeOpacity={0.7} onPress={handlePopupToggle}>
         <AntDesign name="info" size={24} color="black" />
       </TouchableOpacity>
-      <Popup isVisible={showPopup} text={infoText ? infoText : ""} onClose={handlePopupToggle} />
+      <Popup isPopUpone={true} isVisible={showPopup}  onClose={handlePopupToggle} />
+      <Popup isPopUpone={false} isVisible={showPopup2}  onClose={handlePopupToggle2} />
+      <UsernamePopUp isVisible={showPopUpUser} onClose={()=>{setShowPopUpUser(!showPopUpUser)}} />
     </View>
   );
 };

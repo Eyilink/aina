@@ -77,6 +77,7 @@ const CustomComponent = ({ currentSymptom }: Props) => {
 
   return (
     <View style={styles.customComponentContainer}>
+      <TouchableOpacity style={{flexDirection: 'row' , alignItems: 'center',justifyContent:'space-evenly'}} onPress={handlePress}>
       {genererPictogrammePathologie(currentSymptom)?(
           <View style={styls.couleurVert} />
         ) : (
@@ -87,7 +88,7 @@ const CustomComponent = ({ currentSymptom }: Props) => {
         {currentSymptom.data && (currentSymptom.data.length) ? <Text style={styles.subtitle}>{currentSymptom.data[currentSymptom.data.length-1].date}</Text>:null}
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
-
+      </TouchableOpacity>
       <Modal 
         visible={isModalVisible} 
         animationType="slide" 

@@ -11,7 +11,7 @@ export type PublicStackParamList = {
   NewSuivi: undefined;
   // Diseases: undefined;
   // Pregnant: undefined;
-  // Reminder: undefined;
+  Reminder: undefined;
   // Confirmation: undefined;
 };
 
