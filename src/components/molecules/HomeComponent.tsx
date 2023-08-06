@@ -14,12 +14,15 @@ import colors from '@styles/colors';
 import Container from './Container';
 import { useAuthStore, useUserStore, useUsersStore } from '@store/store';
 import { useFocusEffect } from '@react-navigation/native';
-import { Pathologie } from '@store/types';
+import { Pathologie, Symptome } from '@store/types';
 import json_p from '@assets/json/pathologies.json'
 import DataAddPopUp from '@components/popUp/DataAddPopUp';
 import { InformationContext } from './InformationContext';
 import { InformationContext2 } from './InformationContext2';
 import { BooleanContext } from './BooleanContext';
+import ChangeProfilePopUp from '@components/popUp/ChangeProfilePopUp';
+import ProfileAskPersonal from './ProfileAskPersonnal';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 type Props = {
@@ -38,7 +41,13 @@ const HomeComponent = ({
   const [, actions] = useAuthStore();
   const {infoText,setinfoText} = useContext(InformationContext);
   const [users,] = useUsersStore();
-  
+  const [editPopUp,setEditPopUp] = useState<boolean>(false);
+  const [isEditingP,setIsEditingP] = useState<boolean>(false);
+  const onEditProfile = (): void => {
+    setIsEditingP(true);
+    setCarryOnsuivi(true);
+
+  };
   // const [users,actionns] = useUsersStore();
   
   // const {infoText2,setinfoText2} = useContext(InformationContext2);
@@ -116,6 +125,58 @@ const HomeComponent = ({
 
     
       })
+      function calculateBMI(weightString: string | undefined, heightString: string | undefined): number | undefined {
+        if (weightString === undefined || heightString === undefined) {
+          return undefined; // Return null if either weight or height is undefined
+        }
+      
+        const weight = parseFloat(weightString.replace(/[^\d.]/g, ''));
+        const height = parseFloat(heightString.replace(/[^\d.]/g, ''));
+      
+        if (isNaN(weight) || isNaN(height) || height === 0) {
+          return undefined; // Return null if either weight or height is not a valid number, or if height is zero to avoid division by zero
+        }
+      
+        const heightInMeters = height / 100; // Convert height from centimeters to meters
+      
+        const bmi = weight / (heightInMeters * heightInMeters);
+        return bmi;
+      }
+      
+      const addValueUser = (sympt: Symptome, val: string) => {
+        const currentDate = new Date();
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const year = currentDate.getFullYear().toString();
+    
+        const formattedDate = `${day}/${month}/${year}`;
+        // Iterate over each pathology in my_personal_datas
+        user.my_personal_datas.forEach((pathology) => {
+          // Find the symptoms with the same id as the provided sympt
+          const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
+      
+          // Update the data field of each matching symptom
+    
+          if (symptomsToUpdate[0]) {
+          
+          const newData = { date: formattedDate, valeur: val };
+    
+          if (!symptomsToUpdate[0].data) {
+            // If data field doesn't exist, create a new array with the new data
+            symptomsToUpdate[0].data = [newData];
+          } else {
+            // If data field already exists, concatenate the new data to the existing array
+            symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+            }
+          }
+    
+        console.log(pathology.symptoms);  
+        console.log("Value added !")  
+        });
+      };
+
+
+
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
@@ -169,7 +230,7 @@ const parsedDate = `${day}/${month}`;
         null
       : 
       <>
-        {carryOnSuivi ? <>
+        {carryOnSuivi && !isEditingP ? <>
         <HistoryFollowedSymptoms/>
         <Button text={'Fermer les suivis'} onPress={()=>{setCarryOnsuivi(false)}}/>
          </>: null }
@@ -180,7 +241,48 @@ const parsedDate = `${day}/${month}`;
         /> */}
       </>}
 {/* Display the validation button */}
-{carryOnSuivi ? null : (<>
+{carryOnSuivi ? 
+(isEditingP ? 
+<ScrollView>{symptomeJSON
+          .filter((item) => {
+            return (
+              item.id === 41 ||
+              item.id === 42 ||
+              item.id === 43 ||
+              item.id === 122 ||
+              item.id === 133 ||
+              item.id === 131 ||
+              item.id === 251 ||
+              item.id === 252 ||
+              item.id === 253 ||
+              item.id === 254 ||
+              item.id === 255 ||
+              item.id === 256 ||
+              item.id === 257
+            );
+          })
+          .map((item) => {
+            return (
+              <ProfileAskPersonal
+                nameText={item.name}
+                inputPlaceholder={item.unit}
+                displayPersonal={item.caractere === 'Perso'}
+                initValue={item.id === 43 && calculateBMI(user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 42)?.data?.slice(-1)[0].valeur.toString() , user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 41)?.data?.slice(-1)[0].valeur.toString())  ? calculateBMI(user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 42)?.data?.slice(-1)[0].valeur.toString() , user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 41)?.data?.slice(-1)[0].valeur.toString())    :user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id==item.id)?.data?.slice(-1)[0].valeur}
+                onTextChange={(text:string)=>{ addValueUser(item,text);
+                }}
+              />
+            );
+          })}
+           <Button
+      text={'Valider'}
+      isSelected
+      onPress={() => {
+        setIsEditingP(false);
+        actions.saveUserProfile();
+        actions.signupUser();
+      }}
+    />
+      </ScrollView> : null ) : (<>
 <Button
         text={i18n.t('home.button_top')}
         style={{minWidth: '90%'}}
@@ -199,6 +301,22 @@ const parsedDate = `${day}/${month}`;
         onPress={()=>{setRData(true)}}
         
       />
+      <Button
+        text={i18n.t('home.button_bot_bot')}
+        style={{minWidth: '90%'}}
+        onPress={()=>{}}
+        
+      />
+       <Button
+      text={i18n.t('profile.modif')}
+      style={{minWidth: '90%'}}
+      onPress={()=>{
+        setEditPopUp(true);
+      }}
+
+    
+    />
+    <ChangeProfilePopUp isVisible={editPopUp} onClose={()=>{setEditPopUp(false);setCarryOnsuivi(false)}} onPressEdit={onEditProfile} />
       <DataAddPopUp isVisible={rData} onClose={()=>{setRData(false)}} />
       </>) }
       </>

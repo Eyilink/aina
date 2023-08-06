@@ -39,6 +39,7 @@ import ProfileAskPersonal from '@components/molecules/ProfileAskPersonnal';
 import { InformationContext } from '@components/molecules/InformationContext';
 import { useFocusEffect } from '@react-navigation/native';
 import Diseases from '@screens/Public/Diseases';
+import ChangeProfilePopUp from '@components/popUp/ChangeProfilePopUp';
 function Profile(): ReactElement {
   // State variable to toggle the visibility of elements
   const [showElements, setShowElements] = useState(false);
@@ -59,6 +60,7 @@ function Profile(): ReactElement {
   const [tel, setTel] = useState<string>(user.tel);
   const [mail, setMail] = useState<string>(user.mail);
   const[users,actions_users] = useUsersStore();
+  const [editPopUp,setEditPopUp] = useState<boolean>(false);
   useFocusEffect(
     
     React.useCallback(() => {
@@ -195,42 +197,15 @@ const [vali , setValid] = useState(true);
     {user.my_personal_datas?.filter(p => p.id != "21").map((pathologie: Pathologie) => (
       <BoxPathologieProfile objet={pathologie} />
     ))}
-    <Button
-      text={"Ajouter un utilisateur"}
+    {/* <Button
+      text={i18n.t('profile.modif')}
       onPress={()=>{
-        actions_users.replaceUser(user);
-        actions_users.saveUsersToAsyncStorage();
-        actions.resetUserSession();
+        setEditPopUp(true);
       }}
       isValidate
       style={styles.editButton}
     />
-    {/* <Button
-      text={"save d'utilisateur"}
-      onPress={()=>{
-        actions.saveUsersToAsyncStorage();
-        
-       
-      }}
-      isValidate
-      style={styles.editButton}
-    /> */}
-    {/* <Button
-      text={"get d'utilisateur"}
-      onPress={()=>{
-        actions.getUsersFromAsyncStorage();
-        
-       
-      }}
-      isValidate
-      style={styles.editButton}
-    /> */}
-    <Button
-      text={i18n.t('profile.edit')}
-      onPress={onEditProfile}
-      isValidate
-      style={styles.editButton}
-    />
+    <ChangeProfilePopUp isVisible={editPopUp} onClose={()=>{setEditPopUp(false)}} onPressEdit={onEditProfile} /> */}
     <Button
       text={'Exporter les données'}
       onPress={async () => {

@@ -332,9 +332,9 @@ const setTextForPathos = (p_id: string) : void => {
         return (<View key={ind} style={{backgroundColor: colors.white}}>
         {item.init_symptoms?.map(s=>{
           // useEffect(()=>{console.log('value changed ...........')},[sliderValue,yesNoValue,txtValue]);
-          return <View style={{justifyContent: 'center'}}>
-            <AppText style={{textAlign: 'center'}} text={s.question ? s.question.toString() : s.name} />
-            <InputBox s={s} onClose={()=>{}} recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange}  donotdispVButtons ouinonSameLine/>
+          return <View style={s.type === 'Oui/non' || s.type === 'oui/non' ? {justifyContent: 'space-between',alignItems: 'center', flexDirection: 'row' , paddingVertical: 10} : {flexDirection: 'column' , justifyContent: 'center'}}>
+            <AppText style={{textAlign: 'center'}} text={s.surname ? s.surname.toString() : ''} />
+            <InputBox s={s} onClose={()=>{}} noText recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange}  donotdispVButtons  ouinonSameLine/>
           </View>
 
         })}
@@ -359,7 +359,7 @@ const setTextForPathos = (p_id: string) : void => {
         </ScrollView>
       ) : (
         <ScrollView>
-          {items.filter(p=> p.id != "21").map((item, index) => (
+          {items.filter(p=> p.id != "21" && !p.name.includes("Bilan")).map((item, index) => (
             <TouchableOpacity
             key={index}
             style={[

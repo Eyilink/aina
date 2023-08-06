@@ -100,7 +100,8 @@ export const symptomeJSON: Symptome[] = symptoms.map((item: Symptome) => ({
   unit: item.unit,
   caractere: item.caractere,
   valMin: item.valMin,
-  valMax: item.valMax
+  valMax: item.valMax,
+  surname: item.surname,
 }));
 
 export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({

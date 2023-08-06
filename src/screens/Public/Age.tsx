@@ -9,7 +9,7 @@ import Button from '@components/atoms/Button';
 import InputText from '@components/atoms/InputText';
 import Previous from '@components/atoms/Previous';
 
-import { useAuthStore } from '@store/store';
+import { useAuthStore, useUserStore } from '@store/store';
 import { PublicStackParamList } from '@navigation/types';
 import { alertError, isNumeric } from '@helpers/utils';
 import JsonS from '@assets/json/symptomes.json'
@@ -17,6 +17,7 @@ import layout from '@styles/layout';
 import i18n from '@i18n/i18n';
 import ProfileAskPersonal from '@components/molecules/ProfileAskPersonnal';
 import { ScrollView } from 'react-native-gesture-handler';
+import { MALADIE1 } from '@constants/constants';
 
 type Props = {
   navigation: StackNavigationProp<PublicStackParamList, 'Age'>;
@@ -27,6 +28,7 @@ const BirthDateForm = ({ navigation }: Props) => {
   const [month, setMonth] = useState('0');
   const [year, setYear] = useState('2023');
   const [, actions] = useAuthStore();
+  const [user,] = useUserStore({disease: MALADIE1});
   const [code,setCode] = useState<string>();
   const [nom, setNom] = useState<string>();
   const [dateNaissance, setDateNaissance] = useState<string>();
@@ -103,7 +105,7 @@ const BirthDateForm = ({ navigation }: Props) => {
     <Container>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Title text={i18n.t('signup.sectionTitle')} />
+          <Title text={user.username} />
           <Previous />
         </View>
         {/* <SubTitle text={i18n.t('signup.questions.dateDeNaissance')} /> */}

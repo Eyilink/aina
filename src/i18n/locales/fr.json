@@ -65,6 +65,9 @@
     "go": "C'est parti"
   },
   "profile": {
+    "creer" : "Créer un profil",
+    "modif_p":"Modifier",
+    "modif" : "Modifier/Créer un profil",
     "edit": "Modifier",
     "diseases": "Antécédents de santé",
     "pregnant": "Enceinte",
@@ -159,9 +162,10 @@
     "end2bis": "Vous n’avez pas de symptômes évocateurs aujourd’hui.\n\nVous en aviez dans les 3 derniers jours donc soyez très vigilant.",
     "end3": "Vous avez au moins deux symptômes évocateurs.\n\nRestez chez vous et contactez un médecin. Si vous l’avez déjà fait, continuez de suivre vos symptômes.\n\nContactez un médecin ou le 15 en cas d’aggravation.",
     "nodata": "Vous ne suivez actuellement aucune données.",
-    "button_top" : "Continuer un suivi",
-    "button_mid" : "Lancer un suivi",
-    "button_bot" : "Renseigner une donnée"
+    "button_top" : "Suivi en cours",
+    "button_mid" : "Lancer un suivi générique",
+    "button_bot" : "Créer un suivi personnel",
+    "button_bot_bot": "Faire un bilan"
 
   },
   "history": {
