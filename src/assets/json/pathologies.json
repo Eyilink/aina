@@ -170,81 +170,81 @@
     "id": 22,
     "name": "Bilan colonne ",
     "symptoms": "41,42,211",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 23,
     "name": "Bilan hanche Dr",
     "symptoms": "326,163,44,66,67,70",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 24,
     "name": "Bilan hanche G",
     "symptoms": "326,163,44,66,67,69",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 25,
     "name": "Bilan Genou Dr",
     "symptoms": "326,163,125,59,72,122,42",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 26,
     "name": "Bilan Genou  G",
     "symptoms": "326,163,125,60,73,122,42",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 27,
     "name": "Bilan Clinimètre",
     "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 36,
     "name": "Bilan articulaire",
     "symptoms": "22,23,24,25,26,27",
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 37,
     "name": "Bilan AVQ",
-    "symptoms": null,
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "symptoms": "",
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 38,
     "name": "Bilan dépendance",
-    "symptoms": null,
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "symptoms": "",
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 },
 {
     "id": 39,
     "name": "Bilan fragilité",
-    "symptoms": null,
-    "init_symptoms": null,
-    "frequency": null,
-    "logo": null
+    "symptoms": "",
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
 }
 
 
