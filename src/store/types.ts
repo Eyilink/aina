@@ -100,6 +100,7 @@ export type SymptomeJSON = {
 export type Data = { 
   date: string,
   valeur:number | string,
+  evaluateur?: string,
 };
 export type Symptome = {
   id: number;
@@ -111,7 +112,8 @@ export type Symptome = {
   valMin?: number,
   valMax?: number,
   unit?:string,
-  caractere?: string
+  caractere?: string,
+  surname?: string,
 };
   
 export type Pathologie = {

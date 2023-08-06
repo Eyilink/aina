@@ -20,6 +20,7 @@ type Props = {
   isLoading?: boolean;
   style?: ViewStyle;
   disabled?: boolean;
+  noText?: boolean;
 };
 
 const Button = ({
@@ -31,9 +32,11 @@ const Button = ({
   isLoading,
   style,
   disabled,
+  noText
 }: Props): ReactElement => (
   <TouchableOpacity
-    style={[
+    style={noText ? {justifyContent: 'space-evenly', alignItems: 'center',backgroundColor: isSelected ? colors.primary : colors.greyLight,
+    alignSelf: stretch ? 'stretch' : 'center',borderRadius: layout.buttons.borderRadius, paddingHorizontal: layout.padding/3, paddingVertical: layout.padding / 4,}: [
       styles.button,
       {
         backgroundColor: isSelected ? colors.primary : colors.greyLight,

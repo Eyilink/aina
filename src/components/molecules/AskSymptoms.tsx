@@ -30,11 +30,13 @@ type InputSymptomeProps = {
   ouinonSameLine?: boolean;
   recupText?: (value: string) => void;
   recupSymp?: (value: Symptome) => void;
+  isDataComp?: boolean;
+  noText ?: boolean;
 };
 
 
 
-export const InputBox = ({ s, onClose , donotdispVButtons , recupSliderValue , recupYesNo , ouinonSameLine , recupText , recupSymp}: InputSymptomeProps) => {
+export const InputBox = ({ s, onClose,noText , donotdispVButtons , recupSliderValue , recupYesNo , ouinonSameLine , recupText , recupSymp , isDataComp}: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [txt, setTxt] = useState<string>('');
   const [hasUserChosen, setHasUserChosen] = useState(false);
@@ -177,7 +179,6 @@ export const InputBox = ({ s, onClose , donotdispVButtons , recupSliderValue , r
           minimumTrackTintColor="red"
           thumbTintColor="red"
 
-
         />
 
         {s.name === 'Température' ? (
@@ -208,7 +209,8 @@ export const InputBox = ({ s, onClose , donotdispVButtons , recupSliderValue , r
   } else if (s.type === 'Oui/non' || s.type === 'oui/non') {
     symptomText = (
       <View>
-        <View style={ouinonSameLine ? {flexDirection: 'row' , justifyContent: 'space-between' , paddingHorizontal: 80} : {flexDirection: 'column'}}>
+        {isDataComp ? 
+        <>
         <Button
           text={i18n.t('commons.yes')}
           onPress={() => onChange(true)}
@@ -221,8 +223,26 @@ export const InputBox = ({ s, onClose , donotdispVButtons , recupSliderValue , r
           isSelected={hasUserChosen && !symptom}
           
         />
+        </> : 
+        <View style={ouinonSameLine ? {flexDirection: 'row' , justifyContent: 'space-evenly'} : {flexDirection: 'column'}}>
+        <Button
+          text={i18n.t('commons.yes')}
+          onPress={() => onChange(true)}
+          isSelected={hasUserChosen && symptom}
+          style={noText ? {width: '20%',height: '20%'} : {}}
+          noText
+        />
+        <Button
+          text={i18n.t('commons.no')}
+          onPress={() => onChange(false)}
+          isSelected={hasUserChosen && !symptom}
+          style={noText ? {width: '20%',height: '20%'} : {}}
+          noText
+        />
         </View>
-        <Text style={styles.subtitle}></Text>
+  }
+        {/* <Text style={styles.subtitle}></Text> */}
+        
         {donotdispVButtons ? null : <Button
           text="Validate"
           onPress={handleYesNoSymptome}
@@ -232,8 +252,8 @@ export const InputBox = ({ s, onClose , donotdispVButtons , recupSliderValue , r
     );
   } else {
     symptomText = (
-    <View>
-    <ProfileAskPersonal  onTextChange={(text:string)=>{setTxt(text)}} nameText={s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(t=>t.id==s.id)?.data?.slice(-1)[0].valeur} />
+    <View style={{flex: 1}}>
+    <ProfileAskPersonal  onTextChange={(text:string)=>{setTxt(text)}} nameText={ noText ? '' : s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(t=>t.id==s.id)?.data?.slice(-1)[0].valeur} />
     {donotdispVButtons ? null : <Button
           text="Validate"
           onPress={handleValidateT}
@@ -311,7 +331,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   slider: {
-    height: 10,
+   transform: [{scaleX: 1},{scaleY: 3}]
+    
     // marginTop: -12
     
   },
