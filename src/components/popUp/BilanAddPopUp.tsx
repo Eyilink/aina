@@ -21,7 +21,6 @@ const { height, width } = Dimensions.get('window');
 const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
   const [yes, setYes] = useState(true);
   const [sousBilan, setsousBilan] = useState(true);
-  const [sympAffiche, setsympAffiche] = useState(true);
   const [user,] = useUserStore({ disease: MALADIE1 });
   const [path, setPath] = useState<Pathologie>();
   const [souspath, setsousPath] = useState<Pathologie>();
@@ -30,7 +29,6 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
   const Init = () => {
     setYes(true);
     setsousBilan(true);
-    setsympAffiche(true);
   }
 
   const handleListItemClick = (item: Pathologie) => {
@@ -47,15 +45,6 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
     console.log('Item clicked:', item);
     setsousPath(item);
     setsousBilan(false);
-    setsympAffiche(true);
-  };
-
-
-  const handleListItemClickBis = (item: Symptome) => {
-    // Implement your logic here when an item is clicked
-    console.log('Item clicked:', item);
-    setSymp(item);
-    setsympAffiche(false);
   };
 
   return (
@@ -75,7 +64,7 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
                 </TouchableOpacity>
               ))}
             </ScrollView>
-            <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose()}} />
+            <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
           </View>
         ) : (
           sousBilan ?
@@ -91,30 +80,19 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
                   </TouchableOpacity>
                 ) : null}
               </ScrollView>
-              <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose()}} />
+              <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
             </View>
             :
-              sympAffiche ?
-                <View style={styles.popV}>
-                <ScrollView style={styles.scrollContainer}>
-                  {souspath ? souspath.symptoms.map((item) =>
-                    <TouchableOpacity
-                      key={item.id}
-                      onPress={() => handleListItemClickBis(item)}
-                      style={styles.listItem}
-                    >
-                      <AppText text={item.id.toString() + " - " + item.name} />
-                    </TouchableOpacity>
-                  ) : null}
-                  </ScrollView>
-                  <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose()}} />
-                </View>
-              :
-                // Show the text and back button when the item is clicked
-                <View style={styles.popV}>
-                  {symp ? <InputSymptome s={symp} onClose={onClose} onArrow={() => { setYes(true); setsousBilan(true); }} /> : null}
-                  <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose()}} />
-                </View>
+            <>
+            <View style={styles.popV}>
+              <ScrollView style={styles.scrollContainer}>
+                {souspath ? souspath.symptoms.map((item) =>
+                  <InputSymptome s={item} onClose={onClose} onArrow={() => { setYes(true); setsousBilan(true); }} />
+                ) : null}
+              </ScrollView>
+              <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
+              </View>
+            </>
         )}
       </View>
     </Modal>
@@ -139,6 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scrollContainer: {
+    width: '85%',
     margin: '15%',
     flex: 1,
   },

@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Slider
+  Slider,
+  ViewStyle
 } from 'react-native';
 
 import Container from '@components/molecules/Container';
@@ -31,6 +32,7 @@ type InputSymptomeProps = {
   recupText?: (value: string) => void;
   recupSymp?: (value: Symptome) => void;
   isDataComp?: boolean;
+  style?: ViewStyle;
   noText ?: boolean;
 };
 
@@ -267,14 +269,14 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons , recupSliderVa
 
 
 
-const InputSymptome = ({ s, onClose , onArrow }: InputSymptomeProps): ReactElement => {
+const InputSymptome = ({ s, onClose , onArrow, style }: InputSymptomeProps): ReactElement => {
 
 
   return (
-    <Container >
+    <Container>
  
       {/* display question */}
-      <View style={styles.popUpContainer}>
+      <View style={[styles.popUpContainer, style]}>
       <Ionicons
         name="ios-arrow-round-back"
         size={48}
