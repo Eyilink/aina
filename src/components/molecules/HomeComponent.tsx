@@ -3,10 +3,10 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { AntDesign } from '@expo/vector-icons';
 import i18n from '@i18n/i18n';
 import Title from '@components/atoms/Title';
-import { View,Text,StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Button from '@components/atoms/Button';
 import HistoryFollowedSymptoms from '@components/atoms/HistoryFollowedSymptoms';
-import  {DATE_TODAY, MALADIE1, getIconPath, pathologieJSON, symptomeJSON} from '@constants/constants';
+import { DATE_TODAY, MALADIE1, getIconPath, pathologieJSON, symptomeJSON } from '@constants/constants';
 import NewSuivi from './NewSuivi';
 import { Ionicons } from '@expo/vector-icons';
 import layout from '@styles/layout';
@@ -19,37 +19,38 @@ import json_p from '@assets/json/pathologies.json'
 import DataAddPopUp from '@components/popUp/DataAddPopUp';
 import { InformationContext } from './InformationContext';
 import { InformationContext2 } from './InformationContext2';
-import { BooleanContext } from './BooleanContext';
 import ChangeProfilePopUp from '@components/popUp/ChangeProfilePopUp';
 import ProfileAskPersonal from './ProfileAskPersonnal';
 import { ScrollView } from 'react-native-gesture-handler';
+import BilanAddPopUp from '@components/popUp/BilanAddPopUp';
 
 
 type Props = {
   isDataEmpty?: boolean;
-  
+
 };
 // HomeComponent represents the main home screen of the application.
 const HomeComponent = ({
-    isDataEmpty
+  isDataEmpty
 }: Props): ReactElement => {
-  const [user, ] = useUserStore({ disease: MALADIE1 });
+  const [user,] = useUserStore({ disease: MALADIE1 });
   const [ButtonClicked, setButtonClicked] = React.useState(false);
-  
+
   const [carryOnSuivi, setCarryOnsuivi] = useState(false);
-  const [rData,setRData] = useState(false);
+  const [rData, setRData] = useState(false);
+  const [bilanData, setBilanData] = useState(false);
   const [, actions] = useAuthStore();
-  const {infoText,setinfoText} = useContext(InformationContext);
+  const { infoText, setinfoText } = useContext(InformationContext);
   const [users,] = useUsersStore();
-  const [editPopUp,setEditPopUp] = useState<boolean>(false);
-  const [isEditingP,setIsEditingP] = useState<boolean>(false);
+  const [editPopUp, setEditPopUp] = useState<boolean>(false);
+  const [isEditingP, setIsEditingP] = useState<boolean>(false);
   const onEditProfile = (): void => {
     setIsEditingP(true);
     setCarryOnsuivi(true);
 
   };
   // const [users,actionns] = useUsersStore();
-  
+
   // const {infoText2,setinfoText2} = useContext(InformationContext2);
   const [twoDArray, setTDArray] = useState<string[][]>([
     [
@@ -91,96 +92,93 @@ const HomeComponent = ({
       "351", "352", "353", "354", "355", "356", "357", "358", "359", "360"
     ]
   ]);
-  const [firstT , setFirstT] = useState(true);
-    // ValidatePressed is triggered when the validation button is pressed.
+  const [firstT, setFirstT] = useState(true);
+  // ValidatePressed is triggered when the validation button is pressed.
   // It toggles the ButtonClicked state.
   // useEffect(()=>{if(boolC)
   //   setButtonClicked(true);},[])
-  useFocusEffect(()=>{
-    users.map((u,i)=> console.log("Nom user numero "+ i.toString() + " : " + u.username));
-    
+  useFocusEffect(() => {
+    users.map((u, i) => console.log("Nom user numero " + i.toString() + " : " + u.username));
+
     setinfoText('home.png')
     // console.log("user datas" + user.my_personal_datas.length);
     // if(boolC)
     //   setButtonClicked(!ButtonClicked);
     // setinfoText2('')
-    if(isDataEmpty)
+    if (isDataEmpty)
       setCarryOnsuivi(false);
-    if(firstT)
-    {
-      
-      if(user.boolF)
-      {
+    if (firstT) {
+
+      if (user.boolF) {
         processDatas();
-        actions.editUserProfile({key: 'boolF', value: false});
+        actions.editUserProfile({ key: 'boolF', value: false });
       }
-      if(user.boolC)
-      {
-        
-      setButtonClicked(true);
-      actions.editUserProfile({key: 'boolC', value: false});
+      if (user.boolC) {
+
+        setButtonClicked(true);
+        actions.editUserProfile({ key: 'boolC', value: false });
       }
       setFirstT(false);
     }
 
-    
-      })
-      function calculateBMI(weightString: string | undefined, heightString: string | undefined): number | undefined {
-        if (weightString === undefined || heightString === undefined) {
-          return undefined; // Return null if either weight or height is undefined
+
+  })
+  function calculateBMI(weightString: string | undefined, heightString: string | undefined): number | undefined {
+    if (weightString === undefined || heightString === undefined) {
+      return undefined; // Return null if either weight or height is undefined
+    }
+
+    const weight = parseFloat(weightString.replace(/[^\d.]/g, ''));
+    const height = parseFloat(heightString.replace(/[^\d.]/g, ''));
+
+    if (isNaN(weight) || isNaN(height) || height === 0) {
+      return undefined; // Return null if either weight or height is not a valid number, or if height is zero to avoid division by zero
+    }
+
+    const heightInMeters = height / 100; // Convert height from centimeters to meters
+
+    const bmi = weight / (heightInMeters * heightInMeters);
+    return bmi;
+  }
+
+  const addValueUser = (sympt: Symptome, val: string) => {
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    // Iterate over each pathology in my_personal_datas
+    user.my_personal_datas.forEach((pathology) => {
+      // Find the symptoms with the same id as the provided sympt
+      const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
+
+      // Update the data field of each matching symptom
+
+      if (symptomsToUpdate[0]) {
+
+        const newData = { date: formattedDate, valeur: val };
+
+        if (!symptomsToUpdate[0].data) {
+          // If data field doesn't exist, create a new array with the new data
+          symptomsToUpdate[0].data = [newData];
+        } else {
+          // If data field already exists, concatenate the new data to the existing array
+          symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
         }
-      
-        const weight = parseFloat(weightString.replace(/[^\d.]/g, ''));
-        const height = parseFloat(heightString.replace(/[^\d.]/g, ''));
-      
-        if (isNaN(weight) || isNaN(height) || height === 0) {
-          return undefined; // Return null if either weight or height is not a valid number, or if height is zero to avoid division by zero
-        }
-      
-        const heightInMeters = height / 100; // Convert height from centimeters to meters
-      
-        const bmi = weight / (heightInMeters * heightInMeters);
-        return bmi;
       }
-      
-      const addValueUser = (sympt: Symptome, val: string) => {
-        const currentDate = new Date();
-        const day = currentDate.getDate().toString().padStart(2, '0');
-        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        const year = currentDate.getFullYear().toString();
-    
-        const formattedDate = `${day}/${month}/${year}`;
-        // Iterate over each pathology in my_personal_datas
-        user.my_personal_datas.forEach((pathology) => {
-          // Find the symptoms with the same id as the provided sympt
-          const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
-      
-          // Update the data field of each matching symptom
-    
-          if (symptomsToUpdate[0]) {
-          
-          const newData = { date: formattedDate, valeur: val };
-    
-          if (!symptomsToUpdate[0].data) {
-            // If data field doesn't exist, create a new array with the new data
-            symptomsToUpdate[0].data = [newData];
-          } else {
-            // If data field already exists, concatenate the new data to the existing array
-            symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
-            }
-          }
-    
-        console.log(pathology.symptoms);  
-        console.log("Value added !")  
-        });
-      };
+
+      console.log(pathology.symptoms);
+      console.log("Value added !")
+    });
+  };
 
 
 
   const processDatas = () => {
     const updatedPathos = twoDArray.map((objet, index) => {
       const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
-      const pd_obj =  user.my_personal_datas?.find((obj)=>obj.id == objet[0]);
+      const pd_obj = user.my_personal_datas?.find((obj) => obj.id == objet[0]);
       const newE: Pathologie = {
         id: objet[0],
         name: nm ? nm : "",
@@ -191,7 +189,7 @@ const HomeComponent = ({
             name: filteredObj.name,
             type: filteredObj.type,
             frequency: filteredObj.frequency,
-            data: pd_obj ? pd_obj.symptoms.find((s)=> s.id == filteredObj.id)?.data : null,
+            data: pd_obj ? pd_obj.symptoms.find((s) => s.id == filteredObj.id)?.data : null,
             unit: filteredObj.unit,
             valMax: filteredObj.valMax,
             valMin: filteredObj.valMin
@@ -199,9 +197,9 @@ const HomeComponent = ({
         icon: getIconPath(
           pathologieJSON.find((obj) => obj.id === objet[0])?.namelogo?.toString()
         ),
-        date: user.my_personal_datas?.find((obj)=>obj.id == objet[0])?.date ? user.my_personal_datas.find((obj)=>obj.id == objet[0])?.date :  DATE_TODAY,
-        namelogo: json_p.find((obj)=>obj.id.toString() == objet[0])?.logo, 
-        
+        date: user.my_personal_datas?.find((obj) => obj.id == objet[0])?.date ? user.my_personal_datas.find((obj) => obj.id == objet[0])?.date : DATE_TODAY,
+        namelogo: json_p.find((obj) => obj.id.toString() == objet[0])?.logo,
+
       };
       return newE;
     });
@@ -210,158 +208,160 @@ const HomeComponent = ({
     console.log(updatedPathos)
   };
   const ValidatePressed = () => {
-    
+
     setButtonClicked(!ButtonClicked);
   };
   const dateString = DATE_TODAY;
   const [date, time] = dateString.split(' ');
   const [day, month] = date.split('/');
 
-const parsedDate = `${day}/${month}`;
+  const parsedDate = `${day}/${month}`;
 
   return (
     <View style={styles.container}>
-    
-    {!ButtonClicked? 
-      <>
-        {/* If isDataEmpty is true, display a message indicating no data */}
-      {isDataEmpty ? 
-        // <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
-        null
-      : 
-      <>
-        {carryOnSuivi && !isEditingP ? <>
-        <HistoryFollowedSymptoms/>
-        <Button text={'Fermer les suivis'} onPress={()=>{setCarryOnsuivi(false)}}/>
-         </>: null }
-        {/* <Button
+
+      {!ButtonClicked ?
+        <>
+          {/* If isDataEmpty is true, display a message indicating no data */}
+          {isDataEmpty ?
+            // <Text style={styles.title}>{i18n.t('home.nodata')}</Text>
+            null
+            :
+            <>
+              {carryOnSuivi && !isEditingP ? <>
+                <HistoryFollowedSymptoms />
+                <Button text={'Fermer les suivis'} onPress={() => { setCarryOnsuivi(false) }} />
+              </> : null}
+              {/* <Button
           text="Renseigner une donnée ponctuelle"
           onPress={()=>{}}
           stretch
         /> */}
-      </>}
-{/* Display the validation button */}
-{carryOnSuivi ? 
-(isEditingP ? 
-<ScrollView>{symptomeJSON
-          .filter((item) => {
-            return (
-              item.id === 41 ||
-              item.id === 42 ||
-              item.id === 43 ||
-              item.id === 122 ||
-              item.id === 133 ||
-              item.id === 131 ||
-              item.id === 251 ||
-              item.id === 252 ||
-              item.id === 253 ||
-              item.id === 254 ||
-              item.id === 255 ||
-              item.id === 256 ||
-              item.id === 257
-            );
-          })
-          .map((item) => {
-            return (
-              <ProfileAskPersonal
-                nameText={item.name}
-                inputPlaceholder={item.unit}
-                displayPersonal={item.caractere === 'Perso'}
-                initValue={item.id === 43 && calculateBMI(user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 42)?.data?.slice(-1)[0].valeur.toString() , user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 41)?.data?.slice(-1)[0].valeur.toString())  ? calculateBMI(user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 42)?.data?.slice(-1)[0].valeur.toString() , user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id== 41)?.data?.slice(-1)[0].valeur.toString())    :user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(s=>s.id==item.id)?.data?.slice(-1)[0].valeur}
-                onTextChange={(text:string)=>{ addValueUser(item,text);
-                }}
-              />
-            );
-          })}
-           <Button
-      text={'Valider'}
-      isSelected
-      onPress={() => {
-        setIsEditingP(false);
-        actions.saveUserProfile();
-        actions.signupUser();
-      }}
-    />
-      </ScrollView> : null ) : (<>
-<Button
-        text={i18n.t('home.button_top')}
-        style={{minWidth: '90%'}}
-        onPress={()=>{setCarryOnsuivi(true)}}
-        
-      />
-      <Button
-        text={i18n.t('home.button_mid')}
-        style={{minWidth: '90%'}}
-        onPress={ValidatePressed}
-        
-      />
-      <Button
-        text={i18n.t('home.button_bot')}
-        style={{minWidth: '90%'}}
-        onPress={()=>{setRData(true)}}
-        
-      />
-      <Button
-        text={i18n.t('home.button_bot_bot')}
-        style={{minWidth: '90%'}}
-        onPress={()=>{}}
-        
-      />
-       <Button
-      text={i18n.t('profile.modif')}
-      style={{minWidth: '90%'}}
-      onPress={()=>{
-        setEditPopUp(true);
-      }}
+            </>}
+          {/* Display the validation button */}
+          {carryOnSuivi ?
+            (isEditingP ?
+              <ScrollView>{symptomeJSON
+                .filter((item) => {
+                  return (
+                    item.id === 41 ||
+                    item.id === 42 ||
+                    item.id === 43 ||
+                    item.id === 122 ||
+                    item.id === 133 ||
+                    item.id === 131 ||
+                    item.id === 251 ||
+                    item.id === 252 ||
+                    item.id === 253 ||
+                    item.id === 254 ||
+                    item.id === 255 ||
+                    item.id === 256 ||
+                    item.id === 257
+                  );
+                })
+                .map((item) => {
+                  return (
+                    <ProfileAskPersonal
+                      nameText={item.name}
+                      inputPlaceholder={item.unit}
+                      displayPersonal={item.caractere === 'Perso'}
+                      initValue={item.id === 43 && calculateBMI(user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == 42)?.data?.slice(-1)[0].valeur.toString(), user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == 41)?.data?.slice(-1)[0].valeur.toString()) ? calculateBMI(user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == 42)?.data?.slice(-1)[0].valeur.toString(), user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == 41)?.data?.slice(-1)[0].valeur.toString()) : user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == item.id)?.data?.slice(-1)[0].valeur}
+                      onTextChange={(text: string) => {
+                        addValueUser(item, text);
+                      }}
+                    />
+                  );
+                })}
+                <Button
+                  text={'Valider'}
+                  isSelected
+                  onPress={() => {
+                    setIsEditingP(false);
+                    actions.saveUserProfile();
+                    actions.signupUser();
+                  }}
+                />
+              </ScrollView> : null) : (<>
+                <Button
+                  text={i18n.t('home.button_top')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => { setCarryOnsuivi(true) }}
 
-    
-    />
-    <ChangeProfilePopUp isVisible={editPopUp} onClose={()=>{setEditPopUp(false);setCarryOnsuivi(false)}} onPressEdit={onEditProfile} />
-      <DataAddPopUp isVisible={rData} onClose={()=>{setRData(false)}} />
-      </>) }
-      </>
-    :<>
-        {/* Display the back button that allows to go back to the previous screen */}
-      <Ionicons
-        name="ios-arrow-round-back"
-        size={layout.navigation.previousIcon.size}
-        color={colors.black}
-        onPress={ValidatePressed}
-        style={{marginLeft:12}}
-      />
-      <View style={styles.newsuivicontainer}>
-      <NewSuivi onPress={ValidatePressed} setButtonNewSuiviClicked={setButtonClicked}/>
-      </View>
-    </>
-    }
+                />
+                <Button
+                  text={i18n.t('home.button_mid')}
+                  style={{ minWidth: '90%' }}
+                  onPress={ValidatePressed}
+
+                />
+                <Button
+                  text={i18n.t('home.button_bot')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => { setRData(true) }}
+
+                />
+                <Button
+                  text={i18n.t('home.button_bot_bot')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => { setBilanData(true); console.log(user.my_personal_datas?.filter(pathologie => pathologie.id >= '36')); }}
+
+                />
+                <Button
+                  text={i18n.t('profile.modif')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => {
+                    setEditPopUp(true);
+                  }}
+
+
+                />
+                <ChangeProfilePopUp isVisible={editPopUp} onClose={() => { setEditPopUp(false); setCarryOnsuivi(false) }} onPressEdit={onEditProfile} />
+                <DataAddPopUp isVisible={rData} onClose={() => { setRData(false) }} />
+                <BilanAddPopUp isVisible={bilanData} onClose={() => { setBilanData(false) }} />
+              </>)}
+        </>
+        : <>
+          {/* Display the back button that allows to go back to the previous screen */}
+          <Ionicons
+            name="ios-arrow-round-back"
+            size={layout.navigation.previousIcon.size}
+            color={colors.black}
+            onPress={ValidatePressed}
+            style={{ marginLeft: 12 }}
+          />
+          <View style={styles.newsuivicontainer}>
+            <NewSuivi onPress={ValidatePressed} setButtonNewSuiviClicked={setButtonClicked} />
+          </View>
+        </>
+      }
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center'
+  container: {
+    flex: 1,
+    justifyContent: 'center'
 
-    },
-    custom_title: { 
-      fontSize: 30,
- 
-      textAlign: 'center'
-    },
-    title: {
-      fontSize: 24,
-      
-      fontWeight: 'bold',
-      color: 'black',
-      textAlign: 'center',
-      marginBottom: '60%'
-    },
-    newsuivicontainer: {
-      flex: 1,
-      
-    }
-  });
-  
+  },
+  custom_title: {
+    fontSize: 30,
+
+    textAlign: 'center'
+  },
+  title: {
+    fontSize: 24,
+
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+    marginBottom: '60%'
+  },
+  newsuivicontainer: {
+    flex: 1,
+
+  }
+});
+
 
 export default HomeComponent;
