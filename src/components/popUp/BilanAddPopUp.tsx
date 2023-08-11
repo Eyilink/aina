@@ -6,11 +6,12 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import AppText from '@components/atoms/AppText';
-import InputSymptome from '@components/molecules/AskSymptoms';
+import InputSymptome, { InputBox } from '@components/molecules/AskSymptoms';
 import { Path } from 'react-native-svg-charts';
 import json_p from '@assets/json/pathologies.json'
 import json_s from '@assets/json/symptomes.json'
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
+import Clinimeter from '@components/molecules/Clinimeter';
 
 type Props = {
   isVisible: boolean;
@@ -25,6 +26,38 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
   const [path, setPath] = useState<Pathologie>();
   const [souspath, setsousPath] = useState<Pathologie>();
   const [symp, setSymp] = useState<Symptome>();
+  const [currS , setCurrS] = useState<Symptome>();
+
+  const addValueUser = (sympt: Symptome, val: number | string) => {
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    // Iterate over each pathology in my_personal_datas
+    user.my_personal_datas.forEach((pathology) => {
+      // Find the symptoms with the same id as the provided sympt
+      const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
+  
+      // Update the data field of each matching symptom
+
+      if (symptomsToUpdate[0]) {
+      
+      const newData = { date: formattedDate, valeur: val };
+
+      if (!symptomsToUpdate[0].data) {
+        // If data field doesn't exist, create a new array with the new data
+        symptomsToUpdate[0].data = [newData];
+      } else {
+        // If data field already exists, concatenate the new data to the existing array
+        symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+        }
+      }
+
+    console.log(pathology.symptoms);    
+    });
+  };
 
   const Init = () => {
     setYes(true);
@@ -38,7 +71,25 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
     setYes(false);
     console.log(path);
   };
+  const handleSliderChange = (value: number) => {
 
+    if(currS)
+      addValueUser(currS,value);
+  };
+  const handleSympChange = (value: Symptome) => {
+    setCurrS(value);
+  };
+  const handleTxtChange = (value: string) => {
+
+   if(currS)
+      addValueUser(currS,value);
+  };
+
+  const handleYesNoChange = (value: boolean) => {
+
+    if(currS)
+      addValueUser(currS,value ? 1 : 0);
+  };
 
   const handleListItemClickSousBilan = (item: Pathologie) => {
     // Implement your logic here when an item is clicked
@@ -86,9 +137,12 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
             <>
             <View style={styles.popV}>
               <ScrollView style={styles.scrollContainer}>
-                {souspath ? souspath.symptoms.map((item) =>
-                  <InputSymptome s={item} onClose={onClose} onArrow={() => { setYes(true); setsousBilan(true); }} />
-                ) : null}
+                {souspath && !souspath.name.includes("Clinim") ? souspath.symptoms.map((item) =>
+                  <View style={{flexDirection: 'column' , justifyContent: 'center' , paddingTop: 20}}>
+                  <AppText style={{textAlign: 'center'}} text={item.surname ? item.surname.toString() : item.name} />
+                  <InputBox s={item} onClose={()=>{}} noText  recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange}  donotdispVButtons  ouinonSameLine/>
+                </View>
+                ) : <Clinimeter />}
               </ScrollView>
               <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
               </View>
@@ -103,33 +157,29 @@ const styles = StyleSheet.create({
   container: {
 
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   popV: {
-    height: height, // Use the full height of the screen
-    width: '100%',
+  flex:1,
     backgroundColor: 'white',
-    borderRadius: 10,
+alignItems: 'center',
 
-    justifyContent: 'center',
-    alignItems: 'center',
+
   },
   scrollContainer: {
-    width: '85%',
-    margin: '15%',
+    width: '100%',
     flex: 1,
   },
   listItem: {
     paddingVertical: 5,
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
-
+    width: '100%'
   },
   closeButton: {
     alignItems: 'center',
-    paddingVertical: 8,
+
     backgroundColor: 'lightgray',
     borderRadius: 5,
     marginBottom: 10,
