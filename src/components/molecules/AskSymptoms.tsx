@@ -24,10 +24,10 @@ import ProfileAskPersonal from './ProfileAskPersonnal';
 type InputSymptomeProps = {
   s: Symptome;
   onClose: () => void; // onClose function prop
-  onArrow?: ()=> void;
+  onArrow?: () => void;
   donotdispVButtons?: boolean;
   recupSliderValue?: (value: number) => void; // Declare recupSliderValue as a function that takes a number argument and returns void
-  recupYesNo?: (value: boolean) => void; 
+  recupYesNo?: (value: boolean) => void;
   ouinonSameLine?: boolean;
   recupText?: (value: string) => void;
   recupSymp?: (value: Symptome) => void;
@@ -39,7 +39,7 @@ type InputSymptomeProps = {
 
 
 
-export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderValue , recupSliderValue , recupYesNo , ouinonSameLine , recupText , recupSymp , isDataComp}: InputSymptomeProps) => {
+export const InputBox = ({ s, onClose, noText, donotdispVButtons,initsetSliderValue, recupSliderValue, recupYesNo, ouinonSameLine, recupText, recupSymp, isDataComp, evaluateur }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [txt, setTxt] = useState<string>('');
   const [hasUserChosen, setHasUserChosen] = useState(false);
@@ -49,27 +49,27 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
   const [sliderValue, setSliderValue] = useState(initialSliderValue);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   useEffect(() => {
-    if(recupSymp)
-    recupSymp(s)
-    if(recupYesNo)
+    if (recupSymp)
+      recupSymp(s)
+    if (recupYesNo)
       recupYesNo(symptom)
-    
+
   }, [symptom])
   useEffect(() => {
-    if(recupSymp)
-    recupSymp(s)
-    if(recupSliderValue)
+    if (recupSymp)
+      recupSymp(s)
+    if (recupSliderValue)
       recupSliderValue(sliderValue)
-    
+
   }, [sliderValue])
-  useEffect(()=>{
-    if(recupSymp)
-    recupSymp(s)
-    if(recupText)
+  useEffect(() => {
+    if (recupSymp)
+      recupSymp(s)
+    if (recupText)
       recupText(txt);
-   
-  },[txt])
-  
+
+  }, [txt])
+
   const addValueUser = (sympt: Symptome, val: number | string) => {
     const currentDate = new Date();
     const day = currentDate.getDate().toString().padStart(2, '0');
@@ -81,26 +81,26 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
     user.my_personal_datas.forEach((pathology) => {
       // Find the symptoms with the same id as the provided sympt
       const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
-  
+
       // Update the data field of each matching symptom
 
       if (symptomsToUpdate[0]) {
-      
-      const newData = { date: formattedDate, valeur: val };
 
-      if (!symptomsToUpdate[0].data) {
-        // If data field doesn't exist, create a new array with the new data
-        symptomsToUpdate[0].data = [newData];
-      } else {
-        // If data field already exists, concatenate the new data to the existing array
-        symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+        const newData = { date: formattedDate, valeur: val, evaluateur: evaluateur };
+
+        if (!symptomsToUpdate[0].data) {
+          // If data field doesn't exist, create a new array with the new data
+          symptomsToUpdate[0].data = [newData];
+        } else {
+          // If data field already exists, concatenate the new data to the existing array
+          symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
         }
       }
 
-    console.log(pathology.symptoms);    
+      console.log(pathology.symptoms);  
     });
   };
-  
+
   const fixedVal = (value: number): number => {
     return Number(value.toFixed(1));
   };
@@ -151,14 +151,14 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
     }
 
     if (typeof s.valMin !== 'undefined') {
-      if(typeof s.valMin === 'string')
+      if (typeof s.valMin === 'string')
         minimumValue = parseFloat(s.valMin);
       else
         minimumValue = s.valMin;
     }
 
     if (typeof s.valMax !== 'undefined') {
-      if(typeof s.valMax === 'string')
+      if (typeof s.valMax === 'string')
         maximumValue = parseFloat(s.valMax);
       else
         maximumValue = (s.valMax);
@@ -167,7 +167,7 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
     symptomText = (
       <View>
 
-    <View style={styles.lines}>
+        <View style={styles.lines}>
           <View style={styles.lineExtremity} />
           <View style={styles.line} />
           {s.name === 'Température' && <View style={styles.line} />}
@@ -188,66 +188,66 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
 
         {s.name === 'Température' ? (
           <View style={styles.units}>
-          <Text style={styles.unit}>{i18n.t('report.36')}</Text>
-          <Text style={styles.unit}>{i18n.t('report.38')}</Text>
-          <Text style={styles.unit}>{i18n.t('report.40')}</Text>
-          <Text style={styles.unit}>{i18n.t('report.42')}</Text>
-        </View>
+            <Text style={styles.unit}>{i18n.t('report.36')}</Text>
+            <Text style={styles.unit}>{i18n.t('report.38')}</Text>
+            <Text style={styles.unit}>{i18n.t('report.40')}</Text>
+            <Text style={styles.unit}>{i18n.t('report.42')}</Text>
+          </View>
         ) : (
-          
+
           <View style={styles.units}>
-          <Text style={styles.unit}>{i18n.t('report.nonexistent')}</Text>
-          <Text style={styles.unit}>{i18n.t('report.max')}</Text>
-        </View>
+            <Text style={styles.unit}>{i18n.t('report.nonexistent')}</Text>
+            <Text style={styles.unit}>{i18n.t('report.max')}</Text>
+          </View>
         )}
-        
+
         <Text style={styles.valueText}>Intensité: {sliderValue}</Text>
         <Text style={styles.subtitle}></Text>
-       {donotdispVButtons ? null : <Button
+        {donotdispVButtons ? null : <Button
           text={i18n.t('commons.validate')}
           onPress={handleValidate}
           isSelected={true}
-        /> }
+        />}
       </View>
     );
-  // if the symptom is yes / no, we display a oui/non box
+    // if the symptom is yes / no, we display a oui/non box
   } else if (s.type === 'Oui/non' || s.type === 'oui/non') {
     symptomText = (
       <View>
-        {isDataComp ? 
-        <>
-        <Button
-          text={i18n.t('commons.yes')}
-          onPress={() => onChange(true)}
-          isSelected={hasUserChosen && symptom}
-          
-        />
-        <Button
-          text={i18n.t('commons.no')}
-          onPress={() => onChange(false)}
-          isSelected={hasUserChosen && !symptom}
-          
-        />
-        </> : 
-        <View style={ouinonSameLine ? {flexDirection: 'row' , justifyContent: 'space-evenly'} : {flexDirection: 'column'}}>
-        <Button
-          text={i18n.t('commons.yes')}
-          onPress={() => onChange(true)}
-          isSelected={hasUserChosen && symptom}
-          style={noText ? {width: '20%',height: '20%'} : {}}
-          noText
-        />
-        <Button
-          text={i18n.t('commons.no')}
-          onPress={() => onChange(false)}
-          isSelected={hasUserChosen && !symptom}
-          style={noText ? {width: '20%',height: '20%'} : {}}
-          noText
-        />
-        </View>
-  }
+        {isDataComp ?
+          <>
+            <Button
+              text={i18n.t('commons.yes')}
+              onPress={() => onChange(true)}
+              isSelected={hasUserChosen && symptom}
+
+            />
+            <Button
+              text={i18n.t('commons.no')}
+              onPress={() => onChange(false)}
+              isSelected={hasUserChosen && !symptom}
+
+            />
+          </> :
+          <View style={ouinonSameLine ? { flexDirection: 'row', justifyContent: 'space-evenly' } : { flexDirection: 'column' }}>
+            <Button
+              text={i18n.t('commons.yes')}
+              onPress={() => onChange(true)}
+              isSelected={hasUserChosen && symptom}
+              style={noText ? { width: '20%', height: '20%' } : {}}
+              noText
+            />
+            <Button
+              text={i18n.t('commons.no')}
+              onPress={() => onChange(false)}
+              isSelected={hasUserChosen && !symptom}
+              style={noText ? { width: '20%', height: '20%' } : {}}
+              noText
+            />
+          </View>
+        }
         {/* <Text style={styles.subtitle}></Text> */}
-        
+
         {donotdispVButtons ? null : <Button
           text="Validate"
           onPress={handleYesNoSymptome}
@@ -257,14 +257,14 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
     );
   } else {
     symptomText = (
-    <View style={{flex: 1}}>
-    <ProfileAskPersonal  onTextChange={(text:string)=>{setTxt(text)}} nameText={ noText ? '' : s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p=>p.id=="21")?.symptoms.find(t=>t.id==s.id)?.data?.slice(-1)[0].valeur} />
-    {donotdispVButtons ? null : <Button
+      <View style={{ flex: 1 }}>
+        <ProfileAskPersonal onTextChange={(text: string) => { setTxt(text) }} nameText={noText ? '' : s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(t => t.id == s.id)?.data?.slice(-1)[0].valeur} />
+        {donotdispVButtons ? null : <Button
           text="Validate"
           onPress={handleValidateT}
           isSelected
         />}
-    </View>)
+      </View>)
   }
 
   return symptomText;
@@ -272,32 +272,32 @@ export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderVa
 
 
 
-const InputSymptome = ({ s, onClose , onArrow, style }: InputSymptomeProps): ReactElement => {
+const InputSymptome = ({ s, onClose, onArrow, style }: InputSymptomeProps): ReactElement => {
 
 
   return (
     <Container>
- 
+
       {/* display question */}
       <View style={[styles.popUpContainer, style]}>
-      <Ionicons
-        name="ios-arrow-round-back"
-        size={48}
-        color={colors.black}
-        onPress={onArrow ? onArrow : onClose}
-        style={{marginLeft:12}}
-      />
+        <Ionicons
+          name="ios-arrow-round-back"
+          size={48}
+          color={colors.black}
+          onPress={onArrow ? onArrow : onClose}
+          style={{ marginLeft: 12 }}
+        />
         <Text style={styles.subtitle}>
           {'\n'}{'\n'}
-          {s.question? s.question : "Evaluez votre "+s.name}
+          {s.question ? s.question : "Evaluez votre " + s.name}
           {'\n'}{'\n'}
         </Text>
 
         {/* display the input box  */}
         <InputBox s={s} onClose={onClose} />
-        
+
       </View>
-      
+
     </Container>
   );
 };
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: layout.padding,
-    
+
   },
   title: {
     paddingBottom: layout.padding / 2,
@@ -336,18 +336,18 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   slider: {
-   transform: [{scaleX: 1},{scaleY: 3}]
-    
+    transform: [{ scaleX: 1 }, { scaleY: 3 }]
+
     // marginTop: -12
-    
+
   },
   popUpContainer: {
     backgroundColor: 'white',
     padding: 25,
     borderRadius: 10,
-    
+
     justifyContent: 'center',
-    
+
   },
   lines: {
     flexDirection: 'row',

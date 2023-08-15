@@ -1,5 +1,5 @@
 import Button from '@components/atoms/Button';
-import { MALADIE1, pathologieJSON } from '@constants/constants';
+import { Evaluateurs, MALADIE1, pathologieJSON } from '@constants/constants';
 import { useUserStore } from '@store/store';
 import { Pathologie, Symptome } from '@store/types';
 import React, { useState } from 'react';
@@ -12,6 +12,7 @@ import json_p from '@assets/json/pathologies.json'
 import json_s from '@assets/json/symptomes.json'
 import Symptoms from '@screens/Authenticated/Report/Symptoms';
 import Clinimeter from '@components/molecules/Clinimeter';
+import Title from '@components/atoms/Title';
 
 type Props = {
   isVisible: boolean;
@@ -20,13 +21,15 @@ type Props = {
 const { height, width } = Dimensions.get('window');
 
 const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
+  const [evaluateur, setEvaluateur] = useState(true);
   const [yes, setYes] = useState(true);
   const [sousBilan, setsousBilan] = useState(true);
   const [user,] = useUserStore({ disease: MALADIE1 });
   const [path, setPath] = useState<Pathologie>();
+  const [evaluat, setEvaluat] = useState<String>();
   const [souspath, setsousPath] = useState<Pathologie>();
   const [symp, setSymp] = useState<Symptome>();
-  const [currS , setCurrS] = useState<Symptome>();
+  const [currS, setCurrS] = useState<Symptome>();
 
   const addValueUser = (sympt: Symptome, val: number | string) => {
     const currentDate = new Date();
@@ -39,61 +42,70 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
     user.my_personal_datas.forEach((pathology) => {
       // Find the symptoms with the same id as the provided sympt
       const symptomsToUpdate = pathology.symptoms.filter((symptom) => symptom.id === sympt.id);
-  
+
       // Update the data field of each matching symptom
 
       if (symptomsToUpdate[0]) {
-      
-      const newData = { date: formattedDate, valeur: val };
 
-      if (!symptomsToUpdate[0].data) {
-        // If data field doesn't exist, create a new array with the new data
-        symptomsToUpdate[0].data = [newData];
-      } else {
-        // If data field already exists, concatenate the new data to the existing array
-        symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
+        const newData = { date: formattedDate, valeur: val };
+
+        if (!symptomsToUpdate[0].data) {
+          // If data field doesn't exist, create a new array with the new data
+          symptomsToUpdate[0].data = [newData];
+        } else {
+          // If data field already exists, concatenate the new data to the existing array
+          symptomsToUpdate[0].data = symptomsToUpdate[0].data.concat(newData);
         }
       }
 
-    console.log(pathology.symptoms);    
+      console.log(pathology.symptoms);
     });
   };
 
   const Init = () => {
+    setEvaluateur(true);
     setYes(true);
     setsousBilan(true);
   }
 
+  const handleListEvaluateurClick = (item: String) => {
+    // Implement your logic here when an item is clicked
+    console.log('Evaluateur clicked:', item);
+    setEvaluat(item);
+    setEvaluateur(false);
+    console.log(evaluat);
+  };
   const handleListItemClick = (item: Pathologie) => {
     // Implement your logic here when an item is clicked
-    console.log('Item clicked:', item);
+    console.log('Bilan clicked:', item);
     setPath(item);
     setYes(false);
     console.log(path);
   };
   const handleSliderChange = (value: number) => {
 
-    if(currS)
-      addValueUser(currS,value);
+    if (currS)
+      addValueUser(currS, value);
   };
   const handleSympChange = (value: Symptome) => {
     setCurrS(value);
   };
   const handleTxtChange = (value: string) => {
 
-   if(currS)
-      addValueUser(currS,value);
+    if (currS)
+      addValueUser(currS, value);
   };
 
   const handleYesNoChange = (value: boolean) => {
 
-    if(currS)
-      addValueUser(currS,value ? 1 : 0);
+    if (currS)
+      addValueUser(currS, value ? 1 : 0);
+
   };
 
   const handleListItemClickSousBilan = (item: Pathologie) => {
     // Implement your logic here when an item is clicked
-    console.log('Item clicked:', item);
+    console.log('Sous bilan clicked:', item);
     setsousPath(item);
     setsousBilan(false);
   };
@@ -101,53 +113,70 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
   return (
     <Modal visible={isVisible} transparent>
       <View style={styles.container}>
-        {yes ? (
-          // Show the list of user.my_personal_data
+        {evaluateur ? (
           <View style={styles.popV}>
             <ScrollView style={styles.scrollContainer}>
-              {pathologieJSON.filter(pathologie => pathologie.id >= '36').map((item) => (
+              <Title text={'Qui fait le bilan ?'}/>
+              {Evaluateurs.map((item, index) => (
                 <TouchableOpacity
-                  key={item.id}
-                  onPress={() => handleListItemClick(item)}
+                  key={index}
+                  onPress={() => handleListEvaluateurClick(item)}
                   style={styles.listItem}
                 >
-                  <AppText text={item.id.toString() + " - " + item.name} />
+                  <AppText text={index.toString() + " - " + item} />
                 </TouchableOpacity>
               ))}
             </ScrollView>
             <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
-          </View>
-        ) : (
-          sousBilan ?
+          </View>) :
+
+          (yes ? (
+            // Show the list of user.my_personal_data
             <View style={styles.popV}>
               <ScrollView style={styles.scrollContainer}>
-                {path ? path.symptoms.map((item) =>
+                {pathologieJSON.filter(pathologie => pathologie.id >= '36').map((item) => (
                   <TouchableOpacity
-                    key={pathologieJSON.filter(p => p.id == item.id.toString())[0].id}
-                    onPress={() => handleListItemClickSousBilan(pathologieJSON.filter(p => p.id == item.id.toString())[0])}
+                    key={item.id}
+                    onPress={() => handleListItemClick(item)}
                     style={styles.listItem}
                   >
-                    <AppText text={pathologieJSON.filter(p => p.id == item.id.toString())[0].id.toString() + " - " + pathologieJSON.filter(p => p.id == item.id.toString())[0].name} />
+                    <AppText text={item.id.toString() + " - " + item.name} />
                   </TouchableOpacity>
-                ) : null}
+                ))}
               </ScrollView>
               <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
             </View>
-            :
-            <>
-            <View style={styles.popV}>
-              <ScrollView style={styles.scrollContainer}>
-                {souspath && !souspath.name.includes("Clinim") ? souspath.symptoms.map((item) =>
-                  <View style={{flexDirection: 'column' , justifyContent: 'center' , paddingTop: 20}}>
-                  <AppText style={{textAlign: 'center'}} text={item.surname ? item.surname.toString() : item.name} />
-                  <InputBox s={item} onClose={()=>{}} noText  recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange}  donotdispVButtons  ouinonSameLine />
-                </View>
-                ) : <Clinimeter pathos={souspath}/>}
-              </ScrollView>
-              <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
+          ) : (
+            sousBilan ?
+              <View style={styles.popV}>
+                <ScrollView style={styles.scrollContainer}>
+                  {path ? path.symptoms.map((item) =>
+                    <TouchableOpacity
+                      key={pathologieJSON.filter(p => p.id == item.id.toString())[0].id}
+                      onPress={() => handleListItemClickSousBilan(pathologieJSON.filter(p => p.id == item.id.toString())[0])}
+                      style={styles.listItem}
+                    >
+                      <AppText text={pathologieJSON.filter(p => p.id == item.id.toString())[0].id.toString() + " - " + pathologieJSON.filter(p => p.id == item.id.toString())[0].name} />
+                    </TouchableOpacity>
+                  ) : null}
+                </ScrollView>
+                <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
               </View>
-            </>
-        )}
+              :
+              <>
+                <View style={styles.popV}>
+                  <ScrollView style={styles.scrollContainer}>
+                    {souspath && !souspath.name.includes("Clinim") ? souspath.symptoms.map((item) =>
+                      <View style={{ flexDirection: 'column', justifyContent: 'center', paddingTop: 20 }}>
+                        <AppText style={{ textAlign: 'center' }} text={item.surname ? item.surname.toString() : item.name} />
+                        <InputBox s={item} evaluateur={evaluat?evaluat.toString():undefined} onClose={() => { }} noText recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange} donotdispVButtons ouinonSameLine />
+                      </View>
+                    ) : <Clinimeter />}
+                  </ScrollView>
+                  <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
+                </View>
+              </>
+          ))}
       </View>
     </Modal>
   );
@@ -161,14 +190,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   popV: {
-  flex:1,
+    flex: 1,
     backgroundColor: 'white',
-alignItems: 'center',
+    alignItems: 'center',
 
 
   },
   scrollContainer: {
     width: '100%',
+    margin: '15%',
     flex: 1,
   },
   listItem: {
