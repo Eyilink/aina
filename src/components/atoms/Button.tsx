@@ -42,6 +42,7 @@ const Button = ({
         backgroundColor: isSelected ? colors.primary : colors.greyLight,
         alignSelf: stretch ? 'stretch' : 'center',
         marginVertical: isValidate ? layout.padding : layout.padding / 3,
+        borderColor: 'red'
       },
       style,
     ]}
