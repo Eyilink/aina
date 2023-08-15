@@ -34,15 +34,18 @@ type InputSymptomeProps = {
   isDataComp?: boolean;
   style?: ViewStyle;
   noText ?: boolean;
+  initsetSliderValue?: number;
 };
 
 
 
-export const InputBox = ({ s, onClose,noText , donotdispVButtons , recupSliderValue , recupYesNo , ouinonSameLine , recupText , recupSymp , isDataComp}: InputSymptomeProps) => {
+export const InputBox = ({ s, onClose,noText , donotdispVButtons,initsetSliderValue , recupSliderValue , recupYesNo , ouinonSameLine , recupText , recupSymp , isDataComp}: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [txt, setTxt] = useState<string>('');
   const [hasUserChosen, setHasUserChosen] = useState(false);
   const initialSliderValue = s.name === "Température" ? 36 : 0;
+  if(initsetSliderValue)
+    initialSliderValue == initsetSliderValue;
   const [sliderValue, setSliderValue] = useState(initialSliderValue);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   useEffect(() => {
