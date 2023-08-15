@@ -35,6 +35,7 @@ type InputSymptomeProps = {
   style?: ViewStyle;
   noText ?: boolean;
   initsetSliderValue?: number;
+  evaluateur?: string;
 };
 
 

@@ -171,7 +171,7 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
                         <AppText style={{ textAlign: 'center' }} text={item.surname ? item.surname.toString() : item.name} />
                         <InputBox s={item} evaluateur={evaluat?evaluat.toString():undefined} onClose={() => { }} noText recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange} donotdispVButtons ouinonSameLine />
                       </View>
-                    ) : <Clinimeter />}
+                    ) : <Clinimeter pathos={souspath}/>}
                   </ScrollView>
                   <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
                 </View>
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: '100%',
-    margin: '15%',
+    // margin: '15%',
     flex: 1,
   },
   listItem: {
