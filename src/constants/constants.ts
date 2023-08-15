@@ -114,3 +114,5 @@ export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
   
 }));
 
+export const Evaluateurs: String[]=["Personnel", "Aidé", "Médecin traitant", "Médecin spécialiste", "Ergothérapeute", "Infirmière", "Kinésithérapeute"];
+
