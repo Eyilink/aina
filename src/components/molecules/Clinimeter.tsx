@@ -10,8 +10,9 @@ import { useFocusEffect } from '@react-navigation/native';
 
 interface Props{
     pathos?: Pathologie;
+    isMIF?: boolean;
 }
-const Clinimeter = ({pathos}:Props) => {
+const Clinimeter = ({pathos,isMIF}:Props) => {
   const [sliderValue,setSliderValue] = useState<number>(0);
   const [currSymptom,setCurrSymptom] = useState<Symptome | undefined> (pathos?.symptoms[0] ? pathos.symptoms[0] : undefined);
   const [intensiteSymptom,setIntensiteSymptom] = useState<string>("Pas encore d'intensite");
@@ -30,14 +31,22 @@ const Clinimeter = ({pathos}:Props) => {
     }
   }, []); 
 
-
-  for (let i = 0; i < 10; i++) {
+if(isMIF)
+  for (let i = 0; i < 7; i++) {
     const radius = (10 - i) * 9; // Vary the radius from 100% to 0% in increments of 10%
     const bRadius = 300*(i+1);
     circles.push(
       <View key={i} style={[styles.circle, { width: `${radius}%`, height: `${radius}%`,borderRadius: bRadius }]} />
     );
   }
+else
+for (let i = 0; i < 10; i++) {
+  const radius = (10 - i) * 9; // Vary the radius from 100% to 0% in increments of 10%
+  const bRadius = 300*(i+1);
+  circles.push(
+    <View key={i} style={[styles.circle, { width: `${radius}%`, height: `${radius}%`,borderRadius: bRadius }]} />
+  );
+};
   if(pathos)
   for (let i = 0 ; i < pathos.symptoms.length/2 ; i++)
   {
@@ -140,9 +149,38 @@ console.log("clinimeter value ::: " + (foundSymptome ? foundSymptome.name : "") 
       const randomInt = Math.floor(Math.random() * 177);
       const rotateDegree = (360 / pathos.symptoms.length) * ind;
       
+      if(isMIF)
+      {
+        
+        const translateX = Math.cos((rotateDegree - 80) * (Math.PI / 180)) * (176/10) * (value > 0 ? value+3 : value) ;
+      const translateY = Math.sin((rotateDegree - 80) * (Math.PI / 180)) * (176/10) * (value > 0 ? value+3 : value) ;
+        points.push(
+          <View
+            key={`point-${ind}`}
+            style={{
+              position: 'absolute',
+              backgroundColor: 'red', // Customize point style
+              width: 7,
+              height: 7,
+              borderRadius: 2.5,
+              transform: [
+                { translateX: translateX  },
+                { translateY: translateY  },
+              ],
+            }}
+          />
+        );
+
+      }else
+      {
       const translateX = Math.cos((rotateDegree - 80) * (Math.PI / 180)) * (176/10) * value;
       const translateY = Math.sin((rotateDegree - 80) * (Math.PI / 180)) * (176/10) * value;
-  
+      // if(isMIF)
+      // {
+      //   translateX = translateX + Math.cos((rotateDegree - 80) * (Math.PI / 180)) * (176/10) * 90;
+      //   translateY = translateY+ Math.sin((rotateDegree - 80) * (Math.PI / 180)) * (176/10) * 90;
+
+      // }
       points.push(
         <View
           key={`point-${ind}`}
@@ -159,6 +197,7 @@ console.log("clinimeter value ::: " + (foundSymptome ? foundSymptome.name : "") 
           }}
         />
       );
+        }
   
       // if (ind >= 0) {
       //   const prevRotateDegree = (360 / pathos.symptoms.length) * (ind - 1);
@@ -241,6 +280,7 @@ console.log("clinimeter value ::: " + (foundSymptome ? foundSymptome.name : "") 
     });
   };
   useEffect( () => {
+    if(!isMIF)
     switch(sliderValue)
     {
     case 0:
@@ -280,6 +320,38 @@ console.log("clinimeter value ::: " + (foundSymptome ? foundSymptome.name : "") 
         setIntensiteSymptom("Erreur intesité");
       break;
     }
+    else
+    switch(sliderValue)
+    {
+    case 0:
+      setIntensiteSymptom("Non évaluée");
+      break;
+    case 1:
+        setIntensiteSymptom("Aide totale");
+        break;
+    case 2:
+      setIntensiteSymptom("Aide maximale");
+        break;
+    case 3:
+      setIntensiteSymptom("Aide moyenne");
+        break;
+    case 4:
+      setIntensiteSymptom("Aide minimale");
+        break;
+    case 5:
+      setIntensiteSymptom("Surveillance");
+        break;
+    case 6:
+      setIntensiteSymptom("Indépendance modifiée");
+        break;
+    case 7:
+        setIntensiteSymptom("Indépendance complète");
+        break;
+    default:
+        setIntensiteSymptom("Erreur intesité");
+      break;
+    }
+
   },[sliderValue])
   const handleSliderChange = (value: number) => {
     setSliderValue(value);
@@ -316,7 +388,7 @@ console.log("clinimeter value ::: " + (foundSymptome ? foundSymptome.name : "") 
                 </View>
                 <View style={{alignItems: 'center', marginBottom: 10}}>
                     <AppText text={intensiteSymptom} />
-                    {currSymptom ? <View style={{width: '100%'}}><InputBox s={currSymptom} onClose={()=>{}} noText  recupSliderValue={handleSliderChange}   donotdispVButtons initsetSliderValue={sliderValue}/></View> : null}
+                    {currSymptom ? <View style={{width: '100%'}}><InputBox s={currSymptom} onClose={()=>{}} noText isMIF={isMIF} recupSliderValue={handleSliderChange}   donotdispVButtons initsetSliderValue={sliderValue}/></View> : null}
                 </View>
             </View>
             <View style={styles.container}>{circles}{lines}{label}{points}</View>

@@ -36,11 +36,12 @@ type InputSymptomeProps = {
   noText ?: boolean;
   initsetSliderValue?: number;
   evaluateur?: string;
+  isMIF ?: boolean;
 };
 
 
 
-export const InputBox = ({ s, onClose, noText, donotdispVButtons,initsetSliderValue, recupSliderValue, recupYesNo, ouinonSameLine, recupText, recupSymp, isDataComp, evaluateur }: InputSymptomeProps) => {
+export const InputBox = ({ s, onClose, noText,isMIF, donotdispVButtons,initsetSliderValue, recupSliderValue, recupYesNo, ouinonSameLine, recupText, recupSymp, isDataComp, evaluateur }: InputSymptomeProps) => {
   const [symptom, setSymptom] = useState(false);
   const [txt, setTxt] = useState<string>('');
   const [hasUserChosen, setHasUserChosen] = useState(false);
@@ -142,7 +143,7 @@ export const InputBox = ({ s, onClose, noText, donotdispVButtons,initsetSliderVa
   // If the symptom is numeric, we display a slider
   if (s.type === 'Num.' || s.type === 'Oui/non éval') {
     let minimumValue = 0;
-    let maximumValue = 10;
+    let maximumValue = isMIF ? 7 : 10;
     let step = 1;
 
     if (s.name === 'Température') {

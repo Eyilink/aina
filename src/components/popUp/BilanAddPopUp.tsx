@@ -166,12 +166,12 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
               <>
                 <View style={styles.popV}>
                   <ScrollView style={styles.scrollContainer}>
-                    {souspath && !souspath.name.includes("Clinim") ? souspath.symptoms.map((item) =>
+                    {souspath && !souspath.name.includes("Clinim") && !souspath.name.includes("MIF") ? souspath.symptoms.map((item) =>
                       <View style={{ flexDirection: 'column', justifyContent: 'center', paddingTop: 20 }}>
                         <AppText style={{ textAlign: 'center' }} text={item.surname ? item.surname.toString() : item.name} />
                         <InputBox s={item} evaluateur={evaluat?evaluat.toString():undefined} onClose={() => { }} noText recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange} donotdispVButtons ouinonSameLine />
                       </View>
-                    ) : <Clinimeter pathos={souspath}/>}
+                    ) : ( souspath && souspath.name.includes("Clinim") ? <Clinimeter pathos={souspath}/> : <Clinimeter pathos={souspath} isMIF={true} />)}
                   </ScrollView>
                   <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
                 </View>
