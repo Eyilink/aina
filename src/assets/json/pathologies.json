@@ -215,9 +215,17 @@
     "logo": ""
 },
 {
+    "id": 28,
+    "name": "Bilan MIF",
+    "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
+    "init_symptoms": "",
+    "frequency": "",
+    "logo": ""
+},
+{
     "id": 36,
     "name": "Bilan articulaire",
-    "symptoms": "22,23,24,25,26,27",
+    "symptoms": "22,23,24,25,26,27,28",
     "init_symptoms": "",
     "frequency": "",
     "logo": ""
