@@ -134,7 +134,7 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
             // Show the list of user.my_personal_data
             <View style={styles.popV}>
               <ScrollView style={styles.scrollContainer}>
-                {pathologieJSON.filter(pathologie => pathologie.id >= '36').map((item) => (
+                {pathologieJSON.filter(pathologie => pathologie.id >= '80').map((item) => (
                   <TouchableOpacity
                     key={item.id}
                     onPress={() => handleListItemClick(item)}
