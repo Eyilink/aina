@@ -223,7 +223,7 @@
     "logo": ""
 },
 {
-    "id": 36,
+    "id": 80,
     "name": "Bilan articulaire",
     "symptoms": "22,23,24,25,26,27,28",
     "init_symptoms": "",
@@ -231,7 +231,7 @@
     "logo": ""
 },
 {
-    "id": 37,
+    "id": 81,
     "name": "Bilan AVQ",
     "symptoms": "",
     "init_symptoms": "",
@@ -239,7 +239,7 @@
     "logo": ""
 },
 {
-    "id": 38,
+    "id": 82,
     "name": "Bilan dépendance",
     "symptoms": "",
     "init_symptoms": "",
@@ -247,7 +247,7 @@
     "logo": ""
 },
 {
-    "id": 39,
+    "id": 83,
     "name": "Bilan fragilité",
     "symptoms": "",
     "init_symptoms": "",
