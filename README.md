@@ -190,4 +190,6 @@ files as it adds to the cognitive charge of having several files to be aware of 
 for the same component and several files with the exact same name in the IDE.
 
 For the same reason, always prefer naming your files with the name of the component and avoid naming everything index.js. Use an index.js file only if you want to hide some implementation or bundle several files as one logical component.
+
+run project : npx expo start -c
 >>>>>>> README.md

@@ -4,7 +4,7 @@ import { ImageSourcePropType, Platform } from 'react-native';
 import Constants from 'expo-constants';
 import pathologies from '@assets/json/pathologies.json'
 import symptoms from '@assets/json/symptomes.json'
-import { PainSymptoms, Pathologie, Symptome } from '@store/types';
+import { PainSymptoms, Pathologie, Symptome, User } from '@store/types';
 import { InformationContext2 } from '@components/molecules/InformationContext2';
 import {useContext} from 'react'
 
@@ -114,5 +114,23 @@ export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
   
 }));
 
-export const Evaluateurs: String[]=["Personnel", "Aidé", "Médecin traitant", "Médecin spécialiste", "Ergothérapeute", "Infirmière", "Kinésithérapeute"];
+export const Evaluateurs: String[]=["Auto-Bilan", "Bilan Aidant", "Bilan Médecin", "Bilan spécialiste", "Bilan Ergo", "Bilan Infirmière", "Bilan Kiné"];
+
+export function calculateBMI(weightString: string | undefined, heightString: string | undefined): number | undefined {
+  if (weightString === undefined || heightString === undefined) {
+    return undefined; // Return null if either weight or height is undefined
+  }
+
+  const weight = parseFloat(weightString.replace(/[^\d.]/g, ''));
+  const height = parseFloat(heightString.replace(/[^\d.]/g, ''));
+
+  if (isNaN(weight) || isNaN(height) || height === 0) {
+    return undefined; // Return null if either weight or height is not a valid number, or if height is zero to avoid division by zero
+  }
+
+  const heightInMeters = height / 100; // Convert height from centimeters to meters
+
+  const bmi = weight / (heightInMeters * heightInMeters);
+  return bmi;
+}
 

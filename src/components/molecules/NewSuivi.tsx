@@ -83,7 +83,7 @@ const NewSuivi = ({ isFirstLog, onPress,setButtonNewSuiviClicked }: Props) => {
     <>
       {/* <DropDownMenu objets={pathologieData} ischeckeable={false}/> */}
       {/* <AddBoutton onPress={handlePress} style={styles.button}></AddBoutton> */}
-      <ScrollDownMenu items={pathologieJSON} setButtonNewSuiviClicked={setButtonNewSuiviClicked}/>
+      <ScrollDownMenu items={pathologieJSON.filter(p=> p.id > '2' && p.id >= '43' && p.id < '99')} setButtonNewSuiviClicked={setButtonNewSuiviClicked}/>
      
     </>
     )}

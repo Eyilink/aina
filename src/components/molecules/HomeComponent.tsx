@@ -23,15 +23,17 @@ import ChangeProfilePopUp from '@components/popUp/ChangeProfilePopUp';
 import ProfileAskPersonal from './ProfileAskPersonnal';
 import { ScrollView } from 'react-native-gesture-handler';
 import BilanAddPopUp from '@components/popUp/BilanAddPopUp';
+import ProfilAskPersonal from './ProfilAskPersonal';
 
 
 type Props = {
   isDataEmpty?: boolean;
+  hasFocusChanged?: boolean;
 
 };
 // HomeComponent represents the main home screen of the application.
 const HomeComponent = ({
-  isDataEmpty
+  isDataEmpty, hasFocusChanged
 }: Props): ReactElement => {
   const [user,] = useUserStore({ disease: MALADIE1 });
   const [ButtonClicked, setButtonClicked] = React.useState(false);
@@ -44,11 +46,20 @@ const HomeComponent = ({
   const [users,] = useUsersStore();
   const [editPopUp, setEditPopUp] = useState<boolean>(false);
   const [isEditingP, setIsEditingP] = useState<boolean>(false);
+  const [isEditingP2, setIsEditingP2] = useState<boolean>(true);
+  const [isSuiviClicked, setIsSuiviClicked] = useState<boolean>(false);
   const onEditProfile = (): void => {
     setIsEditingP(true);
     setCarryOnsuivi(true);
+    setIsEditingP2(false);
 
   };
+  useEffect(()=>{
+    if(hasFocusChanged)
+    {
+      setIsSuiviClicked(false);
+    }
+  },[hasFocusChanged])
   // const [users,actionns] = useUsersStore();
 
   // const {infoText2,setinfoText2} = useContext(InformationContext2);
@@ -115,7 +126,8 @@ const HomeComponent = ({
       }
       if (user.boolC) {
 
-        setButtonClicked(true);
+        //setButtonClicked(true);
+        onEditProfile();
         actions.editUserProfile({ key: 'boolC', value: false });
       }
       setFirstT(false);
@@ -228,7 +240,7 @@ const HomeComponent = ({
             null
             :
             <>
-              {carryOnSuivi && !isEditingP ? <>
+              {carryOnSuivi && isEditingP2 ? <>
                 <HistoryFollowedSymptoms />
                 <Button text={'Fermer les suivis'} onPress={() => { setCarryOnsuivi(false) }} />
               </> : null}
@@ -240,7 +252,8 @@ const HomeComponent = ({
             </>}
           {/* Display the validation button */}
           {carryOnSuivi ?
-            (isEditingP ?
+            (!isEditingP2 ?
+              (isEditingP ?
               <ScrollView>{symptomeJSON
                 .filter((item) => {
                   return (
@@ -278,11 +291,42 @@ const HomeComponent = ({
                   onPress={() => {
                     setIsEditingP(false);
                     actions.saveUserProfile();
+                  }}
+                />
+              </ScrollView> : <ScrollView>{symptomeJSON
+                .filter((item) => {
+                  return (
+                    item.id === 240 ||
+                    item.id === 304 ||
+                    item.id === 231 
+                  );
+                })
+                .map((item) => {
+                  return (
+                    <ProfilAskPersonal
+                      nameText={item.name}
+                      inputPlaceholder={item.unit}
+                      displayPersonal={item.caractere === 'Perso'}
+                      initValue={user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == item.id)?.data?.slice(-1)[0].valeur}
+                      onTextChange={(text: string) => {
+                        addValueUser(item, text);
+                      }}
+                    />
+                  );
+                })}
+                <Button
+                  text={'Valider'}
+                  isSelected
+                  onPress={() => {
+                    setIsEditingP(true);
+                    setIsEditingP2(true);
+                    actions.saveUserProfile();
                     actions.signupUser();
                   }}
                 />
-              </ScrollView> : null) : (<>
-                <Button
+              </ScrollView>): null) : (isSuiviClicked ?
+              <>
+              <Button
                   text={i18n.t('home.button_top')}
                   style={{ minWidth: '90%' }}
                   onPress={() => { setCarryOnsuivi(true) }}
@@ -300,6 +344,16 @@ const HomeComponent = ({
                   onPress={() => { setRData(true) }}
 
                 />
+                <DataAddPopUp isVisible={rData} onClose={() => { setRData(false) }} />
+              </>:
+              <>
+
+                <Button
+                  text={i18n.t('home.button_suivi')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => { setIsSuiviClicked(true) }}
+
+                />
                 <Button
                   text={i18n.t('home.button_bot_bot')}
                   style={{ minWidth: '90%' }}
@@ -307,6 +361,18 @@ const HomeComponent = ({
 
                 />
                 <Button
+                  text={i18n.t('home.button_prevent')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => { setBilanData(true); console.log(user.my_personal_datas?.filter(pathologie => pathologie.id >= '36')); }}
+
+                />
+                <Button
+                  text={i18n.t('home.button_share')}
+                  style={{ minWidth: '90%' }}
+                  onPress={() => { setBilanData(true); console.log(user.my_personal_datas?.filter(pathologie => pathologie.id >= '36')); }}
+
+                />
+                {/* <Button
                   text={i18n.t('profile.modif')}
                   style={{ minWidth: '90%' }}
                   onPress={() => {
@@ -314,9 +380,9 @@ const HomeComponent = ({
                   }}
 
 
-                />
+                /> */}
                 <ChangeProfilePopUp isVisible={editPopUp} onClose={() => { setEditPopUp(false); setCarryOnsuivi(false) }} onPressEdit={onEditProfile} />
-                <DataAddPopUp isVisible={rData} onClose={() => { setRData(false) }} />
+                
                 <BilanAddPopUp isVisible={bilanData} onClose={() => { setBilanData(false) }} />
               </>)}
         </>

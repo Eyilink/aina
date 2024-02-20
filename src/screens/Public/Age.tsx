@@ -197,7 +197,11 @@ const BirthDateForm = ({ navigation }: Props) => {
                       actions.editUserProfile({ key: 'prenom', value: prenom ? prenom.trim() : "" });
                       actions.editUserProfile({ key: 'tel', value: tel ? tel.trim() : "" });
                       actions.editUserProfile({ key: 'mail', value: mail ? mail.trim() : "" });
-                      navigation.navigate("Reminder");
+                      actions.editUserProfile({key: 'boolC',value: true});
+                      actions.editUserProfile({key: 'boolF',value: true});
+                      actions.addUser(user);
+                      actions.saveUsersToAsyncStorage();
+                      actions.signupUser();
                      
                     }}
                   />

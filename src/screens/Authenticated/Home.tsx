@@ -50,16 +50,20 @@ const Home = ({ navigation }: Props): ReactElement => {
   const [user, ] = useUserStore({ disease: MALADIE1 });
   const {infoText,setinfoText} = useContext(InformationContext);
   const {imageProp,setImageProp} = useContext(ImageContext);
+  const [hasFocusChanged,setHasFocusChanged] = useState<boolean>(false)
   useFocusEffect(
     React.useCallback(() => {
       
       // Code to execute when the component becomes active (tab is focused)
       console.log('Component is focused');
+      setHasFocusChanged(true);
       // setinfoText('@assets/images/home.png')
       setImageProp(undefined);
+
       return () => {
         // Code to execute when the component becomes inactive (tab is unfocused)
         console.log('Component is unfocused');
+        setHasFocusChanged(false)
         setinfoText("");
       };
     }, [])
@@ -100,7 +104,7 @@ const Home = ({ navigation }: Props): ReactElement => {
   return (
     <Container noMarginBottom>
       <View style={styles.container}>
-        <HomeComponent isDataEmpty={user.my_personal_datas && user.my_personal_datas.length>0?false:true}/>
+        <HomeComponent hasFocusChanged={hasFocusChanged} isDataEmpty={user.my_personal_datas && user.my_personal_datas.length>0?false:true}/>
       </View>
     </Container>
     

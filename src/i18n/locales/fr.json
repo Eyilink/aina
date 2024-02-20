@@ -65,16 +65,19 @@
     "go": "C'est parti"
   },
   "profile": {
-    "creer" : "Créer un profil",
+    "creer" : "Création d'un profil",
     "modif_p":"Modifier",
     "modif" : "Modifier/Créer un profil",
-    "edit": "Modifier",
+    "edit": "Modifier un profil",
+    "change": "Changer d'utilisateur",
     "diseases": "Antécédents de santé",
     "pregnant": "Enceinte",
     "reminder": "Rappel",
     "newfollow": "Souhaitez vous lancer un nouveau suivi ?",
     "erase": "Si vous continuez, votre profil actuel sera écrasé par vos nouvelles réponses.\n\n(votre historique d'évaluation sera conservé)",
-    "cgu": "Informations et confidentialité"
+    "cgu": "Informations et confidentialité",
+    "base": "Données de base",
+    "comp" : "Données complémentaires"
   },
   "commons": {
     "yes": "Oui",
@@ -163,9 +166,12 @@
     "end3": "Vous avez au moins deux symptômes évocateurs.\n\nRestez chez vous et contactez un médecin. Si vous l’avez déjà fait, continuez de suivre vos symptômes.\n\nContactez un médecin ou le 15 en cas d’aggravation.",
     "nodata": "Vous ne suivez actuellement aucune données.",
     "button_top" : "Suivi en cours",
+    "button_suivi" : "Suivi",
     "button_mid" : "Lancer un suivi générique",
     "button_bot" : "Créer un suivi personnel",
-    "button_bot_bot": "Faire un bilan"
+    "button_bot_bot": "Faire un bilan",
+    "button_prevent" : "Prévention",
+    "button_share": "Partager"
 
   },
   "history": {

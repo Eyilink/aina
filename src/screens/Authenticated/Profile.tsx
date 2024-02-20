@@ -40,6 +40,8 @@ import { InformationContext } from '@components/molecules/InformationContext';
 import { useFocusEffect } from '@react-navigation/native';
 import Diseases from '@screens/Public/Diseases';
 import ChangeProfilePopUp from '@components/popUp/ChangeProfilePopUp';
+import UsernamePopUp from '@components/popUp/UsernamePopUp';
+import ProfilAskPersonal from '@components/molecules/ProfilAskPersonal';
 function Profile(): ReactElement {
   // State variable to toggle the visibility of elements
   const [showElements, setShowElements] = useState(false);
@@ -178,45 +180,104 @@ function Profile(): ReactElement {
   };
 
 const [vali , setValid] = useState(true);
+const [showPopUpUser,setShowPopUpUser] = useState(false);
+const [isComp,setIsComp] = useState(false)
   return (
     <Container noMarginBottom>
     
-      <View style={styles.container}>
-        <View style={styles.container2}>
+      <ScrollView style={styles.container}>
+        {/* <View style={styles.container2}>
         {!isMod ? null : (!vali ? <Title isPrimary text={i18n.t('navigation.authenticated.profile')} /> : null)}
-        </View>
-        <ScrollView>
-        {!isMod ? (
+        </View> */}
+        {!isMod && isComp && <ScrollView>{symptomeJSON
+                .filter((item) => {
+                  return (
+                    item.id === 240 ||
+                    item.id === 304 ||
+                    item.id === 231 
+                  );
+                })
+                .map((item) => {
+                  return (
+                    <ProfilAskPersonal
+                      nameText={item.name}
+                      inputPlaceholder={item.unit}
+                      displayPersonal={item.caractere === 'Perso'}
+                      initValue={user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(s => s.id == item.id)?.data?.slice(-1)[0].valeur}
+                      onTextChange={(text: string) => {
+                        addValueUser(item, text);
+                      }}
+                    />
+                  );
+                })}
+                <Button
+                  text={'Valider'}
+                  isSelected
+                  onPress={() => {
+                    actions.saveUserProfile();
+                    actions.signupUser();
+                  }}
+                />
+              </ScrollView>}
+        <View>
+        {!isMod && !isComp ? (
   <>
-    {/* Content for the condition when isMod is false */}
     
-    {/* <View style={styles.infosContainer}>
-      <SubTitle text={user.birthDate} style={styles.info} />
-    </View> */}
-    
-    {user.my_personal_datas?.filter(p => p.id != "21").map((pathologie: Pathologie) => (
+    {/* {user.my_personal_datas?.filter(p => p.id != "21").map((pathologie: Pathologie) => (
       <BoxPathologieProfile objet={pathologie} />
-    ))}
-    {/* <Button
-      text={i18n.t('profile.modif')}
-      onPress={()=>{
-        setEditPopUp(true);
-      }}
-      isValidate
-      style={styles.editButton}
-    />
-    <ChangeProfilePopUp isVisible={editPopUp} onClose={()=>{setEditPopUp(false)}} onPressEdit={onEditProfile} /> */}
-    <Button
+    ))} */}
+   {/* <Button
       text={'Exporter les données'}
       onPress={async () => {
         // Export data logic
       }}
+    /> */}
+    <Button
+      text={i18n.t('profile.edit')}
+      onPress={()=>{setValid(false);setIsMod(true)}}
+      isValidate
+
     />
+     <Button
+      text={i18n.t('profile.creer')}
+      onPress={()=>{
+        actions_users.replaceUser(user);
+        actions_users.saveUsersToAsyncStorage();
+        actions.resetUserSession();
+      }}
+      isValidate
+
+    />
+    <Button
+      text={i18n.t('profile.base')}
+      onPress={()=>{
+        setValid(true);setIsMod(true)
+      }}
+      isValidate
+
+    />
+    <Button
+      text={i18n.t('profile.comp')}
+      onPress={()=>{
+        setIsMod(false); setIsComp(true); setValid(false)
+      }}
+      isValidate
+
+    />
+   <Button
+      text={i18n.t('profile.change')}
+      onPress={()=>{
+        setShowPopUpUser(true);
+      }}
+      isValidate
+
+    />
+    <UsernamePopUp isVisible={showPopUpUser} onClose={()=>{setShowPopUpUser(false)}} />
   </>
 ) : (
   <>
     {/* Content for the condition when isMod is true */}
-    {!vali ? (
+    {!vali && !isComp ? (
       <>
         {/* Content for the condition when vali is false */}
         <ProfileAskPersonal
@@ -271,11 +332,13 @@ const [vali , setValid] = useState(true);
                       actions.editUserProfile({ key: 'prenom', value: prenom ? prenom.trim() : "" });
                       actions.editUserProfile({ key: 'tel', value: tel ? tel.trim() : "" });
                       actions.editUserProfile({ key: 'mail', value: mail ? mail.trim() : "" });
-                     
+                      setIsMod(false);
+                      actions.saveUserProfile();
+                      actions.signupUser();
                     }}
                   />
       </>
-    ) : (
+    ) : (!isComp &&
       <>
         {/* Content for the condition when vali is true */}
         {symptomeJSON
@@ -318,7 +381,10 @@ const [vali , setValid] = useState(true);
       }}
     />
       </>
-    )}
+    )
+    
+    
+    }
    
   </>
 )}
@@ -327,8 +393,8 @@ const [vali , setValid] = useState(true);
           <TouchableOpacity onPress={onPressCGU}>
             <AppText text={i18n.t('profile.cgu')} style={styles.cgu} />
           </TouchableOpacity>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </Container>
   );
 }

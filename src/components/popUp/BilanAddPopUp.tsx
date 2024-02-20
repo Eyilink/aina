@@ -106,6 +106,7 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
   const handleListItemClickSousBilan = (item: Pathologie) => {
     // Implement your logic here when an item is clicked
     console.log('Sous bilan clicked:', item);
+    setYes(false);
     setsousPath(item);
     setsousBilan(false);
   };
@@ -115,8 +116,10 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
       <View style={styles.container}>
         {evaluateur ? (
           <View style={styles.popV}>
+            <Title text={'Qui fait le bilan ?'}/>
             <ScrollView style={styles.scrollContainer}>
-              <Title text={'Qui fait le bilan ?'}/>
+
+              
               {Evaluateurs.map((item, index) => (
                 <TouchableOpacity
                   key={index}
@@ -126,6 +129,7 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
                   <AppText text={index.toString() + " - " + item} />
                 </TouchableOpacity>
               ))}
+
             </ScrollView>
             <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
           </View>) :
@@ -134,10 +138,10 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
             // Show the list of user.my_personal_data
             <View style={styles.popV}>
               <ScrollView style={styles.scrollContainer}>
-                {pathologieJSON.filter(pathologie => pathologie.id >= '80').map((item) => (
+                {pathologieJSON.filter(pathologie => (pathologie.name.includes('Faire un bilan') && pathologie.id >= '100') || pathologie.id == '27' || pathologie.id == '28' ).map((item) => (
                   <TouchableOpacity
                     key={item.id}
-                    onPress={() => handleListItemClick(item)}
+                    onPress={() => {if(item.id == '27' || item.id == '28'){ handleListItemClickSousBilan(pathologieJSON.filter(p => p.id == item.id.toString())[0])}else{handleListItemClick(item)}}}
                     style={styles.listItem}
                   >
                     <AppText text={item.id.toString() + " - " + item.name} />
@@ -148,9 +152,16 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
             </View>
           ) : (
             sousBilan ?
-              <View style={styles.popV}>
-                <ScrollView style={styles.scrollContainer}>
-                  {path ? path.symptoms.map((item) =>
+              <View style={{...styles.popV, paddingBottom:30}}>
+                <ScrollView>
+                  <View style={{paddingTop: 80, paddingBottom: 80}}>
+                  {path ? path.init_symptoms?.map((item) =>
+                  { if (
+                    pathologieJSON.filter(p => p.id == item.id.toString())[0].id >= '100' ||
+                    pathologieJSON.filter(p => p.id == item.id.toString())[0].id == '27' ||
+                    pathologieJSON.filter(p => p.id == item.id.toString())[0].id == '28'
+                  )
+                    return <>
                     <TouchableOpacity
                       key={pathologieJSON.filter(p => p.id == item.id.toString())[0].id}
                       onPress={() => handleListItemClickSousBilan(pathologieJSON.filter(p => p.id == item.id.toString())[0])}
@@ -158,19 +169,24 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
                     >
                       <AppText text={pathologieJSON.filter(p => p.id == item.id.toString())[0].id.toString() + " - " + pathologieJSON.filter(p => p.id == item.id.toString())[0].name} />
                     </TouchableOpacity>
+                    </>
+                  }
                   ) : null}
+                  </View>
                 </ScrollView>
                 <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
               </View>
               :
               <>
-                <View style={styles.popV}>
-                  <ScrollView style={styles.scrollContainer}>
-                    {souspath && !souspath.name.includes("Clinim") && !souspath.name.includes("MIF") ? souspath.symptoms.map((item) =>
-                      <View style={{ flexDirection: 'column', justifyContent: 'center', paddingTop: 20 }}>
+                <View style={{}}>
+                  <ScrollView>
+                    {souspath && !souspath.name.includes("Clinim") && !souspath.name.includes("MIF") ? souspath.symptoms?.map((item) =>
+                      <ScrollView style={{ paddingTop: 20, width: width*0.8 }}>
+                        <View style={{ flexDirection: 'column', justifyContent: 'center'}}>
                         <AppText style={{ textAlign: 'center' }} text={item.surname ? item.surname.toString() : item.name} />
                         <InputBox s={item} evaluateur={evaluat?evaluat.toString():undefined} onClose={() => { }} noText recupSliderValue={handleSliderChange} recupYesNo={handleYesNoChange} recupText={handleTxtChange} recupSymp={handleSympChange} donotdispVButtons ouinonSameLine />
-                      </View>
+                        </View>
+                      </ScrollView>
                     ) : ( souspath && souspath.name.includes("Clinim") ? <Clinimeter pathos={souspath}/> : <Clinimeter pathos={souspath} isMIF={true} />)}
                   </ScrollView>
                   <Button text={'Fermer'} isSelected onPress={() => { Init(); onClose() }} />
@@ -186,30 +202,39 @@ const styles = StyleSheet.create({
   container: {
 
     flex: 1,
-
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'white',
+    justifyContent: 'center'
   },
   popV: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'center',
+    
 
+  },popV2: {
+    display: 'flex',
+    flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'center',
+    
 
   },
+  
+
   scrollContainer: {
-    width: '100%',
-    // margin: '15%',
-    flex: 1,
+    paddingTop: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    paddingBottom: 50
   },
   listItem: {
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    width: '100%'
+    
+    paddingVertical: 13,
+
   },
   closeButton: {
     alignItems: 'center',
-
     backgroundColor: 'lightgray',
     borderRadius: 5,
     marginBottom: 10,

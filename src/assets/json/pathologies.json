@@ -1,259 +1,954 @@
-[{
-"id": 1,
-"name": "Infection dentaire",
-"init_symptoms": "251,240,180,190,200",
-"symptoms": "22,27,193,33,27,152",
-"frequency": 1,
-"logo": "dentaire.png"
-},
-{
-"id": 2,
-"name": "Infection cutanée",
-"init_symptoms": "251,240,180,190,200",
-"symptoms": "22,27,193,33,27,152",
-"frequency": 1,
-"logo": "peau.png"
-},
-{
-"id": 3,
-"name": "Infection ORL",
-"init_symptoms": "251,240,180,190,200",
-"symptoms": "22,27,193,33,27,152",
-"frequency": 1,
-"logo": "orl.png"
-},
-{
-"id": 4,
-"name": "Infection pulmonaire",
-"init_symptoms": "251,240,180,190,200",
-"symptoms": "22,27,193,33,27,152",
-"frequency": 1,
-"logo": "poumon.png"
-},
-{
-"id": 5,
-"name": "Covid",
-"init_symptoms": "251,240,180,190,200",
-"symptoms": "22,27,193,33,27,152",
-"frequency": 1,
-"logo": "covid.png"
-},
-{
-"id": 6,
-"name": "Grippe",
-"init_symptoms": "251,240,180,190,200",
-"symptoms": "22,24,25,172",
-"frequency": 1,
-"logo": "grippe.png"
-},
-{
-"id": 7,
-"name": "Colonne vertébrale",
-"init_symptoms": "41,42,211",
-"symptoms": "259,267,122",
-"frequency": 7,
-"logo": "colonne.png"
-},
-{
-"id": 8,
-"name": "Genou gauche",
-"init_symptoms": "326,163,125,60,73,122,42",
-"symptoms": "25,176,122,127",
-"frequency": 3,
-"logo": "genou.png"
-},
-{
-"id": 9,
-"name": "Genou droit",
-"init_symptoms": "326,163,125,59,72,122,42",
-"symptoms": "25,176,122,127",
-"frequency": 3,
-"logo": "genou.png"
-},
-{
-"id": 10,
-"name": "Hanche gauche",
-"init_symptoms": "326,163,44,66,67,69",
-"symptoms": "25,122,125,127",
-"frequency": 30,
-"logo": "hanche.png"
-},
-{
-"id": 11,
-"name": "Hanche droite",
-"init_symptoms": "326,163,44,66,67,70",
-"symptoms": "25,122,125,127",
-"frequency": 30,
-"logo": "hanche.png"
-},
-{
-"id": 12,
-"name": "Clinimètre",
-"init_symptoms": "43,180,210,190,160,170",
-"symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
-"frequency": 90,
-"logo": "clinimetre.png"
-},
-{
-"id": 13,
-"name": "MIF",
-"init_symptoms": "43,180,210,190,160,170",
-"symptoms": "80,92,89,95,97,102,108,109,110,98,99,122,140,135,161,142,143",
-"frequency": 90,
-"logo": "mif.png"
-},
-{
-"id": 14,
-"name": "AVQ",
-"init_symptoms": "43,180,210,190,160,170",
-"symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
-"frequency": 90,
-"logo": "avq.png"
-},
-{
-"id": 15,
-"name": "Braden",
-"init_symptoms": "41,42,43",
-"symptoms": "80,90,91,95,96,97,108,109,110,121,123",
-"frequency": 90,
-"logo": "braden.png"
-},
-{
-"id": 16,
-"name": "INSH",
-"init_symptoms": "41,42,43",
-"symptoms": "80,90,91,95,96,97,108,109,110,121,123",
-"frequency": 3,
-"logo": "insh.png"
-},
-{
-"id": 17,
-"name": "Barthel",
-"init_symptoms": "41,42,43",
-"symptoms": "80,90,91,95,96,97,108,109,110,121,123",
-"frequency": 7,
-"logo": "barthel.png"
-},
-{
-"id": 18,
-"name": "Grossesse",
-"init_symptoms": "41,43,316",
-"symptoms": "317,318,319",
-"frequency": 7,
-"logo": "grossesse.png"
-},
-{
-"id": 19,
-"name": "Affection cardio vasculaire",
-"init_symptoms": "42,41,46,48,180",
-"symptoms": "181,183,184,187,322",
-"frequency": 1,
-"logo": "coeur.png"
-},
-{
-"id": 20,
-"name": "Douleur ophtalmique",
-"init_symptoms": "41,42,133,337",
-"symptoms": "25,133",
-"frequency": 1,
-"logo": "yeux.png"
-},
-{
-    "id": 21,
-    "name": "Autres",
-    "init_symptoms": "",
-    "symptoms": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360" ,
-    "frequency": 1,
-    "logo": "yeux.png"
-},
-{
-    "id": 22,
-    "name": "Bilan colonne ",
-    "symptoms": "41,42,211",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 23,
-    "name": "Bilan hanche Dr",
-    "symptoms": "326,163,44,66,67,70",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 24,
-    "name": "Bilan hanche G",
-    "symptoms": "326,163,44,66,67,69",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 25,
-    "name": "Bilan Genou Dr",
-    "symptoms": "326,163,125,59,72,122,42",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 26,
-    "name": "Bilan Genou  G",
-    "symptoms": "326,163,125,60,73,122,42",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 27,
-    "name": "Bilan Clinimètre",
-    "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 28,
-    "name": "Bilan MIF",
-    "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 80,
-    "name": "Bilan articulaire",
-    "symptoms": "22,23,24,25,26,27,28",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 81,
-    "name": "Bilan AVQ",
-    "symptoms": "",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 82,
-    "name": "Bilan dépendance",
-    "symptoms": "",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-},
-{
-    "id": 83,
-    "name": "Bilan fragilité",
-    "symptoms": "",
-    "init_symptoms": "",
-    "frequency": "",
-    "logo": ""
-}
-
-
+[
+    {
+        "id": 2,
+        "name": "Profil",
+        "init_symptoms": "41,42,43,133,131,",
+        "symptoms": "240, 304, 231                                                                                           ",
+        "frequency": 1,
+        "logo": null
+    },
+    {
+        "id": 3,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": 1,
+        "logo": null
+    },
+    {
+        "id": 4,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": 1,
+        "logo": null
+    },
+    {
+        "id": 5,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": 1,
+        "logo": null
+    },
+    {
+        "id": 6,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": 1,
+        "logo": null
+    },
+    {
+        "id": 7,
+        "name": "Colonne",
+        "init_symptoms": "41,42,211,74,75,76,77,78,79",
+        "symptoms": "359,267,122,366",
+        "frequency": 7,
+        "logo": "colonne.png"
+    },
+    {
+        "id": 8,
+        "name": "Genou G",
+        "init_symptoms": "326,163,125,60,73,122,42",
+        "symptoms": "25,176,122,127,402",
+        "frequency": 3,
+        "logo": "genou.png"
+    },
+    {
+        "id": 9,
+        "name": "Genou Dr",
+        "init_symptoms": "326,163,125,59,72,122,42",
+        "symptoms": "25,176,122,127,402",
+        "frequency": 3,
+        "logo": "genou.png"
+    },
+    {
+        "id": 10,
+        "name": "Hanche G",
+        "init_symptoms": "326,163,44,66,67,69",
+        "symptoms": "25,122,125,127,402",
+        "frequency": 30,
+        "logo": "hanche.png"
+    },
+    {
+        "id": 11,
+        "name": "Hanche Dr",
+        "init_symptoms": "326,163,44,66,67,70",
+        "symptoms": "25,122,125,127,402",
+        "frequency": 30,
+        "logo": "hanche.png"
+    },
+    {
+        "id": 12,
+        "name": "Clinimètre",
+        "init_symptoms": "43,180,210,190,160,170",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
+        "frequency": 90,
+        "logo": "clinimetre.png"
+    },
+    {
+        "id": 13,
+        "name": "MIF",
+        "init_symptoms": "43,180,210,190,160,170",
+        "symptoms": "80,92,89,95,97,102,108,109,110,98,99,122,140,135,161,142,143,83",
+        "frequency": 90,
+        "logo": "mif.png"
+    },
+    {
+        "id": 14,
+        "name": "AVQ",
+        "init_symptoms": "43,180,210,190,160,170",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
+        "frequency": 90,
+        "logo": "avq.png"
+    },
+    {
+        "id": 15,
+        "name": "Braden",
+        "init_symptoms": "41,42,43",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123",
+        "frequency": 90,
+        "logo": "braden.png"
+    },
+    {
+        "id": 16,
+        "name": "NIHSS",
+        "init_symptoms": "41,42,43",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123",
+        "frequency": 3,
+        "logo": "nhss.png"
+    },
+    {
+        "id": 17,
+        "name": "Barthel",
+        "init_symptoms": "41,42,43",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123",
+        "frequency": 7,
+        "logo": "barthel.png"
+    },
+    {
+        "id": 18,
+        "name": "Gynecologie",
+        "init_symptoms": "41,43,316",
+        "symptoms": "317,318,319,Contractions",
+        "frequency": 7,
+        "logo": "grossesse.png"
+    },
+    {
+        "id": 19,
+        "name": "Attente",
+        "init_symptoms": "42,41,46,48,180",
+        "symptoms": "181,183,184,187,322",
+        "frequency": 1,
+        "logo": null
+    },
+    {
+        "id": 20,
+        "name": "Ophtalmologie",
+        "init_symptoms": "41,42,133,337",
+        "symptoms": "25,133,",
+        "frequency": 30,
+        "logo": "yeux.png"
+    },
+    {
+        "id": 21,
+        "name": "Autres",
+        "init_symptoms": "",
+        "symptoms": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360",
+        "frequency": 1,
+        "logo": "yeux.png"
+    },
+    {
+        "id": 22,
+        "name": "Bilan ",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 23,
+        "name": "Bilan",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 24,
+        "name": "Bilan ",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 25,
+        "name": "Bilan",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 26,
+        "name": "Bilan ",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 27,
+        "name": "Bilan Clinimètre",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
+        "init_symptoms": "",
+        "frequency": "",
+        "logo": ""
+    },
+    {
+        "id": 28,
+        "name": "Bilan MIF",
+        "symptoms": "80,90,91,95,96,97,108,109,110,121,123,141,245,150,149,151,144,83",
+        "init_symptoms": "",
+        "frequency": "",
+        "logo": ""
+    },
+    {
+        "id": 29,
+        "name": "Bilan Barthel",
+        "init_symptoms": "80,90,91,95,96,97,108",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 30,
+        "name": "Bilan Braden",
+        "init_symptoms": "80,90,91,95,96,97,108",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 31,
+        "name": "Cr\u00c3\u00a9ation du profil",
+        "init_symptoms": "41,42,43",
+        "symptoms": "7,4,8,2,13,14",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 32,
+        "name": "Vaccination",
+        "init_symptoms": "250,251,252,253,254,255,256,257,258",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 33,
+        "name": "Ant\u00c3\u00a9c\u00c3\u00a9dents",
+        "init_symptoms": "240, 304, 341,250,231",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 34,
+        "name": "Fragilit\u00c3\u00a9",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 35,
+        "name": "ICOPE",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 36,
+        "name": "EHPAD",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 37,
+        "name": "Pr\u00c3\u00a9- diab\u00c3\u00a8te",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 38,
+        "name": "Nutrition",
+        "init_symptoms": " ",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 39,
+        "name": "Arthrose",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 40,
+        "name": "Accueil",
+        "init_symptoms": "19,27,34",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 41,
+        "name": "Mon profil",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 42,
+        "name": "Suivi",
+        "init_symptoms": "180,190,200,210,220,230",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 43,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 44,
+        "name": "Urinaire",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 45,
+        "name": "ORL",
+        "init_symptoms": "251,240,180,190,200",
+        "symptoms": "22,25,27,193,33,27,152",
+        "frequency": null,
+        "logo": "orl.png"
+    },
+    {
+        "id": 46,
+        "name": "Osteo articulaire",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 47,
+        "name": "Dermatologique",
+        "init_symptoms": "251,240,180,190,200",
+        "symptoms": "22,25,27,193,33,27,152",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 48,
+        "name": "Gyn\u00c3\u00a9cologie",
+        "init_symptoms": "41,43,316",
+        "symptoms": "317,318,319,Contractions",
+        "frequency": null,
+        "logo": "grossesse.png"
+    },
+    {
+        "id": 49,
+        "name": "Cardiovasculaire",
+        "init_symptoms": "42,41,46,48,180",
+        "symptoms": "181,183,184,187,322",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 50,
+        "name": "Pulmonaire",
+        "init_symptoms": "251,240,180,190,200",
+        "symptoms": "22,27,193,33,27,152",
+        "frequency": null,
+        "logo": "poumon.png"
+    },
+    {
+        "id": 51,
+        "name": "Endocrino",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 52,
+        "name": "Digestif",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 53,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 54,
+        "name": "Attente",
+        "init_symptoms": "251,240,180,190,200",
+        "symptoms": "22,25,27,193,33,27,152",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 55,
+        "name": "Infection  dentaire",
+        "init_symptoms": "22,25,27,193,33,27,152",
+        "symptoms": "251,240,180,190,200",
+        "frequency": null,
+        "logo": "dentaire.png"
+    },
+    {
+        "id": 56,
+        "name": "Grippe",
+        "init_symptoms": "22,27,193,33,27,152,169",
+        "symptoms": "251,240,180,190,200",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 57,
+        "name": "Covid",
+        "init_symptoms": "22,27,193,33,27,152,169",
+        "symptoms": "251,240,180,190,200",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 58,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 59,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 60,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 61,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 62,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 63,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 64,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 65,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 66,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 67,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 68,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 69,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 70,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 71,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 72,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 73,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 74,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 75,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 76,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 77,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 78,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 79,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 80,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 81,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 82,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 83,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 84,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 85,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 86,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 87,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 88,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 89,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 90,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 91,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 92,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 93,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 94,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 95,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 96,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 97,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 98,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 99,
+        "name": "Faire un bilan",
+        "init_symptoms": "34,32,36,35,37",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 100,
+        "name": "Faire un bilan articulaire",
+        "init_symptoms": "101,102,103,104,105,106,107,108,109,10,111,112,113,114,115,116,117",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 101,
+        "name": "Bilan colonne ",
+        "init_symptoms": "41,42,259,267,122,74,75,76,77,78,79",
+        "symptoms": "359,267,122,366",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 102,
+        "name": "Bilan Genou Dr",
+        "init_symptoms": "326,163,125,59,72,122,42",
+        "symptoms": "25,176,122,127,402",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 103,
+        "name": "Bilan Genou G",
+        "init_symptoms": "326,163,125,59,72,122,42",
+        "symptoms": "25,176,122,127,402",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 104,
+        "name": "Bilan Hanche Dr",
+        "init_symptoms": "326,163,44,66,67,69",
+        "symptoms": "25,122,125,127,402",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 105,
+        "name": "Bilan Hanche G",
+        "init_symptoms": "326,163,44,66,67,70",
+        "symptoms": "25,122,125,127,402",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 106,
+        "name": "Bilan cheville Dr",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 107,
+        "name": "Bilan cheville G",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 108,
+        "name": "Bilan Pied Dr",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 109,
+        "name": "Bilan Pied G",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 110,
+        "name": "Bilan Epaule Dr",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 111,
+        "name": "Bilan Epaule G",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 112,
+        "name": "Bilan Coude Dr",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 113,
+        "name": "Bilan Coude G",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 114,
+        "name": "Bilan Poignet Dr",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 115,
+        "name": "Bilan Poignet G",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 116,
+        "name": "Bilan Main Dr",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 117,
+        "name": "Bilan Main G",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 118,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 119,
+        "name": "Attente",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    },
+    {
+        "id": 120,
+        "name": "Qui fait le bilan",
+        "init_symptoms": "105,109,106,111,108,110,107",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null
+    }
 ]

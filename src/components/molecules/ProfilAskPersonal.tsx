@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, CheckBox, StyleSheet } from 'react-native';
 
-interface ProfileAskPersonalProps {
+interface ProfilAskPersonalProps {
   nameText: string;
   inputPlaceholder?: string;
   displayPersonal: boolean;
@@ -11,13 +11,13 @@ interface ProfileAskPersonalProps {
   initValue?: string | number,
 }
 
-const ProfileAskPersonal = ({
+const ProfilAskPersonal = ({
   nameText,
   inputPlaceholder,
   displayPersonal,
   onTextChange,
   initValue
-}: ProfileAskPersonalProps) => {
+}: ProfilAskPersonalProps) => {
   const [name, setName] = useState(initValue?.toString());
   const [isPersonal, setIsPersonal] = useState(false);
   const [isDataComp, setIsDataComp] = useState(false);
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileAskPersonal;
+export default ProfilAskPersonal;
