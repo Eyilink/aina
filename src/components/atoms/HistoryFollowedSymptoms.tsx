@@ -213,7 +213,7 @@ function HistoryFollowedSymptoms() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={user.my_personal_datas.filter(p => p.id != "21")}
+        data={user.my_personal_datas}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         style={styles.flatListContainer}
