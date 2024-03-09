@@ -19,7 +19,7 @@ interface chk_BoxProps {
   symptom: Symptome;
   id_p: string;
   twoDArray: string[][];
-  setTDArray: React.Dispatch<React.SetStateAction<string[][]>>;
+  setTDArray?: React.Dispatch<React.SetStateAction<string[][]>>;
   pressingChkBx: () => void;
 }
 
@@ -27,13 +27,33 @@ interface chk_BoxProps {
 export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const {imageProp,setImageProp} = useContext(ImageContext);
+  const [user, ] = useUserStore({ disease: MALADIE1 });
   useEffect(()=>{
     // Check if the symptom is already selected by the user
-      const checked = twoDArray.some((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
+    // const objet = twoDArray.find((obj)=>obj[0] === id_p);
+    const objet = user.my_personal_datas.find(p=>p.id === id_p);
+    if(objet)
+    {
+      const symptom2 = objet.symptoms.find(s=> s.id === symptom.id);
+      if(symptom2)
+      {
+        setIsChecked(true);
+      }
+      else
+      {
+        setIsChecked(false);
+      }
+    }else
+    {
+      setIsChecked(false);
+    }
+    console.log('ischecked ::::::::  ' + isChecked);
+      // const checked = twoDArray.some((obj) => {if(obj[0] == id_p && obj.slice(1).includes(symptom.id.toString())){return true;}else{return false;} });
       const path = json_p.find((item)=>item.id.toString() == id_p);
+      // console.log("See if one of the symproms is checked ::: " + checked);
       if(path)
         setImageProp(path.logo);
-      setIsChecked(checked);
+      // setIsChecked(checked);
 
   },[])
   const handleIsChecked = () => {
@@ -45,17 +65,17 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
       if(!existingSymptom)
           if (existingObject) {
               // Object with id_p exists, append symptomId to the second dimension
-              const updatedArray = twoDArray.map((obj) => {
+              const updatedArray = twoDArray;
+              updatedArray.map((obj) => {
               if (obj[0] === id_p) {
-                  return [...obj,symptom.id.toString() ];
+                  twoDArray.push([...obj,symptom.id.toString() ]);
               }
-              return obj;
+              twoDArray.push(obj);
               });
-              setTDArray(updatedArray);
           } else {
             // Object with id_p does not exist, create a new object with id_p and symptomId
-              const updatedArray = [...twoDArray , [id_p,symptom.id.toString()]];
-              setTDArray(updatedArray);
+             twoDArray.push([id_p,symptom.id.toString()]);
+              
           }
           // };
           pressingChkBx();
@@ -91,18 +111,28 @@ const DataAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
     const [, actions] = useAuthStore();
     const [user, ] = useUserStore({ disease: MALADIE1 });
     const [symp,setSymp] = useState<Symptome | undefined>();
-    const [twoDArray, setTDArray] = useState<string[][]>([]);
-    const [addArray,setAddArray] = useState<string[]>([]);
+    let twoDArray: string[][] = [];
+    
 
     const processDatas = () => {
-      user.my_personal_datas.forEach(p=>{
-        addArray.push(p.id.toString());
-        p.symptoms.forEach(s=>addArray.push(s.id.toString()));
-        twoDArray.push(addArray);
-        setAddArray([]);
-      })
+      user.my_personal_datas.forEach(p => {
+        let addArray = [p.id.toString()];
+        
+        p.symptoms.forEach(s => {
+          addArray.push(s.id.toString());
+        });
+      
+        console.log("user personal data pathos array: ", addArray[0]);
+        
+     twoDArray.push(addArray);
+         // Reset addArray for the next iteration
+      });
+      console.log("\r\n----------------Lenght of user.mypersonnaldatas--------------------\r\n" + user.my_personal_datas?.length + "\r\n------------------------------------\r\n");
+      console.log("\r\n----------------TwoDArray--------------------\r\n" + twoDArray + "\r\n------------------------------------\r\n");
       const updatedPathos = twoDArray.map((objet, index) => {
-        const nm = pathologieJSON.find((obj) => obj.id === objet[0])?.name;
+        if(objet[0] != undefined)
+        {
+        const nm = json_p.find((obj) => obj.id.toString() === objet[0])?.name;
         const pd_obj =  user.my_personal_datas?.find((obj)=>obj.id == objet[0]);
         const newE: Pathologie = {
           id: objet[0],
@@ -127,6 +157,7 @@ const DataAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
        
         };
         return newE;
+      }
       });
   
       actions.editUserProfile({ key: 'my_personal_datas', value: updatedPathos });
@@ -162,7 +193,6 @@ const DataAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
               symptom={item}
               id_p={'21'}
               twoDArray={twoDArray}
-              setTDArray={setTDArray}
               pressingChkBx={() => {}}
             />
               ))}

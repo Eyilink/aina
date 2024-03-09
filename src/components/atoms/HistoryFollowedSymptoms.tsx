@@ -85,7 +85,10 @@ const CustomComponent = ({ currentSymptom }: Props) => {
         )}
       <View style={styles.textContainer}>
         <Text style={styles.title_custom}>{currentSymptom.name}</Text>
-        {currentSymptom.data && (currentSymptom.data.length) ? <Text style={styles.subtitle}>{currentSymptom.data[currentSymptom.data.length-1].date}</Text>:null}
+        {currentSymptom.data && (currentSymptom.data.length) ? 
+        <Text style={styles.subtitle}>
+        {currentSymptom.data[currentSymptom.data.length-1].date}
+        </Text>:null}
       </View>
       <Button text="+" onPress={handlePress} style={styles.addButton} />
       </TouchableOpacity>
@@ -188,7 +191,7 @@ type Item = {
 
 const renderItem = ({ item }: { item: Pathologie }) => (
   <View style={styles.custom}>
-    <View style={styles.itemContainer}>
+    <View style={{flexDirection : 'row', justifyContent: 'space-between'}}>
     <Image
          style={{ width: 40, height: 40 }}
          source={item?.namelogo ? getIconPath(item.namelogo) : getIconPath('')}
@@ -198,6 +201,7 @@ const renderItem = ({ item }: { item: Pathologie }) => (
         <Text style={styles.title_comp}>{item.name}</Text>
         <Text style={styles.subtitle}>{item.more}</Text>
       </View>
+      
     </View>
     <View style={styles.Symptome}>
     {item.symptoms.map((item) => (
@@ -228,9 +232,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   Symptome: {
-    flexDirection:'column',
-    textAlign: 'left',
-    marginRight: 15,
+    
+    
   },
   flatListContainer: {
     flexGrow: 1,
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'gray',
     textAlign: 'center',
-    marginRight: 20,
+    paddingHorizontal: 20
   },
   redText: {
     color: 'red',
@@ -264,6 +267,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'column',
+    alignItems: 'center'
   },
   title_comp: {
     fontSize: 30,

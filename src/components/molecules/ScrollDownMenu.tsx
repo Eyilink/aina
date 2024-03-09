@@ -359,7 +359,7 @@ const setTextForPathos = (p_id: string) : void => {
         </ScrollView>
       ) : (
         <ScrollView>
-          {items.filter(p=> p.id != "21" && !p.name.includes("Bilan")).map((item, index) => (
+          {items.filter(p=> p.id != "21" && !p.name.includes("Bilan") && !p.name.includes("Attente")).map((item, index) => (
             <TouchableOpacity
             key={index}
             style={[

@@ -126,4 +126,5 @@ export type Pathologie = {
   symptoms: Symptome[];
   dateend?: string;
   init_symptoms?: Symptome[];
+  title_for_bilan?: string;
 };

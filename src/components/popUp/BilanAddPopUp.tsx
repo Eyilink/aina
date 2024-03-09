@@ -138,13 +138,14 @@ const BilanAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
             // Show the list of user.my_personal_data
             <View style={styles.popV}>
               <ScrollView style={styles.scrollContainer}>
-                {pathologieJSON.filter(pathologie => (pathologie.name.includes('Faire un bilan') && pathologie.id >= '100') || pathologie.id == '27' || pathologie.id == '28' ).map((item) => (
+                {pathologieJSON.filter(pathologie => (pathologie.name.includes('Faire un bilan') && pathologie.id >= '100') //|| pathologie.id == '27' || pathologie.id == '28' 
+                ).map((item) => (
                   <TouchableOpacity
                     key={item.id}
                     onPress={() => {if(item.id == '27' || item.id == '28'){ handleListItemClickSousBilan(pathologieJSON.filter(p => p.id == item.id.toString())[0])}else{handleListItemClick(item)}}}
                     style={styles.listItem}
                   >
-                    <AppText text={item.id.toString() + " - " + item.name} />
+                    <AppText text={item.title_for_bilan ? item.title_for_bilan : ""} />
                   </TouchableOpacity>
                 ))}
               </ScrollView>
@@ -230,8 +231,9 @@ const styles = StyleSheet.create({
     paddingBottom: 50
   },
   listItem: {
-    
-    paddingVertical: 13,
+    justifyContent:'center',
+    alignItems: 'center',
+    paddingVertical: 20,
 
   },
   closeButton: {

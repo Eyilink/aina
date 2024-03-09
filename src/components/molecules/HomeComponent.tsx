@@ -52,6 +52,7 @@ const HomeComponent = ({
     setIsEditingP(true);
     setCarryOnsuivi(true);
     setIsEditingP2(false);
+    setButtonClicked(false);
 
   };
   useEffect(()=>{
@@ -119,10 +120,14 @@ const HomeComponent = ({
     if (isDataEmpty)
       setCarryOnsuivi(false);
     if (firstT) {
-
+      
       if (user.boolF) {
         // processDatas();
+        setIsEditingP(true);
+    setCarryOnsuivi(true);
+    setIsEditingP2(false);
         actions.editUserProfile({ key: 'boolF', value: false });
+        
       }
       if (user.boolC) {
 

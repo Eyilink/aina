@@ -369,7 +369,7 @@
     },
     {
         "id": 48,
-        "name": "Gyn\u00c3\u00a9cologie",
+        "name": "Gynécologie",
         "init_symptoms": "41,43,316",
         "symptoms": "317,318,319,Contractions",
         "frequency": null,
@@ -789,7 +789,8 @@
         "init_symptoms": "101,102,103,104,105,106,107,108,109,10,111,112,113,114,115,116,117",
         "symptoms": "",
         "frequency": null,
-        "logo": null
+        "logo": null,
+        "title_for_bilan" : "Bilan Articulaire"
     },
     {
         "id": 101,
@@ -950,5 +951,41 @@
         "symptoms": "",
         "frequency": null,
         "logo": null
+    },
+    {
+        "id": 121,
+        "name": "Faire un bilan dépendance",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null,
+        "title_for_bilan" : "Bilan Dépendance"
+    },
+    {
+        "id": 122,
+        "name": "Faire un bilan musculaire",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null,
+        "title_for_bilan" : "Bilan Musculaire"
+    },
+    {
+        "id": 123,
+        "name": "Faire un bilan fragilité",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null,
+        "title_for_bilan" : "Bilan Fragilité"
+    },
+    {
+        "id": 124,
+        "name": "Faire un bilan AVQ",
+        "init_symptoms": "",
+        "symptoms": "",
+        "frequency": null,
+        "logo": null,
+        "title_for_bilan" : "Bilan AVQ"
     }
 ]

@@ -110,7 +110,8 @@ export const pathologieJSON: Pathologie[] = pathologies.map((item: any) => ({
 //    symptoms: symptomeData.filter((symptome: Symptome) => symptome.id == item.symptoms.trim().split(",")),
   symptoms: symptomeJSON.filter((symptome: Symptome) => item.symptoms.trim().split(",").includes(String(symptome.id))),
   icon: getIconPath(item.logo),
-  init_symptoms: symptomeJSON.filter((symptome: Symptome) => item.init_symptoms.trim().split(",").includes(String(symptome.id)))
+  init_symptoms: symptomeJSON.filter((symptome: Symptome) => item.init_symptoms.trim().split(",").includes(String(symptome.id))),
+  title_for_bilan: item.title_for_bilan ? item.title_for_bilan : null,
   
 }));
 
