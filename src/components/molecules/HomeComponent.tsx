@@ -53,6 +53,7 @@ const HomeComponent = ({
     setCarryOnsuivi(true);
     setIsEditingP2(false);
     setButtonClicked(false);
+    setIsSuiviClicked(true);
 
   };
   useEffect(()=>{
@@ -123,9 +124,7 @@ const HomeComponent = ({
       
       if (user.boolF) {
         // processDatas();
-        setIsEditingP(true);
-    setCarryOnsuivi(true);
-    setIsEditingP2(false);
+       onEditProfile();
         actions.editUserProfile({ key: 'boolF', value: false });
         
       }

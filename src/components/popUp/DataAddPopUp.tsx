@@ -10,6 +10,7 @@ import InputSymptome from '@components/molecules/AskSymptoms';
 import json_p from '@assets/json/pathologies.json'
 import { ImageContext } from '@components/molecules/ImageContext';
 import { Entypo } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -22,6 +23,107 @@ interface chk_BoxProps {
   setTDArray?: React.Dispatch<React.SetStateAction<string[][]>>;
   pressingChkBx: () => void;
 }
+
+
+ const Chk_Box_SuiviPerso : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const {imageProp,setImageProp} = useContext(ImageContext);
+  const [user, ] = useUserStore({ disease: MALADIE1 });
+  useEffect(()=>{
+    // Check if the symptom is already selected by the user
+    // const objet = twoDArray.find((obj)=>obj[0] === id_p);
+    const objet = user.my_personal_datas.find(p=>p.id === id_p);
+    if(objet)
+    {
+      const symptom2 = objet.symptoms.find(s=> s.id === symptom.id);
+      if(symptom2)
+      {
+        setIsChecked(true);
+      }
+      else
+      {
+        setIsChecked(false);
+      }
+    }else
+    {
+      setIsChecked(false);
+    }
+    console.log('ischecked ::::::::  ' + isChecked);
+      // const checked = twoDArray.some((obj) => {if(obj[0] == id_p && obj.slice(1).includes(symptom.id.toString())){return true;}else{return false;} });
+      const path = json_p.find((item)=>item.id.toString() == id_p);
+      // console.log("See if one of the symproms is checked ::: " + checked);
+      if(path)
+        setImageProp(path.logo);
+      // setIsChecked(checked);
+
+  },[])
+  const handleIsChecked = () => {
+      setIsChecked(!isChecked);
+
+      // if(isChecked){
+      const existingObject = twoDArray.find((obj) => obj[0] === id_p);
+      const existingSymptom = twoDArray.find((obj) => obj[0] === id_p && obj.slice(1).includes(symptom.id.toString()));
+      if(!existingSymptom)
+          if (existingObject) {
+              // Object with id_p exists, append symptomId to the second dimension
+              var updatedArray = twoDArray;
+              updatedArray = twoDArray.map(obj => {
+                if (obj[0] === id_p) {
+                    // Create a new array, copying the existing elements and adding the new element
+                    obj.push(symptom.id.toString());
+                    return obj;
+                } else {
+                    // Return the original array if the condition is not met
+                    return obj;
+                }
+            });
+            twoDArray = updatedArray;
+          } else {
+            // Object with id_p does not exist, create a new object with id_p and symptomId
+             twoDArray.push([id_p,symptom.id.toString()]);
+              
+          }
+        else
+        {
+          if (existingObject) {
+            const updatedArray = twoDArray;
+              updatedArray.map((obj,index) => {
+              if (obj[0] === id_p) {
+                  
+                const foundIndex = obj.indexOf(symptom.id.toString());
+                if (foundIndex !== -1) {
+                    twoDArray[index].splice(foundIndex, 1);
+                }
+              }
+              return obj.length !== 1;
+            
+            })
+            twoDArray = updatedArray;
+          }
+        }
+          // };
+          pressingChkBx();
+          console.log(twoDArray)
+         
+    };
+  
+  return(
+      <TouchableOpacity
+      key={index}
+      style={[styles.itemContainer, isChecked && styles.checkedItemContainer]}
+      onPress={handleIsChecked}
+    >
+      <View style={[styles.checkbox, isChecked && styles.checkedCheckbox]}>
+        {isChecked && <Entypo name="check" size={24} color="#ffffff" style={{}}/>}
+      </View>
+      <View style={styles.itemTitleContainer}>
+        <AppText style={styles.itemTitle} text={symptom.name} />
+      </View>
+    </TouchableOpacity>
+  )
+
+}
+
 
 
 export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,setTDArray,pressingChkBx }) => {
@@ -79,6 +181,7 @@ export const Chk_Box : React.FC<chk_BoxProps> = ({index,symptom,id_p, twoDArray,
           }
           // };
           pressingChkBx();
+          
          
     };
   
@@ -113,20 +216,25 @@ const DataAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
     const [symp,setSymp] = useState<Symptome | undefined>();
     let twoDArray: string[][] = [];
     
+    useFocusEffect(()=>{
+      if(user)
+        if(user.my_personal_datas)
+          user.my_personal_datas.forEach(p => {
+            let addArray = [p.id.toString()];
+            
+            p.symptoms.forEach(s => {
+              addArray.push(s.id.toString());
+            });
+          
+            console.log("user personal data pathos array: ", addArray[0]);
+            
+        twoDArray.push(addArray);
+            // Reset addArray for the next iteration
+          });
+      })
 
     const processDatas = () => {
-      user.my_personal_datas.forEach(p => {
-        let addArray = [p.id.toString()];
-        
-        p.symptoms.forEach(s => {
-          addArray.push(s.id.toString());
-        });
       
-        console.log("user personal data pathos array: ", addArray[0]);
-        
-     twoDArray.push(addArray);
-         // Reset addArray for the next iteration
-      });
       console.log("\r\n----------------Lenght of user.mypersonnaldatas--------------------\r\n" + user.my_personal_datas?.length + "\r\n------------------------------------\r\n");
       console.log("\r\n----------------TwoDArray--------------------\r\n" + twoDArray + "\r\n------------------------------------\r\n");
       const updatedPathos = twoDArray.map((objet, index) => {
@@ -187,7 +295,7 @@ const DataAddPopUp: React.FC<Props> = ({ isVisible, onClose }) => {
                 // >
                 //   <AppText text={item.id.toString() + " - " +item.name} />
                 // </TouchableOpacity>
-                <Chk_Box
+                <Chk_Box_SuiviPerso
               key={idx}
               index={idx}
               symptom={item}

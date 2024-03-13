@@ -190,6 +190,7 @@ type Item = {
 };
 
 const renderItem = ({ item }: { item: Pathologie }) => (
+  item.symptoms.length >= 1 && (
   <View style={styles.custom}>
     <View style={{flexDirection : 'row', justifyContent: 'space-between'}}>
     <Image
@@ -208,7 +209,7 @@ const renderItem = ({ item }: { item: Pathologie }) => (
       <CustomComponent currentSymptom={item} />
     ))}
     </View>
-  </View>
+  </View>)
 );
 
 function HistoryFollowedSymptoms() {
