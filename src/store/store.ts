@@ -6,6 +6,7 @@ import {
 } from 'react-sweet-state';
 import { AsyncStorage } from 'react-native';
 import { getUnixTime } from 'date-fns';
+import * as Sharing from 'expo-sharing';
 
 import {
   SelectorWithDiseaseProps,
@@ -13,9 +14,11 @@ import {
   getReportsSelector,
   getUserSelector,
 } from '@store/selectors';
+import RNFS from 'react-native-fs';
 import { Auth, Disease, Report, RootState, User } from '@store/types';
 import { scheduleLocalNotification } from '@helpers/notifications';
 import { hasPreviousReportToday, orderReportsByDate } from '@helpers/utils';
+import * as FileSystem from 'expo-file-system';
 
 import {
   ASYNC_STORAGE_AUTH_KEY,
@@ -43,8 +46,37 @@ const initialState: RootState = {
   users: [],
 };
 
+const exportUsersToJson = async () => {
+  try {
+    const usersJson = await AsyncStorage.getItem('user');
+    if (usersJson) {
+      const fileName = FileSystem.documentDirectory + 'users.json';
+      await FileSystem.writeAsStringAsync(fileName, usersJson);
+
+      console.log('Users exported to:', fileName);
+      console.log('All users :::: ' , usersJson);
+    } else {
+      console.log('No users data to export.');
+    }
+  } catch (error) {
+    console.error('Error exporting users:', error);
+  }
+};
+const shareUsersFile = async () => {
+  const fileName = FileSystem.documentDirectory + 'users.json';
+  try {
+    await Sharing.shareAsync(fileName);
+  } catch (error) {
+    console.error('Error sharing users file:', error);
+  }
+};
+
 // All the actions that mutate the store
 const actions = {
+  exportUsers: () => async () => {
+    await exportUsersToJson();
+    await shareUsersFile();
+  },
   signupUser: () => async ({ setState, getState }: StoreApi): Promise<void> => {
     const { disease } = getState();
     const { user } = getState().disease[MALADIE1];
@@ -166,6 +198,7 @@ const actions = {
         },
       },
     });
+    
   },
 
   getUserSession: () => async ({ setState }: StoreApi): Promise<void> => {

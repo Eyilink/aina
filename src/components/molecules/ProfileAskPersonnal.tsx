@@ -1,7 +1,7 @@
 import AppText from '@components/atoms/AppText';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, Text, TextInput, CheckBox, StyleSheet } from 'react-native';
+import { View, Text, TextInput, CheckBox, StyleSheet, ViewStyle } from 'react-native';
 
 interface ProfileAskPersonalProps {
   nameText: string;
@@ -9,6 +9,7 @@ interface ProfileAskPersonalProps {
   displayPersonal: boolean;
   onTextChange?: (text: string) => void;
   initValue?: string | number,
+  style?:ViewStyle, 
 }
 
 const ProfileAskPersonal = ({
@@ -16,7 +17,8 @@ const ProfileAskPersonal = ({
   inputPlaceholder,
   displayPersonal,
   onTextChange,
-  initValue
+  initValue,
+  style
 }: ProfileAskPersonalProps) => {
   const [name, setName] = useState(initValue?.toString());
   const [isPersonal, setIsPersonal] = useState(false);
@@ -35,7 +37,7 @@ const ProfileAskPersonal = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.row}>
         <AppText style={styles.label} text={nameText} />
         <TextInput

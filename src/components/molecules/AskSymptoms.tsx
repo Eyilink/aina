@@ -49,6 +49,7 @@ export const InputBox = ({ s, onClose, noText,isMIF, donotdispVButtons,initsetSl
   if(initsetSliderValue)
     initialSliderValue == initsetSliderValue;
   const [sliderValue, setSliderValue] = useState(initialSliderValue);
+  const [oNEVAL,setONEVAL] = useState(false);
   const [user, actions] = useUserStore({ disease: MALADIE1 });
   useEffect(() => {
     if (recupSymp)
@@ -141,7 +142,7 @@ export const InputBox = ({ s, onClose, noText,isMIF, donotdispVButtons,initsetSl
 
   let symptomText = null;
   // If the symptom is numeric, we display a slider
-  if (s.type === 'Num.' || s.type === 'Oui/non éval') {
+  if (s.type === 'Num.' ){//|| s.type === 'Oui/non éval') {
     let minimumValue = 0;
     let maximumValue = isMIF ? 7 : 10;
     let step = 1;
@@ -213,7 +214,58 @@ export const InputBox = ({ s, onClose, noText,isMIF, donotdispVButtons,initsetSl
       </View>
     );
     // if the symptom is yes / no, we display a oui/non box
-  } else if (s.type === 'Oui/non' || s.type === 'oui/non') {
+  } else if (s.type === 'Oui/non éval') {
+    symptomText = (
+      <View>
+        {/* {isDataComp ?
+          <>
+            <Button
+              text={i18n.t('commons.yes')}
+              onPress={() => {setONEVAL(true)}}
+              isSelected={hasUserChosen && symptom}
+
+            />
+            <Button
+              text={i18n.t('commons.no')}
+              onPress={() => onClose()}
+              isSelected={hasUserChosen && !symptom}
+
+            />
+          </> : */}
+          {oNEVAL ? null : 
+          <View>
+          <View style={true ? { flexDirection: 'row', justifyContent: 'space-evenly' } : { flexDirection: 'column' }}>
+            <Button
+              text={i18n.t('commons.yes')}
+              onPress={() => {setONEVAL(true)}}
+              isSelected={hasUserChosen && symptom}
+              style={noText ? { width: '20%', height: '20%' } : {}}
+              noText
+            />
+            <Button
+              text={i18n.t('commons.no')}
+              onPress={() => onClose()}
+              isSelected={hasUserChosen && !symptom}
+              style={noText ? { width: '20%', height: '20%' } : {}}
+              noText
+            />
+          </View>
+          
+          </View>
+        }
+
+        {oNEVAL ? <View >
+        <ProfileAskPersonal  onTextChange={(text: string) => { setTxt(text) }} nameText={noText ? '' : s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(t => t.id == s.id)?.data?.slice(-1)[0].valeur} />
+        <Button
+          text="Validate"
+          onPress={handleValidateT}
+          isSelected
+        />
+      </View> : null}
+       
+      </View>)
+  }
+  else if (s.type === 'Oui/non' || s.type === 'oui/non' ) {
     symptomText = (
       <View>
         {isDataComp ?
@@ -260,7 +312,7 @@ export const InputBox = ({ s, onClose, noText,isMIF, donotdispVButtons,initsetSl
   } else {
     symptomText = (
       <View style={{ flex: 1 }}>
-        <ProfileAskPersonal onTextChange={(text: string) => { setTxt(text) }} nameText={noText ? '' : s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(t => t.id == s.id)?.data?.slice(-1)[0].valeur} />
+        <ProfileAskPersonal  onTextChange={(text: string) => { setTxt(text) }} nameText={noText ? '' : s.name} inputPlaceholder={s.unit} displayPersonal={false} initValue={user.my_personal_datas.find(p => p.id == "21")?.symptoms.find(t => t.id == s.id)?.data?.slice(-1)[0].valeur} />
         {donotdispVButtons ? null : <Button
           text="Validate"
           onPress={handleValidateT}
@@ -278,7 +330,7 @@ const InputSymptome = ({ s, onClose, onArrow, style }: InputSymptomeProps): Reac
 
 
   return (
-    <Container>
+    <View style={styles.container}>
 
       {/* display question */}
       <View style={[styles.popUpContainer, style]}>
@@ -289,18 +341,20 @@ const InputSymptome = ({ s, onClose, onArrow, style }: InputSymptomeProps): Reac
           onPress={onArrow ? onArrow : onClose}
           style={{ marginLeft: 12 }}
         />
-        <Text style={styles.subtitle}>
-          {'\n'}{'\n'}
+        <View style={styles.subtitle}>
+        <Text  style={{fontSize: fonts.subtitle.fontSize - 1, textAlign: 'center'}}>
+          
           {s.question ? s.question : "Evaluez votre " + s.name}
-          {'\n'}{'\n'}
+          
         </Text>
+        </View>
 
         {/* display the input box  */}
         <InputBox s={s} onClose={onClose} />
 
       </View>
 
-    </Container>
+    </View>
   );
 };
 
@@ -309,17 +363,20 @@ export default InputSymptome;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: layout.padding,
+    display: 'flex',
+    justifyContent: 'center',
+   
+    padding: 35,
 
   },
   title: {
     paddingBottom: layout.padding / 2,
   },
   subtitle: {
-
-    textAlign: 'center',
-    fontSize: fonts.subtitle.fontSize - 1,
+    borderColor: 'red',
+    borderWidth: 4,
+   
+    paddingVertical: 20
   },
   recommandationContainer: {
     alignItems: 'center',
@@ -345,9 +402,9 @@ const styles = StyleSheet.create({
   },
   popUpContainer: {
     backgroundColor: 'white',
-    padding: 25,
+    padding: 5,
     borderRadius: 10,
-
+    display: 'flex',
     justifyContent: 'center',
 
   },

@@ -111,6 +111,7 @@ const HomeComponent = ({
   // useEffect(()=>{if(boolC)
   //   setButtonClicked(true);},[])
   useFocusEffect(() => {
+    
     users.map((u, i) => console.log("Nom user numero " + i.toString() + " : " + u.username));
 
     setinfoText('home.png')
@@ -373,7 +374,7 @@ const HomeComponent = ({
                 <Button
                   text={i18n.t('home.button_share')}
                   style={{ minWidth: '90%' }}
-                  onPress={() => { setBilanData(true); console.log(user.my_personal_datas?.filter(pathologie => pathologie.id >= '36')); }}
+                  onPress={() => { console.log("--- Fichier user JSON ---\r\n" + JSON.stringify(user)) }}
 
                 />
                 {/* <Button
