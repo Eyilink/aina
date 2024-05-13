@@ -7,6 +7,21 @@ type Reminder = {
   token?: string; // ExponentPushToken
 };
 
+export type Remarque = {
+  remarque?: string;
+  date?: string;
+  qui?: string;
+}
+export type Antecedent = {
+  antecedent?: string;
+  date?: string;
+  qui?: string;
+}
+export type Vaccin = {
+  vaccin?: string;
+  date?: string;
+  qui?: string;
+}
 export type Diseases = {
   diabetes: boolean;
   heartDisease: boolean;
@@ -36,6 +51,10 @@ export type User = {
   prenom: string,
   boolC: boolean,
   boolF: boolean,
+  remarques: Remarque[];
+  antecedents: Antecedent[];
+  vaccins: Vaccin[];
+
 
 };
 
